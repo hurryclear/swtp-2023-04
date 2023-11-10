@@ -13,6 +13,7 @@ test_frontend:
 
 build_frontend:
   stage: build
+  needs: ["test_frontend"]
   image: 
     name: grc.io/kaniko-project/executor:v1.9.0-debug
     entrypoint: [""]
