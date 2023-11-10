@@ -13,11 +13,15 @@ test_frontend:
 
 build_frontend:
   stage: build
-  image: public.ecr.aws/docker/library/node:lts-alpine
+  image: 
+    name: grc.io/kaniko-project/executor:v1.9.0-debug
+    entrypoint: [""]
   script:
-    - cd frontend
-    - npm install
-    - npm run build
+    - echo ...
+    - /kaniko/executor
+      --context "frontend"
+      --dockerfile "frontend/Dockerfile"
+      -- destination "${CI_REGISTRY_IMAGE}:latest"
   artifacts:
     paths:
       - frontend/dist
