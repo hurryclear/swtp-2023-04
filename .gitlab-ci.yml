@@ -22,7 +22,7 @@ build_frontend:
     - /kaniko/executor
       --context "frontend"
       --dockerfile "frontend/Dockerfile"
-      -- destination "${CI_REGISTRY_IMAGE}:latest"
+      --destination "${CI_REGISTRY_IMAGE}:latest"
   artifacts:
     paths:
       - frontend/dist
