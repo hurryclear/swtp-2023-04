@@ -18,8 +18,8 @@ build_frontend:
     name: gcr.io/kaniko-project/executor:v1.9.0-debug
     entrypoint: [""]
   script:
-    - echo "will die pipeline nur mal starten"
     - echo ...
+    - docker login -u "${CI_REGISTRY_USER}" -p "${CI_REGISTRY_PASSWORD}" "${CI_REGISTRY}"
     #- echo "{\"auths\":{"${CI_REGISTRY}":{\"auth\":"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')"}}}" > /kaniko/.docker/config.json
     #- echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}:${CI_REGISTRY_PASSWORD}" | base64)\"}}}" > /kaniko/.docker/config.json
     #- cat /kaniko/.docker/config.json
