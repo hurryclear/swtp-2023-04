@@ -20,9 +20,7 @@ build_frontend:
   script:
     - echo ..
     - mkdir -p /kaniko/.docker
-    - echo -n '{"auths":{"$CI_REGISTRY":{"username":"$CI_REGISTRY_USER","password":"$CI_REGISTRY_PASSWORD","auth":"' > /kaniko/.docker/config.json
-    - echo -n "$CI_REGISTRY_USER:$CI_JOB_TOKEN" | base64 -w 0 >> /kaniko/.docker/config.json
-    - echo '"}}}' >> /kaniko/.docker/config.json
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_JOB_TOKEN\",\"auth\":\"$(echo -n "$CI_REGISTRY_USER:$CI_JOB_TOKEN" | base64)\"}}}" > /kaniko/.docker/config.json
     - /kaniko/executor
       --context "frontend"
       --dockerfile "frontend/Dockerfile"
