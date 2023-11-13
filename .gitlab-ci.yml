@@ -40,7 +40,7 @@ deploy_frontend:
     - apk update
     - apk add openssh docker docker-compose
     - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr -d ‘\r’ | ssh-add -
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh && chmod 700 ~/.ssh
     - echo "$SSH_KOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
