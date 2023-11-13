@@ -4,8 +4,6 @@ services:
   frontend:
    container_name: vue-frontend
    image: swtp04/vue-frontend
-  ports:
-   - 172.26.92.83:3000:80
-  volumes:
-   - ./frontend/:/app
-  restart: unless-stopped
+   ports:
+    - 172.26.92.83:3000:80
+   restart: unless-stopped
