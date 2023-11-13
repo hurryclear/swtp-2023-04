@@ -23,6 +23,8 @@ build_frontend:
       --context "frontend"
       --dockerfile "frontend/Dockerfile"
       --destination "${CI_REGISTRY_IMAGE}:latest"
+  variables:
+    DOCKER_AUTH_CONFIG: '{"auths": {"$CI_REGISTRY": {"username": "$CI_REGISTRY_USER", "password": "$CI_REGISTRY_PASSWORD"}}}'
   artifacts:
     paths:
       - frontend/dist
