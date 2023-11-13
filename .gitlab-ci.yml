@@ -46,6 +46,6 @@ deploy_frontend:
     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - docker login
+    - docker login -u $CI_REGISTRY_USER -p "DOCKERHUB_ACCESS_TOKEN"
     - docker-compose down --rmi all
     - docker-compose -f docker-compose-prod.yml up -d
