@@ -39,11 +39,13 @@ deploy_frontend:
   before_script:
     - apk update
     - apk add openssh docker docker-compose
+    - echo "Checking docker-compose down commands"
+    - docker-compose down --help
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY2" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh && chmod 700 ~/.ssh
     - echo "$SSH_KOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - docker-compose down -rmi all
+    - docker-compose down --rmi all
     - docker-compose -f docker-compose-prod.yml up -d
