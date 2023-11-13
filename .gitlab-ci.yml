@@ -36,7 +36,7 @@ deploy_frontend:
   when: manual
   image: public.ecr.aws/docker/library/nginx:alpine
   variables:
-    DOCKER_HOST: "ssh://$SERVER_USER@SERVER_IP"
+    DOCKER_HOST: "ssh://$SERVER_USER@$SERVER_IP"
   before_script:
     - apk update
     - apk add openssh docker docker-compose
