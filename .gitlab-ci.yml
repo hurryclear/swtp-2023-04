@@ -21,14 +21,20 @@ test_frontend:
 build_backend:
   stage: build
   needs: ["test_backend"]
-  image: maven:latest
+  when: manual
+  image: 
+    name: gcr.io/kaniko-project/executor:v1.9.0-debug
+    entrypoint: [""]
   script:
     - cd backend
     - mvn compile
     - mvn package -DskipTests
-    - echo "$DOCKERHUB_ACCESS_TOKEN" | docker login --username $CI_REGISTRY_USER --password-stdin
-    - docker build -t "$CI_REGISTRY_IMAGE2" .
-    - docker push "$CI_REGISTRY_IMAGE2"
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$DOCKERHUB_ACCESS_TOKEN\",\"auth\":\"$(echo -n "$CI_REGISTRY_USER:$DOCKERHUB_ACCESS_TOKEN" | base64)\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor
+      --context .
+      --dockerfile Dockerfile
+      --destination "${CI_REGISTRY_IMAGE2}:latest"
 
 build_frontend:
   stage: build
