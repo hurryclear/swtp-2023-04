@@ -3,12 +3,6 @@ stages:
   - build
   - deploy
 
-build_backend:
-  stage: build
-  image: maven:latest
-  script:
-    - mvn compile
-
 test_backend:
   stage: test
   image: maven:latest
