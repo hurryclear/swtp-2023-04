@@ -1,4 +1,12 @@
+#Development stage
 FROM eclipse-temurin:17-jre-ubi9-minimal
 WORKDIR /app
 COPY target/backend-0.0.1-SNAPSHOT.jar /app
 CMD ["java", "-jar", "backend-0.0.1-SNAPSHOT.jar"]
+
+#Build Stage
+FROM maven:latest as build
+WORKDIR /app
+COPY . .
+RUN mvn compile
+RUN mvn package -DskipTests
