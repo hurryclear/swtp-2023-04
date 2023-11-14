@@ -3,6 +3,13 @@ stages:
   - build
   - deploy
 
+test_backend:
+  stage: test
+  image: maven:latest
+  script:
+    - cd backend
+    - mvn test
+
 test_frontend:
   stage: test
   image: public.ecr.aws/docker/library/node:lts-alpine
@@ -10,6 +17,13 @@ test_frontend:
     - cd frontend
     - npm install
     - npm run test
+
+build_backend:
+  stage: build
+  image: maven:latest
+  script:
+    - cd backend
+    - mvn compile
 
 build_frontend:
   stage: build
