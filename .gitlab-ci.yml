@@ -20,10 +20,15 @@ test_frontend:
 
 build_backend:
   stage: build
+  needs: ["test_backend"]
   image: maven:latest
   script:
     - cd backend
     - mvn compile
+    - mvn package -DskipTests
+    - echo "$DOCKERHUB_ACCESS_TOKEN" | docker login --username $CI_REGISTRY_USER --password-stdin
+    - docker build -t "$CI_REGISTRY_IMAGE2" .
+    - docker push "$CI_REGISTRY_IMAGE2"
 
 build_frontend:
   stage: build
