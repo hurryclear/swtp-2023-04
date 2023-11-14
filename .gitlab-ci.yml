@@ -18,6 +18,13 @@ test_frontend:
     - npm install
     - npm run test
 
+build_backend:
+  stage: build
+  image: maven:latest
+  script:
+    - cd backend
+    - mvn compile
+
 build_frontend:
   stage: build
   needs: ["test_frontend"]
