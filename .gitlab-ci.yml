@@ -13,6 +13,7 @@ test_frontend:
 
 test_backend:
   stage: test
+  needs: ["build_backend"]
   image: maven:latest
   script:
     - cd backend
@@ -37,6 +38,12 @@ build_frontend:
   artifacts:
     paths:
       - frontend/dist
+  
+build_backend:
+  stage: build
+  image: maven:latest
+  script:
+    - mvn compile
 
 deploy_frontend:
   stage: deploy
