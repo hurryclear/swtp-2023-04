@@ -34,7 +34,7 @@ build_backend:
       --destination "${CI_REGISTRY_IMAGE2}:latest"
   artifacts:
     paths:
-      - backend/target
+      - backend/target/
 
 build_frontend:
   stage: build
