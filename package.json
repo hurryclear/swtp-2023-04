@@ -1,0 +1,7 @@
+{
+  "name": "swtp-2023-04",
+  "version": "1.0.0",
+  "dependencies": {
+    "vuetify": "^3.4.1"
+  }
+}
