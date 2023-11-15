@@ -1,0 +1,26 @@
+version: "3.7" 
+
+services: 
+ frontend: 
+  container_name: vue-frontend 
+  build: 
+   context: ./frontend/ 
+   dockerfile: Dockerfile 
+   target: development 
+  ports:
+   - 8080:8080
+  volumes: 
+  - ./frontend/:/app 
+  restart: unless-stopped
+
+ backend:
+  container_name: springboot-backend
+  build:
+   context: ./backend/
+   dockerfile: Dockerfile
+   target: build
+  ports:
+   - 8081:8080
+  volumes:
+   - ./backend/:/app
+  restart: unless-stopped

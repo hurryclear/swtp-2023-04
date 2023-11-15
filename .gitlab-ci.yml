@@ -1,0 +1,78 @@
+stages:        
+  - test
+  - build
+  - deploy
+
+test_backend:
+  stage: test
+  image: maven:latest
+  script:
+    - cd backend
+    - mvn test
+
+test_frontend:
+  stage: test
+  image: public.ecr.aws/docker/library/node:lts-alpine
+  script:
+    - cd frontend
+    - npm install
+    - npm run test
+
+build_backend:
+  stage: build
+  needs: ["test_backend"]
+  when: manual
+  image: 
+    name: gcr.io/kaniko-project/executor:v1.9.0-debug
+    entrypoint: [""]
+  script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$DOCKERHUB_ACCESS_TOKEN\",\"auth\":\"$(echo -n "$CI_REGISTRY_USER:$DOCKERHUB_ACCESS_TOKEN" | base64)\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor
+      --context "backend"
+      --dockerfile "backend/Dockerfile"
+      --destination "${CI_REGISTRY_IMAGE2}:latest"
+  artifacts:
+    paths:
+      - backend/target/
+
+build_frontend:
+  stage: build
+  needs: ["test_frontend"]
+  when: manual
+  image: 
+    name: gcr.io/kaniko-project/executor:v1.9.0-debug
+    entrypoint: [""]
+  script:
+    - echo ..
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$DOCKERHUB_ACCESS_TOKEN\",\"auth\":\"$(echo -n "$CI_REGISTRY_USER:$DOCKERHUB_ACCESS_TOKEN" | base64)\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor
+      --context "frontend"
+      --dockerfile "frontend/Dockerfile"
+      --destination "${CI_REGISTRY_IMAGE}:latest"
+  artifacts:
+    paths:
+      - frontend/dist
+
+deploy:
+  stage: deploy
+  needs: 
+    - "build_frontend"
+    - "build_backend"
+  when: manual
+  image: public.ecr.aws/docker/library/nginx:alpine
+  variables:
+    DOCKER_HOST: "ssh://$SERVER_USER@$SERVER_IP"
+  before_script:
+    - apk update
+    - apk add openssh docker docker-compose
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY2" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh && chmod 700 ~/.ssh
+    - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - echo "$DOCKERHUB_ACCESS_TOKEN" | docker login --username $CI_REGISTRY_USER --password-stdin
+    - docker-compose down --rmi all
+    - docker-compose -f docker-compose-prod.yml up -d
