@@ -7,7 +7,7 @@ export default {
     module: {
       name: '',
       comment: '',
-      description: '',
+      description: null,
       module2bCredited: null
     }
   }),

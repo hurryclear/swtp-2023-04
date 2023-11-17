@@ -40,8 +40,12 @@ export default defineComponent({
       this.previousFormFilled = true; // Enable the button when the current form is filled
     },
     removeModuleForm(index) {
-      console.log(index)
-      this.moduleForms.splice(index, 1);
+      if (this.moduleForms.length>1){
+        console.log('Deleting module at Index',index)
+        this.moduleForms.splice(index, 1);
+      } else {
+        console.log('Not deleting last module.')
+      }
     },
   },
 });
