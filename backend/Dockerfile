@@ -1,5 +1,6 @@
 # Development stage
-FROM eclipse-temurin:17-jre-ubi9-minimal as development
+#FROM eclipse-temurin:17-jre-ubi9-minimal as development
+FROM openjdk:17 as development
 WORKDIR /app
 
 # Build Stage
@@ -10,7 +11,8 @@ RUN mvn compile
 RUN mvn package -DskipTests
 
 # Production stage
-FROM eclipse-temurin:17-jre-ubi9-minimal as production
+#FROM eclipse-temurin:17-jre-ubi9-minimal as production
+FROM openjdk:17 as production
 WORKDIR /app
 COPY --from=build /app/target/backend-0.0.1-SNAPSHOT.jar .
 EXPOSE 8080
