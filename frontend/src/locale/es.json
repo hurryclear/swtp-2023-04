@@ -1,0 +1,24 @@
+{
+  "darkMode": {
+    "toggleDarkMode": "Activar modo oscuro"
+  },
+  "moduleForm": {
+    "addModule": "Agregar módulo",
+    "module": "Módulo",
+    "moduleDescription": "¡Proporcione información sobre el módulo a acreditar!",
+    "moduleNameLabel": "Nombre del módulo",
+    "moduleDescriptionLabel": "Descripción del módulo",
+    "moduleCreditedLabel": "Módulo acreditado",
+    "commentLabel": "Comentario",
+    "removeModule": "Eliminar módulo"
+  },
+  "universityForm": {
+    "previousUniversity": "Universidad anterior",
+    "universityDescription": "¡Especifique el nombre de su universidad anterior!",
+    "universityNameLabel": "Nombre de la universidad",
+    "countryLabel": "País",
+    "previousStudyProgram": "Programa de estudios anterior",
+    "studyProgramDescription": "¡Especifique el nombre de su programa de estudios anterior!",
+    "studyProgramLabel": "Nombre del programa de estudios"
+  }
+}

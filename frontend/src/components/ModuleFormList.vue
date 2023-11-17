@@ -1,18 +1,21 @@
 <template>
   <div>
+    <!-- Expansion panels for displaying ModuleForms -->
     <v-expansion-panels>
+      <!-- Use v-for to iterate through moduleForms array and display ModuleForm components -->
       <ModuleForm
           v-for="(form, index) in moduleForms"
           :key="index"
           @formFilled="handleFormFilled"
           @removeModule="removeModuleForm(index)"
       />
+      <!-- Button to add a new ModuleForm -->
       <v-btn
           class="userInput"
           @click="addModuleForm"
           :disabled="!previousFormFilled"
       >
-        Modul hinzufügen
+        {{ $t("moduleForm.addModule") }}
       </v-btn>
     </v-expansion-panels>
   </div>
@@ -32,19 +35,21 @@ export default defineComponent({
   },
   methods: {
     addModuleForm() {
-      const newModuleForm = ModuleForm; // Create a new instance of ModuleForm
-      this.moduleForms.push(newModuleForm);
+      // Add a new instance of ModuleForm to the moduleForms array
+      this.moduleForms.push(ModuleForm);
       this.previousFormFilled = false;
     },
     handleFormFilled() {
-      this.previousFormFilled = true; // Enable the button when the current form is filled
+      // Enable the button when the current form is filled
+      this.previousFormFilled = true;
     },
     removeModuleForm(index) {
-      if (this.moduleForms.length>1){
-        console.log('Deleting module at Index',index)
+      // Check if there is more than one module form before removing
+      if (this.moduleForms.length > 1) {
+        console.log('Deleting module at Index', index);
         this.moduleForms.splice(index, 1);
       } else {
-        console.log('Not deleting last module.')
+        console.log('Not deleting the last module.');
       }
     },
   },
@@ -52,7 +57,8 @@ export default defineComponent({
 </script>
 
 <style scoped>
-  .v-btn{
-    width:100%
-  }
+/* Apply styles specifically to the scoped component */
+.v-btn {
+  width: 100%;
+}
 </style>

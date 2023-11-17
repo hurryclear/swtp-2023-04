@@ -1,26 +1,20 @@
 <template>
   <v-expansion-panels>
+    <!-- Expansion panel for the "Bisherige Universität" section -->
     <v-expansion-panel>
       <v-expansion-panel-title>
+        <!-- Display title and fade in/out transition for description -->
         <template v-slot:default="{ expanded }">
           <v-row no-gutters>
             <v-col>
-              Bisherige Universität
+              {{$t("universityForm.previousUniversity")}}
             </v-col>
-            <v-col
-                class="text-grey"
-            >
+            <v-col class="text-grey">
               <v-fade-transition leave-absolute>
-                <span
-                    v-if="expanded"
-                    key="0"
-                >
-                  Geben Sie den Namen Ihrer bisherigen Universität an!
+                <span v-if="expanded" key="0">
+                  {{$t("universityForm.universityDescription")}}
                 </span>
-                <span
-                    v-else
-                    key="1"
-                >
+                <span v-else key="1">
                   {{ university.universityName }}
                 </span>
               </v-fade-transition>
@@ -28,45 +22,40 @@
           </v-row>
         </template>
       </v-expansion-panel-title>
+      <!-- Text fields for entering university information -->
       <v-expansion-panel-text>
         <v-text-field
             v-model="university.universityName"
             hide-details
-            label="Name der Universität"
+            :label="universityNameLabel"
             variant="outlined"
             class="userInput"
         />
         <v-text-field
             v-model="university.country"
             hide-details
-            label="Land"
+            :label=countryLabel
             variant="outlined"
             class="userInput"
         />
       </v-expansion-panel-text>
     </v-expansion-panel>
 
+    <!-- Expansion panel for the "Bisheriger Studiengang" section -->
     <v-expansion-panel>
       <v-expansion-panel-title>
+        <!-- Display title and fade in/out transition for description -->
         <template v-slot:default="{ expanded }">
           <v-row no-gutters>
             <v-col>
-              Bisheriger Studiengang
+              {{ $t("universityForm.previousStudyProgram") }}
             </v-col>
-            <v-col
-                class="text-grey"
-            >
+            <v-col class="text-grey">
               <v-fade-transition leave-absolute>
-                <span
-                    v-if="expanded"
-                    key="0"
-                >
-                  Geben Sie den Namen Ihres bisherigen Studiengangs an!
+                <span v-if="expanded" key="0">
+                  {{$t("universityForm.studyProgramDescription")}}
                 </span>
-                <span
-                    v-else
-                    key="1"
-                >
+                <span v-else key="1">
                   {{ university.studyProgram }}
                 </span>
               </v-fade-transition>
@@ -74,11 +63,12 @@
           </v-row>
         </template>
       </v-expansion-panel-title>
+      <!-- Text field for entering study program information -->
       <v-expansion-panel-text>
         <v-text-field
             v-model="university.studyProgram"
             hide-details
-            label="Name des Studiengangs"
+            :label="studyProgramLabel"
             variant="outlined"
             class="userInput"
         />
@@ -86,8 +76,15 @@
     </v-expansion-panel>
   </v-expansion-panels>
 </template>
+
 <script>
 export default {
+  computed: {
+    universityNameLabel(){return this.$t("universityForm.universityNameLabel")},
+    countryLabel(){return this.$t("universityForm.countryLabel")},
+    studyProgramLabel(){return this.$t("universityForm.studyProgramLabel")}
+  },
+
   data: () => ({
     university: {
       universityName: '',
@@ -99,4 +96,5 @@ export default {
 </script>
 
 <style scoped>
+/* Add scoped styles if needed */
 </style>
