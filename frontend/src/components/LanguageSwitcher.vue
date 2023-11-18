@@ -3,6 +3,8 @@
       v-model="$i18n.locale"
       :items="languageOptions"
       label="Select Language"
+      variant="outlined"
+      hide-details
   />
 </template>
 
@@ -20,3 +22,5 @@ const languageOptions = [
   { title: '🇵🇹 Português', value: 'pt' },
 ];
 </script>
+<style>
+</style>

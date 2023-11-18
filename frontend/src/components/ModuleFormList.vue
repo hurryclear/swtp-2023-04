@@ -14,6 +14,7 @@
           class="userInput"
           @click="addModuleForm"
           :disabled="!previousFormFilled"
+          variant="outlined"
       >
         {{ $t("moduleForm.addModule") }}
       </v-btn>
