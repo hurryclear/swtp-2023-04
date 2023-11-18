@@ -1,6 +1,10 @@
 <template>
   <!-- Toggle button for switching between light and dark mode -->
-  <v-btn @click="toggleTheme">
+  <v-btn
+      @click="toggleTheme"
+      variant="outlined"
+      class="v-btn"
+  >
     {{ $t("darkMode.toggleDarkMode") }}
   </v-btn>
 </template>
@@ -17,9 +21,4 @@ function toggleTheme() {
   // Set the theme to light if it's currently dark, and vice versa
   theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
 }
-
 </script>
-
-<style scoped>
-/* Styles specific to this component go here if needed */
-</style>

@@ -116,7 +116,10 @@ export default {
           variant="outlined"
       />
       <!-- Button to remove the module -->
-      <v-btn @click="removeModule">
+      <v-btn
+          @click="removeModule"
+          variant="outlined"
+      >
         {{ $t("moduleForm.removeModule") }}
       </v-btn>
     </v-expansion-panel-text>
