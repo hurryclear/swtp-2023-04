@@ -7,6 +7,9 @@ WORKDIR /app
 # Copy the Maven wrapper from the host to the image
 COPY mvnw mvnw.cmd .mvn /app/
 
+# Ensure that the Maven wrapper has execute permissions
+RUN chmod +x ./mvnw
+
 # Copy the pom.xml file to download dependencies
 COPY pom.xml /app/
 
