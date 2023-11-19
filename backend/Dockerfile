@@ -24,11 +24,11 @@ FROM openjdk:17-jdk-alpine as production
 WORKDIR /app
 
 # Copy the packaged JAR file from the build stage to the deployment directory
-COPY --from=build /app/target/*.jar app.jar
+COPY --from=build /app/target/*.jar backend.jar
 
 # Expose the port on which your application will run
 EXPOSE 8080
 
 # Run the Spring Boot application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "backend.jar"]
 
