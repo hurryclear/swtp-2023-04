@@ -1,24 +1,34 @@
-# Build stage with Maven and Amazon Corretto 17
-FROM maven:3.9.5-amazoncorretto-17 as build
+# Start with a base image that includes Java (e.g., OpenJDK)
+FROM openjdk:17-jdk-slim as build
 
-# Set the working directory
+# Set the working directory in the Docker image
 WORKDIR /app
-# Copy the project files to the container
-COPY . /app
 
-# Ensure that the Maven wrapper has execute permissions
+# Copy the Maven Wrapper from your project into the Docker image
+COPY mvnw .
+COPY .mvn .mvn
+
+# Copy the pom.xml and src code to the container
+COPY pom.xml .
+COPY src src
+
 RUN chmod +x ./mvnw
-# Build the application with Maven
-RUN ./mvnw clean package -DskipTests
+# Use the Maven Wrapper to package the Spring Boot application
+# with all its dependencies into a single executable JAR file
+RUN ./mvnw package -DskipTests
 
-# Run stage with Amazon Corretto 17
-FROM amazoncorretto:17
+# For the final image, use a smaller base image (JRE is enough to run the application)
+FROM openjdk:17-jdk-alpine as production
 
-# Copy the built artifact from the build stage to the run stage
-COPY --from=build /app/target/*.jar /backend.jar
+# Set the deployment directory
+WORKDIR /app
 
-# Expose the port the application runs on
+# Copy the packaged JAR file from the build stage to the deployment directory
+COPY --from=build /app/target/*.jar app.jar
+
+# Expose the port on which your application will run
 EXPOSE 8080
 
-# Run the application
-ENTRYPOINT ["java", "-jar", "/backend.jar"]
+# Run the Spring Boot application
+ENTRYPOINT ["java", "-jar", "app.jar"]
+
