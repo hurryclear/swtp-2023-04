@@ -1,17 +1,11 @@
 <script>
 export default {
-  methods: {
-    navigateTo(page) {
-      if (page === 'home'){
-        this.$router.push('/')
-      }
-    }
-  }
 }
 </script>
 
 <template>
-  <v-btn @click="navigateTo('home')">Home</v-btn>
+
+  <p>This is the login view</p>
 </template>
 
 <style scoped>

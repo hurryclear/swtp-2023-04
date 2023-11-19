@@ -16,6 +16,11 @@ const routes = [
         path: '/application-form',
         name: 'Application Form',
         component: () => import('@/views/ApplicationForm.vue')
+    },
+    {
+        path: '/review-application',
+        name: 'Review Application',
+        component: () => import('@/views/ReviewView.vue')
     }
 ]
 const router = createRouter({

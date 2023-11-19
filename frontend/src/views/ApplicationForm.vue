@@ -5,14 +5,7 @@ import { defineComponent } from "vue";
 import ModuleFormList from "@/components/ModuleFormList.vue";
 
 export default defineComponent({
-  components: { ModuleFormList, UniversityForm },
-  methods: {
-    navigateTo(page) {
-      if (page === 'home'){
-        this.$router.push('/')
-      }
-    }
-  }
+  components: { ModuleFormList, UniversityForm }
 });
 </script>
 
@@ -21,7 +14,6 @@ export default defineComponent({
   <UniversityForm/>
   <br/>
   <ModuleFormList/>
-  <v-btn @click="navigateTo('home')">Home</v-btn>
 </template>
 
 <style>
