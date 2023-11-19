@@ -5,8 +5,8 @@ FROM maven:3.9.5-amazoncorretto-17 as build
 WORKDIR /app
 
 # Copy the Maven wrapper and .mvn folder from the host to the image
-COPY mvnw mvnw.cmd /app/
 COPY .mvn /app/.mvn
+COPY mvnw mvnw.cmd /app/
 
 # Ensure that the Maven wrapper has execute permissions
 RUN chmod +x ./mvnw
@@ -22,7 +22,7 @@ COPY pom.xml /app/
 COPY src /app/src
 
 # Build the application using Maven
-RUN ./mvnw clean package -DskipTests
+RUN ./mvnw clean package -DskipTests -X
 
 # Use Amazon Corretto JDK as the runtime base image
 FROM amazoncorretto:17
