@@ -1,6 +1,5 @@
 package com.example.backend;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -13,7 +12,9 @@ class BackendApplicationTests {
 		int a = 1;
 		int b = 2;
 		int expected = 3;
-		int actual = test.sum(a, b);
-		Assertions.assertEquals(expected, actual);
+		int acutal = test.sum(a, b);
+		Assertions.assertEquals(expected, acutal);
 	}
+
+
 }

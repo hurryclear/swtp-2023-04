@@ -12,5 +12,5 @@ services:
    container_name: springboot-backend
    image: swtp04/springboot-backend
    ports:
-    - 172.26.92.83:3001:80
+    - 172.26.92.83:3001:8080
    restart: unless-stopped
