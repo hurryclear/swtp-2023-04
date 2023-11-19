@@ -6,8 +6,10 @@ WORKDIR /app
 # Copy the project files to the container
 COPY . /app
 
+# Ensure that the Maven wrapper has execute permissions
+RUN chmod +x ./mvnw
 # Build the application with Maven
-RUN mvn clean package -DskipTests
+RUN ./mvnw clean package -DskipTests
 
 # Run stage with Amazon Corretto 17
 FROM amazoncorretto:17
