@@ -4,8 +4,9 @@ FROM maven:3.9.5-amazoncorretto-17 as build
 # Set the working directory in the Docker image
 WORKDIR /app
 
-# Copy the Maven wrapper from the host to the image
-COPY mvnw mvnw.cmd .mvn /app/
+# Copy the Maven wrapper and .mvn folder from the host to the image
+COPY mvnw mvnw.cmd /app/
+COPY .mvn /app/.mvn
 
 # Ensure that the Maven wrapper has execute permissions
 RUN chmod +x ./mvnw
