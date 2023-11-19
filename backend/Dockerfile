@@ -1,40 +1,22 @@
-# Use the specified Maven image with Amazon Corretto JDK as the base image
+# Build stage with Maven and Amazon Corretto 17
 FROM maven:3.9.5-amazoncorretto-17 as build
 
-# Set the working directory in the Docker image
+# Set the working directory
 WORKDIR /app
+# Copy the project files to the container
+COPY . /app
 
-# Copy the Maven wrapper and .mvn folder from the host to the image
-COPY .mvn /app/.mvn
-COPY mvnw mvnw.cmd /app/
+# Build the application with Maven
+RUN mvn clean package -DskipTests
 
-# Ensure that the Maven wrapper has execute permissions
-RUN chmod +x ./mvnw
-
-# Copy the pom.xml file to download dependencies
-COPY pom.xml /app/
-
-# Optionally, if your build is slow and you want to improve subsequent builds,
-# you can uncomment the following lines to enable dependency caching:
-# RUN ./mvnw dependency:go-offline -B
-
-# Copy the source code from the host to the image
-COPY src /app/src
-
-# Build the application using Maven
-RUN ./mvnw clean package -DskipTests -X
-
-# Use Amazon Corretto JDK as the runtime base image
+# Run stage with Amazon Corretto 17
 FROM amazoncorretto:17
 
-# Set the working directory in the runtime image
-WORKDIR /app
+# Copy the built artifact from the build stage to the run stage
+COPY --from=build /app/target/*.jar /backend.jar
 
-# Copy the built artifact from the build stage to the runtime image
-COPY --from=build /app/target/*.jar backend.jar
-
-# Expose the port on which the application will run
+# Expose the port the application runs on
 EXPOSE 8080
 
-# Define the command to run the application
-CMD ["java", "-jar", "backend.jar"]
+# Run the application
+ENTRYPOINT ["java", "-jar", "/backend.jar"]
