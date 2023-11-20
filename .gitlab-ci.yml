@@ -32,9 +32,9 @@ build_backend:
       --context "backend"
       --dockerfile "backend/Dockerfile"
       --destination "${CI_REGISTRY_IMAGE2}:latest"
-  artifacts:
-    paths:
-      - backend/target/
+  #artifacts:
+  #  paths:
+  #    - backend/target/
 
 build_frontend:
   stage: build
@@ -51,9 +51,9 @@ build_frontend:
       --context "frontend"
       --dockerfile "frontend/Dockerfile"
       --destination "${CI_REGISTRY_IMAGE}:latest"
-  artifacts:
-    paths:
-      - frontend/dist
+  #artifacts:
+  #  paths:
+  #    - frontend/dist
 
 deploy:
   stage: deploy
@@ -75,4 +75,5 @@ deploy:
   script:
     - echo "$DOCKERHUB_ACCESS_TOKEN" | docker login --username $CI_REGISTRY_USER --password-stdin
     - docker-compose down --rmi all
+    - docker-compose -f docker-compose-prod.yml pull
     - docker-compose -f docker-compose-prod.yml up -d
