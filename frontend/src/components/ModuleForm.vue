@@ -43,6 +43,7 @@
           :label="$t('moduleForm.moduleCreditedLabel')"
           variant="outlined"
           hide-details
+          multiple
           :items="moduleNamesList"
       />
       <v-text-field
