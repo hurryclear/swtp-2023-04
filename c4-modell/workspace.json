@@ -1,0 +1,348 @@
+{
+  "id" : 1,
+  "name" : "Name",
+  "description" : "Description",
+  "lastModifiedDate" : "2023-11-20T23:18:54Z",
+  "lastModifiedAgent" : "structurizr-javascript",
+  "properties" : {
+    "structurizr.dsl" : "d29ya3NwYWNlIHsKCiAgICBtb2RlbCB7CiAgICAgICAgdXNlcjEgPSBwZXJzb24gIlN0dWRlbnRzIiAiVXNlcnMgb2Ygc29mdHdhcmUgc3lzdGVtLCB3aG8gbWFrZXMgYXBwbGljYXRpb25zIgogICAgICAgIHVzZXIyID0gcGVyc29uICJXb3JrZXJzIiAiVXNlcnMgb2Ygc29mdHdhcmUgc3lzdGVtLCB3aG8gd29ya3Mgd2l0aCBhcHBsaWNhdGlvbnMiCiAgICAgICAgc29mdHdhcmVTeXN0ZW0gPSBzb2Z0d2FyZVN5c3RlbSAiU29mdHdhcmUgU3lzdGVtIiB7CgogICAgICAgICAgICB1c2VyMSAtPiB0aGlzICJVc2VzIgogICAgICAgICAgICB1c2VyMiAtPiB0aGlzICJVc2VzIgoKICAgICAgICAgICAgd2ViYXBwMSA9IGNvbnRhaW5lciAiV2ViIEFwcCIgIkxvaW4gcGFnZSB3aXRoIG5lY2Vzc2FyeSBjcmVkZW50aWFscyIgIkphdmEgYW5kIFNwcmluZ2Jvb3QiewogICAgICAgICAgICAgICAgdGFncyAiV2ViIEFwcCIKICAgICAgICAgICAgICAgIHVzZXIxIC0+IHRoaXMgIkxvaW4gcGFnZSB3aXRoIG5lY2Vzc2FyeSBjcmVkZW50aWFscyIKICAgICAgICAgICAgICAgIHVzZXIyIC0+IHRoaXMgIkxvaW4gcGFnZSB3aXRoIG5lY2Vzc2FyeSBjcmVkZW50aWFscyIKICAgICAgICAgICAgfQogICAgICAgICAgICB3ZWJhcHAyID0gY29udGFpbmVyICJBcHBsaWNhdGlvbiBjcmVhdGUiICIiICJWdWUuanMiewogICAgICAgICAgICAgICAgdGFncyAiQXBwbGljYXRpb24gY3JlYXRlIgogICAgICAgICAgICAgICAgdXNlcjEgLT4gdGhpcyAiSW5mb3JtYXRpb24gaW5wdXQsIHBkZiBmaWxlIHVwbG9hZCBhbmQgYXBwbGljYXRpb24gY3JlYXRlIgogICAgICAgICAgICAgICAgd2ViYXBwMSAtPiB0aGlzICJEZWxpdmVycyB0byB0aGUgYXBwbGljYW50cycgd2ViIGJyb3dzZXIiCiAgICAgICAgICAgIH0KICAgICAgICAgICAgd2ViYXBwMyA9IGNvbnRhaW5lciAiVmlldyBvZiBhbGwgYXBwbGljYXRpb25zIiAiIiAiVnVlLmpzInsKICAgICAgICAgICAgICAgIHRhZ3MgIlZpZXcgb2YgYWxsIGFwcGxpY2F0aW9ucyIKICAgICAgICAgICAgICAgIHVzZXIyIC0+IHRoaXMgIkhhdmEgYSB2aWV3IG9mIGFsbCBhcHBsaWNhdGlvbnMgYW5kIGFsc28gYmUgYWJsZSB0byBkb3dubG9hZCBlYWNoIGFwcGxpY2FpdG9uIGluIHBkZiBmaWxlIgogICAgICAgICAgICAgICAgd2ViYXBwMSAtPiB0aGlzICJEZWxpdmVycyB0byB0aGUgd29ya2Vycycgd2ViIGJyb3dzZXIiCiAgICAgICAgICAgIH0KICAgICAgICAgICAgYXBpID0gY29udGFpbmVyICJCYWNrZW5kIEFQSSBBcHBsaWNhdGlvbiIgIiIgIkphdmEgYW5kIFNwcmluZ2Jvb3QiewogICAgICAgICAgICAgICAgdGFncyAiQmFja2VuZCBBUEkgQXBwbGljYXRpb24iCiAgICAgICAgICAgICAgICB3ZWJhcHAyIC0+IHRoaXMgIk1ha2VzIEFQSSBjYWxscyB0byIKICAgICAgICAgICAgICAgIHdlYmFwcDMgLT4gdGhpcyAiTWFrZXMgQVBJIGNhbGxzIHRvIgogICAgICAgICAgICB9CiAgICAgICAgICAgIGRiID0gY29udGFpbmVyICJEYXRhYmFzZSIgIlN0b3JlcyB1c2VyIGFuZCB3b3JrZXJzIGNyZWRlbnRpYWxzLCBhcHBsaWNhdGlvbnMnIGluZm9ybWF0aW9uLCBwZGYgZmlsZXMgYW5kIGV0Yy4iICJQb3N0Z3JlcyJ7CiAgICAgICAgICAgICAgICB0YWdzICJEYXRhYmFzZSIKICAgICAgICAgICAgICAgIGFwaSAtPiB0aGlzICJyZWFkcyBmcm9tIGFuZCB3cml0ZXMgdG8iICJQb3N0Z3JlcyIKICAgICAgICAgICAgfQogICAgICAgIH0KICAgIH0KCiAgICB2aWV3cyB7CiAgICAgICAgc3lzdGVtQ29udGV4dCBzb2Z0d2FyZVN5c3RlbSAiRGlhZ3JhbTEiIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgICAgIGF1dG9MYXlvdXQKICAgICAgICB9CgogICAgICAgIGNvbnRhaW5lciBzb2Z0d2FyZVN5c3RlbSAiRGlhZ3JhbTIiIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgICAgIGF1dG9MYXlvdXQKICAgICAgICB9CgogICAgICAgIC8vdGhlbWUgZGVmYXVsdAogICAgICAgIHN0eWxlcyB7CiAgICAgICAgICAgIGVsZW1lbnQgIlBlcnNvbiIgewogICAgICAgICAgICAgICAgc2hhcGUgcGVyc29uCiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICMwNDNFNzgKICAgICAgICAgICAgICAgIGNvbG9yICNmZmZmZmYKICAgICAgICAgICAgfQogICAgICAgICAgICBlbGVtZW50ICJTb2Z0d2FyZSBTeXN0ZW0iIHsKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgIzAyNjZDQQogICAgICAgICAgICAgICAgY29sb3IgI2ZmZmZmZgogICAgICAgICAgICB9CiAgICAgICAgICAgIGVsZW1lbnQgIkRhdGFiYXNlIiB7CiAgICAgICAgICAgICAgICBzaGFwZSBjeWxpbmRlcgogICAgICAgICAgICAgICAgYmFja2dyb3VuZCAjM0Y5NEU5CiAgICAgICAgICAgICAgICBjb2xvciAjZmZmZmZmCiAgICAgICAgICAgIH0KICAgICAgICAgICAgZWxlbWVudCAiV2ViIEFwcCIgewogICAgICAgICAgICAgICAgYmFja2dyb3VuZCAjMDQ2NUM3CiAgICAgICAgICAgICAgICBjb2xvciAjZmZmZmZmCiAgICAgICAgICAgIH0KICAgICAgICAgICAgZWxlbWVudCAiQXBwbGljYXRpb24gY3JlYXRlIiB7CiAgICAgICAgICAgICAgICBzaGFwZSBXZWJCcm93c2VyCiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICMzRjk0RTkKICAgICAgICAgICAgICAgIGNvbG9yICNmZmZmZmYKICAgICAgICAgICAgfQogICAgICAgICAgICBlbGVtZW50ICJWaWV3IG9mIGFsbCBhcHBsaWNhdGlvbnMiIHsKICAgICAgICAgICAgICAgIHNoYXBlIFdlYkJyb3dzZXIKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgIzNGOTRFOQogICAgICAgICAgICAgICAgY29sb3IgI2ZmZmZmZgogICAgICAgICAgICB9CiAgICAgICAgICAgIGVsZW1lbnQgIkJhY2tlbmQgQVBJIEFwcGxpY2F0aW9uIiB7CiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICMzRjk0RTkKICAgICAgICAgICAgICAgIGNvbG9yICNmZmZmZmYKICAgICAgICAgICAgfQogICAgICAgIH0KICAgIH0KCn0K"
+  },
+  "configuration" : { },
+  "model" : {
+    "people" : [ {
+      "id" : "2",
+      "tags" : "Element,Person",
+      "properties" : {
+        "structurizr.dsl.identifier" : "user2"
+      },
+      "name" : "Workers",
+      "description" : "Users of software system, who works with applications",
+      "relationships" : [ {
+        "id" : "13",
+        "tags" : "Relationship",
+        "properties" : {
+          "structurizr.dsl.identifier" : "fab4928c-fedc-4d2d-ba15-28b1eb367d1f"
+        },
+        "sourceId" : "2",
+        "destinationId" : "12",
+        "description" : "Hava a view of all applications and also be able to download each applicaiton in pdf file"
+      }, {
+        "id" : "5",
+        "tags" : "Relationship",
+        "properties" : {
+          "structurizr.dsl.identifier" : "3368d835-f9f6-4a5a-a7b6-b134d9b3c554"
+        },
+        "sourceId" : "2",
+        "destinationId" : "3",
+        "description" : "Uses"
+      }, {
+        "id" : "8",
+        "tags" : "Relationship",
+        "properties" : {
+          "structurizr.dsl.identifier" : "e48d9f2b-6bed-4624-9b37-6108023dede4"
+        },
+        "sourceId" : "2",
+        "destinationId" : "6",
+        "description" : "Loin page with necessary credentials"
+      } ],
+      "location" : "Unspecified"
+    }, {
+      "id" : "1",
+      "tags" : "Element,Person",
+      "properties" : {
+        "structurizr.dsl.identifier" : "user1"
+      },
+      "name" : "Students",
+      "description" : "Users of software system, who makes applications",
+      "relationships" : [ {
+        "id" : "10",
+        "tags" : "Relationship",
+        "properties" : {
+          "structurizr.dsl.identifier" : "d0373c60-4989-4b23-90dc-c5b36a446b4b"
+        },
+        "sourceId" : "1",
+        "destinationId" : "9",
+        "description" : "Information input, pdf file upload and application create"
+      }, {
+        "id" : "4",
+        "tags" : "Relationship",
+        "properties" : {
+          "structurizr.dsl.identifier" : "db118fe2-2271-474a-8c5e-cafffce9b840"
+        },
+        "sourceId" : "1",
+        "destinationId" : "3",
+        "description" : "Uses"
+      }, {
+        "id" : "7",
+        "tags" : "Relationship",
+        "properties" : {
+          "structurizr.dsl.identifier" : "7fcfb40c-498d-4932-b089-db9c4176b95a"
+        },
+        "sourceId" : "1",
+        "destinationId" : "6",
+        "description" : "Loin page with necessary credentials"
+      } ],
+      "location" : "Unspecified"
+    } ],
+    "softwareSystems" : [ {
+      "id" : "3",
+      "tags" : "Element,Software System",
+      "properties" : {
+        "structurizr.dsl.identifier" : "softwaresystem"
+      },
+      "name" : "Software System",
+      "location" : "Unspecified",
+      "containers" : [ {
+        "id" : "15",
+        "tags" : "Element,Container,Backend API Application",
+        "properties" : {
+          "structurizr.dsl.identifier" : "api"
+        },
+        "name" : "Backend API Application",
+        "relationships" : [ {
+          "id" : "19",
+          "tags" : "Relationship",
+          "properties" : {
+            "structurizr.dsl.identifier" : "da0a7710-bb80-48bd-b9b0-b427c47f41e1"
+          },
+          "sourceId" : "15",
+          "destinationId" : "18",
+          "description" : "reads from and writes to",
+          "technology" : "Postgres"
+        } ],
+        "technology" : "Java and Springboot",
+        "documentation" : { }
+      }, {
+        "id" : "18",
+        "tags" : "Element,Container,Database",
+        "properties" : {
+          "structurizr.dsl.identifier" : "db"
+        },
+        "name" : "Database",
+        "description" : "Stores user and workers credentials, applications' information, pdf files and etc.",
+        "technology" : "Postgres",
+        "documentation" : { }
+      }, {
+        "id" : "12",
+        "tags" : "Element,Container,View of all applications",
+        "properties" : {
+          "structurizr.dsl.identifier" : "webapp3"
+        },
+        "name" : "View of all applications",
+        "relationships" : [ {
+          "id" : "17",
+          "tags" : "Relationship",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ecff5611-a365-4ba5-b9fe-8f03df604397"
+          },
+          "sourceId" : "12",
+          "destinationId" : "15",
+          "description" : "Makes API calls to"
+        } ],
+        "technology" : "Vue.js",
+        "documentation" : { }
+      }, {
+        "id" : "9",
+        "tags" : "Element,Container,Application create",
+        "properties" : {
+          "structurizr.dsl.identifier" : "webapp2"
+        },
+        "name" : "Application create",
+        "relationships" : [ {
+          "id" : "16",
+          "tags" : "Relationship",
+          "properties" : {
+            "structurizr.dsl.identifier" : "8412f4e8-176a-4d19-9739-3518c3e863bc"
+          },
+          "sourceId" : "9",
+          "destinationId" : "15",
+          "description" : "Makes API calls to"
+        } ],
+        "technology" : "Vue.js",
+        "documentation" : { }
+      }, {
+        "id" : "6",
+        "tags" : "Element,Container,Web App",
+        "properties" : {
+          "structurizr.dsl.identifier" : "webapp1"
+        },
+        "name" : "Web App",
+        "description" : "Loin page with necessary credentials",
+        "relationships" : [ {
+          "id" : "14",
+          "tags" : "Relationship",
+          "properties" : {
+            "structurizr.dsl.identifier" : "b2493aba-15f0-4521-b8cb-856912c74bb8"
+          },
+          "sourceId" : "6",
+          "destinationId" : "12",
+          "description" : "Delivers to the workers' web browser"
+        }, {
+          "id" : "11",
+          "tags" : "Relationship",
+          "properties" : {
+            "structurizr.dsl.identifier" : "001bc092-7933-46fe-bddd-60986600a1b5"
+          },
+          "sourceId" : "6",
+          "destinationId" : "9",
+          "description" : "Delivers to the applicants' web browser"
+        } ],
+        "technology" : "Java and Springboot",
+        "documentation" : { }
+      } ],
+      "documentation" : { }
+    } ]
+  },
+  "documentation" : { },
+  "views" : {
+    "systemContextViews" : [ {
+      "key" : "Diagram1",
+      "order" : 1,
+      "softwareSystemId" : "3",
+      "dimensions" : {
+        "width" : 1500,
+        "height" : 1400
+      },
+      "automaticLayout" : {
+        "implementation" : "Graphviz",
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 300,
+        "nodeSeparation" : 300,
+        "edgeSeparation" : 0,
+        "vertices" : false,
+        "applied" : true
+      },
+      "enterpriseBoundaryVisible" : true,
+      "elements" : [ {
+        "id" : "1",
+        "x" : 199,
+        "y" : 199
+      }, {
+        "id" : "2",
+        "x" : 899,
+        "y" : 199
+      }, {
+        "id" : "3",
+        "x" : 524,
+        "y" : 899
+      } ],
+      "relationships" : [ {
+        "id" : "4"
+      }, {
+        "id" : "5"
+      } ]
+    } ],
+    "containerViews" : [ {
+      "key" : "Diagram2",
+      "order" : 2,
+      "softwareSystemId" : "3",
+      "dimensions" : {
+        "width" : 1732,
+        "height" : 3291
+      },
+      "automaticLayout" : {
+        "implementation" : "Graphviz",
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 300,
+        "nodeSeparation" : 300,
+        "edgeSeparation" : 0,
+        "vertices" : false,
+        "applied" : true
+      },
+      "externalSoftwareSystemBoundariesVisible" : true,
+      "elements" : [ {
+        "id" : "1",
+        "x" : 269,
+        "y" : 199
+      }, {
+        "id" : "12",
+        "x" : 969,
+        "y" : 1499
+      }, {
+        "id" : "2",
+        "x" : 1131,
+        "y" : 199
+      }, {
+        "id" : "15",
+        "x" : 594,
+        "y" : 2099
+      }, {
+        "id" : "6",
+        "x" : 594,
+        "y" : 899
+      }, {
+        "id" : "18",
+        "x" : 594,
+        "y" : 2699
+      }, {
+        "id" : "9",
+        "x" : 219,
+        "y" : 1499
+      } ],
+      "relationships" : [ {
+        "id" : "17"
+      }, {
+        "id" : "16"
+      }, {
+        "id" : "14"
+      }, {
+        "id" : "13"
+      }, {
+        "id" : "11"
+      }, {
+        "id" : "7"
+      }, {
+        "id" : "8"
+      }, {
+        "id" : "10",
+        "vertices" : [ {
+          "x" : 444,
+          "y" : 795
+        } ]
+      }, {
+        "id" : "19"
+      } ]
+    } ],
+    "configuration" : {
+      "branding" : { },
+      "styles" : {
+        "elements" : [ {
+          "tag" : "Person",
+          "background" : "#043e78",
+          "color" : "#ffffff",
+          "shape" : "Person"
+        }, {
+          "tag" : "Software System",
+          "background" : "#0266ca",
+          "color" : "#ffffff"
+        }, {
+          "tag" : "Database",
+          "background" : "#3f94e9",
+          "color" : "#ffffff",
+          "shape" : "Cylinder"
+        }, {
+          "tag" : "Web App",
+          "background" : "#0465c7",
+          "color" : "#ffffff"
+        }, {
+          "tag" : "Application create",
+          "background" : "#3f94e9",
+          "color" : "#ffffff",
+          "shape" : "WebBrowser"
+        }, {
+          "tag" : "View of all applications",
+          "background" : "#3f94e9",
+          "color" : "#ffffff",
+          "shape" : "WebBrowser"
+        }, {
+          "tag" : "Backend API Application",
+          "background" : "#3f94e9",
+          "color" : "#ffffff"
+        } ]
+      },
+      "terminology" : { },
+      "metadataSymbols" : "SquareBrackets",
+      "lastSavedView" : "Diagram1"
+    }
+  }
+}

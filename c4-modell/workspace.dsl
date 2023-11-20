@@ -1,9 +1,13 @@
 workspace {
 
     model {
-        user1 = person "Students" ""
-        user2 = person "Workers" ""
+        user1 = person "Students" "Users of software system, who makes applications"
+        user2 = person "Workers" "Users of software system, who works with applications"
         softwareSystem = softwareSystem "Software System" {
+
+            user1 -> this "Uses"
+            user2 -> this "Uses"
+
             webapp1 = container "Web App" "Loin page with necessary credentials" "Java and Springboot"{
                 tags "Web App"
                 user1 -> this "Loin page with necessary credentials"
@@ -33,13 +37,13 @@ workspace {
 
     views {
         systemContext softwareSystem "Diagram1" {
-
-            // autoLayout
+            include *
+            autoLayout
         }
 
         container softwareSystem "Diagram2" {
             include *
-            // autoLayout
+            autoLayout
         }
 
         //theme default
