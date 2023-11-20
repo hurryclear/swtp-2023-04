@@ -1,15 +1,19 @@
 <template>
   <v-container>
-    <!-- Main Navigation Buttons -->
-    <v-row>
-      <v-col>
-        <!-- Student Navigation Button -->
-        <v-btn @click="navigateTo('applicationForm')">Apply Now</v-btn>
-      </v-col>
-      <v-col>
-        <!-- University Navigation Button -->
-        <v-btn @click="navigateTo('login')">University Login</v-btn>
-      </v-col>
+    <!-- Dynamic Content for Different User Roles -->
+    <v-row v-if="userRole === 'student'">
+      <!-- Content for Students -->
+
+      <p>This is the home view as student</p>
+    </v-row>
+    <v-row v-else-if="userRole === 'studentAffairsOffice'">
+      <!-- Content for student affairs office -->
+
+      <p>This is the home view as student affairs office</p>
+    </v-row>
+    <v-row v-else-if="userRole === 'examiningCommitteeChair'">
+      <!-- Content for Committee Chair -->
+      <p>This is the home view as committee</p>
     </v-row>
 
     <!-- Your Main Page Content Goes Here -->
@@ -19,19 +23,15 @@
 
 <script>
 export default {
+  data() {
+    return {
+      userRole: 'student', // Set the default user role
+    };
+  },
   methods: {
-    navigateTo(page) {
-      // Implement navigation logic based on the clicked button
-      if (page === 'applicationForm') {
-        this.$router.push('/application-form'); // Adjust the route as needed
-      } else if (page === 'login') {
-        this.$router.push('/login'); // Adjust the route as needed
-      }
+    setUserRole(role) {
+      this.userRole = role;
     },
   },
 };
 </script>
-
-<style scoped>
-/* Add your custom styles here */
-</style>
