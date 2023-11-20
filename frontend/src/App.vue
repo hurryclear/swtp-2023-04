@@ -37,7 +37,6 @@ export default defineComponent({
 
 </script>
 
-
 <style>
   .v-application > * {
     transition: background-color 1s ease, color 1s ease; /*Dark Mode Transition*/

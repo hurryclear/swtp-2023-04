@@ -6,13 +6,13 @@
 
       <p>This is the home view as student</p>
     </v-row>
-    <v-row v-else-if="userRole === 'university'">
-      <!-- Content for University -->
+    <v-row v-else-if="userRole === 'studentAffairsOffice'">
+      <!-- Content for student affairs office -->
 
-      <p>This is the home view as university</p>
+      <p>This is the home view as student affairs office</p>
     </v-row>
-    <v-row v-else-if="userRole === 'committee'">
-      <!-- Content for Committee -->
+    <v-row v-else-if="userRole === 'examiningCommitteeChair'">
+      <!-- Content for Committee Chair -->
       <p>This is the home view as committee</p>
     </v-row>
 

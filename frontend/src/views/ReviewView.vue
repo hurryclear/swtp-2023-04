@@ -1,10 +1,10 @@
-<script setup>
-
-</script>
-
 <template>
   <p>This is the review view</p>
 </template>
+
+<script setup>
+
+</script>
 
 <style scoped>
 

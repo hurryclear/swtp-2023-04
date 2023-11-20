@@ -22,22 +22,23 @@
     <v-expansion-panel-text>
       <v-text-field
           class="userInput"
-          v-model="module.name"
+          v-model="formData.name"
           hide-details
           :label="$t('moduleForm.moduleNameLabel')"
           variant="outlined"
       />
       <v-file-input
-          v-model="module.description"
+          v-model="formData.description"
           class="userInput"
           accept=".pdf"
+          show-size
           :label="$t('moduleForm.moduleDescriptionLabel')"
           variant="outlined"
           hide-details
           prepend-icon=""
       />
       <v-select
-          v-model="module.module2bCredited"
+          v-model="formData.module2bCredited"
           class="userInput"
           :label="$t('moduleForm.moduleCreditedLabel')"
           variant="outlined"
@@ -45,7 +46,7 @@
           :items="moduleNamesList"
       />
       <v-text-field
-          v-model="module.comment"
+          v-model="formData.comment"
           class="userInput"
           hide-details
           :label="$t('moduleForm.commentLabel')"
@@ -65,46 +66,43 @@
 import moduleJSON from '../assets/module_liste.json';
 
 export default {
+  props: {
+    module: Object, // Add a prop to receive module data
+  },
   data() {
     return {
-      formIsEmpty: true,
+      isFilled: false,
       moduleNamesList: [],
-      module: {
-        name: '',
-        comment: '',
-        description: null,
-        module2bCredited: null
-      }
+      formData: {...this.module},
     };
   },
   mounted() {
     this.extractModuleNames();
   },
   methods: {
-    onFormFilled() {
-      this.$emit('formFilled');
-    },
     extractModuleNames() {
       this.moduleNamesList = moduleJSON.courses[0].modules.map(module => module.name);
     },
     checkFormFilled() {
-      const isFilled =
-          this.module.name.trim()!== '' &&
-          this.module.description!== null &&
-          this.module.module2bCredited!== null;
-
-      if (isFilled) {
-        this.onFormFilled();
-      }
+      this.formData.isFilled =
+          this.formData.name.trim()!== '' &&
+          this.formData.description!== null &&
+          this.formData.module2bCredited!== null;
     },
     removeModule() {
       this.$emit('removeModule');
-    }
+    },
+    // Watch changes in module data and emit an event to the parent
+    watchModuleData() {
+      this.checkFormFilled();
+      this.$emit('updateModuleData', this.formData);
+    },
   },
   watch: {
-    'module.name': 'checkFormFilled',
-    'module.description': 'checkFormFilled',
-    'module.module2bCredited': 'checkFormFilled',
+    'formData.name': 'watchModuleData',
+    'formData.description': 'watchModuleData',
+    'formData.module2bCredited': 'watchModuleData',
+    'formData.comment': 'watchModuleData',
   },
 };
 </script>

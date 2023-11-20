@@ -1,17 +1,17 @@
 <template>
   <div>
     <v-expansion-panels>
-      <template v-for="(form, index) in moduleForms" :key="index">
-        <ModuleForm
-            :module="form"
-            @formFilled="handleFormFilled"
-            @removeModule="removeModuleForm(index)"
-        />
-      </template>
+      <ModuleForm
+          v-for="(form, index) in moduleForms"
+          :key="moduleForms[index].key"
+          :module="form"
+          @removeModule="removeModuleForm(index)"
+          @updateModuleData="updateModuleData(index,$event)"
+      />
       <v-btn
           class="userInput"
           @click="addModuleForm"
-          :disabled="!previousFormFilled"
+          :disabled="!this.formsFilled"
           variant="outlined"
       >
         {{ $t("moduleForm.addModule") }}
@@ -22,33 +22,52 @@
 
 <script>
 import ModuleForm from "@/components/ModuleForm.vue";
-import { defineComponent } from "vue";
-
+import {defineComponent} from "vue";
 export default defineComponent({
-  components: { ModuleForm },
+  components: {ModuleForm},
   data() {
     return {
-      moduleForms: [ModuleForm],
-      previousFormFilled: false,
+      moduleForms: [
+          {
+            key: 0,
+            name: '',
+            comment: '',
+            description: null,
+            module2bCredited: null
+          }
+      ],
+      formsFilled: false,
     };
   },
   methods: {
     addModuleForm() {
-      this.moduleForms.push(ModuleForm);
-      this.previousFormFilled = false;
+      this.moduleForms.push({key:(this.moduleForms[this.moduleForms.length - 1].key+1), name: '', comment: '', description: null, module2bCredited: null, isFilled: false });
+      this.formsFilled = false;
     },
-    handleFormFilled() {
-      this.previousFormFilled = true;
+    checkIfFilled(){
+      this.formsFilled = this.moduleForms.every(form => form.isFilled);
+      return this.formsFilled;
     },
     removeModuleForm(index) {
       if (this.moduleForms.length > 1) {
-        console.log("Deleting module at Index", index);
         this.moduleForms.splice(index, 1);
-      } else {
-        console.log("Not deleting the last module.");
+        this.checkIfFilled()
       }
     },
+    // Listen to the emitted event from ModuleForm and propagate it to the parent (FormPage)
+    updateModuleData(index,data) {
+      this.moduleForms[index]=data;
+      if (this.checkIfFilled()){
+        this.$emit('updateModuleData',this.moduleForms)
+      }
+    },
+    emitFillChange(){
+      this.$emit('fillChange',this.formsFilled)
+    }
   },
+  watch: {
+    "formsFilled": "emitFillChange"
+  }
 });
 </script>
 

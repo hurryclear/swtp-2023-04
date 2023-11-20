@@ -73,15 +73,29 @@
 
 <script>
 export default {
+  props: {
+    universityData: Object, // Add a prop to receive university data
+  },
   data() {
     return {
       university: {
         universityName: '',
         studyProgram: '',
-        country: ''
+        country: '',
+        // Initialize with data from the parent component
+        ...this.universityData,
       }
     }
-  }
+  },
+  watch: {
+    university: {
+      handler(newVal) {
+        // Emit an event to the parent when university data changes
+        this.$emit('updateUniversityData', newVal);
+      },
+      deep: true,
+    },
+  },
 }
 </script>
 
