@@ -30,6 +30,7 @@ workspace {
                 webapp1 -> this "Delivers to the workers' web browser"
             }
 
+            // Container: Single Web Page "Login Page"
             webapp4 = container "Login Page" "All users will login in this page" "Vue.js" {
                 tags "Login Page"
                 user1 -> this "Login with necessary credential"
@@ -37,12 +38,30 @@ workspace {
                 webapp1 -> this "Delivers to the users' web browser"
             }
 
+            // Container: Backend API Application
             api = container "Backend API Application" "Provides Online Plattform functionally via a JSON/HTTPS API." "Java and Springboot"{
                 tags "Backend API Application"
                 webapp2 -> this "Makes API calls to"
-                webapp3 -> this "Makes API calls to"
                 webapp4 -> this "Makes API calls to"
+
+                // components in Backend API Application
+                c1 = component "Login Controller" "Allow users to sign in" "Node.js" {
+                    webapp2 -> this "Makes API calls to"
+                    webapp4 -> this "Makes API calls to"
+                }
+                c2 = component "Application Number Generator" "Generate randomly but unique application numbers for each new application" "Node.js" {
+                    webapp2 -> this "Makes API calls to"
+                    webapp4 -> this "Makes API calls to"
+                }
+                c3 = component "PDF File Component" "Generate pdf file with all information from applicants" "I don't know"{
+                    webapp2 -> this "Makes API calls to"
+                    webapp3 -> this "Makes API calls to"
+                }
+                c4 = component "Security Component" "Provides functionality related to signing in, changing passwords, etc."{
+                    c1 -> this "Uses"
+                }
             }
+
             db = container "Database" "Stores user and workers credentials, applications' information, pdf files and etc." "Postgres"{
                 tags "Database"
                 api -> this "reads from and writes to" "Postgres"
@@ -72,9 +91,12 @@ workspace {
             include *
             //autoLayout
         }
+        component api {
+            include *
+            //autoLayout
+        }
 
-
-        //theme default
+        //change theme (you can also just use "theme default")
         styles {
             element "Person" {
                 shape person
