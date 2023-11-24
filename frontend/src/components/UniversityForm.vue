@@ -5,12 +5,12 @@
         <template v-slot:default="{ expanded }">
           <v-row no-gutters>
             <v-col>
-              {{ $t("universityForm.previousUniversity") }}
+              {{ $t("applicationForm.previousUniversity") }}
             </v-col>
             <v-col class="text-grey">
               <v-fade-transition leave-absolute>
                 <span v-if="expanded" key="0">
-                  {{ $t("universityForm.universityDescription") }}
+                  {{ $t("applicationForm.universityDescription") }}
                 </span>
                 <span v-else key="1">
                   {{ university.universityName }}
@@ -24,14 +24,14 @@
         <v-text-field
             v-model="university.universityName"
             hide-details
-            :label="$t('universityForm.universityNameLabel')"
+            :label="$t('applicationForm.universityNameLabel')"
             variant="outlined"
             class="userInput"
         />
         <v-text-field
             v-model="university.country"
             hide-details
-            :label="$t('universityForm.countryLabel')"
+            :label="$t('applicationForm.countryLabel')"
             variant="outlined"
             class="userInput"
         />
@@ -43,12 +43,12 @@
         <template v-slot:default="{ expanded }">
           <v-row no-gutters>
             <v-col>
-              {{ $t("universityForm.previousStudyProgram") }}
+              {{ $t("applicationForm.previousStudyProgram") }}
             </v-col>
             <v-col class="text-grey">
               <v-fade-transition leave-absolute>
                 <span v-if="expanded" key="0">
-                  {{ $t("universityForm.studyProgramDescription") }}
+                  {{ $t("applicationForm.studyProgramDescription") }}
                 </span>
                 <span v-else key="1">
                   {{ university.studyProgram }}
@@ -62,7 +62,7 @@
         <v-text-field
             v-model="university.studyProgram"
             hide-details
-            :label="$t('universityForm.studyProgramLabel')"
+            :label="$t('applicationForm.studyProgramLabel')"
             variant="outlined"
             class="userInput"
         />

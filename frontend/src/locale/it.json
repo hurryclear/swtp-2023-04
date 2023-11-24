@@ -2,7 +2,7 @@
   "darkMode": {
     "toggleDarkMode": "Attiva/Disattiva Modalità Scura"
   },
-  "moduleForm": {
+  "applicationForm": {
     "addModule": "Aggiungi Modulo",
     "module": "Modulo",
     "moduleDescription": "Fornisci informazioni sul modulo da convalidare!",
@@ -10,9 +10,7 @@
     "moduleDescriptionLabel": "Descrizione del Modulo",
     "moduleCreditedLabel": "Modulo Convalidato",
     "commentLabel": "Commento",
-    "removeModule": "Rimuovi Modulo"
-  },
-  "universityForm": {
+    "removeModule": "Rimuovi Modulo",
     "previousUniversity": "Università Precedente",
     "universityDescription": "Specifica il nome della tua università precedente!",
     "universityNameLabel": "Nome dell'Università",
@@ -20,5 +18,11 @@
     "previousStudyProgram": "Programma di Studi Precedente",
     "studyProgramDescription": "Specifica il nome del tuo programma di studi precedente!",
     "studyProgramLabel": "Nome del Programma di Studi"
+  },
+  "navBar": {
+    "main":"",
+    "apply": "",
+    "review": "",
+    "login": ""
   }
 }

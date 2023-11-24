@@ -2,7 +2,7 @@
   "darkMode": {
     "toggleDarkMode": "ダークモードの切り替え"
   },
-  "moduleForm": {
+  "applicationForm": {
     "addModule": "モジュールを追加",
     "module": "モジュール",
     "moduleDescription": "認定するモジュールに関する情報を提供してください！",
@@ -10,9 +10,7 @@
     "moduleDescriptionLabel": "モジュールの説明",
     "moduleCreditedLabel": "認定されたモジュール",
     "commentLabel": "コメント",
-    "removeModule": "モジュールを削除"
-  },
-  "universityForm": {
+    "removeModule": "モジュールを削除",
     "previousUniversity": "前の大学",
     "universityDescription": "前の大学の名前を指定してください！",
     "universityNameLabel": "大学名",
@@ -20,5 +18,11 @@
     "previousStudyProgram": "前の学習プログラム",
     "studyProgramDescription": "前の学習プログラムの名前を指定してください！",
     "studyProgramLabel": "学習プログラム名"
+  },
+  "navBar": {
+    "main":"",
+    "apply": "",
+    "review": "",
+    "login": ""
   }
 }
