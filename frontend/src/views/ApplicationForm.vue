@@ -46,12 +46,13 @@ export default defineComponent({
         studyProgram: '',
         country: '',
       },
+      //TODO: Get File
       moduleForms: [
-          {
-            name: '',
-            comment: '',
-            description: null,
-            module2bCredited: null}
+        {
+          name: '',
+          comment: '',
+          description: null,
+          module2bCredited: null}
       ],
       moduleDataFilled: false
     };
@@ -74,7 +75,7 @@ export default defineComponent({
       };
 
       // TODO: Submission Handling
-      console.log('Whole Form submitted:', formData);
+      console.log('Whole Form submitted:', JSON.stringify(formData, null, 2));
     },
   }
 });

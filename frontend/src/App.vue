@@ -3,21 +3,21 @@
       <v-container>
         <NavigationMenu/>
       </v-container>
-      <div class="main-container d-flex align-center">
-        <v-row>
-          <v-col>
+      <v-container fluid>
+        <v-row >
+          <v-col cols="12" md="6">
             <LanguageSwitcher/>
           </v-col>
-          <v-col>
+          <v-col cols="12" md="6">
             <DarkThemeToggle
                 style="
-                  height:100%;
-                  width:100%;
-                "
+                    height:100%;
+                    width:100%;
+                  "
             />
           </v-col>
         </v-row>
-      </div>
+      </v-container>
       <v-divider thickness="3"/>
       <div class="main-container">
         <router-view/>

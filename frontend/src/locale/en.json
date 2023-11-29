@@ -2,7 +2,7 @@
   "darkMode": {
     "toggleDarkMode": "Toggle Dark Mode"
   },
-  "moduleForm": {
+  "applicationForm": {
     "addModule": "Add Module",
     "module": "Module",
     "moduleDescription": "Provide information about the module to be credited!",
@@ -10,15 +10,20 @@
     "moduleDescriptionLabel": "Module Description",
     "moduleCreditedLabel": "Credited Module",
     "commentLabel": "Comment",
-    "removeModule": "Remove Module"
-  },
-  "universityForm": {
+    "removeModule": "Remove Module",
     "previousUniversity": "Previous University",
     "universityDescription": "Specify the name of your previous university!",
     "universityNameLabel": "University Name",
     "countryLabel": "Country",
     "previousStudyProgram": "Previous Study Program",
     "studyProgramDescription": "Specify the name of your previous study program!",
-    "studyProgramLabel": "Study Program Name"
+    "studyProgramLabel": "Study Program Name",
+    "submit": "Submit Form"
+  },
+  "navBar": {
+    "main":"Main Page",
+    "apply": "Apply",
+    "review": "Review",
+    "login": "login"
   }
 }

@@ -1,16 +1,12 @@
 <template>
   <v-container>
-    <!-- Navigation Menu -->
-    <v-app-bar app>
-      <v-btn @click="navigateTo('main')">Main Page</v-btn>
-      <v-btn @click="navigateTo('applicationForm')">Apply Now</v-btn>
-      <v-btn @click="navigateTo('reviewApplication')">Review Application</v-btn>
-      <v-btn @click="navigateTo('login')">University Login</v-btn>
-      <!-- Add more buttons for different user roles and actions -->
-    </v-app-bar>
-
-    <!-- Your Main Page Content Goes Here -->
-
+      <!-- Navigation Menu -->
+      <v-app-bar app>
+        <v-btn @click="navigateTo('main')">{{ $t("navBar.main") }}</v-btn>
+        <v-btn @click="navigateTo('applicationForm')">{{$t("navBar.apply")}}</v-btn>
+        <v-btn @click="navigateTo('reviewApplication')">{{$t("navBar.review")}}</v-btn>
+        <v-btn @click="navigateTo('login')">{{$t("navBar.login")}}</v-btn>
+      </v-app-bar>
   </v-container>
 </template>
 

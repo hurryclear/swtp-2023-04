@@ -4,12 +4,12 @@
       <template v-slot:default="{ expanded }">
         <v-row no-gutters>
           <v-col>
-            {{ $t("moduleForm.module") }}
+            {{ $t("applicationForm.module") }}
           </v-col>
           <v-col class="text-grey">
             <v-fade-transition leave-absolute>
               <span v-if="expanded" key="0">
-                {{ $t("moduleForm.moduleDescription") }}
+                {{ $t("applicationForm.moduleDescription") }}
               </span>
               <span v-else key="1">
                 {{ module.name }}
@@ -24,7 +24,7 @@
           class="userInput"
           v-model="formData.name"
           hide-details
-          :label="$t('moduleForm.moduleNameLabel')"
+          :label="$t('applicationForm.moduleNameLabel')"
           variant="outlined"
       />
       <v-file-input
@@ -32,31 +32,33 @@
           class="userInput"
           accept=".pdf"
           show-size
-          :label="$t('moduleForm.moduleDescriptionLabel')"
+          :label="$t('applicationForm.moduleDescriptionLabel')"
           variant="outlined"
           hide-details
           prepend-icon=""
+          @change="handleFileChange"
       />
       <v-select
           v-model="formData.module2bCredited"
           class="userInput"
-          :label="$t('moduleForm.moduleCreditedLabel')"
+          :label="$t('applicationForm.moduleCreditedLabel')"
           variant="outlined"
           hide-details
+          multiple
           :items="moduleNamesList"
       />
       <v-text-field
           v-model="formData.comment"
           class="userInput"
           hide-details
-          :label="$t('moduleForm.commentLabel')"
+          :label="$t('applicationForm.commentLabel')"
           variant="outlined"
       />
       <v-btn
           @click="removeModule"
           variant="outlined"
       >
-        {{ $t("moduleForm.removeModule") }}
+        {{ $t("applicationForm.removeModule") }}
       </v-btn>
     </v-expansion-panel-text>
   </v-expansion-panel>
@@ -74,6 +76,7 @@ export default {
       isFilled: false,
       moduleNamesList: [],
       formData: {...this.module},
+      selectedFile: null,
     };
   },
   mounted() {
@@ -92,10 +95,13 @@ export default {
     removeModule() {
       this.$emit('removeModule');
     },
+    handleFileChange(event) {
+      this.selectedFile = event.target.files[0];
+    },
     // Watch changes in module data and emit an event to the parent
     watchModuleData() {
       this.checkFormFilled();
-      this.$emit('updateModuleData', this.formData);
+      this.$emit('updateModuleData', this.formData, this.selectedFile);
     },
   },
   watch: {
