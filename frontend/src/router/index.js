@@ -21,6 +21,11 @@ const routes = [
         path: '/review-application',
         name: 'Review Application',
         component: () => import('@/views/ReviewView.vue')
+    },
+    {
+        path: '/study-office',
+        name: 'Studienbüro',
+        component: () => import('@/views/StudyOfficeView.vue')
     }
 ]
 const router = createRouter({
