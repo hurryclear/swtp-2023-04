@@ -1,13 +1,12 @@
 <template>
-    <v-app class="wrapper">
+    <v-container fluid="true" class="wrapper">
       <h1>Offene Anträge</h1>
       <FormDisplay/>
-    </v-app>
+    </v-container>
 </template>
 
 <script setup>
   import FormDisplay from "@/components/FormDisplay.vue";
-
 </script>
 
 <style scoped>
