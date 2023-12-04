@@ -1,16 +1,23 @@
 <template>
-  <li v-for="tests in testArray" v-bind:key="tests" class="list">
-    {{ tests }}
+  <li class="list">
+    <v-btn class="edit-button">
+      Antrage bearbeiten
+    </v-btn>
+    Antrag: {{ json.universityData.universityName }}
   </li>
 </template>
 
 <script setup>
-  const testArray = [1, 2, 3, 4, 5]
+  import json from '@/assets/test_Form.json'
 </script>
 
 <style scoped>
   .list {
     padding: 30px;
     margin-left: 5%;
+  }
+
+  .edit-button {
+    margin-right: 0.5rem;
   }
 </style>
