@@ -1,7 +1,7 @@
 <template>
   <li class="list">
     <v-btn class="edit-button">
-      Antrage bearbeiten
+      Anträge bearbeiten
     </v-btn>
     Antrag: {{ json.universityData.universityName }}
   </li>
@@ -14,7 +14,6 @@
 <style scoped>
   .list {
     padding: 30px;
-    margin-left: 5%;
   }
 
   .edit-button {
