@@ -3,7 +3,7 @@
       <!-- Navigation Menu -->
       <v-app-bar app>
         <v-btn @click="navigateTo('main')">{{ $t("navBar.main") }}</v-btn>
-        <v-btn @click="navigateTo('applicationForm')">{{$t("navBar.apply")}}</v-btn>
+        <v-btn @click="navigateTo('applicationForm')">{{$t("navBar.creditModules")}}</v-btn>
         <v-btn @click="navigateTo('reviewApplication')">{{$t("navBar.review")}}</v-btn>
         <v-btn @click="navigateTo('login')">{{$t("navBar.login")}}</v-btn>
       </v-app-bar>

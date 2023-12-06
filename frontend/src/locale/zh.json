@@ -21,7 +21,7 @@
   },
   "navBar": {
     "main":"Main Page",
-    "apply": "Apply",
+    "creditModules": "Apply",
     "review": "Review",
     "login": "login"
   }

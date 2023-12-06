@@ -22,7 +22,7 @@
   },
   "navBar": {
     "main":"Hauptseite",
-    "apply": "Module anrechnen",
+    "creditModules": "Module anrechnen",
     "review": "Antrag einsehen",
     "login": "Login"
   }
