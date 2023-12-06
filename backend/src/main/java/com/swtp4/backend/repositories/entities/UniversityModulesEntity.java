@@ -31,4 +31,8 @@ public class UniversityModulesEntity {
     private Blob description_pdf;
 
     private int credits;
+
+    private String comment_student;
+
+    private String comment_employee;
 }
