@@ -112,7 +112,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-/* Add scoped styles if needed */
-</style>
