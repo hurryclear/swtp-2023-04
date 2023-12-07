@@ -22,8 +22,9 @@ public class UniversityModulesEntity {
 
     private String number;
 
+    @ManyToOne
     @JoinColumn(name = "applications_id")
-    private UUID application_id;
+    private ApplicationEntity applicationEntity;
 
     private String title;
 
