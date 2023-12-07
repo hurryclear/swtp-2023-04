@@ -57,7 +57,7 @@ export default {
 
       if (this.username === dummyUsername && this.password === dummyPassword) {
         this.$store.dispatch('authenticateUser', true);
-        this.$router.push('/OpenApplications');
+        this.$router.push('/study-office');
       } else {
         this.loginError = true;
       }
