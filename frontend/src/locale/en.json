@@ -25,5 +25,11 @@
     "creditModules": "Credit Modules",
     "review": "Review",
     "login": "login"
+  },
+
+  "loginComponent": {
+    "usernameLabel": "Username",
+    "passwordLabel": "Password",
+    "loginButton": "Login"
   }
 }

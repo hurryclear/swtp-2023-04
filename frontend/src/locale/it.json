@@ -24,5 +24,10 @@
     "creditModules": "",
     "review": "",
     "login": ""
+  },
+  "loginComponent": {
+    "usernameLabel": "Nome utente",
+    "passwordLabel": "Password",
+    "loginButton": "Accedi"
   }
 }

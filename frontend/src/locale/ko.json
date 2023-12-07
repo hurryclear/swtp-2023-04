@@ -24,5 +24,10 @@
     "creditModules": "",
     "review": "",
     "login": ""
+  },
+  "loginComponent": {
+    "usernameLabel": "사용자 이름",
+    "passwordLabel": "비밀번호",
+    "loginButton": "로그인"
   }
 }

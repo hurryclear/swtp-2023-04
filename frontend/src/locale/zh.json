@@ -24,5 +24,10 @@
     "creditModules": "Apply",
     "review": "Review",
     "login": "login"
+  },
+  "loginComponent": {
+    "usernameLabel": "用户名",
+    "passwordLabel": "密码",
+    "loginButton": "登录"
   }
 }

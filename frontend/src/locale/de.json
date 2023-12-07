@@ -25,5 +25,10 @@
     "creditModules": "Module anrechnen",
     "review": "Antrag einsehen",
     "login": "Login"
+  },
+  "loginComponent": {
+    "usernameLabel": "Benutzername",
+    "passwordLabel": "Passwort",
+    "loginButton": "Einloggen"
   }
 }
