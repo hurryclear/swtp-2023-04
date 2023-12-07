@@ -15,6 +15,9 @@ export default createStore({
   actions: {
     authenticateUser({ commit }, status) {
       commit('setAuthentication', status);
+    },
+    logoutUser({ commit }) {
+      commit('setAuthentication', false);
     }
   },
   modules: {

@@ -20,14 +20,15 @@
     "studyProgramLabel": "Название учебной программы"
   },
   "navBar": {
-    "main":"",
-    "creditModules": "",
-    "review": "",
-    "login": ""
+    "main":"Главная Страница",
+    "creditModules": "Зачесть Модули",
+    "review": "Просмотреть Заявку",
+    "login": "Войти"
   },
   "loginComponent": {
     "usernameLabel": "Benutzername",
     "passwordLabel": "Passwort",
-    "loginButton": "Einloggen"
+    "loginButton": "Einloggen",
+    "loginErrorMessage": "Неверное имя пользователя или пароль."
   }
 }

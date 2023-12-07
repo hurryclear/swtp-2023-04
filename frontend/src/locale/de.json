@@ -29,6 +29,7 @@
   "loginComponent": {
     "usernameLabel": "Benutzername",
     "passwordLabel": "Passwort",
-    "loginButton": "Einloggen"
+    "loginButton": "Einloggen",
+    "loginErrorMessage": "Falscher Benutzername oder Passwort."
   }
 }

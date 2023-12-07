@@ -23,13 +23,14 @@
   "navBar": {
     "main":"Main Page",
     "creditModules": "Credit Modules",
-    "review": "Review",
-    "login": "login"
+    "review": "Review Application",
+    "login": "Login"
   },
 
   "loginComponent": {
     "usernameLabel": "Username",
     "passwordLabel": "Password",
-    "loginButton": "Login"
+    "loginButton": "Login",
+    "loginErrorMessage": "Incorrect username or password."
   }
 }

@@ -20,14 +20,15 @@
     "studyProgramLabel": "Nome do Programa de Estudo"
   },
   "navBar": {
-    "main":"",
-    "creditModules": "",
-    "review": "",
-    "login": ""
+    "main":"Página Principal",
+    "creditModules": "Acreditar Módulos",
+    "review": "Visualizar Pedido",
+    "login": "Entrar"
   },
   "loginComponent": {
     "usernameLabel": "Nome de usuário",
     "passwordLabel": "Senha",
-    "loginButton": "Entrar"
+    "loginButton": "Entrar",
+    "loginErrorMessage": "Nome de usuário ou senha incorretos."
   }
 }

@@ -3,13 +3,13 @@
     <v-form @submit.prevent="submitLogin">
       <v-col>
         <v-text-field
-          label="Username"
+          :label="$t('loginComponent.usernameLabel')"
           v-model="username"
           required
           variant="outlined"
         />
         <v-text-field
-          label="Password"
+          :label="$t('loginComponent.passwordLabel')"
           :type="showPassword ? 'text' : 'password'"
           v-model="password"
           required
@@ -22,12 +22,16 @@
           type="error"
           dismissible
         >
-          Incorrect username or password.
+        {{ $t('loginComponent.loginErrorMessage') }}
         </v-alert>
       </v-col>
+      
       <v-row justify="center">
-        <v-btn type="submit" variant="outlined">
-          Login
+        <v-btn 
+        type="submit" 
+        variant="outlined"
+        >
+        {{ $t('loginComponent.loginButton') }}
         </v-btn>
       </v-row>
     </v-form>
@@ -56,7 +60,6 @@ export default {
       } else {
         this.loginError = true;
       }
-      console.log('Attempting to login');
     },
     togglePasswordVisibility() {
       this.showPassword = !this.showPassword;
