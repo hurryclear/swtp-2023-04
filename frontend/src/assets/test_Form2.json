@@ -1,0 +1,25 @@
+{
+  "universityData": {
+    "universityName": "University of Birmingham",
+    "studyProgram": "B. Sc. Informatik",
+    "country": "England"
+  },
+  "moduleFormsData": [
+    {
+      "key": 0,
+      "name": "Algorithms and Datastructures 2",
+      "comment": "",
+      "module2bCredited": [
+        "Algorithmen und Datenstrukturen 2"
+      ]
+    },
+    {
+      "key": 1,
+      "name": "Linear Algebra",
+      "comment": "",
+      "module2bCredited": [
+        "Lineare Algebra"
+      ]
+    }
+  ]
+}

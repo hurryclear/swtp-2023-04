@@ -28,7 +28,12 @@ const routes = [
         name: 'Open Applications',
         component: () => import('@/views/OpenApplications.vue'),
         meta: { requiresAuth: true }
-      }
+      },
+    {
+        path: '/study-office',
+        name: 'Studienbüro',
+        component: () => import('@/views/StudyOfficeView.vue')
+    }
 ]
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
