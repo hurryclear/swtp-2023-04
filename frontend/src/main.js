@@ -10,7 +10,7 @@ import i18n from "@/plugins/i18n";
 import vuetify from "@/plugins/vuetify";
 
 // Vuex Store
-//import store from '@/store/index'; // Make sure to import the store
+import store from '@/store'; // Import the store
 
 // Vue App
 import { createApp } from 'vue';
@@ -21,6 +21,6 @@ const app = createApp(App);
 app.use(vuetify);
 app.use(i18n);
 app.use(router);
-//app.use(store); // Use the store here
+app.use(store); // Use the store here
 
 app.mount('#app');

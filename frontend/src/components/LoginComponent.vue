@@ -51,12 +51,12 @@ export default {
       const dummyPassword = 'password';
 
       if (this.username === dummyUsername && this.password === dummyPassword) {
-        //this.$store.dispatch('login');
-        //this.loginError = false;
-        this.$router.push('/review-application');
+        this.$store.dispatch('authenticateUser', true);
+        this.$router.push('/protected');
       } else {
         this.loginError = true;
       }
+      console.log('Attempting to login');
     },
     togglePasswordVisibility() {
       this.showPassword = !this.showPassword;
