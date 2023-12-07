@@ -30,5 +30,6 @@
     "passwordLabel": "Senha",
     "loginButton": "Entrar",
     "loginErrorMessage": "Nome de usuário ou senha incorretos."
-  }
+  },
+  "logoutButton": "Sair"
 }

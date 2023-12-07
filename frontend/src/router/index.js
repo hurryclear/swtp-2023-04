@@ -24,9 +24,9 @@ const routes = [
         component: () => import('@/views/ReviewView.vue')
     },
     {
-        path: '/protected',
-        name: 'Protected',
-        component: () => import('@/views/StudieMitarbeiter.vue'),
+        path: '/OpenApplications',
+        name: 'Open Applications',
+        component: () => import('@/views/OpenApplications.vue'),
         meta: { requiresAuth: true }
       }
 ]

@@ -30,5 +30,6 @@
     "passwordLabel": "Mot de passe",
     "loginButton": "Se connecter",
     "loginErrorMessage": "Nom d'utilisateur ou mot de passe incorrect."
-  }
+  },
+  "logoutButton": "Se déconnecter"
 }

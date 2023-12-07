@@ -8,7 +8,7 @@
 import LogoutButton from '@/components/LogoutButton.vue'; 
 
 export default {
-  name: 'StudieMitarbeiter',
+  name: 'OpenApplication',
   components: {
     LogoutButton
   }

@@ -30,5 +30,6 @@
     "passwordLabel": "Password",
     "loginButton": "Accedi",
     "loginErrorMessage": "Nome utente o password errati."
-  }
+  },
+  "logoutButton": "Esci"
 }

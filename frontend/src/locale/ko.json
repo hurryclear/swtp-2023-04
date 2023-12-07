@@ -30,5 +30,6 @@
     "passwordLabel": "비밀번호",
     "loginButton": "로그인",
     "loginErrorMessage": "사용자 이름 또는 비밀번호가 잘못되었습니다."
-  }
+  },
+  "logoutButton": "로그아웃"
 }

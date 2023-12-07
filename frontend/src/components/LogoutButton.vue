@@ -4,7 +4,8 @@
             <v-btn
                 color="red" 
                 varient="outlined"
-                @click="logout">Logout
+                @click="logout">
+                {{ $t('logoutButton') }}
             </v-btn>
         </v-row>
     </v-col>
@@ -15,10 +16,7 @@
     name: 'LogoutButton',
     methods: {
       logout() {
-        // Dispatch action to set isAuthenticated to false
         this.$store.dispatch('logoutUser');
-  
-        // Redirect to login page
         this.$router.push('/login');
       }
     }

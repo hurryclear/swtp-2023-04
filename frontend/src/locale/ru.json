@@ -26,9 +26,10 @@
     "login": "Войти"
   },
   "loginComponent": {
-    "usernameLabel": "Benutzername",
-    "passwordLabel": "Passwort",
-    "loginButton": "Einloggen",
+    "usernameLabel": "Имя пользователя",
+    "passwordLabel": "Пароль",
+    "loginButton": "Войти",
     "loginErrorMessage": "Неверное имя пользователя или пароль."
-  }
+  },
+  "logoutButton": "Выйти"
 }

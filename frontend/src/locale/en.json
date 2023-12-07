@@ -32,5 +32,6 @@
     "passwordLabel": "Password",
     "loginButton": "Login",
     "loginErrorMessage": "Incorrect username or password."
-  }
+  },
+  "logoutButton": "Logout"
 }

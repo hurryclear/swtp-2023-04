@@ -30,5 +30,6 @@
     "passwordLabel": "密码",
     "loginButton": "登录",
     "loginErrorMessage":  "用户名或密码错误。"
-  }
+  },
+  "logoutButton": "登出"
 }

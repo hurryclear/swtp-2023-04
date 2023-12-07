@@ -30,5 +30,6 @@
     "passwordLabel": "Contraseña",
     "loginButton": "Iniciar sesión",
     "loginErrorMessage": "Nombre de usuario o contraseña incorrectos."
-  }
+  },
+  "logoutButton": "Cerrar sesión"
 }

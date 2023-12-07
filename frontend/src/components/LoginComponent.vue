@@ -51,12 +51,13 @@ export default {
   },
   methods: {
     submitLogin() {
+      //hier api schnittstelle einbauen um richtige daten zu bekommen
       const dummyUsername = 'admin';
       const dummyPassword = 'password';
 
       if (this.username === dummyUsername && this.password === dummyPassword) {
         this.$store.dispatch('authenticateUser', true);
-        this.$router.push('/protected');
+        this.$router.push('/OpenApplications');
       } else {
         this.loginError = true;
       }
