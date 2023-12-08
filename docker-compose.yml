@@ -24,3 +24,14 @@ services:
   volumes:
    - ./backend/:/app
   restart: unless-stopped
+
+ db:
+  env_file:
+   - .env.dev
+  container_name: postgres_db
+  image: postgres
+  volumes:
+   - ./postgres-database:/var/lib/postgresql/data
+  restart: always
+  ports:
+   - 127.0.0.1:5432:5432
