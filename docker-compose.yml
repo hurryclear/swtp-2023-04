@@ -26,10 +26,13 @@ services:
   restart: unless-stopped
 
  db:
-  env_file:
-   - .env.dev
-  container_name: postgres_db
   image: postgres
+  container_name: postgres_db
+  environment:
+   POSTGRES_DB: <db>
+   POSTGRES_USER: <user>
+   POSTGRES_PASSWORD: <password>
+   PGDATA: /var/lib/postgresql/data/db-files/
   volumes:
    - ./postgres-database:/var/lib/postgresql/data
   restart: always
