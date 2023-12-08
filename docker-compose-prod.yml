@@ -14,8 +14,8 @@ services:
    ports:
     - 172.26.92.83:3001:8080
    restart: unless-stopped
-   depends_on:
-    - postgres
+#   depends_on:
+#    - postgres
    environment:
     SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/backend_database
     SPRING_DATASOURCE_USERNAME: swtp
