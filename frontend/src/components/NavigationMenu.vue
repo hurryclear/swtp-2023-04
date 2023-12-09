@@ -24,12 +24,13 @@
 
     <v-navigation-drawer fluid v-model="drawer" app>
       <v-list>
-        <v-btn class="button-spacing" variant="elevated" color="#262A31" prepend-icon="mdi-home" @click="navigateTo('main')">{{ $t("navBar.main") }}</v-btn>
-        <v-btn class="button-spacing" variant="elevated" color="#262A31" @click="navigateTo('applicationForm')">{{$t("navBar.creditModules")}}</v-btn>
-        <v-btn class="button-spacing" variant="elevated" color="#262A31" @click="navigateTo('reviewApplication')">{{$t("navBar.review")}}</v-btn>
-        <v-btn class="button-spacing" variant="elevated" color="#262A31" icon="mdi-login-variant" @click="navigateTo('login')"></v-btn>
-        <LanguageSwitcher />
+        <v-spacer> <v-btn class="button-spacing" variant="text" icon="mdi-close" @click="drawer = !drawer"></v-btn></v-spacer>
+        <v-spacer> <v-btn class="button-spacing" variant="elevated" color="#262A31" prepend-icon="mdi-home" @click="navigateTo('main')">{{ $t("navBar.main") }}</v-btn></v-spacer>
+        <v-spacer><v-btn class="button-spacing" variant="elevated" color="#262A31" @click="navigateTo('applicationForm')">{{$t("navBar.creditModules")}}</v-btn></v-spacer>
+        <v-spacer> <v-btn class="button-spacing" variant="elevated" color="#262A31" @click="navigateTo('reviewApplication')">{{$t("navBar.review")}}</v-btn></v-spacer>
         <DarkThemeToggle />
+        <LanguageSwitcher />
+        <v-btn class="button-spacing" variant="elevated" color="#262A31" icon="mdi-login-variant" @click="navigateTo('login')"></v-btn>
       </v-list> 
     </v-navigation-drawer>
   </v-container>
@@ -125,7 +126,7 @@ export default {
   width: 100%;
 }
 
-@media (max-width: 600px) {
+
   .d-sm-none {
     display: inline-block;
     margin-left: 8px; 
@@ -135,5 +136,5 @@ export default {
   .d-none.d-sm-flex {
     display: none;
   }
-}
+
 </style>
