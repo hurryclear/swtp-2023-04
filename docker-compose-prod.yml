@@ -17,7 +17,7 @@ services:
 #   depends_on:
 #    - postgres
    environment:
-    SPRING_DATASOURCE_URL: jdbc:postgresql://172.26.92.83:5432/backend_database
+    SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/backend_database
     SPRING_DATASOURCE_USERNAME: swtp
     SPRING_DATASOURCE_PASSWORD: brunchPaprika2023
 #   networks:
