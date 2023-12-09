@@ -17,11 +17,11 @@ services:
 #   depends_on:
 #    - postgres
    environment:
-    SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/backend_database
+    SPRING_DATASOURCE_URL: jdbc:postgresql://172.26.92.83:5432/backend_database
     SPRING_DATASOURCE_USERNAME: swtp
     SPRING_DATASOURCE_PASSWORD: brunchPaprika2023
-   networks:
-    - backend_network
+#   networks:
+#    - backend_network
 
   postgres:
    image: postgres:16
@@ -32,13 +32,13 @@ services:
     POSTGRES_PASSWORD: brunchPaprika2023
    volumes:
     - postgres_data:/var/lib/postgresql/data
-   networks:
-    - backend_network
+#   networks:
+#    - backend_network
    restart: unless-stopped
 
 volumes:
  postgres_data:
 
-networks:
- backend_network:
-  driver: bridge
+#networks:
+# backend_network:
+#  driver: bridge
