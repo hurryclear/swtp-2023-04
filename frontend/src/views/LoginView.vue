@@ -16,8 +16,6 @@ export default {
   methods: {
     handleLogin(credentials) {
       console.log('Login submitted', credentials);
-      // Here you can add the logic to handle the submitted login credentials
-      // For example, make an API call
     }
   }
 };

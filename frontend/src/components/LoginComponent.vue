@@ -28,8 +28,9 @@
       
       <v-row justify="center">
         <v-btn 
+        color="blue"
         type="submit" 
-        variant="outlined"
+        
         >
         {{ $t('loginComponent.loginButton') }}
         </v-btn>
@@ -47,21 +48,41 @@ export default {
       password: '',
       showPassword: false,
       loginError: false,
+      dummyLogins: {
+      examiningCommitteeChair: { username: 'admin1', password: '1234' },
+      studyOffice: { username: 'admin2', password: '1234' },
+    },
     };
   },
   methods: {
-    submitLogin() {
-      //hier api schnittstelle einbauen um richtige daten zu bekommen
-      const dummyUsername = 'admin';
-      const dummyPassword = 'password';
+  
+submitLogin() {
+  let role;
+  if (this.username === this.dummyLogins.examiningCommitteeChair.username && 
+      this.password === this.dummyLogins.examiningCommitteeChair.password) {
+    role = 'examiningCommitteeChair';
+    console.log('User role set to:', role);
+  } else if (this.username === this.dummyLogins.studyOffice.username && 
+             this.password === this.dummyLogins.studyOffice.password) {
+    role = 'studyOffice';
+    console.log('User role set to:', role);
+  }
 
-      if (this.username === dummyUsername && this.password === dummyPassword) {
-        this.$store.dispatch('authenticateUser', true);
-        this.$router.push('/study-office');
-      } else {
-        this.loginError = true;
-      }
-    },
+  if (role) {
+    this.$store.dispatch('authenticateUser', { status: true, role });
+    if (role === 'examiningCommitteeChair') {
+      this.$router.push('/pruefunsausschuss');
+    } else if (role === 'studyOffice') {
+      this.$router.push('/study-office');
+    }
+  } else {
+    this.loginError = true;
+  }
+},
+
+
+
+  
     togglePasswordVisibility() {
       this.showPassword = !this.showPassword;
     },

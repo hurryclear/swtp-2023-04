@@ -27,8 +27,15 @@ const routes = [
         path: '/study-office',
         name: 'Studienbüro',
         component: () => import('@/views/StudyOfficeView.vue'),
-        meta: { requiresAuth: true }
-      }
+        meta: { requiresAuth: true, role: 'studyOffice'}
+    },
+    {
+      path:'/pruefunsausschuss',
+      name:'PrüfungsAusschuss',
+      component: () => import('@/views/PruefungsAusschuss.vue'),
+      meta: { requiresAuth: true, role: 'examiningCommitteeChair'}
+    }
+    
 ]
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
@@ -36,15 +43,33 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    if (to.matched.some(record => record.meta.requiresAuth)) {
-      if (!store.state.isAuthenticated) {
-        next({ name: 'Login' });
+  console.log('Navigating to:', to.path);
+  console.log('Current user authenticated status:', store.state.isAuthenticated);
+  console.log('Current user role:', store.state.userRole);
+
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!store.state.isAuthenticated) {
+      console.log('User not authenticated. Redirecting to Login.');
+      next({ name: 'Login' });
+    } else {
+      const routeRequiresRole = to.meta.role;
+      const userRole = store.state.userRole;
+
+      console.log('Route requires role:', routeRequiresRole);
+
+      if (routeRequiresRole && userRole !== routeRequiresRole) {
+        console.log(`User role ${userRole} does not match required role ${routeRequiresRole}. Redirecting.`);
+        next({ name: 'Login' }); // Redirect to a safe route
       } else {
+        console.log('User role matches or no specific role required. Proceeding to route.');
         next();
       }
-    } else {
-      next();
     }
-  });
+  } else {
+    console.log('No authentication required for this route. Proceeding to route.');
+    next();
+  }
+});
+
 
 export default router
