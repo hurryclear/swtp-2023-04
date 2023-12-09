@@ -15,6 +15,8 @@ services:
 
  backend:
   container_name: springboot-backend
+  env_file:
+   - .env.dev
   build:
    context: ./backend/
    dockerfile: Dockerfile

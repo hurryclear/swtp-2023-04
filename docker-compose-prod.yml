@@ -10,6 +10,8 @@ services:
   
   backend:
    container_name: springboot-backend
+   env_file:
+    - .env.prod
    image: swtp04/springboot-backend:latest
    ports:
     - 172.26.92.83:3001:8080

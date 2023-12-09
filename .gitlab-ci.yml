@@ -72,10 +72,11 @@ deploy:
     - mkdir -p ~/.ssh && chmod 700 ~/.ssh
     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
+    - cp ${ENV_PROD} .env.prod
   script:
     - echo "$DOCKERHUB_ACCESS_TOKEN" | docker login --username $CI_REGISTRY_USER --password-stdin
     - docker-compose down --rmi all
     - docker-compose -f docker-compose-prod.yml pull
 #    - docker-compose -f docker-compose-prod.yml up -d --force-recreate --no-deps frontend backend
-    - docker-compose -f docker-compose-prod.yml up -d
+    - docker-compose --env-file env.prod -f docker-compose-prod.yml up -d
 
