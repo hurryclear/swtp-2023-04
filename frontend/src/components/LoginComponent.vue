@@ -3,36 +3,35 @@
     <v-form @submit.prevent="submitLogin">
       <v-col>
         <v-text-field
-          :label="$t('loginComponent.usernameLabel')"
-          v-model="username"
-          required
-          variant="outlined"
+            :label="$t('loginComponent.usernameLabel')"
+            v-model="username"
+            required
+            variant="outlined"
         />
         <v-text-field
-          :label="$t('loginComponent.passwordLabel')"
-          :type="showPassword ? 'text' : 'password'"
-          v-model="password"
-          required
-          :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
-          @click:append-inner="togglePasswordVisibility"
-          variant="outlined"
+            :label="$t('loginComponent.passwordLabel')"
+            :type="showPassword ? 'text' : 'password'"
+            v-model="password"
+            required
+            :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+            @click:append-inner="togglePasswordVisibility"
+            variant="outlined"
         />
         <v-alert
-          v-if="loginError"
-          type="error"
-          dismissible
+            v-if="loginError"
+            type="error"
+            dismissible
         >
-        {{ $t('loginComponent.loginErrorMessage') }}
+          {{ $t('loginComponent.loginErrorMessage') }}
         </v-alert>
       </v-col>
-      
+
       <v-row justify="center">
-        <v-btn 
-        color="blue"
-        type="submit" 
-        
+        <v-btn
+            color="blue"
+            type="submit"
         >
-        {{ $t('loginComponent.loginButton') }}
+          {{ $t('loginComponent.loginButton') }}
         </v-btn>
       </v-row>
     </v-form>
@@ -49,40 +48,35 @@ export default {
       showPassword: false,
       loginError: false,
       dummyLogins: {
-      examiningCommitteeChair: { username: 'admin1', password: '1234' },
-      studyOffice: { username: 'admin2', password: '1234' },
-    },
+        examiningCommitteeChair: {username: 'admin1', password: '1234'},
+        studyOffice: {username: 'admin2', password: '1234'},
+      },
     };
   },
   methods: {
-  
-submitLogin() {
-  let role;
-  if (this.username === this.dummyLogins.examiningCommitteeChair.username && 
-      this.password === this.dummyLogins.examiningCommitteeChair.password) {
-    role = 'examiningCommitteeChair';
-    console.log('User role set to:', role);
-  } else if (this.username === this.dummyLogins.studyOffice.username && 
-             this.password === this.dummyLogins.studyOffice.password) {
-    role = 'studyOffice';
-    console.log('User role set to:', role);
-  }
+    submitLogin() {
+      let role;
+      if (this.username === this.dummyLogins.examiningCommitteeChair.username &&
+          this.password === this.dummyLogins.examiningCommitteeChair.password) {
+        role = 'examiningCommitteeChair';
+        console.log('User role set to:', role);
+      } else if (this.username === this.dummyLogins.studyOffice.username &&
+          this.password === this.dummyLogins.studyOffice.password) {
+        role = 'studyOffice';
+        console.log('User role set to:', role);
+      }
 
-  if (role) {
-    this.$store.dispatch('authenticateUser', { status: true, role });
-    if (role === 'examiningCommitteeChair') {
-      this.$router.push('/pruefunsausschuss');
-    } else if (role === 'studyOffice') {
-      this.$router.push('/study-office');
-    }
-  } else {
-    this.loginError = true;
-  }
-},
-
-
-
-  
+      if (role) {
+        this.$store.dispatch('authenticateUser', {status: true, role});
+        if (role === 'examiningCommitteeChair') {
+          this.$router.push('/pruefunsausschuss');
+        } else if (role === 'studyOffice') {
+          this.$router.push('/study-office');
+        }
+      } else {
+        this.loginError = true;
+      }
+    },
     togglePasswordVisibility() {
       this.showPassword = !this.showPassword;
     },
