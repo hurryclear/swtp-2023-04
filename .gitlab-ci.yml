@@ -78,5 +78,8 @@ deploy:
     - docker-compose down --rmi all
     - docker-compose -f docker-compose-prod.yml pull
 #    - docker-compose -f docker-compose-prod.yml up -d --force-recreate --no-deps frontend backend
-    - docker-compose --env-file .env.prod -f docker-compose-prod.yml up -d
+    - export DB_USERNAME=$DB_USERNAME
+    - export DB_PASSWORD=$DB_PASSWORD
+    - export DB_NAME=$DB_NAME
+    - docker-compose -f docker-compose-prod.yml up -d
 
