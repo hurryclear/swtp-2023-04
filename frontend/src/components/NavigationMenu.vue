@@ -3,7 +3,7 @@
     <v-app-bar app class="custom-navbar">
       <div class="navbar-content">
         <v-img :src="logoSrc" height="100%" contain class="navbar-logo"></v-img>
-        <v-spacer></v-spacer>
+        <v-spacer/>
 
         <!-- Hamburger menu for mobile view -->
         <v-btn class="d-md-none" variant="elevated" color="#262A31" icon="mdi-menu" @click="drawer = !drawer">
@@ -12,47 +12,102 @@
 
         <!-- Regular buttons for desktop view -->
         <div class="d-none d-md-flex">
-          <v-btn class="button-spacing" variant="elevated" color="#262A31" prepend-icon="mdi-home"
-                 @click="navigateTo('main')">{{ $t("navBar.main") }}
+          <v-btn class="button-spacing"
+                 variant="elevated" color="#262A31"
+                 prepend-icon="mdi-home"
+                 @click="navigateTo('main')"
+                 style="height: auto;"
+          >
+            {{ $t("navBar.main") }}
           </v-btn>
-          <v-btn class="button-spacing" variant="elevated" color="#262A31" @click="navigateTo('applicationForm')">
+          <v-btn class="button-spacing"
+                 variant="elevated"
+                 color="#262A31"
+                 @click="navigateTo('applicationForm')"
+                 style="height: auto;"
+          >
             {{ $t("navBar.creditModules") }}
           </v-btn>
-          <v-btn class="button-spacing" variant="elevated" color="#262A31" @click="navigateTo('reviewApplication')">
+          <v-btn class="button-spacing"
+                 variant="elevated"
+                 color="#262A31"
+                 @click="navigateTo('reviewApplication')"
+                 style="height: auto;"
+          >
             {{ $t("navBar.review") }}
           </v-btn>
           <LanguageSwitcher/>
           <DarkThemeToggle/>
-          <v-btn class="button-spacing" variant="elevated" color="#262A31" icon="mdi-login-variant"
-                 @click="navigateTo('login')"></v-btn>
+          <v-btn class="button-spacing"
+                 variant="elevated"
+                 color="#262A31"
+                 icon="mdi-login-variant"
+                 @click="navigateTo('login')"
+          />
         </div>
       </div>
     </v-app-bar>
 
-    <v-navigation-drawer fluid v-model="drawer" app>
+    <v-navigation-drawer fluid temporary v-model="drawer" app>
       <v-list>
-        <v-spacer>
-          <v-btn class="button-spacing" variant="text" icon="mdi-close" @click="drawer = !drawer"></v-btn>
-        </v-spacer>
-        <v-spacer>
-          <v-btn class="button-spacing" variant="elevated" color="#262A31" prepend-icon="mdi-home"
-                 @click="navigateTo('main')">{{ $t("navBar.main") }}
-          </v-btn>
-        </v-spacer>
-        <v-spacer>
-          <v-btn class="button-spacing" variant="elevated" color="#262A31" @click="navigateTo('applicationForm')">
-            {{ $t("navBar.creditModules") }}
-          </v-btn>
-        </v-spacer>
-        <v-spacer>
-          <v-btn class="button-spacing" variant="elevated" color="#262A31" @click="navigateTo('reviewApplication')">
-            {{ $t("navBar.review") }}
-          </v-btn>
-        </v-spacer>
-        <DarkThemeToggle/>
-        <LanguageSwitcher/>
-        <v-btn class="button-spacing" variant="elevated" color="#262A31" icon="mdi-login-variant"
-               @click="navigateTo('login')"></v-btn>
+        <v-btn
+            class="button-spacing"
+            variant="text"
+            icon="mdi-close"
+            @click="drawer = !drawer"
+        />
+        <v-spacer/>
+        <!-- TODO: width:calc(100% - 1rem) ist erstmal ne Übergangslösung -->
+        <v-btn
+            class="button-spacing"
+            variant="elevated"
+            color="#262A31"
+            prepend-icon="mdi-home"
+            @click="navigateTo('main')"
+            style="width:calc(100% - 1rem)"
+        >
+          {{ $t("navBar.main") }}
+        </v-btn>
+        <v-spacer/>
+        <v-btn
+            class="button-spacing"
+            variant="elevated"
+            color="#262A31"
+            @click="navigateTo('applicationForm')"
+            style="width:calc(100% - 1rem)"
+        >
+          {{ $t("navBar.creditModules") }}
+        </v-btn>
+        <v-spacer/>
+        <v-btn
+            class="button-spacing"
+            variant="elevated"
+            color="#262A31"
+            @click="navigateTo('reviewApplication')"
+            style="width:calc(100% - 1rem)"
+        >
+          {{ $t("navBar.review") }}
+        </v-btn>
+        <v-spacer/>
+        <v-container fluid>
+          <v-row>
+            <v-col cols="4">
+              <DarkThemeToggle/>
+            </v-col>
+            <v-col cols="4">
+              <LanguageSwitcher/>
+            </v-col>
+            <v-col cols="4">
+              <v-btn
+                  class="button-spacing"
+                  variant="elevated"
+                  color="#262A31"
+                  icon="mdi-login-variant"
+                  @click="navigateTo('login')"
+              />
+            </v-col>
+          </v-row>
+        </v-container>
       </v-list>
     </v-navigation-drawer>
   </v-container>
