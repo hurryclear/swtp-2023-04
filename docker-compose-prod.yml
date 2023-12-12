@@ -13,4 +13,17 @@ services:
    image: swtp04/springboot-backend:latest
    ports:
     - 172.26.92.83:3001:8080
+   depends_on:
+    - postgres
    restart: unless-stopped
+   environment:
+    SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/your_database_name
+    SPRING_DATASOURCE_USERNAME: your_username
+    SPRING_DATASOURCE_PASSWORD: your_password
+
+  postgres:
+   image: postgres:16
+   environment:
+    POSTGRES_DB: your_database_name
+    POSTGRES_USER: your_username
+    POSTGRES_PASSWORD: your_password
