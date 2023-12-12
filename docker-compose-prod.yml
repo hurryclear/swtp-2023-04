@@ -6,7 +6,11 @@ services:
    image: swtp04/vue-frontend:latest
    ports:
     - 172.26.92.83:3000:80
+   depends_on:
+    - backend
    restart: unless-stopped
+   networks:
+    - frontend_backend_network
   
   backend:
    container_name: springboot-backend
@@ -20,6 +24,9 @@ services:
     SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/your_database_name
     SPRING_DATASOURCE_USERNAME: your_username
     SPRING_DATASOURCE_PASSWORD: your_password
+   networks:
+    - backend_db_network
+    - frontend_backend_network
 
   postgres:
    image: postgres:16
@@ -27,3 +34,18 @@ services:
     POSTGRES_DB: your_database_name
     POSTGRES_USER: your_username
     POSTGRES_PASSWORD: your_password
+   networks:
+    - backend_db_network
+
+networks:
+ backend_db_network:
+  driver: bridge
+  ipam:
+   config:
+    - subnet: 172.17.0.0/25
+ frontend_backend_network:
+  driver: bridge
+  ipam:
+   config:
+    - subnet: 172.17.1.0/25
+
