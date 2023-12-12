@@ -70,6 +70,6 @@ deploy:
     - chmod 644 ~/.ssh/known_hosts
   script:
     - echo "$DOCKERHUB_ACCESS_TOKEN" | docker login --username $CI_REGISTRY_USER --password-stdin
-    - docker-compose down --rmi all
+    - docker-compose -f docker-compose prod down --rmi all
     - docker-compose -f docker-compose-prod.yml pull
     - docker-compose -f docker-compose-prod.yml up -d
