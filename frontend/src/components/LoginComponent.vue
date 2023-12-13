@@ -49,8 +49,8 @@ export default {
       loginError: false,
       //TODO: Remove after backend implementation
       dummyLogins: {
-        examiningCommitteeChair: {username: 'admin1', password: '1234'},
-        studyOffice: {username: 'admin2', password: '1234'},
+        examiningCommitteeChair: {username: 'Prüfungsausschuss', password: '1234'},
+        studyOffice: {username: 'Studienbüro', password: '1234'},
       },
     };
   },

@@ -10,7 +10,3 @@
 import LogoutButton from '@/components/LogoutButton.vue';
 
 </script>
-
-<style scoped>
-
-</style>
