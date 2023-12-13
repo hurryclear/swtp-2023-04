@@ -3,8 +3,8 @@
 </template>
 
 <script setup>
-import { useTheme } from 'vuetify'
-import { computed } from 'vue'
+import {useTheme} from 'vuetify'
+import {computed} from 'vue'
 
 const theme = useTheme()
 
@@ -18,11 +18,8 @@ function toggleTheme() {
 </script>
 
 <style scoped>
-  .button-spacing {
-  margin-left: 8px; 
-  margin-right: 8px; 
-  margin-top: 8px;
-  margin-bottom: 8px;
-  }
+.button-spacing {
+  margin: 8px;
+}
 
 </style>

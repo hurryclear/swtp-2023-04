@@ -23,30 +23,33 @@
 <script>
 import ModuleForm from "@/components/ModuleForm.vue";
 import {defineComponent} from "vue";
+
 export default defineComponent({
   components: {ModuleForm},
   data() {
     return {
       moduleForms: [
-          {
-            key: 0,
-            name: '',
-            comment: '',
-            description: null,
-            file: null,
-            module2bCredited: null
-          }
+        {
+          key: 0,
+          name: '',
+          comment: '',
+          description: null,
+          file: null,
+          module2bCredited: null
+        }
       ],
       formsFilled: false,
     };
   },
   methods: {
     addModuleForm() {
-      this.moduleForms.push({key:(this.moduleForms[this.moduleForms.length - 1].key+1), name: '', comment: '', description: null,
-        file: null, module2bCredited: null, isFilled: false });
+      this.moduleForms.push({
+        key: (this.moduleForms[this.moduleForms.length - 1].key + 1), name: '', comment: '', description: null,
+        file: null, module2bCredited: null, isFilled: false
+      });
       this.formsFilled = false;
     },
-    checkIfFilled(){
+    checkIfFilled() {
       this.formsFilled = this.moduleForms.every(form => form.isFilled);
       return this.formsFilled;
     },
@@ -58,14 +61,14 @@ export default defineComponent({
     },
     // Listen to the emitted event from ModuleForm and propagate it to the parent (FormPage)
     updateModuleData(index, data, file) {
-      this.moduleForms[index]=data;
-      this.moduleForms[index].file=file
-      if (this.checkIfFilled()){
-        this.$emit('updateModuleData',this.moduleForms)
+      this.moduleForms[index] = data;
+      this.moduleForms[index].file = file
+      if (this.checkIfFilled()) {
+        this.$emit('updateModuleData', this.moduleForms)
       }
     },
-    emitFillChange(){
-      this.$emit('fillChange',this.formsFilled)
+    emitFillChange() {
+      this.$emit('fillChange', this.formsFilled)
     }
   },
   watch: {

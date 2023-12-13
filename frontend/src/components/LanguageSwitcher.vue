@@ -49,10 +49,7 @@ export default {
 
 <style scoped>
 .button-spacing {
-  margin-left: 8px;
-  margin-right: 8px;
-  margin-top: 8px;
-  margin-bottom: 8px;
+  margin: 8px;
 }
 
 </style>

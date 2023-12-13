@@ -12,19 +12,19 @@
 </template>
 
 <script setup>
-  import test1 from '@/assets/test_Form.json'
-  import test2 from '@/assets/test_Form2.json'
+import test1 from '@/assets/test_Form.json'
+import test2 from '@/assets/test_Form2.json'
 
-  const forms = {test1, test2}
+const forms = {test1, test2}
 </script>
 
 <style scoped>
-  .list {
-    padding: 2rem;
-  }
+.list {
+  padding: 2rem;
+}
 
-  .edit-button {
-    margin-left: 5%;
-    align-self: center;
-  }
+.edit-button {
+  margin-left: 5%;
+  align-self: center;
+}
 </style>

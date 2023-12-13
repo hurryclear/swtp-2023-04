@@ -47,6 +47,7 @@ export default {
       password: '',
       showPassword: false,
       loginError: false,
+      //TODO: Remove after backend implementation
       dummyLogins: {
         examiningCommitteeChair: {username: 'admin1', password: '1234'},
         studyOffice: {username: 'admin2', password: '1234'},
@@ -69,7 +70,7 @@ export default {
       if (role) {
         this.$store.dispatch('authenticateUser', {status: true, role});
         if (role === 'examiningCommitteeChair') {
-          this.$router.push('/pruefunsausschuss');
+          this.$router.push('/pruefungsausschuss');
         } else if (role === 'studyOffice') {
           this.$router.push('/study-office');
         }

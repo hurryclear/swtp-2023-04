@@ -182,16 +182,14 @@ export default {
   z-index: -1;
 }
 
+/*Somehow controls where the logo is placed*/
 .navbar-logo {
   max-height: 120px;
   max-width: 240px;
 }
 
 .button-spacing {
-  margin-left: 8px;
-  margin-right: 8px;
-  margin-top: 8px;
-  margin-bottom: 8px;
+  margin: 8px;
 }
 
 .navbar-content {
@@ -211,5 +209,4 @@ export default {
 .d-none.d-md-flex {
   display: none;
 }
-
 </style>
