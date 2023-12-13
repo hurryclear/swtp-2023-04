@@ -4,6 +4,9 @@
       <FormDisplay @open-edit-menu="displayEditMenu"/>
       <EditMenu v-if="isDisplayed" :form="formContent"/>
     </v-container>
+    <div>
+      <LogoutButton />
+    </div>
 </template>
 
 <script>

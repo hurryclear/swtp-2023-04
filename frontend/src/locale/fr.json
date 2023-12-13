@@ -20,9 +20,16 @@
     "studyProgramLabel": "Nom du programme d'études"
   },
   "navBar": {
-    "main":"",
-    "creditModules": "",
-    "review": "",
-    "login": ""
-  }
+    "main":"Page Principale",
+    "creditModules": "Valider des Modules",
+    "review": "Consulter la Demande",
+    "login": "Connexion"
+  },
+  "loginComponent": {
+    "usernameLabel": "Nom d'utilisateur",
+    "passwordLabel": "Mot de passe",
+    "loginButton": "Se connecter",
+    "loginErrorMessage": "Nom d'utilisateur ou mot de passe incorrect."
+  },
+  "logoutButton": "Se déconnecter"
 }

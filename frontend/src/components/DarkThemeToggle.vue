@@ -1,15 +1,25 @@
 <template>
-  <v-btn @click="toggleTheme" variant="outlined" class="v-btn">
-    {{ $t("darkMode.toggleDarkMode") }}
-  </v-btn>
+  <v-btn class="button-spacing" variant="elevated" color="#262A31" :icon="themeIcon" @click="toggleTheme"></v-btn>
 </template>
 
 <script setup>
-import { useTheme } from 'vuetify'
+import {useTheme} from 'vuetify'
+import {computed} from 'vue'
 
 const theme = useTheme()
+
+const themeIcon = computed(() => {
+  return theme.global.current.value.dark ? 'mdi-brightness-7' : 'mdi-brightness-4';
+});
 
 function toggleTheme() {
   theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
 }
 </script>
+
+<style scoped>
+.button-spacing {
+  margin: 8px;
+}
+
+</style>
