@@ -1,8 +1,10 @@
 <template>
     <v-container fluid class="wrapper">
-      <h1>Offene Anträge</h1>
-      <FormDisplay @open-edit-menu="displayEditMenu"/>
-      <EditMenu v-if="isDisplayed" :form="formContent"/>
+      <h1 style="margin-bottom: 2%">Offene Anträge</h1>
+      <v-row>
+        <FormDisplay class="form-display" @open-edit-menu="openEditMenu"/>
+        <EditMenu class="edit-menu" v-if="isDisplayed" :form="formContent" @close-edit-menu="closeEditMenu"/>
+      </v-row>
     </v-container>
 </template>
 
@@ -18,19 +20,31 @@
       }
     },
     methods: {
-      displayEditMenu(form) {
+      openEditMenu(form) {
         this.formContent = form;
         this.isDisplayed = true;
+      },
+      closeEditMenu() {
+        this.isDisplayed = false;
+        this.formContent = {};
       }
     }
   }
-
-
-
 </script>
 
 <style scoped>
   .wrapper {
     margin-left: 5%;
+  }
+
+  .form-display {
+    border: 2px solid gray;
+    border-radius: 3px;
+  }
+
+  .edit-menu {
+    border: 2px solid gray;
+    border-radius: 3px;
+    width: 40%;
   }
 </style>
