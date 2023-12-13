@@ -37,7 +37,6 @@
     },
     methods: {
       openEditMenu(form) {
-        //const cleanJSON = JSON.stringify(form)
         this.$emit('open-edit-menu', form);
       }
     }
@@ -46,8 +45,7 @@
 
 <style scoped>
   .table {
-    table-layout: fixed;
-    margin-right: 5rem;
+    margin-right: 10%;
     width: 40%;
   }
 
