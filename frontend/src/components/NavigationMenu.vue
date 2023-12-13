@@ -1,8 +1,8 @@
 <template>
   <v-container>
     <v-app-bar app class="custom-navbar">
-      <div class="navbar-content">
-        <v-img :src="logoSrc" height="100%" contain class="navbar-logo"></v-img>
+        <!-- Logo -->
+        <v-img :src="logoSrc" ></v-img>
         <v-spacer/>
 
         <!-- Hamburger menu for mobile view -->
@@ -45,7 +45,7 @@
                  @click="navigateTo('login')"
           />
         </div>
-      </div>
+      
     </v-app-bar>
 
     <v-navigation-drawer fluid temporary v-model="drawer" app>
@@ -166,10 +166,6 @@ export default {
 </script>
 
 <style scoped>
-.custom-navbar {
-  background-color: var(--v-theme-dark);
-}
-
 .custom-navbar::after {
   content: '';
   position: absolute;
@@ -182,24 +178,13 @@ export default {
   z-index: -1;
 }
 
-.navbar-logo {
-  max-height: 120px;
-  max-width: 240px;
-}
+
 
 .button-spacing {
   margin-left: 8px;
   margin-right: 8px;
   margin-top: 8px;
   margin-bottom: 8px;
-}
-
-.navbar-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
 }
 
 .d-md-none {
