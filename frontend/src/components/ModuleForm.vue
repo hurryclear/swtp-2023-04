@@ -88,9 +88,9 @@ export default {
     },
     checkFormFilled() {
       this.formData.isFilled =
-          this.formData.name.trim()!== '' &&
-          this.formData.description!== null &&
-          this.formData.module2bCredited!== null;
+          this.formData.name.trim() !== '' &&
+          this.formData.description !== null &&
+          this.formData.module2bCredited !== null;
     },
     removeModule() {
       this.$emit('removeModule');
@@ -110,9 +110,5 @@ export default {
     'formData.module2bCredited': 'watchModuleData',
     'formData.comment': 'watchModuleData',
   },
-};
+}
 </script>
-
-<style scoped>
-/* Add scoped styles if needed */
-</style>

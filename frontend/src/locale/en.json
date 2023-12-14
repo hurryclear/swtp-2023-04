@@ -22,8 +22,16 @@
   },
   "navBar": {
     "main":"Main Page",
-    "apply": "Apply",
-    "review": "Review",
-    "login": "login"
-  }
+    "creditModules": "Credit Modules",
+    "review": "Review Application",
+    "login": "Login"
+  },
+
+  "loginComponent": {
+    "usernameLabel": "Username",
+    "passwordLabel": "Password",
+    "loginButton": "Login",
+    "loginErrorMessage": "Incorrect username or password."
+  },
+  "logoutButton": "Logout"
 }

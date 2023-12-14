@@ -20,9 +20,16 @@
     "studyProgramLabel": "Nombre del programa de estudios"
   },
   "navBar": {
-    "main":"",
-    "apply": "",
-    "review": "",
-    "login": ""
-  }
+    "main":"Página Principal",
+    "creditModules": "Acreditar Módulos",
+    "review": "Ver Solicitud",
+    "login": "Iniciar Sesión"
+  },
+  "loginComponent": {
+    "usernameLabel": "Nombre de usuario",
+    "passwordLabel": "Contraseña",
+    "loginButton": "Iniciar sesión",
+    "loginErrorMessage": "Nombre de usuario o contraseña incorrectos."
+  },
+  "logoutButton": "Cerrar sesión"
 }

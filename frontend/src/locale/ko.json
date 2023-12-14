@@ -20,9 +20,16 @@
     "studyProgramLabel": "학습 프로그램 이름"
   },
   "navBar": {
-    "main":"",
-    "apply": "",
-    "review": "",
-    "login": ""
-  }
+    "main":"메인 페이지",
+    "creditModules": "모듈 인정",
+    "review": "신청서 조회",
+    "login": "로그인"
+  },
+  "loginComponent": {
+    "usernameLabel": "사용자 이름",
+    "passwordLabel": "비밀번호",
+    "loginButton": "로그인",
+    "loginErrorMessage": "사용자 이름 또는 비밀번호가 잘못되었습니다."
+  },
+  "logoutButton": "로그아웃"
 }

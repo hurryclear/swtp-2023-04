@@ -20,9 +20,16 @@
     "studyProgramLabel": "学習プログラム名"
   },
   "navBar": {
-    "main":"",
-    "apply": "",
-    "review": "",
-    "login": ""
-  }
+    "main":"メインページ",
+    "creditModules": "モジュールを認定する",
+    "review": "申請を閲覧する",
+    "login": "ログイン"
+  },
+  "loginComponent": {
+    "usernameLabel": "ユーザー名",
+    "passwordLabel": "パスワード",
+    "loginButton": "ログイン",
+    "loginErrorMessage": "ユーザー名またはパスワードが間違っています。"
+  },
+  "logoutButton": "ログアウト"
 }
