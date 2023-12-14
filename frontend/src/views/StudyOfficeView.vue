@@ -1,6 +1,11 @@
 <template>
     <v-container fluid class="wrapper">
-      <h1 style="margin-bottom: 2%">Offene Anträge</h1>
+      <v-row>
+        <h1 style="margin-bottom: 2%">Offene Anträge</h1>
+        <v-spacer/>
+        <v-spacer/>
+        <LogoutButton style="margin-left: 40%"/>
+      </v-row>
       <v-row>
         <v-col>
           <FormDisplay class="form-display" @open-edit-menu="openEditMenu"/>
@@ -10,16 +15,14 @@
         </v-col>
       </v-row>
     </v-container>
-    <div>
-      <LogoutButton />
-    </div>
 </template>
 
 <script>
   import EditMenu from "@/components/EditMenu.vue";
   import FormDisplay from "@/components/FormDisplay.vue"
+  import LogoutButton from "@/components/LogoutButton.vue";
   export default {
-    components: {EditMenu, FormDisplay},
+    components: {EditMenu, FormDisplay, LogoutButton},
     data() {
       return {
         isDisplayed: false,
@@ -46,14 +49,13 @@
 
   .form-display {
     border: 2px solid gray;
-    border-radius: 3px;
-    display: flow;
+    border-radius: 10px;
     width: 80%;
   }
 
   .edit-menu {
     border: 2px solid gray;
-    border-radius: 3px;
+    border-radius: 10px;
     width: 80%;
   }
 </style>
