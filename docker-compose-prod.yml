@@ -3,14 +3,52 @@ version: "3.7"
 services:
   frontend:
    container_name: vue-frontend
-   image: swtp04/vue-frontend
+   image: swtp04/vue-frontend:latest
    ports:
     - 172.26.92.83:3000:80
+   depends_on:
+    - backend
    restart: unless-stopped
+   networks:
+    - app
   
   backend:
    container_name: springboot-backend
-   image: swtp04/springboot-backend
+   image: swtp04/springboot-backend:latest
    ports:
-    - 172.26.92.83:3001:80
+    - 172.26.92.83:3001:8080
+   depends_on:
+    - postgres
    restart: unless-stopped
+   environment:
+    SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/your_database_name
+    SPRING_DATASOURCE_USERNAME: your_username
+    SPRING_DATASOURCE_PASSWORD: your_password
+   networks:
+    - app
+
+  postgres:
+   image: postgres:16
+   container_name: postgres-database
+   environment:
+    POSTGRES_DB: your_database_name
+    POSTGRES_USER: your_username
+    POSTGRES_PASSWORD: your_password
+   volumes:
+    - postgres_data:/var/lib/postgresql/data
+   networks:
+    - app
+   ports:
+    - 172.26.92.83:5432:5432
+   restart: unless-stopped
+
+networks:
+# frontend-backend:
+#  driver: bridge
+# backend-db:
+#  driver: bridge
+ app:
+  driver: bridge
+
+volumes:
+ postgres_data:
