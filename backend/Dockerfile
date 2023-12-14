@@ -11,5 +11,4 @@ RUN mvn clean package -DskipTests
 FROM amazoncorretto:17 as production
 WORKDIR /app
 COPY --from=build /app/target/backend.jar .
-EXPOSE 8080
 CMD ["java", "-jar", "backend.jar"]
