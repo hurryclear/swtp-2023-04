@@ -2,8 +2,12 @@
     <v-container fluid class="wrapper">
       <h1 style="margin-bottom: 2%">Offene Anträge</h1>
       <v-row>
-        <FormDisplay class="form-display" @open-edit-menu="openEditMenu"/>
-        <EditMenu class="edit-menu" v-if="isDisplayed" :form="formContent" @close-edit-menu="closeEditMenu"/>
+        <v-col>
+          <FormDisplay class="form-display" @open-edit-menu="openEditMenu"/>
+        </v-col>
+        <v-col>
+          <EditMenu class="edit-menu" v-if="isDisplayed" :form="formContent" @close-edit-menu="closeEditMenu"/>
+        </v-col>
       </v-row>
     </v-container>
 </template>
@@ -40,11 +44,13 @@
   .form-display {
     border: 2px solid gray;
     border-radius: 3px;
+    display: flow;
+    width: 80%;
   }
 
   .edit-menu {
     border: 2px solid gray;
     border-radius: 3px;
-    width: 40%;
+    width: 80%;
   }
 </style>
