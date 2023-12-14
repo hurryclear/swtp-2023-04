@@ -64,7 +64,9 @@ export default defineComponent({
       this.moduleForms = data;
     },
     submitWholeForm() {
+      const timestamp = new Date().toISOString();
       const formData = {
+        timestamp: timestamp,
         universityData: this.universityData,
         moduleFormsData: this.moduleForms,
       };
