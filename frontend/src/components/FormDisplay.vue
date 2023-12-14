@@ -46,7 +46,6 @@
 <style scoped>
   .table {
     margin-right: 10%;
-    width: 40%;
   }
 
   td {
