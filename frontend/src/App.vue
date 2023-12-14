@@ -1,10 +1,10 @@
 <template>
-  <v-app className="v-application">
+  <v-app class="v-application">
     <v-container>
       <NavigationMenu/>
     </v-container>
 
-    <div className="main-container">
+    <div class="main-container">
       <router-view/>
     </div>
   </v-app>

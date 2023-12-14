@@ -1,7 +1,7 @@
 package com.example.backend;
 
 
-import jakarta.persistence.*;
+//import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
-@Table
+//@Entity
+//@Table
 public class University {
-    @Id
+    //@Id
     private String universityName;
     private String studyProgram;
     private String country;
