@@ -42,10 +42,11 @@ export default defineComponent({
 </script>
 
 <style>
-  .v-application > * {
-    transition: background-color 1s ease, color 1s ease; /*Dark Mode Transition*/
-  }
-  .main-container {
-    margin:1rem
-  }
+.v-application > * {
+  transition: background-color 1s ease, color 1s ease; /*Dark Mode Transition*/
+}
+
+.main-container {
+  margin: 1rem
+}
 </style>

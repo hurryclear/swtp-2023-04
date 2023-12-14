@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.*;
 public class GreetingController {
 
     @GetMapping("/greeting")
-    public String greeting() {
-        return "Hello from Spring Boot!";
+    public Object greeting() {
+        return new University("Universität Bochum", "B. Sc. Informatik", "Deutschland");
     }
 
 
