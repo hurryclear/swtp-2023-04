@@ -31,5 +31,10 @@
     "loginButton": "Iniciar sesión",
     "loginErrorMessage": "Nombre de usuario o contraseña incorrectos."
   },
-  "logoutButton": "Cerrar sesión"
+  "logoutButton": "Cerrar sesión",
+  "homeView": {
+    "welcomeStudent": "¡Bienvenido a nuestra nueva plataforma en línea para el reconocimiento de créditos en la Universidad de Leipzig!\nEntendemos que el proceso de reconocimiento de créditos a menudo es complejo y lleva tiempo.\nEs aún más importante que este proceso ahora se pueda realizar en línea, de manera digital y fácil.\nComo estudiante, ahora puedes enviar tu solicitud con solo unos clics.\nPresiona 'Reconocer Módulos' para empezar.\nAl enviar tu solicitud, se te asignará un número de referencia único, que también podrás usar más tarde para ver tu solicitud y su estado.",
+    "welcomeStudentAffairsOffice": "¡Bienvenido, personal de la Oficina de Asuntos Estudiantiles!\nComo miembro del personal de la Oficina de Asuntos Estudiantiles, tienes acceso a una visión general de todas las solicitudes abiertas.\nPuedes procesar, complementar y hacer un seguimiento del estado de procesamiento de las solicitudes.\nUtiliza la interfaz amigable para hacer que el proceso de reconocimiento de créditos sea más eficiente.",
+    "welcomeExaminingCommitteeChair": "Bienvenido, estimado presidente del Comité de Exámenes!\nEn esta plataforma, tienes la oportunidad de revisar y aprobar o rechazar todas las solicitudes abiertas.\nPor favor, proporciona una razón fundamentada para tus decisiones.\nTu participación hace que el proceso de reconocimiento de créditos sea más eficiente y concreto."
+  }
 }

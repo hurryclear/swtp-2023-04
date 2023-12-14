@@ -31,5 +31,10 @@
     "loginButton": "Accedi",
     "loginErrorMessage": "Nome utente o password errati."
   },
-  "logoutButton": "Esci"
+  "logoutButton": "Esci",
+  "homeView": {
+    "welcomeStudent": "Benvenuto nella nostra nuova piattaforma online per il riconoscimento dei crediti presso l'Università di Lipsia!\nComprendiamo che il processo di riconoscimento dei crediti è spesso complesso e richiede tempo.\nÈ ancora più importante che questo processo possa ora essere svolto online, in modo digitale e semplice.\nCome studente, puoi ora inviare la tua domanda con pochi clic.\nPremi su 'Riconosci Moduli' per iniziare.\nCon l'invio della tua domanda ti verrà assegnato un numero di riferimento unico, con il quale potrai anche in seguito visualizzare la tua domanda e il suo stato.",
+    "welcomeStudentAffairsOffice": "Benvenuto, personale dell'Ufficio Affari Studenteschi!\nCome membro del personale dell'Ufficio Affari Studenteschi, hai accesso a una panoramica di tutte le domande aperte.\nPuoi elaborare, integrare e monitorare lo stato di elaborazione delle domande.\nUtilizza l'interfaccia utente amichevole per rendere più efficiente il processo di riconoscimento dei crediti.",
+    "welcomeExaminingCommitteeChair": "Benvenuto, stimato presidente del Comitato Esami!\nSu questa piattaforma hai la possibilità di visionare e approvare o respingere tutte le domande aperte.\nFornisci una motivazione ben fondata per le tue decisioni.\nLa tua partecipazione rende il processo di riconoscimento dei crediti più efficiente e mirato."
+  }
 }
