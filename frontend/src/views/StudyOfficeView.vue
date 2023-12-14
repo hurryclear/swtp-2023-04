@@ -1,22 +1,53 @@
 <template>
-    <v-container fluid="true" class="wrapper">
-      <h1>Offene Anträge</h1>
-      <FormDisplay/>
+    <v-container fluid class="wrapper">
+      <h1 style="margin-bottom: 2%">Offene Anträge</h1>
+      <v-row>
+        <FormDisplay class="form-display" @open-edit-menu="openEditMenu"/>
+        <EditMenu class="edit-menu" v-if="isDisplayed" :form="formContent" @close-edit-menu="closeEditMenu"/>
+      </v-row>
     </v-container>
     <div>
       <LogoutButton />
     </div>
 </template>
 
-<script setup>
-  import FormDisplay from "@/components/FormDisplay.vue";
-
-  import LogoutButton from '@/components/LogoutButton.vue'; 
-
+<script>
+  import EditMenu from "@/components/EditMenu.vue";
+  import FormDisplay from "@/components/FormDisplay.vue"
+  export default {
+    components: {EditMenu, FormDisplay},
+    data() {
+      return {
+        isDisplayed: false,
+        formContent: {}
+      }
+    },
+    methods: {
+      openEditMenu(form) {
+        this.formContent = form;
+        this.isDisplayed = true;
+      },
+      closeEditMenu() {
+        this.isDisplayed = false;
+        this.formContent = {};
+      }
+    }
+  }
 </script>
 
 <style scoped>
   .wrapper {
     margin-left: 5%;
+  }
+
+  .form-display {
+    border: 2px solid gray;
+    border-radius: 3px;
+  }
+
+  .edit-menu {
+    border: 2px solid gray;
+    border-radius: 3px;
+    width: 40%;
   }
 </style>

@@ -30,7 +30,7 @@ const routes = [
         meta: { requiresAuth: true, role: 'studyOffice'}
     },
     {
-      path:'/pruefunsausschuss',
+      path:'/pruefungsausschuss',
       name:'PrüfungsAusschuss',
       component: () => import('@/views/PruefungsAusschuss.vue'),
       meta: { requiresAuth: true, role: 'examiningCommitteeChair'}
