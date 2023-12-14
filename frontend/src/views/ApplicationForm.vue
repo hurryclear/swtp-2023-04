@@ -20,13 +20,12 @@
 </template>
 
 <script>
-// Importing necessary components
 import UniversityForm from "@/components/UniversityForm.vue";
 import { defineComponent } from "vue";
 import ModuleFormList from "@/components/ModuleFormList.vue";
 
 export default defineComponent({
-  components: {ModuleFormList, UniversityForm},
+  components: { ModuleFormList, UniversityForm },
   computed: {
     universityDataFilled() {
       return (
@@ -42,44 +41,57 @@ export default defineComponent({
   data() {
     return {
       universityData: {
-        universityName: '',
-        studyProgram: '',
-        country: '',
+        universityName: "",
+        studyProgram: "",
+        country: "",
       },
-      //TODO: Get File
       moduleForms: [
         {
-          name: '',
-          comment: '',
+          name: "",
+          comment: "",
           description: null,
-          module2bCredited: null}
+          module2bCredited: null,
+        },
       ],
-      moduleDataFilled: false
+      moduleDataFilled: false,
     };
   },
   methods: {
-    // Update university data when UniversityForm emits an event
     updateUniversityData(data) {
       this.universityData = data;
     },
-    // Update module data when ModuleForm emits an event
     updateModuleData(data) {
-      this.moduleForms = data
+      this.moduleForms = data;
     },
-
     submitWholeForm() {
-      // Combine university data and module forms data for submission
       const formData = {
         universityData: this.universityData,
         moduleFormsData: this.moduleForms,
       };
 
-      // TODO: Submission Handling
-      console.log('Whole Form submitted:', JSON.stringify(formData, null, 2));
+      const filePath = "form.json";
+
+      // Create a Blob with the JSON data
+      const blob = new Blob([JSON.stringify(formData, null, 2)], {
+        type: "application/json",
+      });
+
+      // Create a link element to trigger the download
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = filePath;
+
+      // Append the link to the document and trigger the download
+      document.body.appendChild(link);
+      link.click();
+
+      // Remove the link from the document
+      document.body.removeChild(link);
     },
-  }
+  },
 });
 </script>
+
 
 <style>
 /* Styling for the class 'userInput' */
