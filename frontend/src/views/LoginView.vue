@@ -1,7 +1,7 @@
 
 <template>
   <div>
-    <LoginComponent @loginSubmitted="handleLogin" />
+    <LoginComponent @loginSubmitted="handleLogin"/>
   </div>
 </template>
 

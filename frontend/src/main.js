@@ -10,15 +10,20 @@ import i18n from "@/plugins/i18n";
 import vuetify from "@/plugins/vuetify";
 
 // Vuex Store
-import store from '@/store'; 
+import store from '@/store';
+
+//TODO: AXIOS
+
+import VueAxios from 'vue-axios';
+import axios from '@/plugins/axios';
 
 // Vue App
 import { createApp } from 'vue';
 import App from './App.vue';
 
-//TODO: AXIOS
 const app = createApp(App);
 
+app.use(VueAxios, axios);
 app.use(vuetify);
 app.use(i18n);
 app.use(router);

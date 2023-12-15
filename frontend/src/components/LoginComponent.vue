@@ -63,7 +63,7 @@ export default {
         console.log('User role set to:', role);
       } else if (this.username === this.dummyLogins.studyOffice.username &&
           this.password === this.dummyLogins.studyOffice.password) {
-        role = 'studyOffice';
+        role = 'studentAffairsOffice';
         console.log('User role set to:', role);
       }
 
@@ -71,7 +71,7 @@ export default {
         this.$store.dispatch('authenticateUser', {status: true, role});
         if (role === 'examiningCommitteeChair') {
           this.$router.push('/pruefungsausschuss');
-        } else if (role === 'studyOffice') {
+        } else if (role === 'studentAffairsOffice') {
           this.$router.push('/study-office');
         }
       } else {
