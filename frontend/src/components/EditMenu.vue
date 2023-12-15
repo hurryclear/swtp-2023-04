@@ -5,6 +5,7 @@
         <u>Antrag</u>
       </v-card-title>
       <v-spacer></v-spacer>
+        <v-btn @click="openComparisonMenu">Mit anderen Anträgen vergleichen</v-btn>
         <v-btn class="button-top"  icon="mdi-close" @click="closeEditMenu" variant="text"></v-btn>
     </div>
     <v-card-item>
@@ -17,7 +18,7 @@
       <u>Land</u>: {{ form.universityData.country }}
     </v-card-item>
     <v-card-title>
-      <u>Module</u>:
+      Module:
     </v-card-title>
     <div v-for="moduleData in form.moduleFormsData" v-bind:key="moduleData.key" >
       <v-card-subtitle>
@@ -44,7 +45,7 @@
 <script>
 export default {
   props: {
-    form: Object
+    form: JSON
   },
 
   data() {
@@ -66,6 +67,9 @@ export default {
       });
       this.closeEditMenu();
     },
+    openComparisonMenu() {
+      this.$emit("open-comparison");
+    }
   },
 }
 </script>

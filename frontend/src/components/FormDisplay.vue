@@ -1,4 +1,5 @@
 <template>
+  <h1>Offene Anträge</h1>
   <v-table class="table">
     <thead>
     <tr>
@@ -45,7 +46,9 @@
 
 <style scoped>
   .table {
-    margin-right: 10%;
+    border: 2px solid gray;
+    border-radius: 10px;
+    width: 80%;
   }
 
   td {
@@ -56,4 +59,6 @@
   .table-row {
     padding-top: 20%;
   }
+
+
 </style>
