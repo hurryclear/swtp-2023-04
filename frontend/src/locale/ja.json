@@ -3,27 +3,26 @@
     "toggleDarkMode": "ダークモードの切り替え"
   },
   "applicationForm": {
-    "addModule": "モジュールの追加",
+    "addModule": "モジュールを追加",
     "module": "モジュール",
-    "moduleDescription": "クレジットされるモジュールに関する情報を提供してください！",
+    "moduleDescription": "認定するモジュールに関する情報を提供してください！",
     "moduleNameLabel": "モジュール名",
     "moduleDescriptionLabel": "モジュールの説明",
-    "moduleCreditedLabel": "クレジットされるモジュール",
+    "moduleCreditedLabel": "認定されたモジュール",
     "commentLabel": "コメント",
-    "removeModule": "モジュールの削除",
+    "removeModule": "モジュールを削除",
     "previousUniversity": "前の大学",
     "universityDescription": "前の大学の名前を指定してください！",
-    "universityNameLabel": "大学の名前",
+    "universityNameLabel": "大学名",
     "countryLabel": "国",
     "previousStudyProgram": "前の学習プログラム",
     "studyProgramDescription": "前の学習プログラムの名前を指定してください！",
-    "studyProgramLabel": "学習プログラムの名前",
-    "submit": "フォームを送信"
+    "studyProgramLabel": "学習プログラム名"
   },
   "navBar": {
-    "main": "メインページ",
-    "creditModules": "クレジットモジュール",
-    "review": "申請の確認",
+    "main":"メインページ",
+    "creditModules": "モジュールを認定する",
+    "review": "申請を閲覧する",
     "login": "ログイン"
   },
   "loginComponent": {
@@ -34,31 +33,8 @@
   },
   "logoutButton": "ログアウト",
   "homeView": {
-    "welcomeStudent": "ライプツィヒ大学の学分認定のための新しいオンラインプラットフォームへようこそ！\n学分認定のプロセスは複雑で時間がかかることがよく理解されています。\nこのプロセスをオンラインで、デジタルで、簡単に行えることはさらに重要です。\n学生として、数クリックで申請を提出できます。\n「クレジットモジュール」をクリックして開始してください。\n申請を送信すると、一意の参照番号が割り当てられ、後で申請とそのステータスを表示できます。",
-    "welcomeStudentAffairsOffice": "学務オフィスのスタッフの皆様、ようこそ！\n学務オフィスのスタッフとして、すべてのオープンな申請の概要にアクセスできます。\n申請の処理、補完、処理ステータスの追跡が可能です。\n使いやすいインターフェースを利用して、学分認定プロセスを効率的に進めてください。",
-    "welcomeExaminingCommitteeChair": "尊敬される試験委員会の委員長の皆様、ようこそ！\nこのプラットフォームでは、すべてのオープンな申請を概観し、承認または拒否する機会があります。\nご自身の意思決定に根拠を提供してください。\n透明性のある学分認定プロセスは、皆様の参加によってより効率的で目的に沿ったものとなります。"
-  },
-  "studentAffairsOfficeView": {
-    "openApplications": "オープンな申請"
-  },
-  "examiningCommitteeChairView": {
-    "moduleCount": "モジュールの数",
-    "studentAffairsOfficeComment": "学務オフィスからのコメント",
-    "accept": "承認",
-    "decline": "拒否"
-  },
-  "reviewComponent": {
-    "reviewApplication": "申請の確認",
-    "formID": "参照番号",
-    "checkStatus": "ステータスの確認",
-    "downloadApplication": "申請のダウンロード"
-  },
-  "formDisplay": {
-    "university": "大学",
-    "edit": "編集",
-    "sendToExaminingCommitteeChair": "試験委員会に送信",
-    "reason": "理由",
-    "modules": "モジュール",
-    "application": "申請"
+    "welcomeStudent": "ライプツィヒ大学の新しいオンライン単位認定プラットフォームへようこそ！\n単位認定のプロセスは複雑で時間がかかることがよくありますが、そのプロセスがオンラインでデジタルかつ簡単に行えるようになったことは非常に重要です。\n学生の方は今後、数回のクリックで申請を行うことができます。\n始めるには「モジュールを認定」ボタンを押してください。\n申請を送信すると、一意の取引番号が割り当てられ、後で申請とその状態を確認できます。",
+    "welcomeStudentAffairsOffice": "学生アフェアーズオフィスのスタッフの皆様、ようこそ！\n学生アフェアーズオフィスのスタッフとして、全てのオープンな申請の概要にアクセスできます。\n申請の処理、補完、および処理状況の追跡が可能です。\n使いやすいインターフェースを活用して、単位認定プロセスを効率的に進めてください。",
+    "welcomeExaminingCommitteeChair": "尊敬される試験委員会の委員長の皆様、ようこそ！\nこのプラットフォームでは、全てのオープンな申請を概観し、承認または拒否する機会があります。\nご判断にはしっかりとした理由をご記入ください。\n皆様のご参加により、単位認定プロセスがより効率的で目的を持って進行します。"
   }
 }

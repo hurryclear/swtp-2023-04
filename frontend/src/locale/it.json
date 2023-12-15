@@ -5,60 +5,36 @@
   "applicationForm": {
     "addModule": "Aggiungi Modulo",
     "module": "Modulo",
-    "moduleDescription": "Fornisci informazioni sul modulo da accredita!",
+    "moduleDescription": "Fornisci informazioni sul modulo da convalidare!",
     "moduleNameLabel": "Nome del Modulo",
     "moduleDescriptionLabel": "Descrizione del Modulo",
-    "moduleCreditedLabel": "Modulo Accreditato",
+    "moduleCreditedLabel": "Modulo Convalidato",
     "commentLabel": "Commento",
     "removeModule": "Rimuovi Modulo",
     "previousUniversity": "Università Precedente",
     "universityDescription": "Specifica il nome della tua università precedente!",
     "universityNameLabel": "Nome dell'Università",
     "countryLabel": "Paese",
-    "previousStudyProgram": "Programma di Studio Precedente",
-    "studyProgramDescription": "Specifica il nome del tuo programma di studio precedente!",
-    "studyProgramLabel": "Nome del Programma di Studio",
-    "submit": "Invia Modulo"
+    "previousStudyProgram": "Programma di Studi Precedente",
+    "studyProgramDescription": "Specifica il nome del tuo programma di studi precedente!",
+    "studyProgramLabel": "Nome del Programma di Studi"
   },
   "navBar": {
     "main":"Pagina Principale",
-    "creditModules": "Accredita Moduli",
-    "review": "Esamina Richiesta",
+    "creditModules": "Convalidare Moduli",
+    "review": "Visualizzare la Domanda",
     "login": "Accedi"
   },
   "loginComponent": {
-    "usernameLabel": "Nome Utente",
+    "usernameLabel": "Nome utente",
     "passwordLabel": "Password",
     "loginButton": "Accedi",
     "loginErrorMessage": "Nome utente o password errati."
   },
   "logoutButton": "Esci",
   "homeView": {
-    "welcomeStudent": "Benvenuto nella nostra nuova piattaforma online per il riconoscimento dei crediti presso l'Università di Lipsia!\nComprediamo che il processo di riconoscimento dei crediti sia spesso complesso e lungo.\nÈ ancor più importante che questo processo possa ora essere effettuato online, in modo digitale e semplice.\nCome studente, puoi ora inviare la tua richiesta con pochi clic.\nClicca su 'Accredita Moduli' per iniziare.\nCon l'invio della tua richiesta, ti sarà assegnato un numero di riferimento unico, che potrai utilizzare in seguito per visualizzare la tua richiesta e il suo stato.",
-    "welcomeStudentAffairsOffice": "Benvenuto, personale dell'Ufficio Affari Studenti!\nCome membro dello staff dell'Ufficio Affari Studenti, hai accesso a una panoramica di tutte le richieste aperte.\nPuoi elaborare, integrare e monitorare lo stato di elaborazione delle richieste.\nUtilizza l'interfaccia utente amichevole per rendere più efficiente il processo di riconoscimento dei crediti.",
-    "welcomeExaminingCommitteeChair": "Benvenuto, stimato presidente del Comitato Esami!\nSu questa piattaforma, hai l'opportunità di esaminare e approvare o respingere tutte le richieste aperte.\nFornisci una motivazione ben fondata per le tue decisioni.\nLa tua partecipazione rende il processo di riconoscimento dei crediti più efficiente e mirato."
-  },
-  "studentAffairsOfficeView": {
-    "openApplications": "Richieste Aperte"
-  },
-  "examiningCommitteeChairView": {
-    "moduleCount": "Numero di Moduli",
-    "studentAffairsOfficeComment": "Commento dell'Ufficio Affari Studenti",
-    "accept": "Accetta",
-    "decline": "Rifiuta"
-  },
-  "reviewComponent": {
-    "reviewApplication": "Esamina Richiesta",
-    "formID": "Numero di Riferimento",
-    "checkStatus": "Verifica Stato",
-    "downloadApplication": "Scarica Richiesta"
-  },
-  "formDisplay": {
-    "university": "Università",
-    "edit": "Modifica",
-    "sendToExaminingCommitteeChair": "Invia al Comitato Esami",
-    "reason": "Motivo",
-    "modules": "Moduli",
-    "application": "Richiesta"
+    "welcomeStudent": "Benvenuto nella nostra nuova piattaforma online per il riconoscimento dei crediti presso l'Università di Lipsia!\nComprendiamo che il processo di riconoscimento dei crediti è spesso complesso e richiede tempo.\nÈ ancora più importante che questo processo possa ora essere svolto online, in modo digitale e semplice.\nCome studente, puoi ora inviare la tua domanda con pochi clic.\nPremi su 'Riconosci Moduli' per iniziare.\nCon l'invio della tua domanda ti verrà assegnato un numero di riferimento unico, con il quale potrai anche in seguito visualizzare la tua domanda e il suo stato.",
+    "welcomeStudentAffairsOffice": "Benvenuto, personale dell'Ufficio Affari Studenteschi!\nCome membro del personale dell'Ufficio Affari Studenteschi, hai accesso a una panoramica di tutte le domande aperte.\nPuoi elaborare, integrare e monitorare lo stato di elaborazione delle domande.\nUtilizza l'interfaccia utente amichevole per rendere più efficiente il processo di riconoscimento dei crediti.",
+    "welcomeExaminingCommitteeChair": "Benvenuto, stimato presidente del Comitato Esami!\nSu questa piattaforma hai la possibilità di visionare e approvare o respingere tutte le domande aperte.\nFornisci una motivazione ben fondata per le tue decisioni.\nLa tua partecipazione rende il processo di riconoscimento dei crediti più efficiente e mirato."
   }
 }

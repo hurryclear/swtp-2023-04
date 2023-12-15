@@ -1,17 +1,18 @@
 <template>
   <v-container>
+    
       <v-col >
         <v-card>
-          <v-card-title>{{ $t('reviewComponent.reviewApplication') }}</v-card-title>
+          <v-card-title>Review Application</v-card-title>
           <v-card-text>
-            <v-text-field
-              :label="$t('reviewComponent.formID')"
+            <v-text-field 
+              label="Enter Form ID" 
               v-model="formId"
               @keyup.enter="checkStatus"
               outlined
               dense
-            />
-            <v-btn @click="checkStatus" color="primary" >{{ $t('reviewComponent.checkStatus') }}</v-btn>
+            ></v-text-field>
+            <v-btn @click="checkStatus" color="primary" >Check</v-btn>
           </v-card-text>
         </v-card>
       </v-col>
@@ -21,7 +22,7 @@
         <div>
           {{ statusMessage }}
         </div>
-        <v-btn @click="downloadForm" append-icon="mdi-download">{{ $t('reviewComponent.downloadApplication') }}</v-btn>
+        <v-btn @click="downloadForm" append-icon="mdi-download">Download Application</v-btn>
       </v-alert>
     </v-col>
 
