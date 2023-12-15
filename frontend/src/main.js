@@ -12,8 +12,7 @@ import vuetify from "@/plugins/vuetify";
 // Vuex Store
 import store from '@/store';
 
-//TODO: AXIOS
-
+// Axios
 import VueAxios from 'vue-axios';
 import axios from '@/plugins/axios';
 

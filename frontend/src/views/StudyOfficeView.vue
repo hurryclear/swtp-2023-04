@@ -19,7 +19,7 @@
 
 <script>
   import EditMenu from "@/components/EditMenu.vue";
-  import FormDisplay from "@/components/FormDisplay.vue"
+  import FormDisplay from "@/components/FormDisplay.vue";
   import LogoutButton from "@/components/LogoutButton.vue";
   export default {
     components: {EditMenu, FormDisplay, LogoutButton},
@@ -29,12 +29,17 @@
         formContent: {}
       }
     },
-    closeEditMenu() {
-      this.isDisplayed = false;
-      this.formContent = {};
+    methods: {
+      openEditMenu(){
+        //TODO
+        console.log("Opening edit menu (wip)")
+      },
+      closeEditMenu() {
+        this.isDisplayed = false;
+        this.formContent = {};
+      }
     }
   }
-}
 </script>
 
 <style scoped>
