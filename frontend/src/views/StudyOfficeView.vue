@@ -1,6 +1,7 @@
 <template>
     <v-container fluid class="wrapper">
       <v-row>
+        <h1 style="margin-bottom: 2%">{{$t("studentAffairsOfficeView.openApplications")}}</h1>
         <v-spacer/>
         <v-spacer/>
         <v-spacer/>
