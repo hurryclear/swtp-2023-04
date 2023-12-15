@@ -1,7 +1,7 @@
 <template>
     <v-container fluid class="wrapper">
       <v-row>
-        <h1 style="margin-bottom: 2%">Offene Anträge</h1>
+        <h1 style="margin-bottom: 2%">{{$t("studentAffairsOfficeView.openApplications")}}</h1>
         <v-spacer/>
         <v-spacer/>
         <LogoutButton style="margin-left: 40%"/>

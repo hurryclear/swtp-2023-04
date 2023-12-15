@@ -2,9 +2,9 @@
   <v-table class="table">
     <thead>
     <tr>
-      <th style="text-align: left;">Universität</th>
-      <th style="text-align: center;">Anzahl der Module</th>
-      <th style="text-align: right;">Bisheriger Studiengang</th>
+      <th style="text-align: left;">{{$t("formDisplay.university")}}</th>
+      <th style="text-align: center;">{{ $t("examiningCommitteeChairView.moduleCount") }}</th>
+      <th style="text-align: right;">{{$t("applicationForm.previousStudyProgram")}}</th>
     </tr>
     </thead>
     <tr v-for="form in forms" v-bind:key="form" class="table-row">
@@ -19,7 +19,7 @@
       </td>
       <td>
         <v-btn @click="openEditMenu(form)">
-          Bearbeiten
+          {{ $t("formDisplay.edit") }}
         </v-btn>
       </td>
     </tr>
