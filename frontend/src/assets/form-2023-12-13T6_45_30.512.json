@@ -1,0 +1,26 @@
+{
+  "timestamp": "2023-12-13T6:45:30.512Z",
+  "universityData": {
+    "universityName": "MIT",
+    "studyProgram": "Computer Science",
+    "country": "United States"
+  },
+  "moduleFormsData": [
+    {
+      "key": 0,
+      "name": "Introduction to Computer Science",
+      "comment": "The content covered in this module aligns with the curriculum at ETH Zurich for the first semester.",
+      "description": [
+        {}
+      ],
+      "file": {},
+      "module2bCredited": [
+        "Kermodul (Wahlpflichtfach)"
+      ],
+      "isFilled": true
+    }
+  ],
+  "status": "Akzeptiert",
+  "id": "2023-12-13T6:45:30.512Z",
+  "comment": "Da wir auch ein Modul zu Künstlicher Intelligenz haben, mit ähnlichem Leistungsaufwand, sollte das Modul angerechnet werden"
+}
