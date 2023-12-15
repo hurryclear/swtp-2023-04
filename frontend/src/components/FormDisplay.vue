@@ -31,7 +31,7 @@
     computed: {
       // Use Vuex getter to get forms with a specific status
       forms() {
-        return this.$store.getters.formsByStatus('open');
+        return this.$store.getters.formsByStatus('Offen');
       }
     },
     methods: {
