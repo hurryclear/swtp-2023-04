@@ -81,7 +81,7 @@ export default defineComponent({
         timestamp: timestamp,
         universityData: this.universityData,
         moduleFormsData: this.moduleForms,
-        status: 'open', 
+        status: 'Offen', 
       };
 
       // Dispatch the form data to the Vuex store
@@ -111,7 +111,7 @@ export default defineComponent({
         timestamp: new Date().toISOString(),
         universityData: this.universityData,
         moduleFormsData: this.moduleForms,
-        status: 'open',
+        status: 'Offen',
       };
     },
 
