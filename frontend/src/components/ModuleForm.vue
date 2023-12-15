@@ -56,7 +56,7 @@
       />
       <v-btn
           @click="removeModule"
-          variant="outlined"
+          color="red"
       >
         {{ $t("applicationForm.removeModule") }}
       </v-btn>

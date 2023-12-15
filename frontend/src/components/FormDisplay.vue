@@ -27,12 +27,11 @@
 </template>
 
 <script>
-  import test1 from '@/assets/test_Form.json'
-  import test2 from '@/assets/test_Form2.json'
   export default {
-    data() {
-      return {
-        forms: [test1, test2]
+    computed: {
+      // Use Vuex getter to get forms with a specific status
+      forms() {
+        return this.$store.getters.formsByStatus('Offen');
       }
     },
     methods: {
@@ -42,6 +41,7 @@
     }
   }
 </script>
+
 
 <style scoped>
   .table {
