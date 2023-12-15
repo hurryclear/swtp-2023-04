@@ -12,7 +12,6 @@
           class="userInput"
           @click="addModuleForm"
           :disabled="!this.formsFilled"
-          variant="outlined"
       >
         {{ $t("applicationForm.addModule") }}
       </v-btn>
@@ -69,7 +68,7 @@ export default defineComponent({
     },
     emitFillChange() {
       this.$emit('fillChange', this.formsFilled)
-    }
+    },
   },
   watch: {
     "formsFilled": "emitFillChange"

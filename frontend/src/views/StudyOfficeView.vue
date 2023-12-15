@@ -29,23 +29,15 @@
         formContent: {}
       }
     },
-    methods: {
-      openEditMenu(form) {
-        this.formContent = form;
-        this.isDisplayed = true;
-      },
-      closeEditMenu() {
-        this.isDisplayed = false;
-        this.formContent = {};
-      }
+    closeEditMenu() {
+      this.isDisplayed = false;
+      this.formContent = {};
     }
   }
+}
 </script>
 
 <style scoped>
-  .wrapper {
-    margin-left: 5%;
-  }
 
   .form-display {
     border: 2px solid gray;
