@@ -35,8 +35,31 @@
   },
   "logoutButton": "Logout",
   "homeView": {
-    "welcomeStudent": "Welcome to our new online platform for credit recognition at the University of Leipzig!\nWe understand that the process of credit recognition is often complex and time-consuming.\nIt is even more important that this process can now be done online, digitally, and easily.\nAs a student, you can now submit your application with just a few clicks.\nClick on 'Recognize Modules' to get started.\nBy submitting your application, you will be assigned a unique reference number, which you can use later to view your application and its status.",
+    "welcomeStudent": "Welcome to our new online platform for credit recognition at the University of Leipzig!\n...Click on 'Credit Modules' to get started.\nBy submitting your application, you will be assigned a unique reference number, which you can use later to view your application and its status.",
     "welcomeStudentAffairsOffice": "Welcome, staff of the Student Affairs Office!\nAs a staff member of the Student Affairs Office, you have access to an overview of all open applications.\nYou can process, supplement, and track the processing status of applications.\nUse the user-friendly interface to make the credit recognition process more efficient.",
     "welcomeExaminingCommitteeChair": "Welcome, esteemed chairperson of the Examination Committee!\nOn this platform, you have the opportunity to overview and approve or reject all open applications.\nPlease provide a well-founded reason for your decisions.\nYour participation makes the credit recognition process more efficient and purposeful."
+  },
+  "studentAffairsOfficeView": {
+    "openApplications": "Open Applications"
+  },
+  "examiningCommitteeChairView": {
+    "moduleCount": "Number of Modules",
+    "studentAffairsOfficeComment": "Comment from Student Affairs Office",
+    "accept": "Accept",
+    "decline": "Decline"
+  },
+  "reviewComponent": {
+    "reviewApplication": "Review Application",
+    "formID": "Reference Number",
+    "checkStatus": "Check Status",
+    "downloadApplication": "Download Application"
+  },
+  "formDisplay": {
+    "university": "University",
+    "edit": "Edit",
+    "sendToExaminingCommitteeChair": "Send to Examination Committee",
+    "reason": "Reason",
+    "modules": "Modules",
+    "application": "Application"
   }
 }

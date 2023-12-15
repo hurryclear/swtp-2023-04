@@ -1,6 +1,6 @@
 {
   "darkMode": {
-    "toggleDarkMode": "Alternar Modo Escuro"
+    "toggleDarkMode": "Ativar/Desativar Modo Escuro"
   },
   "applicationForm": {
     "addModule": "Adicionar Módulo",
@@ -17,24 +17,48 @@
     "countryLabel": "País",
     "previousStudyProgram": "Programa de Estudo Anterior",
     "studyProgramDescription": "Especifique o nome de seu programa de estudo anterior!",
-    "studyProgramLabel": "Nome do Programa de Estudo"
+    "studyProgramLabel": "Nome do Programa de Estudo",
+    "submit": "Enviar Formulário"
   },
   "navBar": {
     "main":"Página Principal",
-    "creditModules": "Acreditar Módulos",
-    "review": "Visualizar Pedido",
-    "login": "Entrar"
+    "creditModules": "Crédito de Módulos",
+    "review": "Revisar Solicitação",
+    "login": "Login"
   },
   "loginComponent": {
-    "usernameLabel": "Nome de usuário",
+    "usernameLabel": "Nome de Usuário",
     "passwordLabel": "Senha",
     "loginButton": "Entrar",
     "loginErrorMessage": "Nome de usuário ou senha incorretos."
   },
   "logoutButton": "Sair",
   "homeView": {
-    "welcomeStudent": "Bem-vindo à nossa nova plataforma online para reconhecimento de créditos na Universidade de Leipzig!\nEntendemos que o processo de reconhecimento de créditos muitas vezes é complexo e demorado.\nÉ ainda mais importante que este processo agora possa ser feito online, digitalmente e de maneira fácil.\nComo estudante, você pode agora enviar sua solicitação com apenas alguns cliques.\nClique em 'Reconhecer Módulos' para começar.\nAo enviar sua solicitação, será atribuído a você um número de referência único, que você pode usar posteriormente para visualizar sua solicitação e seu status.",
-    "welcomeStudentAffairsOffice": "Bem-vindo, equipe do Escritório de Assuntos Estudantis!\nComo membro da equipe do Escritório de Assuntos Estudantis, você tem acesso a uma visão geral de todas as solicitações abertas.\nVocê pode processar, complementar e acompanhar o status de processamento das solicitações.\nUse a interface amigável para tornar o processo de reconhecimento de créditos mais eficiente.",
-    "welcomeExaminingCommitteeChair": "Bem-vindo, estimado presidente do Comitê de Exames!\nNesta plataforma, você tem a oportunidade de revisar e aprovar ou rejeitar todas as solicitações abertas.\nPor favor, forneça uma justificativa fundamentada para suas decisões.\nSua participação torna o processo de reconhecimento de créditos mais eficiente e direcionado."
+    "welcomeStudent": "Bem-vindo à nossa nova plataforma online para reconhecimento de créditos na Universidade de Leipzig!\nEntendemos que o processo de reconhecimento de créditos muitas vezes é complexo e demorado.\nÉ ainda mais importante que esse processo agora possa ser feito online, de forma digital e fácil.\nComo estudante, você pode agora enviar sua solicitação com apenas alguns cliques.\nClique em 'Crédito de Módulos' para começar.\nAo enviar sua solicitação, será atribuído um número de referência exclusivo, que você pode usar posteriormente para visualizar sua solicitação e seu status.",
+    "welcomeStudentAffairsOffice": "Bem-vindo, equipe do Escritório de Assuntos Estudantis!\nComo membro da equipe do Escritório de Assuntos Estudantis, você tem acesso a uma visão geral de todas as solicitações em aberto.\nVocê pode processar, complementar e acompanhar o status de processamento das solicitações.\nUse a interface amigável para tornar o processo de reconhecimento de créditos mais eficiente.",
+    "welcomeExaminingCommitteeChair": "Bem-vindo, estimado presidente do Comitê de Exames!\nNesta plataforma, você tem a oportunidade de revisar e aprovar ou rejeitar todas as solicitações em aberto.\nForneça uma justificativa fundamentada para suas decisões.\nSua participação torna o processo de reconhecimento de créditos mais eficiente e direcionado."
+  },
+  "studentAffairsOfficeView": {
+    "openApplications": "Solicitações em Aberto"
+  },
+  "examiningCommitteeChairView": {
+    "moduleCount": "Número de Módulos",
+    "studentAffairsOfficeComment": "Comentário do Escritório de Assuntos Estudantis",
+    "accept": "Aceitar",
+    "decline": "Recusar"
+  },
+  "reviewComponent": {
+    "reviewApplication": "Revisar Solicitação",
+    "formID": "Número de Referência",
+    "checkStatus": "Verificar Status",
+    "downloadApplication": "Baixar Solicitação"
+  },
+  "formDisplay": {
+    "university": "Universidade",
+    "edit": "Editar",
+    "sendToExaminingCommitteeChair": "Enviar para Comitê de Exames",
+    "reason": "Motivo",
+    "modules": "Módulos",
+    "application": "Solicitação"
   }
 }
