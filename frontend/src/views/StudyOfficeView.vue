@@ -1,44 +1,43 @@
 <template>
-    <v-container fluid class="wrapper">
-      <h1 style="margin-bottom: 2%">Offene Anträge</h1>
-      <v-row>
-        <FormDisplay class="form-display" @open-edit-menu="openEditMenu"/>
-        <EditMenu class="edit-menu" v-if="isDisplayed" :form="formContent" @close-edit-menu="closeEditMenu"/>
-      </v-row>
-    </v-container>
-    <div>
-      <LogoutButton />
-    </div>
+  <v-container fluid>
+    <h1>Studienbüro: Offene Anträge</h1>
+    <v-row>
+      <FormDisplay class="form-display" :forms="openForms" @open-edit-menu="openEditMenu"/>
+      <EditMenu class="edit-menu" v-if="isDisplayed" :form="formContent" @close-edit-menu="closeEditMenu"/>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
-  import EditMenu from "@/components/EditMenu.vue";
-  import FormDisplay from "@/components/FormDisplay.vue"
-  export default {
-    components: {EditMenu, FormDisplay},
-    data() {
-      return {
-        isDisplayed: false,
-        formContent: {}
-      }
+import FormDisplay from "@/components/FormDisplay.vue"; // Adjust path as necessary
+import EditMenu from "@/components/EditMenu.vue"; // Adjust path as necessary
+
+export default {
+  components: {
+    FormDisplay,
+    EditMenu
+  },
+  data() {
+    return {
+      isDisplayed: false,
+      formContent: {}
+    };
+  },
+  methods: {
+
+    openEditMenu(form) {
+      this.formContent = form;
+      this.isDisplayed = true;
     },
-    methods: {
-      openEditMenu(form) {
-        this.formContent = form;
-        this.isDisplayed = true;
-      },
-      closeEditMenu() {
-        this.isDisplayed = false;
-        this.formContent = {};
-      }
+    closeEditMenu() {
+      this.isDisplayed = false;
+      this.formContent = {};
     }
   }
+}
 </script>
 
 <style scoped>
-  .wrapper {
-    margin-left: 5%;
-  }
 
   .form-display {
     border: 2px solid gray;
