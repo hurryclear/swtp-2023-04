@@ -1,17 +1,14 @@
-# Development stage
-FROM eclipse-temurin:17-jre-ubi9-minimal as development
+#Development Stage
+FROM maven:3.9.5-amazoncorretto-17 as development
 WORKDIR /app
 
-# Build Stage
-FROM maven:latest as build
-WORKDIR /app
+#Build Stage
+FROM development as build
 COPY . .
-RUN mvn compile
-RUN mvn package -DskipTests
+RUN mvn clean package -DskipTests
 
-# Production stage
-FROM eclipse-temurin:17-jre-ubi9-minimal as production
+#Production Stage
+FROM amazoncorretto:17 as production
 WORKDIR /app
-COPY --from=build /app/target/backend-0.0.1-SNAPSHOT.jar .
-EXPOSE 8080
-CMD ["java", "-jar", "backend-0.0.1-SNAPSHOT.jar"]
+COPY --from=build /app/target/backend.jar .
+CMD ["java", "-jar", "backend.jar"]
