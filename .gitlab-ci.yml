@@ -73,7 +73,13 @@ deploy:
     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
+#    - echo "$DOCKERHUB_ACCESS_TOKEN" | docker login --username $CI_REGISTRY_USER --password-stdin
+#    - docker-compose down --rmi all
+#    - docker-compose -f docker-compose-prod.yml pull
+##    - docker-compose -f docker-compose-prod.yml up -d --force-recreate --no-deps frontend backend
+#    - docker-compose -f docker-compose-prod.yml up -d
     - echo "$DOCKERHUB_ACCESS_TOKEN" | docker login --username $CI_REGISTRY_USER --password-stdin
-    - docker-compose down --rmi all
+    - docker-compose down --rmi all -v --remove-orphans
+    - docker network prune -f
     - docker-compose -f docker-compose-prod.yml pull
     - docker-compose -f docker-compose-prod.yml up -d
