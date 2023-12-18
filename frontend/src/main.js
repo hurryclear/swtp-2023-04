@@ -12,6 +12,7 @@ import vuetify from "@/plugins/vuetify";
 // Vuex Store
 import store from '@/store';
 
+// Axios
 import VueAxios from 'vue-axios';
 import axios from '@/plugins/axios';
 
@@ -25,6 +26,6 @@ app.use(VueAxios, axios);
 app.use(vuetify);
 app.use(i18n);
 app.use(router);
-app.use(store);
+app.use(store); 
 
 app.mount('#app');

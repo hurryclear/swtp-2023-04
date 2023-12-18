@@ -6,30 +6,59 @@
     "addModule": "모듈 추가",
     "module": "모듈",
     "moduleDescription": "인정 받을 모듈에 대한 정보를 제공하세요!",
-    "moduleNameLabel": "모듈 이름",
+    "moduleNameLabel": "모듈명",
     "moduleDescriptionLabel": "모듈 설명",
-    "moduleCreditedLabel": "인정 받은 모듈",
+    "moduleCreditedLabel": "인정 받을 모듈",
     "commentLabel": "코멘트",
     "removeModule": "모듈 제거",
     "previousUniversity": "이전 대학",
     "universityDescription": "이전 대학의 이름을 지정하세요!",
     "universityNameLabel": "대학 이름",
     "countryLabel": "국가",
-    "previousStudyProgram": "이전 학습 프로그램",
-    "studyProgramDescription": "이전 학습 프로그램의 이름을 지정하세요!",
-    "studyProgramLabel": "학습 프로그램 이름"
+    "previousStudyProgram": "이전 과정",
+    "studyProgramDescription": "이전 학과의 이름을 지정하세요!",
+    "studyProgramLabel": "학과 이름",
+    "submit": "양식 제출"
   },
   "navBar": {
     "main":"메인 페이지",
     "creditModules": "모듈 인정",
-    "review": "신청서 조회",
+    "review": "신청 검토",
     "login": "로그인"
   },
   "loginComponent": {
-    "usernameLabel": "사용자 이름",
+    "usernameLabel": "사용자명",
     "passwordLabel": "비밀번호",
     "loginButton": "로그인",
-    "loginErrorMessage": "사용자 이름 또는 비밀번호가 잘못되었습니다."
+    "loginErrorMessage": "잘못된 사용자명이나 비밀번호입니다."
   },
-  "logoutButton": "로그아웃"
+  "logoutButton": "로그아웃",
+  "homeView": {
+    "welcomeStudent": "라이프치히 대학에서의 학점 인정을 위한 새로운 온라인 플랫폼에 오신 것을 환영합니다!\n학점 인정 프로세스는 종종 복잡하고 시간이 소요될 수 있습니다.\n이제 이 프로세스를 온라인으로, 디지털로 쉽게 처리할 수 있다는 것이 더욱 중요합니다.\n학생으로서 몇 번의 클릭만으로 신청서를 제출할 수 있습니다.\n'모듈 인정'을 클릭하여 시작하세요.\n신청서를 제출하면 후에 신청서와 상태를 확인할 수 있는 고유한 참조 번호가 할당됩니다.",
+    "welcomeStudentAffairsOffice": "학생 사무소 직원 여러분, 환영합니다!\n학생 사무소 직원으로서 모든 오픈 신청서에 대한 개요에 액세스할 수 있습니다.\n신청서의 처리, 보충 및 처리 상태를 추적할 수 있습니다.\n사용자 친화적인 인터페이스를 사용하여 학점 인정 프로세스를 더 효율적으로 진행하세요.",
+    "welcomeExaminingCommitteeChair": "존경하는 시험 위원회 위원장 여러분, 환영합니다!\n이 플랫폼에서는 모든 오픈 신청서를 검토하고 승인 또는 거부할 수 있는 기회가 있습니다.\n결정에 근거를 제공해 주십시오.\n귀하의 참여로 학점 인정 프로세스가 더 효율적이고 목적적으로 진행됩니다."
+  },
+  "studentAffairsOfficeView": {
+    "openApplications": "오픈 신청서"
+  },
+  "examiningCommitteeChairView": {
+    "moduleCount": "모듈 수",
+    "studentAffairsOfficeComment": "학생 사무소 코멘트",
+    "accept": "수락",
+    "decline": "거부"
+  },
+  "reviewComponent": {
+    "reviewApplication": "신청서 검토",
+    "formID": "참조 번호",
+    "checkStatus": "상태 확인",
+    "downloadApplication": "신청서 다운로드"
+  },
+  "formDisplay": {
+    "university": "대학",
+    "edit": "편집",
+    "sendToExaminingCommitteeChair": "시험 위원회에 전송",
+    "reason": "이유",
+    "modules": "모듈",
+    "application": "신청서"
+  }
 }

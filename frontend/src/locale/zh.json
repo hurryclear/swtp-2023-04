@@ -5,23 +5,24 @@
   "applicationForm": {
     "addModule": "添加模块",
     "module": "模块",
-    "moduleDescription": "提供有关要认证的模块的信息！",
+    "moduleDescription": "提供有关要认可的模块的信息！",
     "moduleNameLabel": "模块名称",
     "moduleDescriptionLabel": "模块描述",
-    "moduleCreditedLabel": "认证的模块",
+    "moduleCreditedLabel": "已认可的模块",
     "commentLabel": "评论",
-    "removeModule": "移除模块",
-    "previousUniversity": "先前的大学",
-    "universityDescription": "指定您先前大学的名称！",
+    "removeModule": "删除模块",
+    "previousUniversity": "之前的大学",
+    "universityDescription": "指定您之前大学的名称！",
     "universityNameLabel": "大学名称",
     "countryLabel": "国家",
-    "previousStudyProgram": "先前的学习计划",
-    "studyProgramDescription": "指定您先前学习计划的名称！",
-    "studyProgramLabel": "学习计划名称"
+    "previousStudyProgram": "之前的学习计划",
+    "studyProgramDescription": "指定您之前学习计划的名称！",
+    "studyProgramLabel": "学习计划名称",
+    "submit": "提交表单"
   },
   "navBar": {
-    "main":"主页",
-    "creditModules": "学分模块认证",
+    "main": "主页",
+    "creditModules": "学分模块",
     "review": "查看申请",
     "login": "登录"
   },
@@ -29,7 +30,35 @@
     "usernameLabel": "用户名",
     "passwordLabel": "密码",
     "loginButton": "登录",
-    "loginErrorMessage":  "用户名或密码错误。"
+    "loginErrorMessage": "用户名或密码错误。"
   },
-  "logoutButton": "登出"
+  "logoutButton": "登出",
+  "homeView": {
+    "welcomeStudent": "欢迎来到我们在莱比锡大学的新在线平台，用于学分认可！\n我们了解学分认可的过程通常很复杂且耗时。\n更重要的是，现在这个过程可以在线、数字化且轻松完成。\n作为学生，您现在可以通过几次点击提交申请。\n点击“学分模块”开始。\n提交申请后，将分配给您一个唯一的参考号，以便以后查看申请及其状态。",
+    "welcomeStudentAffairsOffice": "欢迎，学生事务办公室的工作人员！\n作为学生事务办公室的工作人员，您可以访问所有打开申请的概述。\n您可以处理、补充并跟踪申请的处理状态。\n使用用户友好的界面使学分认可过程更加高效。",
+    "welcomeExaminingCommitteeChair": "欢迎，尊敬的考试委员会主席！\n在此平台上，您有机会概览并批准或拒绝所有打开的申请。\n请为您的决定提供充分的理由。\n您的参与使学分认可过程更加高效和有针对性。"
+  },
+  "studentAffairsOfficeView": {
+    "openApplications": "打开的申请"
+  },
+  "examiningCommitteeChairView": {
+    "moduleCount": "模块数量",
+    "studentAffairsOfficeComment": "学生事务办公室的评论",
+    "accept": "接受",
+    "decline": "拒绝"
+  },
+  "reviewComponent": {
+    "reviewApplication": "查看申请",
+    "formID": "参考号",
+    "checkStatus": "查看状态",
+    "downloadApplication": "下载申请"
+  },
+  "formDisplay": {
+    "university": "大学",
+    "edit": "编辑",
+    "sendToExaminingCommitteeChair": "发送至考试委员会",
+    "reason": "原因",
+    "modules": "模块",
+    "application": "申请"
+  }
 }

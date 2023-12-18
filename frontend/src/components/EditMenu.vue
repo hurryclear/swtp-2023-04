@@ -5,9 +5,8 @@
         <u>Antrag</u>
       </v-card-title>
       <v-spacer></v-spacer>
-        <v-btn class="button-top" @click="closeEditMenu">
-          Schließen
-        </v-btn>
+        <v-btn @click="openComparisonMenu">Mit anderen Anträgen vergleichen</v-btn>
+        <v-btn class="button-top"  icon="mdi-close" @click="closeEditMenu" variant="text"></v-btn>
     </div>
     <v-card-item>
       <u>Universität</u>: {{ form.universityData.universityName }}
@@ -19,15 +18,20 @@
       <u>Land</u>: {{ form.universityData.country }}
     </v-card-item>
     <v-card-title>
-      <u>Module</u>:
+      Module:
     </v-card-title>
     <div v-for="moduleData in form.moduleFormsData" v-bind:key="moduleData.key" >
       <v-card-subtitle>
         Modul {{ moduleData.key + 1 }}
       </v-card-subtitle>
-      <v-card-item v-for="modules in moduleData.module2bCredited" v-bind:key="modules">
-        <u>Modulname</u>: {{ moduleData.name }} <br>
-        Gewünschte Anrechnung: {{ modules }}
+      <v-card-item>
+        <u>Modulname</u>: {{ moduleData.name }}
+        <v-card-item>
+          Gewünschte Anrechnung:
+          <v-card-text v-for="modules in moduleData.module2bCredited" v-bind:key="modules">
+            {{ modules}}
+          </v-card-text>
+        </v-card-item>
       </v-card-item>
       <v-card-item>
         <u>Kommentar zu diesem Modul</u>: {{ moduleData.comment }}
@@ -35,43 +39,42 @@
     </div>
     <v-text-field class="text-field" label="Begründung" v-model="begruendung"/>
     <v-card-actions>
-        <v-btn class="button-bottom" @click="accept">
-          Annehmen
-        </v-btn>
-        <v-btn class="button-bottom" @click="decline">
-          Ablehnen
+        <v-btn color="blue" class="button-bottom" @click="sendToPruefungsausschuss">
+          An Prüfungsausschuss senden
         </v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
+
 <script>
 export default {
   props: {
-    display: Boolean,
     form: JSON
   },
+
   data() {
     return {
-      begruendung: null
+      begruendung: '',
     }
   },
+
   methods: {
     closeEditMenu() {
       this.$emit("close-edit-menu");
     },
-    accept() {
-      console.log(this.form);
-      console.log(this.begruendung);
-      console.log("STATUS: ACCEPTED");
-      this.$emit("close-edit-menu");
+    sendToPruefungsausschuss() {
+      // Dispatch action to accept the form
+      this.$store.dispatch('changeFormStatus', {
+        formId: this.form.id,
+        newStatus: 'in Bearbeitung',
+        comment: this.begruendung
+      });
+      this.closeEditMenu();
     },
-    decline() {
-      console.log(this.form);
-      console.log(this.begruendung);
-      console.log("STATUS: DECLINED");
-      this.$emit("close-edit-menu");
-    },
+    openComparisonMenu() {
+      this.$emit("open-comparison");
+    }
   },
 }
 </script>

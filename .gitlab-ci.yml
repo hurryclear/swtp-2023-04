@@ -21,7 +21,9 @@ test_frontend:
 build_backend:
   stage: build
   needs: ["test_backend"]
-#  when: manual
+  rules:
+    - if: $CI_COMMIT_BRANCH == "development"
+    - if: $CI_COMMIT_BRANCH == "main"
   image: 
     name: gcr.io/kaniko-project/executor:v1.9.0-debug
     entrypoint: [""]
@@ -34,10 +36,13 @@ build_backend:
       --destination "${CI_REGISTRY_IMAGE2}:latest"
 
 
+
 build_frontend:
   stage: build
   needs: ["test_frontend"]
-#  when: manual
+  rules:
+    - if: $CI_COMMIT_BRANCH == "development"
+    - if: $CI_COMMIT_BRANCH == "main"
   image: 
     name: gcr.io/kaniko-project/executor:v1.9.0-debug
     entrypoint: [""]
@@ -51,12 +56,15 @@ build_frontend:
       --destination "${CI_REGISTRY_IMAGE}:latest"
 
 
+
 deploy:
   stage: deploy
   needs: 
     - "build_frontend"
     - "build_backend"
   when: manual
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
   image: public.ecr.aws/docker/library/nginx:alpine
   variables:
     DOCKER_HOST: "ssh://$SERVER_USER@$SERVER_IP"

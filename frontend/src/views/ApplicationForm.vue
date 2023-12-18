@@ -1,28 +1,39 @@
 <template>
   <!-- Displaying UniversityForm and ModuleFormList components -->
   <UniversityForm
-      :universityData="universityData"
-      @updateUniversityData="updateUniversityData"
+    :universityData="universityData"
+    @updateUniversityData="updateUniversityData"
   />
   <br/>
   <ModuleFormList
-      :moduleForms="moduleForms"
-      @updateModuleData="updateModuleData"
-      @fillChange="(data) => this.moduleDataFilled=data"
+    :moduleForms="moduleForms"
+    @updateModuleData="updateModuleData"
+    @fillChange="(data) => this.moduleDataFilled=data"
   />
   <br />
   <v-btn
-      class="userInput"
-      @click="submitWholeForm"
-      :disabled="!this.formsFilled"
-      variant="outlined"
+    class="userInput"
+    @click="submitWholeForm"
+    :disabled="!this.formsFilled"
+    color="primary"
   >Submit Whole Form</v-btn>
+
+  <div v-if="submittedFormId">
+    <v-text-field
+      v-model="submittedFormId"
+      label="Application ID"
+      readonly
+    ></v-text-field>
+    <v-btn icon="mdi-content-copy" @click="copyFormIdToClipboard"></v-btn>
+    <v-btn icon="mdi-download" @click="createDownloadableJSON(generateFormData())"></v-btn>
+  </div>
 </template>
 
 <script>
 import UniversityForm from "@/components/UniversityForm.vue";
-import { defineComponent } from "vue";
 import ModuleFormList from "@/components/ModuleFormList.vue";
+import { defineComponent} from "vue";
+import { mapActions } from "vuex";
 
 export default defineComponent({
   components: { ModuleFormList, UniversityForm },
@@ -40,6 +51,7 @@ export default defineComponent({
   },
   data() {
     return {
+      submittedFormId: null,
       universityData: {
         universityName: "",
         studyProgram: "",
@@ -69,31 +81,53 @@ export default defineComponent({
         timestamp: timestamp,
         universityData: this.universityData,
         moduleFormsData: this.moduleForms,
+        status: 'Offen', 
       };
 
-      const filePath = "form.json";
+      // Dispatch the form data to the Vuex store
+      this.submitForm(formData);
 
-      // Create a Blob with the JSON data
-      const blob = new Blob([JSON.stringify(formData, null, 2)], {
+      this.submittedFormId = timestamp;
+
+      console.log('Whole Form submitted:', JSON.stringify(formData, null, 2));
+    },
+
+    createDownloadableJSON(data) {
+      const blob = new Blob([JSON.stringify(data, null, 2)], {
         type: "application/json",
       });
 
-      // Create a link element to trigger the download
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
-      link.download = filePath;
+      link.download = `form-${data.timestamp}.json`;
 
-      // Append the link to the document and trigger the download
       document.body.appendChild(link);
       link.click();
-
-      // Remove the link from the document
       document.body.removeChild(link);
     },
-  },
+
+    generateFormData() {
+      return {
+        timestamp: new Date().toISOString(),
+        universityData: this.universityData,
+        moduleFormsData: this.moduleForms,
+        status: 'Offen',
+      };
+    },
+
+    copyFormIdToClipboard() {
+      if (this.submittedFormId) {
+        navigator.clipboard.writeText(this.submittedFormId).then(() => {
+          console.log("Form ID copied to clipboard!");
+        }).catch(err => {
+          console.error('Could not copy text: ', err);
+        });
+      }
+    },
+    ...mapActions(['submitForm']) // Map Vuex action
+  }
 });
 </script>
-
 
 <style>
 /* Styling for the class 'userInput' */

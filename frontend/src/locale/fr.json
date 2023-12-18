@@ -1,35 +1,64 @@
 {
   "darkMode": {
-    "toggleDarkMode": "Activer le mode sombre"
+    "toggleDarkMode": "Activer le Mode Sombre"
   },
   "applicationForm": {
-    "removeModule": "Supprimer le module",
-    "addModule": "Ajouter un module",
+    "addModule": "Ajouter un Module",
     "module": "Module",
-    "moduleDescription": "Fournissez des informations sur le module à créditer!",
-    "moduleNameLabel": "Nom du module",
-    "moduleDescriptionLabel": "Description du module",
-    "moduleCreditedLabel": "Module crédité",
+    "moduleDescription": "Fournir des informations sur le module à créditer !",
+    "moduleNameLabel": "Nom du Module",
+    "moduleDescriptionLabel": "Description du Module",
+    "moduleCreditedLabel": "Module Crédité",
     "commentLabel": "Commentaire",
-    "previousUniversity": "Université précédente",
-    "universityDescription": "Indiquez le nom de votre université précédente!",
-    "universityNameLabel": "Nom de l'université",
+    "removeModule": "Supprimer le Module",
+    "previousUniversity": "Université Précédente",
+    "universityDescription": "Indiquez le nom de votre université précédente !",
+    "universityNameLabel": "Nom de l'Université",
     "countryLabel": "Pays",
-    "previousStudyProgram": "Programme d'études précédent",
-    "studyProgramDescription": "Indiquez le nom de votre programme d'études précédent!",
-    "studyProgramLabel": "Nom du programme d'études"
+    "previousStudyProgram": "Programme d'Études Précédent",
+    "studyProgramDescription": "Indiquez le nom de votre programme d'études précédent !",
+    "studyProgramLabel": "Nom du Programme d'Études",
+    "submit": "Soumettre le Formulaire"
   },
   "navBar": {
     "main":"Page Principale",
-    "creditModules": "Valider des Modules",
-    "review": "Consulter la Demande",
+    "creditModules": "Créditer les Modules",
+    "review": "Examiner la Demande",
     "login": "Connexion"
   },
   "loginComponent": {
-    "usernameLabel": "Nom d'utilisateur",
-    "passwordLabel": "Mot de passe",
-    "loginButton": "Se connecter",
+    "usernameLabel": "Nom d'Utilisateur",
+    "passwordLabel": "Mot de Passe",
+    "loginButton": "Connexion",
     "loginErrorMessage": "Nom d'utilisateur ou mot de passe incorrect."
   },
-  "logoutButton": "Se déconnecter"
+  "logoutButton": "Déconnexion",
+  "homeView": {
+    "welcomeStudent": "Bienvenue sur notre nouvelle plateforme en ligne de reconnaissance de crédits à l'Université de Leipzig!\nNous comprenons que le processus de reconnaissance de crédits est souvent complexe et prend du temps.\nIl est d'autant plus important que ce processus puisse désormais être effectué en ligne, de manière numérique et facile.\nEn tant qu'étudiant, vous pouvez maintenant soumettre votre demande en quelques clics seulement.\nCliquez sur 'Créditer les Modules' pour commencer.\nEn soumettant votre demande, un numéro de référence unique vous sera attribué, que vous pourrez utiliser ultérieurement pour consulter votre demande et son statut.",
+    "welcomeStudentAffairsOffice": "Bienvenue, personnel du Bureau des Affaires Étudiantes!\nEn tant que membre du personnel du Bureau des Affaires Étudiantes, vous avez accès à une vue d'ensemble de toutes les demandes ouvertes.\nVous pouvez traiter, compléter et suivre le statut de traitement des demandes.\nUtilisez l'interface conviviale pour rendre le processus de reconnaissance de crédits plus efficace.",
+    "welcomeExaminingCommitteeChair": "Bienvenue, estimé président du Comité d'Examen!\nSur cette plateforme, vous avez la possibilité de consulter et d'approuver ou de rejeter toutes les demandes ouvertes.\nVeuillez fournir une justification bien fondée pour vos décisions.\nVotre participation rend le processus de reconnaissance de crédits plus efficace et ciblé."
+  },
+  "studentAffairsOfficeView": {
+    "openApplications": "Demandes Ouvertes"
+  },
+  "examiningCommitteeChairView": {
+    "moduleCount": "Nombre de Modules",
+    "studentAffairsOfficeComment": "Commentaire du Bureau des Affaires Étudiantes",
+    "accept": "Accepter",
+    "decline": "Refuser"
+  },
+  "reviewComponent": {
+    "reviewApplication": "Examiner la Demande",
+    "formID": "Numéro de Référence",
+    "checkStatus": "Vérifier le Statut",
+    "downloadApplication": "Télécharger la Demande"
+  },
+  "formDisplay": {
+    "university": "Université",
+    "edit": "Modifier",
+    "sendToExaminingCommitteeChair": "Envoyer au Comité d'Examen",
+    "reason": "Raison",
+    "modules": "Modules",
+    "application": "Demande"
+  }
 }
