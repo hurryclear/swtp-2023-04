@@ -1,13 +1,25 @@
-<template>
 
-  <p>This is the login view</p>
+<template>
+  <div>
+    <LoginComponent @loginSubmitted="handleLogin"/>
+  </div>
 </template>
 
 <script>
-  export default {
+import LoginComponent from '@/components/LoginComponent.vue';
+
+export default {
+  name: 'LoginView',
+  components: {
+    LoginComponent
+  },
+  methods: {
+    handleLogin(credentials) {
+      console.log('Login submitted', credentials);
+    }
   }
+};
 </script>
 
-<style scoped>
 
-</style>
+

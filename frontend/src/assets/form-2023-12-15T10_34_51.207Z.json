@@ -1,0 +1,27 @@
+{
+  "timestamp": "2023-12-15T10:34:51.207Z",
+  "universityData": {
+    "universityName": "TU Berlin",
+    "studyProgram": "B. Sc. Informatik",
+    "country": "Deutschland"
+  },
+  "moduleFormsData": [
+    {
+      "key": 0,
+      "name": "Algorithmen und Datenstrukturen",
+      "comment": "Wir haben in dieser einzigen Vorlesung den gleichen Stoff behandelt, wie an der Uni Leipzig in beiden Modulen.",
+      "description": [
+        {}
+      ],
+      "file": {},
+      "module2bCredited": [
+        "Algorithmen und Datenstrukturen 1",
+        "Algorithmen und Datenstrukturen 2"
+      ],
+      "isFilled": true
+    }
+  ],
+  "status": "Abgelehnt",
+  "id": "2023-12-15T10:34:51.207Z",
+  "comment": "Das angegebene Modul besitzt allerdings nur 6CP, doch die gewünschten Module würden zusammen 10CP ergeben. Die Differenz ist zu groß um dieses Modul anzurechnen."
+}

@@ -1,12 +1,18 @@
 <template>
     <v-container fluid class="wrapper">
-      <h1 style="margin-bottom: 2%">Offene Anträge</h1>
       <v-row>
-        <v-col>
-          <FormDisplay class="form-display" @open-edit-menu="openEditMenu"/>
+        <v-spacer/>
+        <v-spacer/>
+        <v-spacer/>
+        <LogoutButton style="margin-left: 80%"/>
+      </v-row>
+      <v-row>
+        <v-col class="col-left">
+          <FormDisplay class="form-display" v-if="FDisDisplayed" @open-edit-menu="openEditMenu"/>
+          <ComparisonMenu class="comparison" v-if="CMisDisplayed" @close-comparison="closeComparisonMenu"/>
         </v-col>
         <v-col>
-          <EditMenu class="edit-menu" v-if="isDisplayed" :form="formContent" @close-edit-menu="closeEditMenu"/>
+          <EditMenu class="edit-menu" v-if="EMisDisplayed" :form="EMformContent" @close-edit-menu="closeEditMenu" @open-comparison="openComparison"/>
         </v-col>
       </v-row>
     </v-container>
@@ -14,43 +20,54 @@
 
 <script>
   import EditMenu from "@/components/EditMenu.vue";
-  import FormDisplay from "@/components/FormDisplay.vue"
+  import FormDisplay from "@/components/FormDisplay.vue";
+  import LogoutButton from "@/components/LogoutButton.vue";
+  import ComparisonMenu from "@/components/ComparisonMenu.vue";
   export default {
-    components: {EditMenu, FormDisplay},
+    components: {ComparisonMenu, EditMenu, FormDisplay, LogoutButton},
     data() {
       return {
-        isDisplayed: false,
-        formContent: {}
+        EMisDisplayed: false,
+        FDisDisplayed: true,
+        CMisDisplayed: false,
+        EMformContent: {}
       }
     },
     methods: {
-      openEditMenu(form) {
-        this.formContent = form;
-        this.isDisplayed = true;
+      openEditMenu(form){
+        this.EMisDisplayed = true;
+        this.EMformContent = form;
       },
       closeEditMenu() {
-        this.isDisplayed = false;
-        this.formContent = {};
+        this.EMisDisplayed = false;
+        this.EMformContent = {};
+      },
+      openComparison() {
+        this.FDisDisplayed = false;
+        this.CMisDisplayed = true;
+      },
+      closeComparisonMenu() {
+        this.CMisDisplayed = false;
+        this.FDisDisplayed = true;
       }
     }
   }
 </script>
 
 <style scoped>
-  .wrapper {
-    margin-left: 5%;
+  .comparison {
+    border: 2px solid gray;
+    border-radius: 10px;
+    width: 80%;
   }
 
-  .form-display {
-    border: 2px solid gray;
-    border-radius: 3px;
-    display: flow;
-    width: 80%;
+  .col-left {
+    margin-left: 5%;
   }
 
   .edit-menu {
     border: 2px solid gray;
-    border-radius: 3px;
+    border-radius: 10px;
     width: 80%;
   }
 </style>

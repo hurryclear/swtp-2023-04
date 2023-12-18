@@ -1,0 +1,26 @@
+{
+  "timestamp": "2017-10-21T22:11:56.973Z",
+  "universityData": {
+    "universityName": "University of Barcelona",
+    "studyProgram": "bachelor's degree in Computer Engineering",
+    "country": "Spain"
+  },
+  "moduleFormsData": [
+    {
+      "key": 0,
+      "name": "Linear Algebra",
+      "comment": "Creditpoints are almost the same.",
+      "description": [
+        {}
+      ],
+      "file": {},
+      "module2bCredited": [
+        "Lineare Algebra 1"
+      ],
+      "isFilled": true
+    }
+  ],
+  "status": "Akzeptiert",
+  "id": "2017-10-21T22:11:56.973Z",
+  "comment": "Modulinhalte und Creditpoints liegen nah bei einander. Sollte angerechnet werden."
+}
