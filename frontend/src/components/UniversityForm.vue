@@ -5,22 +5,14 @@
         <template v-slot:default="{ expanded }">
           <v-row no-gutters>
             <v-col>
-              Bisherige Universität
+              {{ $t("applicationForm.previousUniversity") }}
             </v-col>
-            <v-col
-                class="text-grey"
-            >
+            <v-col class="text-grey">
               <v-fade-transition leave-absolute>
-                <span
-                    v-if="expanded"
-                    key="0"
-                >
-                  Geben Sie den Namen Ihrer bisherigen Universität an!
+                <span v-if="expanded" key="0">
+                  {{ $t("applicationForm.universityDescription") }}
                 </span>
-                <span
-                    v-else
-                    key="1"
-                >
+                <span v-else key="1">
                   {{ university.universityName }}
                 </span>
               </v-fade-transition>
@@ -32,14 +24,14 @@
         <v-text-field
             v-model="university.universityName"
             hide-details
-            label="Name der Universität"
+            :label="$t('applicationForm.universityNameLabel')"
             variant="outlined"
             class="userInput"
         />
         <v-text-field
             v-model="university.country"
             hide-details
-            label="Land"
+            :label="$t('applicationForm.countryLabel')"
             variant="outlined"
             class="userInput"
         />
@@ -51,22 +43,14 @@
         <template v-slot:default="{ expanded }">
           <v-row no-gutters>
             <v-col>
-              Bisheriger Studiengang
+              {{ $t("applicationForm.previousStudyProgram") }}
             </v-col>
-            <v-col
-                class="text-grey"
-            >
+            <v-col class="text-grey">
               <v-fade-transition leave-absolute>
-                <span
-                    v-if="expanded"
-                    key="0"
-                >
-                  Geben Sie den Namen Ihres bisherigen Studiengangs an!
+                <span v-if="expanded" key="0">
+                  {{ $t("applicationForm.studyProgramDescription") }}
                 </span>
-                <span
-                    v-else
-                    key="1"
-                >
+                <span v-else key="1">
                   {{ university.studyProgram }}
                 </span>
               </v-fade-transition>
@@ -78,7 +62,7 @@
         <v-text-field
             v-model="university.studyProgram"
             hide-details
-            label="Name des Studiengangs"
+            :label="$t('applicationForm.studyProgramLabel')"
             variant="outlined"
             class="userInput"
         />
@@ -86,17 +70,35 @@
     </v-expansion-panel>
   </v-expansion-panels>
 </template>
+
 <script>
 export default {
-  data: () => ({
-    university: {
-      universityName: '',
-      studyProgram: '',
-      country: ''
+  props: {
+    universityData: Object, // Add a prop to receive university data
+  },
+  data() {
+    return {
+      university: {
+        universityName: '',
+        studyProgram: '',
+        country: '',
+        // Initialize with data from the parent component
+        ...this.universityData,
+      }
     }
-  }),
+  },
+  watch: {
+    university: {
+      handler(newVal) {
+        // Emit an event to the parent when university data changes
+        this.$emit('updateUniversityData', newVal);
+      },
+      deep: true,
+    },
+  },
 }
 </script>
 
 <style scoped>
+/* Add scoped styles if needed */
 </style>

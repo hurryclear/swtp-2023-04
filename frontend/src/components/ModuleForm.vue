@@ -1,75 +1,19 @@
-<script>
-import moduleJSON  from '../assets/module_liste.json'
-export default {
-  data: () => ({
-    formIsEmpty: "true",
-    moduleNamesList: [],
-    module: {
-      name: '',
-      comment: '',
-      description: '',
-      module2bCredited: null
-    }
-  }),
-  mounted() {
-    this.extractModuleNames();
-  },
-  methods: {
-    onFormFilled() {
-      // Emit an event when the form is filled
-      this.$emit('formFilled');
-    },
-    extractModuleNames() {
-      this.moduleNamesList = moduleJSON.courses[0].modules.map(module => module.name);
-    },
-    checkFormFilled() {
-      // Check conditions to determine if all required fields are filled
-      const isFilled =
-          this.module.name.trim() !== '' &&
-          this.module.description !== null &&
-          this.module.module2bCredited !== null;
-
-      if (isFilled) {
-        this.onFormFilled(); // Call onFormFilled when all required fields are filled
-      }
-    },
-    removeModule() {
-      this.$emit('removeModule');
-    }
-  },
-  watch: {
-    'module.name': 'checkFormFilled', // Watch for changes in module.name
-    'module.description': 'checkFormFilled', // Watch for changes in module.description
-    'module.module2bCredited': 'checkFormFilled', // Watch for changes in module.module2bCredited
-  },
-}
-
-</script>
-
 <template>
   <v-expansion-panel>
     <v-expansion-panel-title>
       <template v-slot:default="{ expanded }">
         <v-row no-gutters>
           <v-col>
-            Modul
+            {{ $t("applicationForm.module") }}
           </v-col>
-          <v-col
-              class="text-grey"
-          >
+          <v-col class="text-grey">
             <v-fade-transition leave-absolute>
-                <span
-                    v-if="expanded"
-                    key="0"
-                >
-                  Geben Sie Angaben über das anzurechnende Modul an!
-                </span>
-              <span
-                  v-else
-                  key="1"
-              >
-                  {{ module.name }}
-                </span>
+              <span v-if="expanded" key="0">
+                {{ $t("applicationForm.moduleDescription") }}
+              </span>
+              <span v-else key="1">
+                {{ module.name }}
+              </span>
             </v-fade-transition>
           </v-col>
         </v-row>
@@ -78,41 +22,97 @@ export default {
     <v-expansion-panel-text>
       <v-text-field
           class="userInput"
-          v-model="module.name"
+          v-model="formData.name"
           hide-details
-          label="Modulname"
+          :label="$t('applicationForm.moduleNameLabel')"
           variant="outlined"
       />
       <v-file-input
-          v-model="module.description"
+          v-model="formData.description"
           class="userInput"
           accept=".pdf"
-          label="Modulbeschreibung"
+          show-size
+          :label="$t('applicationForm.moduleDescriptionLabel')"
           variant="outlined"
           hide-details
           prepend-icon=""
+          @change="handleFileChange"
       />
       <v-select
-          v-model="module.module2bCredited"
+          v-model="formData.module2bCredited"
           class="userInput"
-          label="Anzurechnendes Modul"
+          :label="$t('applicationForm.moduleCreditedLabel')"
           variant="outlined"
           hide-details
-          :items=moduleNamesList
+          multiple
+          :items="moduleNamesList"
       />
       <v-text-field
-          v-model="module.comment"
+          v-model="formData.comment"
           class="userInput"
           hide-details
-          label="Bemerkung"
+          :label="$t('applicationForm.commentLabel')"
           variant="outlined"
       />
-      <v-btn @click="removeModule">
-        Entferne Modul
+      <v-btn
+          @click="removeModule"
+          variant="outlined"
+      >
+        {{ $t("applicationForm.removeModule") }}
       </v-btn>
     </v-expansion-panel-text>
   </v-expansion-panel>
 </template>
 
+<script>
+import moduleJSON from '../assets/module_liste.json';
+
+export default {
+  props: {
+    module: Object, // Add a prop to receive module data
+  },
+  data() {
+    return {
+      isFilled: false,
+      moduleNamesList: [],
+      formData: {...this.module},
+      selectedFile: null,
+    };
+  },
+  mounted() {
+    this.extractModuleNames();
+  },
+  methods: {
+    extractModuleNames() {
+      this.moduleNamesList = moduleJSON.courses[0].modules.map(module => module.name);
+    },
+    checkFormFilled() {
+      this.formData.isFilled =
+          this.formData.name.trim()!== '' &&
+          this.formData.description!== null &&
+          this.formData.module2bCredited!== null;
+    },
+    removeModule() {
+      this.$emit('removeModule');
+    },
+    handleFileChange(event) {
+      this.selectedFile = event.target.files[0];
+    },
+    // Watch changes in module data and emit an event to the parent
+    watchModuleData() {
+      this.checkFormFilled();
+      this.$emit('updateModuleData', this.formData, this.selectedFile);
+    },
+  },
+  watch: {
+    'formData.name': 'watchModuleData',
+    'formData.description': 'watchModuleData',
+    'formData.module2bCredited': 'watchModuleData',
+    'formData.comment': 'watchModuleData',
+  },
+};
+</script>
+
 <style scoped>
+/* Add scoped styles if needed */
 </style>
