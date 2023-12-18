@@ -24,9 +24,14 @@
       <v-card-subtitle>
         Modul {{ moduleData.key + 1 }}
       </v-card-subtitle>
-      <v-card-item v-for="modules in moduleData.module2bCredited" v-bind:key="modules">
-        <u>Modulname</u>: {{ moduleData.name }} <br>
-        Gewünschte Anrechnung: {{ modules }}
+      <v-card-item>
+        <u>Modulname</u>: {{ moduleData.name }}
+        <v-card-item>
+          Gewünschte Anrechnung:
+          <v-card-text v-for="modules in moduleData.module2bCredited" v-bind:key="modules">
+            {{ modules}}
+          </v-card-text>
+        </v-card-item>
       </v-card-item>
       <v-card-item>
         <u>Kommentar zu diesem Modul</u>: {{ moduleData.comment }}
