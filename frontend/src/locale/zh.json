@@ -2,7 +2,7 @@
   "darkMode": {
     "toggleDarkMode": "切换暗模式"
   },
-  "moduleForm": {
+  "applicationForm": {
     "addModule": "添加模块",
     "module": "模块",
     "moduleDescription": "提供有关要认证的模块的信息！",
@@ -10,9 +10,7 @@
     "moduleDescriptionLabel": "模块描述",
     "moduleCreditedLabel": "认证的模块",
     "commentLabel": "评论",
-    "removeModule": "移除模块"
-  },
-  "universityForm": {
+    "removeModule": "移除模块",
     "previousUniversity": "先前的大学",
     "universityDescription": "指定您先前大学的名称！",
     "universityNameLabel": "大学名称",
@@ -20,5 +18,11 @@
     "previousStudyProgram": "先前的学习计划",
     "studyProgramDescription": "指定您先前学习计划的名称！",
     "studyProgramLabel": "学习计划名称"
+  },
+  "navBar": {
+    "main":"Main Page",
+    "apply": "Apply",
+    "review": "Review",
+    "login": "login"
   }
 }

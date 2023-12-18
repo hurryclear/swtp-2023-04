@@ -2,7 +2,7 @@
   "darkMode": {
     "toggleDarkMode": "Dunklen Modus umschalten"
   },
-  "moduleForm": {
+  "applicationForm": {
     "addModule": "Modul hinzufügen",
     "module": "Modul",
     "moduleDescription": "Geben Sie Angaben über das anzurechnende Modul an!",
@@ -10,15 +10,20 @@
     "moduleDescriptionLabel": "Modulbeschreibung",
     "moduleCreditedLabel": "Anzurechnendes Modul",
     "commentLabel": "Bemerkung",
-    "removeModule": "Entferne Modul"
-  },
-  "universityForm": {
+    "removeModule": "Entferne Modul",
     "previousUniversity": "Bisherige Universität",
     "universityDescription": "Geben Sie den Namen Ihrer bisherigen Universität an!",
     "universityNameLabel": "Name der Universität",
     "countryLabel": "Land",
     "previousStudyProgram": "Bisheriger Studiengang",
     "studyProgramDescription": "Geben Sie den Namen Ihres bisherigen Studiengangs an!",
-    "studyProgramLabel": "Name des Studiengangs"
+    "studyProgramLabel": "Name des Studiengangs",
+    "submit": "Absenden"
+  },
+  "navBar": {
+    "main":"Hauptseite",
+    "apply": "Module anrechnen",
+    "review": "Antrag einsehen",
+    "login": "Login"
   }
 }

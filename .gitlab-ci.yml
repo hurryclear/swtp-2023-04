@@ -21,7 +21,7 @@ test_frontend:
 build_backend:
   stage: build
   needs: ["test_backend"]
-#  when: manual
+  when: manual
   image: 
     name: gcr.io/kaniko-project/executor:v1.9.0-debug
     entrypoint: [""]
@@ -32,14 +32,12 @@ build_backend:
       --context "backend"
       --dockerfile "backend/Dockerfile"
       --destination "${CI_REGISTRY_IMAGE2}:latest"
-  #artifacts:
-  #  paths:
-  #    - backend/target/
+
 
 build_frontend:
   stage: build
   needs: ["test_frontend"]
-#  when: manual
+  when: manual
   image: 
     name: gcr.io/kaniko-project/executor:v1.9.0-debug
     entrypoint: [""]
@@ -51,16 +49,14 @@ build_frontend:
       --context "frontend"
       --dockerfile "frontend/Dockerfile"
       --destination "${CI_REGISTRY_IMAGE}:latest"
-  #artifacts:
-  #  paths:
-  #    - frontend/dist
+
 
 deploy:
   stage: deploy
   needs: 
     - "build_frontend"
     - "build_backend"
-#  when: manual
+  when: manual
   image: public.ecr.aws/docker/library/nginx:alpine
   variables:
     DOCKER_HOST: "ssh://$SERVER_USER@$SERVER_IP"
@@ -73,7 +69,18 @@ deploy:
     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
+#    - echo "$DOCKERHUB_ACCESS_TOKEN" | docker login --username $CI_REGISTRY_USER --password-stdin
+#    - docker-compose -f docker-compose-prod.yml down --rmi all
+#    - docker-compose -f docker-compose-prod.yml pull
+#    - docker-compose -f docker-compose-prod.yml up -d
+    # rm all networks, volumes, containers and images to fix ssh vpn connection bug
     - echo "$DOCKERHUB_ACCESS_TOKEN" | docker login --username $CI_REGISTRY_USER --password-stdin
-    - docker-compose down --rmi all
+    - docker-compose down --rmi all -v --remove-orphans
+    - docker network prune -f
     - docker-compose -f docker-compose-prod.yml pull
+#    - docker-compose -f docker-compose-prod.yml up -d --force-recreate --no-deps frontend backend
+    - export DB_USERNAME=$DB_USERNAME
+    - export DB_PASSWORD=$DB_PASSWORD
+    - export DB_NAME=$DB_NAME
     - docker-compose -f docker-compose-prod.yml up -d
+

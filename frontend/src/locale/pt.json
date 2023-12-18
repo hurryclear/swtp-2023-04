@@ -2,7 +2,7 @@
   "darkMode": {
     "toggleDarkMode": "Alternar Modo Escuro"
   },
-  "moduleForm": {
+  "applicationForm": {
     "addModule": "Adicionar Módulo",
     "module": "Módulo",
     "moduleDescription": "Forneça informações sobre o módulo a ser creditado!",
@@ -10,9 +10,7 @@
     "moduleDescriptionLabel": "Descrição do Módulo",
     "moduleCreditedLabel": "Módulo Creditado",
     "commentLabel": "Comentário",
-    "removeModule": "Remover Módulo"
-  },
-  "universityForm": {
+    "removeModule": "Remover Módulo",
     "previousUniversity": "Universidade Anterior",
     "universityDescription": "Especifique o nome de sua universidade anterior!",
     "universityNameLabel": "Nome da Universidade",
@@ -20,5 +18,11 @@
     "previousStudyProgram": "Programa de Estudo Anterior",
     "studyProgramDescription": "Especifique o nome de seu programa de estudo anterior!",
     "studyProgramLabel": "Nome do Programa de Estudo"
+  },
+  "navBar": {
+    "main":"",
+    "apply": "",
+    "review": "",
+    "login": ""
   }
 }

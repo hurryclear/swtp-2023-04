@@ -2,7 +2,7 @@
   "darkMode": {
     "toggleDarkMode": "다크 모드 전환"
   },
-  "moduleForm": {
+  "applicationForm": {
     "addModule": "모듈 추가",
     "module": "모듈",
     "moduleDescription": "인정 받을 모듈에 대한 정보를 제공하세요!",
@@ -10,9 +10,7 @@
     "moduleDescriptionLabel": "모듈 설명",
     "moduleCreditedLabel": "인정 받은 모듈",
     "commentLabel": "코멘트",
-    "removeModule": "모듈 제거"
-  },
-  "universityForm": {
+    "removeModule": "모듈 제거",
     "previousUniversity": "이전 대학",
     "universityDescription": "이전 대학의 이름을 지정하세요!",
     "universityNameLabel": "대학 이름",
@@ -20,5 +18,11 @@
     "previousStudyProgram": "이전 학습 프로그램",
     "studyProgramDescription": "이전 학습 프로그램의 이름을 지정하세요!",
     "studyProgramLabel": "학습 프로그램 이름"
+  },
+  "navBar": {
+    "main":"",
+    "apply": "",
+    "review": "",
+    "login": ""
   }
 }

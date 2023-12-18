@@ -13,6 +13,10 @@ import vuetify from "@/plugins/vuetify";
 import { createApp } from 'vue'
 import App from './App.vue'
 
+// TODO: Axios
+//import axiosInstance from "@/plugins/axios";
+//app.config.globalProperties.$axios = axiosInstance;
+
 const app = createApp(App)
 app.use(vuetify)
 app.use(i18n)
