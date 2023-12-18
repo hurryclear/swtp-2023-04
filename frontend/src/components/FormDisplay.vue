@@ -1,5 +1,5 @@
 <template>
-  <h1>Offene Anträge</h1>
+  <h1>{{$t("studentAffairsOfficeView.openApplications")}}</h1>
   <v-table class="table">
     <thead>
     <tr>
