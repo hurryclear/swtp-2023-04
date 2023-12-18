@@ -13,13 +13,13 @@ services:
   volumes: 
   - ./frontend/:/app 
   restart: unless-stopped
+  networks:
+   - app
 
  backend:
   container_name: springboot-backend
   depends_on:
    - postgres
-  env_file:
-   - .env.dev
   environment:
    SPRING_PROFILES_ACTIVE: dev
    SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/db_dev
@@ -34,6 +34,8 @@ services:
   volumes:
    - ./backend/:/app
   restart: unless-stopped
+  networks:
+   - app
 
 
 
@@ -49,10 +51,12 @@ services:
   restart: unless-stopped
   ports:
    - "5432:5432"
+  networks:
+   - app
 
 volumes:
  postgres_data:
 
 networks:
- backend_network:
+ app:
   driver: bridge
