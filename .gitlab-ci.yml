@@ -21,7 +21,7 @@ test_frontend:
 build_backend:
   stage: build
   needs: ["test_backend"]
-#  when: manual
+  when: manual
   image: 
     name: gcr.io/kaniko-project/executor:v1.9.0-debug
     entrypoint: [""]
@@ -39,7 +39,7 @@ build_backend:
 build_frontend:
   stage: build
   needs: ["test_frontend"]
-#  when: manual
+  when: manual
   image: 
     name: gcr.io/kaniko-project/executor:v1.9.0-debug
     entrypoint: [""]
