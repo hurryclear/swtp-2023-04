@@ -5,7 +5,7 @@ services:
    container_name: vue-frontend
    image: swtp04/vue-frontend:latest
    ports:
-    - 172.26.92.83:3000:80
+    - 172.26.92.83:3000:3000
    restart: unless-stopped
   
   backend:
@@ -17,9 +17,14 @@ services:
      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
    ports:
-    - 172.26.92.83:3001:8080
+    - 172.26.92.83:3001:3001
    restart: unless-stopped
-
+   depends_on:
+    - postgres
+   environment:
+    SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/backend_database
+    SPRING_DATASOURCE_USERNAME: swtp
+    SPRING_DATASOURCE_PASSWORD: brunchPaprika2023
 
   postgres:
    image: postgres:16
@@ -31,6 +36,8 @@ services:
    volumes:
     - postgres_data:/var/lib/postgresql/data
    restart: unless-stopped
+   ports:
+     - 5432:5432
 
 volumes:
  postgres_data:

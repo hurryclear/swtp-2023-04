@@ -53,13 +53,6 @@ services:
 volumes:
  postgres_data:
 
-# db:
-#  env_file:
-#   - .env.dev
-#  container_name: postgres_db
-#  image: postgres
-#  volumes:
-#   - ./postgres-database:/var/lib/postgresql/data
-#  restart: always
-#  ports:
-#   - 127.0.0.1:5432:5432
+networks:
+ backend_network:
+  driver: bridge
