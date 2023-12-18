@@ -1,8 +1,8 @@
-# Development stage
+#Development Stage
 FROM maven:3.9.5-amazoncorretto-17 as development
 WORKDIR /app
 
-# Build Stage
+#Build Stage
 FROM development as build
 WORKDIR /app
 COPY . .
