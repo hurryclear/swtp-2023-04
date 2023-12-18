@@ -3,16 +3,18 @@
     <v-expansion-panels>
       <ModuleForm
           v-for="(form, index) in moduleForms"
-          :key="index"
-          @formFilled="handleFormFilled"
+          :key="moduleForms[index].key"
+          :module="form"
           @removeModule="removeModuleForm(index)"
+          @updateModuleData="updateModuleData(index,$event)"
       />
       <v-btn
           class="userInput"
           @click="addModuleForm"
-          :disabled="!previousFormFilled"
+          :disabled="!this.formsFilled"
+          variant="outlined"
       >
-        Modul hinzufügen
+        {{ $t("moduleForm.addModule") }}
       </v-btn>
     </v-expansion-panels>
   </div>
@@ -20,35 +22,57 @@
 
 <script>
 import ModuleForm from "@/components/ModuleForm.vue";
-import { defineComponent } from "vue";
-
+import {defineComponent} from "vue";
 export default defineComponent({
-  components: { ModuleForm },
+  components: {ModuleForm},
   data() {
     return {
-      moduleForms: [ModuleForm], // Array to store instances of ModuleForm
-      previousFormFilled: false,
+      moduleForms: [
+          {
+            key: 0,
+            name: '',
+            comment: '',
+            description: null,
+            module2bCredited: null
+          }
+      ],
+      formsFilled: false,
     };
   },
   methods: {
     addModuleForm() {
-      const newModuleForm = ModuleForm; // Create a new instance of ModuleForm
-      this.moduleForms.push(newModuleForm);
-      this.previousFormFilled = false;
+      this.moduleForms.push({key:(this.moduleForms[this.moduleForms.length - 1].key+1), name: '', comment: '', description: null, module2bCredited: null, isFilled: false });
+      this.formsFilled = false;
     },
-    handleFormFilled() {
-      this.previousFormFilled = true; // Enable the button when the current form is filled
+    checkIfFilled(){
+      this.formsFilled = this.moduleForms.every(form => form.isFilled);
+      return this.formsFilled;
     },
     removeModuleForm(index) {
-      console.log(index)
-      this.moduleForms.splice(index, 1);
+      if (this.moduleForms.length > 1) {
+        this.moduleForms.splice(index, 1);
+        this.checkIfFilled()
+      }
     },
+    // Listen to the emitted event from ModuleForm and propagate it to the parent (FormPage)
+    updateModuleData(index,data) {
+      this.moduleForms[index]=data;
+      if (this.checkIfFilled()){
+        this.$emit('updateModuleData',this.moduleForms)
+      }
+    },
+    emitFillChange(){
+      this.$emit('fillChange',this.formsFilled)
+    }
   },
+  watch: {
+    "formsFilled": "emitFillChange"
+  }
 });
 </script>
 
 <style scoped>
-  .v-btn{
-    width:100%
-  }
+.v-btn {
+  width: 100%;
+}
 </style>

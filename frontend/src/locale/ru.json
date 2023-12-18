@@ -1,0 +1,24 @@
+{
+  "darkMode": {
+    "toggleDarkMode": "Переключить темный режим"
+  },
+  "moduleForm": {
+    "addModule": "Добавить модуль",
+    "module": "Модуль",
+    "moduleDescription": "Укажите информацию о модуле, который следует засчитать!",
+    "moduleNameLabel": "Название модуля",
+    "moduleDescriptionLabel": "Описание модуля",
+    "moduleCreditedLabel": "Зачтенный модуль",
+    "commentLabel": "Комментарий",
+    "removeModule": "Удалить модуль"
+  },
+  "universityForm": {
+    "previousUniversity": "Предыдущий университет",
+    "universityDescription": "Укажите название вашего предыдущего университета!",
+    "universityNameLabel": "Название университета",
+    "countryLabel": "Страна",
+    "previousStudyProgram": "Предыдущая учебная программа",
+    "studyProgramDescription": "Укажите название вашей предыдущей учебной программы!",
+    "studyProgramLabel": "Название учебной программы"
+  }
+}
