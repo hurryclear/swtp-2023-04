@@ -78,9 +78,4 @@ deploy:
     - docker-compose down --rmi all -v --remove-orphans
     - docker network prune -f
     - docker-compose -f docker-compose-prod.yml pull
-#    - docker-compose -f docker-compose-prod.yml up -d --force-recreate --no-deps frontend backend
-    - export DB_USERNAME=$DB_USERNAME
-    - export DB_PASSWORD=$DB_PASSWORD
-    - export DB_NAME=$DB_NAME
     - docker-compose -f docker-compose-prod.yml up -d
-

@@ -2,36 +2,31 @@
   <v-container>
     <!-- Dynamic Content for Different User Roles -->
     <v-row v-if="userRole === 'student'">
-      <!-- Content for Students -->
-
-      <p>This is the home view as student</p>
+      <p>
+        {{$t('homeView.welcomeStudent')}}
+      </p>
     </v-row>
     <v-row v-else-if="userRole === 'studentAffairsOffice'">
-      <!-- Content for student affairs office -->
-
-      <p>This is the home view as student affairs office</p>
+      <p>
+        {{$t('homeView.welcomeStudentAffairsOffice')}}
+      </p>
     </v-row>
     <v-row v-else-if="userRole === 'examiningCommitteeChair'">
-      <!-- Content for Committee Chair -->
-      <p>This is the home view as committee</p>
+      <p>
+        {{$t('homeView.welcomeExaminingCommitteeChair')}}
+      </p>
     </v-row>
-
-    <!-- Your Main Page Content Goes Here -->
-
   </v-container>
 </template>
 
 <script>
+import store from "@/store";
+
 export default {
-  data() {
-    return {
-      userRole: 'student', // Set the default user role
-    };
+computed: {
+  userRole() {
+    return store.state.userRole;
   },
-  methods: {
-    setUserRole(role) {
-      this.userRole = role;
-    },
-  },
+}
 };
 </script>

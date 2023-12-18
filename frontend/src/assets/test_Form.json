@@ -1,0 +1,17 @@
+{
+  "universityData": {
+    "universityName": "Universität Bochum",
+    "studyProgram": "B. Sc. Informatik",
+    "country": "Deutschland"
+  },
+  "moduleFormsData": [
+    {
+      "key": 0,
+      "name": "Algorithmen und Datenstrukturen 1",
+      "comment": "",
+      "module2bCredited": [
+        "Algorithmen und Datenstrukturen 1"
+      ]
+    }
+  ]
+}

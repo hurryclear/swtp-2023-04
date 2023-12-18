@@ -1,0 +1,25 @@
+{
+  "timestamp": "2023-12-14T21:08:44.104Z",
+  "universityData": {
+    "universityName": "University of Toronto",
+    "studyProgram": "Software Engineering",
+    "country": "Canada"
+  },
+  "moduleFormsData": [
+    {
+      "key": 0,
+      "name": "Advanced Software Engineering",
+      "comment": "Challenging but rewarding!",
+      "description": [{}],
+      "file": {},
+      "module2bCredited": [
+        "Software Engineering",
+        "Software Engineering Praktikum"
+      ],
+      "isFilled": true
+    }
+  ],
+  "status": "Akzeptiert",
+  "id": "2023-12-14T21:08:44.104Z",
+  "comment": "Das angegebene Modul übersteigt den Inhalt von Software Enginnering/Software Engineering Praktikum. Antrag sollte Akzeptiert werden."
+}

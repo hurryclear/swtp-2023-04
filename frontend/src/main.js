@@ -1,4 +1,4 @@
-import "@/assets/main.css"
+import "@/assets/main.css";
 
 // Router
 import router from "@/router";
@@ -9,16 +9,23 @@ import i18n from "@/plugins/i18n";
 // Vuetify
 import vuetify from "@/plugins/vuetify";
 
+// Vuex Store
+import store from '@/store';
+
+// Axios
+import VueAxios from 'vue-axios';
+import axios from '@/plugins/axios';
+
 // Vue App
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from 'vue';
+import App from './App.vue';
 
-// TODO: Axios
-//import axiosInstance from "@/plugins/axios";
-//app.config.globalProperties.$axios = axiosInstance;
+const app = createApp(App);
 
-const app = createApp(App)
-app.use(vuetify)
-app.use(i18n)
-app.use(router)
-app.mount('#app')
+app.use(VueAxios, axios);
+app.use(vuetify);
+app.use(i18n);
+app.use(router);
+app.use(store); 
+
+app.mount('#app');
