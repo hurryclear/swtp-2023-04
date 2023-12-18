@@ -4,11 +4,13 @@ WORKDIR /app
 
 #Build Stage
 FROM development as build
+WORKDIR /app
 COPY . .
 RUN mvn clean package -DskipTests
 
-#Production Stage
+# Production Stage
 FROM amazoncorretto:17 as production
 WORKDIR /app
-COPY --from=build /app/target/backend.jar .
-CMD ["java", "-jar", "backend.jar"]
+COPY --from=build /app/target/backend-0.0.1-SNAPSHOT.jar .
+EXPOSE 3001
+CMD ["java", "-jar", "backend-0.0.1-SNAPSHOT.jar"]
