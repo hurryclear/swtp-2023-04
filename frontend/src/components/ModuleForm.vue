@@ -57,6 +57,7 @@
       <v-btn
           @click="removeModule"
           color="red"
+          :disabled="removeDisabled"
       >
         {{ $t("applicationForm.removeModule") }}
       </v-btn>
@@ -70,6 +71,7 @@ import moduleJSON from '../assets/module_liste.json';
 export default {
   props: {
     module: Object, // Add a prop to receive module data
+    removeDisabled: Boolean,
   },
   data() {
     return {

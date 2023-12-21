@@ -42,7 +42,7 @@ export default defineComponent({
     };
   },
   computed: {
-    removeDisabled: this.moduleForms.length === 1
+    removeDisabled(){return this.moduleForms.length === 1}
   },
   methods: {
     addModuleForm() {
