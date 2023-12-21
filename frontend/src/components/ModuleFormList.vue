@@ -5,6 +5,7 @@
           v-for="(form, index) in moduleForms"
           :key="moduleForms[index].key"
           :module="form"
+          :removeDisabled =" removeDisabled"
           @removeModule="removeModuleForm(index)"
           @updateModuleData="(form,file)=>updateModuleData(index,form,file)"
       />
@@ -39,6 +40,9 @@ export default defineComponent({
       ],
       formsFilled: false,
     };
+  },
+  computed: {
+    removeDisabled: this.moduleForms.length === 1
   },
   methods: {
     addModuleForm() {
