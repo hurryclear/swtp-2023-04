@@ -34,17 +34,17 @@
   },
   "logoutButton": "Ausloggen",
   "homeView": {
-    "welcomeStudent": "Herzlich willkommen auf unserer neuen Online-Plattform für die Anrechnung von Studienleistungen an der Universität Leipzig!\n...Drücken Sie auf 'Module anrechnen', um zu beginnen.\nMit dem Absenden Ihres Antrags wird Ihnen eine eindeutige Vorgangsnummer zugewiesen, mit dieser können Sie auch später noch Ihren Antrag sowie dessen Status einsehen.",
-    "welcomeStudentAffairsOffice": "Herzlich willkommen, Mitarbeitende des Studienbüros!\n        Als mitarbeitende Person des Studienbüros haben Sie Zugriff auf eine Übersicht aller offenen Anträge.\n        Sie können Anträge bearbeiten, ergänzen und den Bearbeitungsstatus verfolgen.\n        Nutzen Sie das benutzerfreundliche Interface, um den Anrechnungsprozess effizient zu gestalten.",
-    "welcomeExaminingCommitteeChair": "Herzlich willkommen, verehrte vorsitzende Person des Prüfungsausschusses!\n        Auf dieser Plattform haben Sie die Möglichkeit, alle offenen Anträge zu überblicken und zu genehmigen oder abzulehnen.\n        Bitte geben Sie eine fundierte Begründung für Ihre Entscheidungen an.\n        Der transparente Anrechnungsprozess wird durch Ihre Teilnahme effizienter und zielführender."
+    "welcomeStudent": "Herzlich willkommen auf unserer neuen Online-Plattform für die Anrechnung von Studienleistungen an der Universität Leipzig! Drücken Sie auf 'Module anrechnen', um zu beginnen. Mit dem Absenden Ihres Antrags wird Ihnen eine eindeutige Vorgangsnummer zugewiesen, mit dieser können Sie auch später noch Ihren Antrag sowie dessen Status einsehen.",
+    "welcomeStudentAffairsOffice": "Herzlich willkommen, Mitarbeitende des Studienbüros! Als mitarbeitende Person des Studienbüros haben Sie Zugriff auf eine Übersicht aller offenen Anträge. Sie können Anträge bearbeiten, ergänzen und den Bearbeitungsstatus verfolgen. Nutzen Sie das benutzerfreundliche Interface, um den Anrechnungsprozess effizient zu gestalten.",
+    "welcomeExaminingCommitteeChair": "Herzlich willkommen, verehrte vorsitzende Person des Prüfungsausschusses! Auf dieser Plattform haben Sie die Möglichkeit, alle offenen Anträge zu überblicken und zu genehmigen oder abzulehnen. Bitte geben Sie eine fundierte Begründung für Ihre Entscheidungen an. Der transparente Anrechnungsprozess wird durch Ihre Teilnahme effizienter und zielführender."
   },
   "studentAffairsOfficeView": {
     "openApplications": "Offene Anträge"
   },
   "examiningCommitteeChairView": {
-    "moduleCount":"Anzahl der Module",
+    "moduleCount": "Anzahl der Module",
     "studentAffairsOfficeComment": "Kommentar vom Studienbüro",
-    "accept":"Annehmen",
+    "accept": "Annehmen",
     "decline": "Ablehnen"
   },
   "reviewComponent": {

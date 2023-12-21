@@ -1,14 +1,14 @@
 <template>
   <v-container>
     <v-app-bar app class="custom-navbar">
-        <!-- Logo -->
-        <v-img :src="logoSrc" ></v-img>
-        <v-spacer/>
+      <!-- Logo -->
+      <v-img :src="logoSrc" @click="navigateTo('main')"/>
+      <v-spacer/>
 
-        <!-- Hamburger menu for mobile view -->
-        <v-btn class="d-md-none" variant="elevated" color="#262A31" icon="mdi-menu" @click="drawer = !drawer">
-          <v-icon>mdi-menu</v-icon>
-        </v-btn>
+      <!-- Hamburger menu for mobile view -->
+      <v-btn class="d-md-none" variant="elevated" color="#262A31" icon="mdi-menu" @click="drawer = !drawer">
+        <v-icon>mdi-menu</v-icon>
+      </v-btn>
 
         <!-- Regular buttons for desktop view -->
         <div class="d-none d-md-flex">
@@ -176,12 +176,6 @@ export default {
   background-color: #B02F2C;
   clip-path: polygon(47% 0, 100% 0, 100% 100%, 50% 100%);
   z-index: -1;
-}
-
-/*Somehow controls where the logo is placed*/
-.navbar-logo {
-  max-height: 120px;
-  max-width: 240px;
 }
 
 .button-spacing {
