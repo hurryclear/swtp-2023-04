@@ -43,9 +43,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log('Navigating to:', to.path);
-  console.log('Current user authenticated status:', store.state.isAuthenticated);
-  console.log('Current user role:', store.state.userRole);
+  console.log('Navigating to:', to.path,"\nCurrent user authenticated status:",store.state.isAuthenticated,"\nCurrent user role:", store.state.userRole);
 
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!store.state.isAuthenticated) {

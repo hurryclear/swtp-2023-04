@@ -10,42 +10,42 @@
         <v-icon>mdi-menu</v-icon>
       </v-btn>
 
-        <!-- Regular buttons for desktop view -->
-        <div class="d-none d-md-flex">
-          <v-btn class="button-spacing"
-                 variant="elevated" color="#262A31"
-                 prepend-icon="mdi-home"
-                 @click="navigateTo('main')"
-                 style="height: auto;"
-          >
-            {{ $t("navBar.main") }}
-          </v-btn>
-          <v-btn class="button-spacing"
-                 variant="elevated"
-                 color="#262A31"
-                 @click="navigateTo('applicationForm')"
-                 style="height: auto;"
-          >
-            {{ $t("navBar.creditModules") }}
-          </v-btn>
-          <v-btn class="button-spacing"
-                 variant="elevated"
-                 color="#262A31"
-                 @click="navigateTo('reviewApplication')"
-                 style="height: auto;"
-          >
-            {{ $t("navBar.review") }}
-          </v-btn>
-          <LanguageSwitcher/>
-          <DarkThemeToggle/>
-          <v-btn class="button-spacing"
-                 variant="elevated"
-                 color="#262A31"
-                 icon="mdi-login-variant"
-                 @click="navigateTo('login')"
-          />
-        </div>
-      
+      <!-- Regular buttons for desktop view -->
+      <div class="d-none d-md-flex">
+        <v-btn class="button-spacing"
+               variant="elevated" color="#262A31"
+               prepend-icon="mdi-home"
+               @click="navigateTo('main')"
+               style="height: auto;"
+        >
+          {{ $t("navBar.main") }}
+        </v-btn>
+        <v-btn class="button-spacing"
+               variant="elevated"
+               color="#262A31"
+               @click="navigateTo('applicationForm')"
+               style="height: auto;"
+        >
+          {{ $t("navBar.creditModules") }}
+        </v-btn>
+        <v-btn class="button-spacing"
+               variant="elevated"
+               color="#262A31"
+               @click="navigateTo('reviewApplication')"
+               style="height: auto;"
+        >
+          {{ $t("navBar.review") }}
+        </v-btn>
+        <LanguageSwitcher/>
+        <DarkThemeToggle/>
+        <v-btn class="button-spacing"
+               variant="elevated"
+               color="#262A31"
+               icon="mdi-login-variant"
+               @click="navigateTo('login')"
+        />
+      </div>
+
     </v-app-bar>
 
     <v-navigation-drawer fluid temporary v-model="drawer" app>

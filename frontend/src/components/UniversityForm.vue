@@ -21,8 +21,10 @@
         </template>
       </v-expansion-panel-title>
       <v-expansion-panel-text>
-        <v-text-field
-            v-model="university.universityName"
+        <v-combobox
+            v-model="selectedUniversity"
+            :items="universities"
+            item-title="name"
             hide-details
             :label="$t('applicationForm.universityNameLabel')"
             variant="outlined"
@@ -37,7 +39,6 @@
         />
       </v-expansion-panel-text>
     </v-expansion-panel>
-
     <v-expansion-panel>
       <v-expansion-panel-title>
         <template v-slot:default="{ expanded }">
@@ -70,35 +71,59 @@
     </v-expansion-panel>
   </v-expansion-panels>
 </template>
-
 <script>
+import axios from "axios";
+
 export default {
   props: {
-    universityData: Object, // Add a prop to receive university data
+    universityData: Object,
   },
   data() {
     return {
       university: {
-        universityName: '',
+        universityName: null,
         studyProgram: '',
         country: '',
-        // Initialize with data from the parent component
         ...this.universityData,
+      },
+      selectedUniversity:null,
+      universities: [],
+    }
+  },
+  methods: {
+    async fetchUniversities() {
+      try {
+        const response = await axios.get("http://universities.hipolabs.com/search", {timeout: 10000});
+        this.universities = response.data;
+        console.log("Universities fetched.")
+      } catch (error) {
+        console.error('Error fetching universities:', error);
       }
     }
   },
   watch: {
     university: {
       handler(newVal) {
-        // Emit an event to the parent when university data changes
         this.$emit('updateUniversityData', newVal);
       },
       deep: true,
     },
+    selectedUniversity: function(newValue) {
+      if (typeof newValue === 'string') {
+        this.university.universityName = newValue
+      } else {
+        if (newValue==null) {
+          this.university.universityName='';
+          return;
+        }
+        this.university.universityName = newValue.name
+        this.university.country = newValue.country
+      }
+    },
+  },
+  mounted() {
+    // Fetch universities data only once when the component is mounted
+    this.fetchUniversities();
   },
 }
 </script>
-
-<style scoped>
-/* Add scoped styles if needed */
-</style>
