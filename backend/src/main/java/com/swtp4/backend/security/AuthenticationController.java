@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
-@RequestMapping("api/auth")
+@RequestMapping("/api/auth")
 public class AuthenticationController {
     // controls login and logout procedure by using the AuthenticationService
     private final AuthenticationService authenticationService;
@@ -16,6 +16,7 @@ public class AuthenticationController {
     public AuthenticationController(AuthenticationService authenticationService){
         this.authenticationService = authenticationService;
     }
+
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(
