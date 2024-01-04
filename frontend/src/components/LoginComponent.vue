@@ -39,6 +39,8 @@
 </template>
 
 <script>
+import axios from "@/plugins/axios";
+
 export default {
   name: 'LoginComponent',
   data() {
@@ -55,28 +57,38 @@ export default {
     };
   },
   methods: {
-    submitLogin() {
-      let role;
-      if (this.username === this.dummyLogins.examiningCommitteeChair.username &&
-          this.password === this.dummyLogins.examiningCommitteeChair.password) {
-        role = 'examiningCommitteeChair';
-        console.log('User role set to:', role);
-      } else if (this.username === this.dummyLogins.studyOffice.username &&
-          this.password === this.dummyLogins.studyOffice.password) {
-        role = 'studentAffairsOffice';
-        console.log('User role set to:', role);
-      }
+    // submitLogin() {
+    //   let role;
+    //   if (this.username === this.dummyLogins.examiningCommitteeChair.username &&
+    //       this.password === this.dummyLogins.examiningCommitteeChair.password) {
+    //     role = 'examiningCommitteeChair';
+    //     console.log('User role set to:', role);
+    //   } else if (this.username === this.dummyLogins.studyOffice.username &&
+    //       this.password === this.dummyLogins.studyOffice.password) {
+    //     role = 'studentAffairsOffice';
+    //     console.log('User role set to:', role);
+    //   }
+    //
+    //   if (role) {
+    //     this.$store.dispatch('authenticateUser', {status: true, role});
+    //     if (role === 'examiningCommitteeChair') {
+    //       this.$router.push('/pruefungsausschuss');
+    //     } else if (role === 'studentAffairsOffice') {
+    //       this.$router.push('/study-office');
+    //     }
+    //   } else {
+    //     this.loginError = true;
+    //   }
+    // },
+    async submitLogin(){
+      // const response2 = await axios.get('http://localhost:3001/api/auth/test');
+      // console.log("test", response2);
 
-      if (role) {
-        this.$store.dispatch('authenticateUser', {status: true, role});
-        if (role === 'examiningCommitteeChair') {
-          this.$router.push('/pruefungsausschuss');
-        } else if (role === 'studentAffairsOffice') {
-          this.$router.push('/study-office');
-        }
-      } else {
-        this.loginError = true;
-      }
+      const response = await axios.post('http://localhost:3001/api/auth/login', {
+        username: this.username,
+        password: this.password
+      });
+      console.log("response", response);
     },
     togglePasswordVisibility() {
       this.showPassword = !this.showPassword;

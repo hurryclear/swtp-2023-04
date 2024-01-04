@@ -42,7 +42,7 @@ public class SecurityConfig {
 
     // this is our hash function, only hashed password are saved in our database
     @Bean
-    public PasswordEncoder passswordEndcoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -51,7 +51,7 @@ public class SecurityConfig {
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setUserDetailsService(customUserDetailsService);
-        daoAuthenticationProvider.setPasswordEncoder(passswordEndcoder());
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         return daoAuthenticationProvider;
     }
 
@@ -61,4 +61,5 @@ public class SecurityConfig {
         throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
 }

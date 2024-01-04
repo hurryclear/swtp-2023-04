@@ -21,13 +21,19 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(
             @RequestBody AuthenticationRequest authenticationRequest) {
-        String jwt = authenticationService.authenticate(authenticationRequest);
-        return ResponseEntity.ok(new AuthenticationResponse(jwt));
+        AuthenticationResponse response = authenticationService.authenticate(authenticationRequest);
+//        return ResponseEntity.ok("I made till here");
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/logout")
     public ResponseEntity<?> logoutUser() {
         authenticationService.logout();
         return ResponseEntity.ok("Logout successful");
+    }
+
+    @GetMapping("/test")
+    public String test() {
+        return "Request hat geklappt";
     }
 }

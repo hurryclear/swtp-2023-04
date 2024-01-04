@@ -12,4 +12,5 @@ import lombok.Setter;
 public class AuthenticationResponse {
     // just a dto which is turned into a json by springboot
     private String token;
+    private String role;
 }
