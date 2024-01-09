@@ -10,8 +10,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.Date;
 
@@ -28,15 +28,20 @@ public class JwtServiceTest {
     @Mock
     private Authentication authentication;
 
-    @Value("${jwt.secret}")
-    private String jwtSecret;
-
-    @Value("${jwt.expiration}")
-    private long jwtExpirationInMillis;
+    private final String jwtSecret = "kdcg/HWhPwXlI0IzwNAph97Vwv7mnQ5tM0EH//MmSjXrbGkFTB1jCupER02sJQykbmBHg8TahS7YIl2tJ8uh4A=="; // Use a test secret key
+    private final long jwtExpirationInMillis = 3600000; // 1 hour for example
+    private final String jwtHeader = "Authorization";
+    private final String jwtPrefix = "Bearer ";
 
     @BeforeEach
     public void setUp() {
         when(authentication.getName()).thenReturn("testUser");
+
+        // Use reflection to set the fields in JwtService
+        ReflectionTestUtils.setField(jwtService, "jwtSecret", jwtSecret);
+        ReflectionTestUtils.setField(jwtService, "jwtExpirationInMillis", jwtExpirationInMillis);
+        ReflectionTestUtils.setField(jwtService, "jwtHeader", jwtHeader);
+        ReflectionTestUtils.setField(jwtService, "jwtPrefix", jwtPrefix);
     }
 
     @Test
