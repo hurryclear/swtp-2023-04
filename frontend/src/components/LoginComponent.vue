@@ -84,10 +84,17 @@ export default {
       // const response2 = await axios.get('http://localhost:3001/api/auth/test');
       // console.log("test", response2);
 
-      const response = await axios.post('http://localhost:3001/api/auth/login', {
-        username: this.username,
-        password: this.password
-      });
+      const response = await axios
+          .post('http://localhost:3000/api/auth/login', {
+            username: this.username,
+            password: this.password
+          })
+          // .then(response => {
+          //   if (response.data.token) {
+          //     localStorage.setItem('user', JSON.stringify(response.data));
+          //   }
+          // })
+          ;
       console.log("response", response);
     },
     togglePasswordVisibility() {

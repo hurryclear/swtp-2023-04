@@ -19,11 +19,6 @@ public class JwtService {
 
     // jwtSecret is our secret key to generate Tokens
     // these are environment variables and can be set in application.properties
-    //T set properties in application.properties by using gitlab secret variables
-    // jwt.secret=YourSecretKey
-    // jwt.expiration=3600000 # 1 hour in milliseconds
-    // jwt.header=Authorization
-    // jwt.prefix=Bearer !!!!mit einem LEERZEICHEN DAHINTER!!!!!
     @Value("${jwt.secret}")
     private String jwtSecret;
 

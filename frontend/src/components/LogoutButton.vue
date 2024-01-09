@@ -15,9 +15,13 @@
 export default {
   name: 'LogoutButton',
   methods: {
+    // logout() {
+    //   this.$store.dispatch('logoutUser');
+    //   this.$router.push('/login');
+    // }
     logout() {
-      this.$store.dispatch('logoutUser');
-      this.$router.push('/login');
+      localStorage.removeItem('user')
+      this.$router.push('/login')
     }
   }
 }

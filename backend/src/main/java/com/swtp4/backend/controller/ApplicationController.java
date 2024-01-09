@@ -4,11 +4,7 @@ import com.swtp4.backend.repositories.entities.ApplicationEntity;
 import com.swtp4.backend.services.ApplicationService;
 import com.swtp4.backend.services.PDFService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "api/application")
@@ -28,5 +24,10 @@ public class ApplicationController {
         //JSOn cut - application attribute zur applicationEntity
         applicationService.save(application);
         //Rest - Module, PDF-Dateien
+    }
+
+    @GetMapping(name = "/testAccess")
+    public String testSecureAccess(){
+        return "Erfolgreich auf gesicherten Api Endpoint zugegriffen";
     }
 }
