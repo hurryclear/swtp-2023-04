@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.swtp4.backend.security.JwtService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -54,4 +55,42 @@ public class JwtServiceTest {
         assertEquals("testUser", decodedJWT.getSubject());
         assertTrue(decodedJWT.getExpiresAt().after(new Date()));
     }
+
+    @Test
+    public void whenValidateToken_withValidToken_thenShouldReturnTrue() {
+        String token = jwtService.generateToken(authentication);
+        assertTrue(jwtService.validateToken(token));
+    }
+
+    @Test
+    public void whenValidateToken_withInvalidToken_thenShouldReturnFalse() {
+        String invalidToken = "invalid.token.here";
+        assertFalse(jwtService.validateToken(invalidToken));
+    }
+
+    @Test
+    public void whenGetUsernameFromToken_withValidToken_thenShouldReturnUsername() {
+        String token = jwtService.generateToken(authentication);
+        String username = jwtService.getUsernameFromToken(token);
+        assertEquals("testUser", username);
+    }
+
+    @Test
+    public void whenResolveToken_withBearerToken_thenShouldReturnToken() {
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        when(request.getHeader("Authorization")).thenReturn("Bearer token");
+
+        String token = jwtService.resolveToken(request);
+        assertEquals("token", token);
+    }
+
+    @Test
+    public void whenResolveToken_withoutBearerPrefix_thenShouldReturnNull() {
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        when(request.getHeader("Authorization")).thenReturn("token");
+
+        String token = jwtService.resolveToken(request);
+        assertNull(token);
+    }
+
 }
