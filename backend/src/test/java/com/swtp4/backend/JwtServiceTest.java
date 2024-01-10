@@ -36,7 +36,7 @@ public class JwtServiceTest {
 
     @BeforeEach
     public void setUp() {
-        when(authentication.getName()).thenReturn("testUser");
+        lenient().when(authentication.getName()).thenReturn("testUser");
 
         // Use reflection to set the fields in JwtService
         ReflectionTestUtils.setField(jwtService, "jwtSecret", jwtSecret);
