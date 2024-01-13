@@ -10,6 +10,16 @@ test_backend:
     - cd backend
     - mvn test
 
+test_integration:
+  stage: test
+  image: maven:latest
+  script:
+    - cd backend
+    - mvn -Dskip.ut=true verify # skipping Unittests and only run integration tests in main and dev
+  rules:
+    - if: $CI_COMMIT_BRANCH == "development"
+    - if: $CI_COMMIT_BRANCH == "main"
+
 test_frontend:
   stage: test
   image: public.ecr.aws/docker/library/node:lts-alpine
@@ -20,7 +30,7 @@ test_frontend:
 
 build_backend:
   stage: build
-  needs: ["test_backend"]
+  needs: ["test_backend", "test_integration"]
   rules:
     - if: $CI_COMMIT_BRANCH == "development"
     - if: $CI_COMMIT_BRANCH == "main"
