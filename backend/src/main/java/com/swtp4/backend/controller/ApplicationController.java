@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "api/application")
+@RequestMapping(path = "/application")
 public class ApplicationController {
 
     private ApplicationService applicationService;
@@ -24,10 +24,5 @@ public class ApplicationController {
         //JSOn cut - application attribute zur applicationEntity
         applicationService.save(application);
         //Rest - Module, PDF-Dateien
-    }
-
-    @GetMapping(name = "/testAccess")
-    public String testSecureAccess(){
-        return "Erfolgreich auf gesicherten Api Endpoint zugegriffen";
     }
 }
