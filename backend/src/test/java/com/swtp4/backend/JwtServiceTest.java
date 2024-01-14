@@ -64,7 +64,7 @@ public class JwtServiceTest {
 
     @Test
     public void whenValidateToken_withInvalidToken_thenShouldReturnFalse() {
-        String invalidToken = "invalid.token.here";
+        String invalidToken = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
         assertFalse(jwtService.validateToken(invalidToken));
     }
 
