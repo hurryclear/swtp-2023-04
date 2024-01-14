@@ -39,6 +39,8 @@
 </template>
 
 <script>
+import axios from "@/plugins/axios";
+
 export default {
   name: 'LoginComponent',
   data() {
