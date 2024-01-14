@@ -29,7 +29,7 @@ public class UserEntity implements UserDetails {
     // The UserEntity must implement these methods, otherwise the other security components cannot use it.
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + this.role.name()));
     }
 
     @Override

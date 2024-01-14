@@ -49,6 +49,8 @@ public class JwtAuthenticationAndAuthorizationIT {
     public void setup() {
         UserEntity user = new UserEntity("testuser", passwordEncoder.encode("password"), Role.OFFICE);
         userRepository.save(user);
+        UserEntity committee_member = new UserEntity("committeeuser", passwordEncoder.encode("password"), Role.COMMITTEE);
+        userRepository.save(committee_member);
     }
 
     @AfterEach
@@ -56,6 +58,13 @@ public class JwtAuthenticationAndAuthorizationIT {
         userRepository.deleteAll();
     }
 
+    private String createValidToken(String username) {
+        return JWT.create()
+                .withSubject(username)
+                .withIssuedAt(new Date(System.currentTimeMillis()))
+                .withExpiresAt(new Date(System.currentTimeMillis() + jwtExpirationInMillis))
+                .sign(Algorithm.HMAC512(jwtSecret));
+    }
     @Test
     public void testAuthenticationWithValidCredentials() throws Exception {
         String jsonBody = "{\"username\":\"testuser\",\"password\":\"password\"}";
@@ -79,13 +88,8 @@ public class JwtAuthenticationAndAuthorizationIT {
 
     @Test
     public void testAccessProtectedEndpointWithValidToken() throws Exception {
-        String validToken = JWT.create()
-                .withSubject("testuser")
-                .withIssuedAt(new Date(System.currentTimeMillis()))
-                .withExpiresAt(new Date(System.currentTimeMillis() + jwtExpirationInMillis))
-                .sign(Algorithm.HMAC512(jwtSecret));
-
-        mockMvc.perform(get("/testProtectedEndpoint")
+        String validToken = createValidToken("testuser");
+        mockMvc.perform(get("/test/protectedEndpoint")
                         .header(jwtHeader, jwtPrefix + validToken))
                 .andExpect(status().isOk());
     }
@@ -94,7 +98,7 @@ public class JwtAuthenticationAndAuthorizationIT {
     public void testAccessProtectedEndpointWithInvalidToken() throws Exception {
         String invalidToken = "thats.invalid.Token";
 
-        mockMvc.perform(get("/testProtectedEndpoint")
+        mockMvc.perform(get("/test/protectedEndpoint")
                         .header(jwtHeader, jwtPrefix + invalidToken))
                 .andExpect(status().isUnauthorized());
     }
@@ -109,10 +113,36 @@ public class JwtAuthenticationAndAuthorizationIT {
                                 .withExpiresAt(expiredDate)
                                 .sign(Algorithm.HMAC512(jwtSecret));
 
-        mockMvc.perform(get("/testProtectedEndpoint")
+        mockMvc.perform(get("/test/protectedEndpoint")
                         .header(jwtHeader, jwtPrefix + invalidToken))
                 .andExpect(status().isUnauthorized());
     }
 
+    @Test
+    public void testAccessCommitteeEndpointWithCommitteeRole() throws Exception {
+        String committeeToken = createValidToken("committeeuser");
+
+        mockMvc.perform(get("/test/committeeOnly")
+                        .header(jwtHeader, jwtPrefix + committeeToken))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testAccessCommitteeEndpointWithOfficeRole() throws Exception {
+        String officeToken = createValidToken("testuser");
+
+        mockMvc.perform(get("/test/committeeOnly")
+                        .header(jwtHeader, jwtPrefix + officeToken))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    public void testAccessOfficeEndpointWithOfficeRole() throws Exception {
+        String officeToken = createValidToken("testuser");
+
+        mockMvc.perform(get("/test/office")
+                        .header(jwtHeader, jwtPrefix + officeToken))
+                .andExpect(status().isOk());
+    }
 
 }
