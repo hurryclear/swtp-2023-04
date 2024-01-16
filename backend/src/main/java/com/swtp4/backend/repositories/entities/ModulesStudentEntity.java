@@ -6,15 +6,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.sql.Blob;
-import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "university_modules")
-public class UniversityModulesEntity {
+@Table(name = "modules_student")
+public class ModulesStudentEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -22,16 +21,16 @@ public class UniversityModulesEntity {
 
     private String number;
 
-    @ManyToOne
-    @JoinColumn(name = "applications_id")
-    private ApplicationEntity applicationEntity;
-
     private String title;
 
     @Lob
     private Blob description_pdf;
 
     private int credits;
+
+    private String university;
+
+    private String major;
 
     private String comment_student;
 

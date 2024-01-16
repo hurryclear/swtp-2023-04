@@ -1,21 +1,21 @@
 package com.swtp4.backend.services;
 
-import com.swtp4.backend.repositories.ApplicationRepository;
-import com.swtp4.backend.repositories.UniversityModulesRepository;
-import com.swtp4.backend.repositories.entities.ApplicationEntity;
+import com.swtp4.backend.repositories.ApplicationsRepository;
+import com.swtp4.backend.repositories.ModulesStudentRepository;
+import com.swtp4.backend.repositories.entities.ApplicationsEntity;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ApplicationService {
 
-    private ApplicationRepository applicationRepository;
-    private UniversityModulesRepository universityModulesRepository;
+    private ApplicationsRepository applicationsRepository;
+    private ModulesStudentRepository modulesStudentRepository;
 
-    public ApplicationService(ApplicationRepository applicationRepository) {
-        this.applicationRepository = applicationRepository;
+    public ApplicationService(ApplicationsRepository applicationsRepository) {
+        this.applicationsRepository = applicationsRepository;
     }
 
-    public void save(ApplicationEntity applicationEntity) {
-        applicationRepository.save(applicationEntity);
+    public void save(ApplicationsEntity applicationsEntity) {
+        applicationsRepository.save(applicationsEntity);
     }
 }
