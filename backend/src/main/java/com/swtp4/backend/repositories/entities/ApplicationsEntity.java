@@ -1,5 +1,6 @@
 package com.swtp4.backend.repositories.entities;
 
+import com.swtp4.backend.repositories.entities.keyClasses.ApplicationsKeyClass;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,8 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -17,11 +16,10 @@ import java.util.UUID;
 @Entity(name="applications")
 @Table(name="applications")
 
-public class ApplicationEntity {
+public class ApplicationsEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    @EmbeddedId
+    private ApplicationsKeyClass applicationsKeyClass;
 
     private String status;
 
