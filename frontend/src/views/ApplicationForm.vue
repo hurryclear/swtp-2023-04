@@ -16,14 +16,14 @@
     @click="submitWholeForm"
     :disabled="!this.formsFilled"
     color="primary"
-  >Submit Whole Form</v-btn>
+  >{{$t("applicationForm.submit")}}</v-btn>
 
   <div v-if="submittedFormId">
     <v-text-field
       v-model="submittedFormId"
       label="Application ID"
       readonly
-    ></v-text-field>
+    />
     <v-btn icon="mdi-content-copy" @click="copyFormIdToClipboard"></v-btn>
     <v-btn icon="mdi-download" @click="createDownloadableJSON(generateFormData())"></v-btn>
   </div>

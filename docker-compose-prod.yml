@@ -21,9 +21,15 @@ services:
     - postgres
    restart: unless-stopped
    environment:
+    SPRING_PROFILES_ACTIVE: prod
     SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/your_database_name
     SPRING_DATASOURCE_USERNAME: your_username
     SPRING_DATASOURCE_PASSWORD: your_password
+#   gitlab secret variables should be used
+    JWT_SECRET: "kdcg/HWhPwXlI0IzwNAph97Vwv7mnQ5tM0EH//MmSjXrbGkFTB1jCupER02sJQykbmBHg8TahS7YIl2tJ8uh4A=="
+    JWT_EXPIRATION: 3600000
+    JWT_HEADER: Authorization
+    JWT_PREFIX: "Bearer "
    networks:
     - app
 
