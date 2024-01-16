@@ -17,7 +17,7 @@ public class ModulesBlockEntity {
     @Id
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumns({
             @JoinColumn(name = "applications_id"),
             @JoinColumn(name = "applications_creator")
