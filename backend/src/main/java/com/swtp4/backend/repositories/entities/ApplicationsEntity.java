@@ -30,4 +30,8 @@ public class ApplicationsEntity {
     private String university;
 
     private String major;
+
+    private String commentStudent;
+
+    private String commentEmployee;
 }
