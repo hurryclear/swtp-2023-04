@@ -18,7 +18,7 @@
       "modulesStudent": [
         {
           "number": "420",
-          "name": "AlgoDat 1.5",
+          "title": "AlgoDat 1.5",
           "description": "",
           "credits": "5",
           "university": "University of Regenbogenland",
@@ -28,7 +28,7 @@
         },
         {
           "number": "69",
-          "name": "AlgoDat 0.5",
+          "title": "AlgoDat 0.5",
           "description": "",
           "credits": "4",
           "university": "University of Regenbogenland",
@@ -48,7 +48,7 @@
       "modulesStudent": [
         {
           "number": "81923",
-          "name": "Das Alles-Modul",
+          "title": "Das Alles-Modul",
           "description": "",
           "credits": "20",
           "university": "University of Regenbogenland",
@@ -57,7 +57,7 @@
           "commentEmployee": "Beschreibung war wirklich lang, Kaffee ist alle"
         }
       ],
-      "module2bCredited": [
+      "modules2bCredited": [
         "Lineare Algebra für Informatiker",
         "Analysis für Informatiker"
       ]

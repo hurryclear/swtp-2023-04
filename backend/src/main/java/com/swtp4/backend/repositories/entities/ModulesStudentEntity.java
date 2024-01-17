@@ -32,7 +32,7 @@ public class ModulesStudentEntity {
 
     private String major;
 
-    private String comment_student;
+    private String commentStudent;
 
-    private String comment_employee;
+    private String commentEmployee;
 }
