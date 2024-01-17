@@ -27,7 +27,7 @@ public class ApplicationsEntity {
 
     private Date dateLastEdited;
 
-    private String university;
+    private String universityName;
 
     private String major;
 
