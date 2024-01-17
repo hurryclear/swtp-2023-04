@@ -4,6 +4,7 @@ import com.swtp4.backend.repositories.entities.ApplicationsEntity;
 import com.swtp4.backend.services.ApplicationService;
 import com.swtp4.backend.services.PDFService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,8 +20,8 @@ public class ApplicationController {
         this.pdfService = pdfService;
     }
 
-    @PostMapping
-    public void addApplication(@RequestBody ApplicationsEntity application){
+    @PostMapping("/saveApplication")
+    public void saveApplication(@RequestBody ApplicationsEntity applicationsEntity){
         //JSOn cut - application attribute zur applicationEntity
         applicationService.save(application);
         //Rest - Module, PDF-Dateien
