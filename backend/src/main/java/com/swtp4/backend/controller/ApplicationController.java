@@ -1,6 +1,6 @@
 package com.swtp4.backend.controller;
 
-import com.swtp4.backend.repositories.dto.ApplicationsDTO;
+import com.swtp4.backend.repositories.dto.ApplicationsDto;
 import com.swtp4.backend.services.ApplicationService;
 import com.swtp4.backend.services.PDFService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class ApplicationController {
     }
 
     @PostMapping("/saveApplication")
-    public void saveApplication(@RequestBody ApplicationsDTO applicationsDTO){
+    public void saveApplication(@RequestBody ApplicationsDto applicationsDTO){
         applicationService.save(applicationsDTO);
     }
 }

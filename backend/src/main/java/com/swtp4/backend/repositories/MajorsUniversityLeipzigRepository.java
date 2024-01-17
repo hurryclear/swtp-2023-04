@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MajorsUniversityLeipzigRepository extends JpaRepository<MajorsUniversityLeipzigEntity, Long> {
+
+    MajorsUniversityLeipzigEntity findByName(String name);
 }

@@ -1,11 +1,10 @@
 package com.swtp4.backend.services;
 
-import com.swtp4.backend.controller.ApplicationController;
 import com.swtp4.backend.repositories.ApplicationsRepository;
 import com.swtp4.backend.repositories.ModulesBlockRepository;
 import com.swtp4.backend.repositories.ModulesRelationRepository;
 import com.swtp4.backend.repositories.ModulesStudentRepository;
-import com.swtp4.backend.repositories.dto.ApplicationsDTO;
+import com.swtp4.backend.repositories.dto.ApplicationsDto;
 import com.swtp4.backend.repositories.dto.ModulesBlockDto;
 import com.swtp4.backend.repositories.entities.*;
 import com.swtp4.backend.repositories.entities.keyClasses.ApplicationsKeyClass;
@@ -34,7 +33,7 @@ public class ApplicationService {
         this.modulesStudentRepository = modulesStudentRepository;
     }
 
-    public void save(ApplicationsDTO applicationsDTO) {
+    public void save(ApplicationsDto applicationsDTO) {
         //Save ApplicationEntities
         ApplicationsEntity applicationsEntityStudent = applicationsDTO.getApplicationData();
         ApplicationsEntity applicationsEntityEmployee = applicationsDTO.getApplicationData();
@@ -42,6 +41,7 @@ public class ApplicationService {
         ApplicationsKeyClass applicationsKeyClassEmployee = new ApplicationsKeyClass();
         applicationsKeyClassStudent.setCreator("Student");
         applicationsKeyClassEmployee.setCreator("Employee");
+        //TODO: Implement processNumberGenerator
         UUID processNumber = UUID.randomUUID();
         applicationsKeyClassStudent.setId(processNumber);
         applicationsKeyClassEmployee.setId(processNumber);

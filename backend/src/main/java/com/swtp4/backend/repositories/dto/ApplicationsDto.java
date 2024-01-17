@@ -1,7 +1,6 @@
 package com.swtp4.backend.repositories.dto;
 
 import com.swtp4.backend.repositories.entities.ApplicationsEntity;
-import com.swtp4.backend.repositories.entities.ModulesBlockEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 
-public class ApplicationsDTO {
+public class ApplicationsDto {
 
     //applicationData from JSON mapped to applicationEntity
     private ApplicationsEntity applicationData;
