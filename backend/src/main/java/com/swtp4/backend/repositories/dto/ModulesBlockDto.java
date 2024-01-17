@@ -20,4 +20,7 @@ public class ModulesBlockDto {
 
     //modulesStudent from JSON in moduleFormsData mapped to List of ModulesStudentEntities
     private List<ModulesStudentEntity> modulesStudent;
+
+    //modules2bCredited from JSON
+    private List<String> modules2bCredited;
 }

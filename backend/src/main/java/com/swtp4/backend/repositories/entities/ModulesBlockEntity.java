@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class ModulesBlockEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne(cascade = CascadeType.ALL)
