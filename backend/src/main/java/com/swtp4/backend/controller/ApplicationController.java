@@ -1,10 +1,9 @@
 package com.swtp4.backend.controller;
 
-import com.swtp4.backend.repositories.entities.ApplicationsEntity;
+import com.swtp4.backend.repositories.dto.ApplicationsDTO;
 import com.swtp4.backend.services.ApplicationService;
 import com.swtp4.backend.services.PDFService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,9 +20,7 @@ public class ApplicationController {
     }
 
     @PostMapping("/saveApplication")
-    public void saveApplication(@RequestBody ApplicationsEntity applicationsEntity){
-        //JSOn cut - application attribute zur applicationEntity
-        applicationService.save(application);
-        //Rest - Module, PDF-Dateien
+    public void saveApplication(@RequestBody ApplicationsDTO applicationsDTO){
+        applicationService.save(applicationsDTO);
     }
 }

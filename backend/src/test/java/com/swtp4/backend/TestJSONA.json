@@ -1,12 +1,16 @@
 {
-  "universityName": "University of Regenbogenland",
-  "major": "B. Sc. Informatik",
-  "country": "Regenbogencountry",
-  "status": "",
-  "commentStudent": "Ich will alle CP valla",
-  "commentEmployee": "Der bekommt nicht alle CP yalla",
-  "dateOfSubmission": "2023-12-31T22:30:42.103Z",
-  "dateLastEdited": "2024-01-14T14:12:14.675Z",
+  "applicationData": [
+    {
+      "universityName": "University of Regenbogenland",
+      "major": "B. Sc. Informatik",
+      "country": "Regenbogencountry",
+      "status": "",
+      "commentStudent": "Ich will alle CP valla",
+      "commentEmployee": "Der bekommt nicht alle CP yalla",
+      "dateOfSubmission": "2023-12-31T22:30:42.103Z",
+      "dateLastEdited": "2024-01-14T14:12:14.675Z"
+    }
+  ],
   "moduleFormsData": [
     {
       "key": 0,
