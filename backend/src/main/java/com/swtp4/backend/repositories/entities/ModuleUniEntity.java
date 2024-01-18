@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "modules_university_leipzig")
-public class ModulesUniversityLeipzigEntity {
+@Table(name = "module_uni")
+public class ModuleUniEntity {
 
     @Id
     private String number;
@@ -20,6 +20,6 @@ public class ModulesUniversityLeipzigEntity {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name ="majors_university_leipzig_name")
-    private MajorsUniversityLeipzigEntity majorsUniversityLeipzigEntity;
+    @JoinColumn(name ="major_uni_name")
+    private MajorUniEntity majorUniEntity;
 }

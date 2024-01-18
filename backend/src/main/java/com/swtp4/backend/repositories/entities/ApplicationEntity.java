@@ -1,6 +1,6 @@
 package com.swtp4.backend.repositories.entities;
 
-import com.swtp4.backend.repositories.entities.keyClasses.ApplicationsKeyClass;
+import com.swtp4.backend.repositories.entities.keyClasses.ApplicationKeyClass;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,13 +13,13 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity(name="applications")
-@Table(name="applications")
+@Entity(name="application")
+@Table(name="application")
 
-public class ApplicationsEntity {
+public class ApplicationEntity {
 
     @EmbeddedId
-    private ApplicationsKeyClass applicationsKeyClass;
+    private ApplicationKeyClass applicationKeyClass;
 
     private String status;
 

@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "module_blocks")
-public class ModulesBlockEntity {
+@Table(name = "module_block")
+public class ModuleBlockEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,10 +20,10 @@ public class ModulesBlockEntity {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumns({
-            @JoinColumn(name = "applications_id"),
-            @JoinColumn(name = "applications_creator")
+            @JoinColumn(name = "application_id"),
+            @JoinColumn(name = "application_creator")
     })
-    private ApplicationsEntity applicationsEntity;
+    private ApplicationEntity applicationEntity;
 
     private String approval;
 

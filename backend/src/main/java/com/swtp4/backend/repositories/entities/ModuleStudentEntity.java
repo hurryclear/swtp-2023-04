@@ -12,8 +12,8 @@ import java.sql.Blob;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "modules_student")
-public class ModulesStudentEntity {
+@Table(name = "module_student")
+public class ModuleStudentEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -26,7 +26,7 @@ public class ModulesStudentEntity {
     @Lob
     private Blob description_pdf;
 
-    private int credits;
+    private String credits;
 
     private String university;
 

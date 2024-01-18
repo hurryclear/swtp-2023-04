@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "majors_university_leipzig")
-public class MajorsUniversityLeipzigEntity {
+@Table(name = "major_uni")
+public class MajorUniEntity {
 
     @Id
     private Long id;

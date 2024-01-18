@@ -1,6 +1,6 @@
 package com.swtp4.backend.repositories.dto;
 
-import com.swtp4.backend.repositories.entities.ModulesUniversityLeipzigEntity;
+import com.swtp4.backend.repositories.entities.ModuleUniEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,9 +12,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MajorsUniversityLeipzigDto {
+public class MajorUniDto {
 
     private String name;
 
-    private List<ModulesUniversityLeipzigEntity> modules;
+    private List<ModuleUniEntity> modules;
 }

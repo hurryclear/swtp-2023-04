@@ -13,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ApplicationsKeyClass implements Serializable {
+public class ApplicationKeyClass implements Serializable {
 
     @Column(name = "id")
     private UUID id; //TODO ID-Generator Datentyp

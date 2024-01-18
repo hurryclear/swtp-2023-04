@@ -1,6 +1,5 @@
 package com.swtp4.backend.repositories.dto;
 
-import com.swtp4.backend.repositories.entities.MajorsUniversityLeipzigEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,5 +13,5 @@ import java.util.List;
 @Builder
 public class UniDataDto {
 
-    private List<MajorsUniversityLeipzigDto> courses;
+    private List<MajorUniDto> courses;
 }

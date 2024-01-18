@@ -1,7 +1,7 @@
 package com.swtp4.backend.repositories.dto;
 
-import com.swtp4.backend.repositories.entities.ModulesBlockEntity;
-import com.swtp4.backend.repositories.entities.ModulesStudentEntity;
+import com.swtp4.backend.repositories.entities.ModuleBlockEntity;
+import com.swtp4.backend.repositories.entities.ModuleStudentEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,13 +13,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ModulesBlockDto {
+public class ModuleBlockDto {
 
     //moduleBlock from moduleFormsData from JSON mapped to ModulesBlockEntity
-    private ModulesBlockEntity moduleBlockData;
+    private ModuleBlockEntity moduleBlockData;
 
     //modulesStudent from JSON in moduleFormsData mapped to List of ModulesStudentEntities
-    private List<ModulesStudentEntity> modulesStudent;
+    private List<ModuleStudentEntity> modulesStudent;
 
     //modules2bCredited from JSON
     private List<String> modules2bCredited;
