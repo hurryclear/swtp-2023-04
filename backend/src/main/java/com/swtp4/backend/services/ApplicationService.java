@@ -1,14 +1,14 @@
 package com.swtp4.backend.services;
 
-import com.swtp4.backend.repositories.ApplicationsRepository;
-import com.swtp4.backend.repositories.ModulesBlockRepository;
-import com.swtp4.backend.repositories.ModulesRelationRepository;
-import com.swtp4.backend.repositories.ModulesStudentRepository;
-import com.swtp4.backend.repositories.dto.ApplicationsDto;
-import com.swtp4.backend.repositories.dto.ModulesBlockDto;
+import com.swtp4.backend.repositories.ApplicationRepository;
+import com.swtp4.backend.repositories.ModuleBlockRepository;
+import com.swtp4.backend.repositories.ModuleRelationRepository;
+import com.swtp4.backend.repositories.ModuleStudentRepository;
+import com.swtp4.backend.repositories.dto.ApplicationDto;
+import com.swtp4.backend.repositories.dto.ModuleBlockDto;
 import com.swtp4.backend.repositories.entities.*;
-import com.swtp4.backend.repositories.entities.keyClasses.ApplicationsKeyClass;
-import com.swtp4.backend.repositories.entities.keyClasses.ModulesRelationKeyClass;
+import com.swtp4.backend.repositories.entities.keyClasses.ApplicationKeyClass;
+import com.swtp4.backend.repositories.entities.keyClasses.ModuleRelationKeyClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,73 +18,85 @@ import java.util.UUID;
 @Service
 public class ApplicationService {
 
-    private ApplicationsRepository applicationsRepository;
-    private ModulesStudentRepository modulesStudentRepository;
-    private ModulesBlockRepository modulesBlockRepository;
-    private ModulesRelationRepository modulesRelationRepository;
+    private ApplicationRepository applicationRepository;
+    private ModuleStudentRepository moduleStudentRepository;
+    private ModuleBlockRepository moduleBlockRepository;
+    private ModuleRelationRepository moduleRelationRepository;
 
     @Autowired
     public ApplicationService(
-            ApplicationsRepository applicationsRepository,
-            ModulesBlockRepository modulesBlockRepository,
-            ModulesStudentRepository modulesStudentRepository) {
-        this.applicationsRepository = applicationsRepository;
-        this.modulesBlockRepository = modulesBlockRepository;
-        this.modulesStudentRepository = modulesStudentRepository;
+            ApplicationRepository applicationRepository,
+            ModuleBlockRepository moduleBlockRepository,
+            ModuleStudentRepository moduleStudentRepository,
+            ModuleRelationRepository moduleRelationRepository) {
+        this.applicationRepository = applicationRepository;
+        this.moduleBlockRepository = moduleBlockRepository;
+        this.moduleStudentRepository = moduleStudentRepository;
+        this.moduleRelationRepository = moduleRelationRepository;
     }
 
-    public void save(ApplicationsDto applicationsDTO) {
+    public void save(ApplicationDto applicationDto) {
         //Save ApplicationEntities
-        ApplicationsEntity applicationsEntityStudent = applicationsDTO.getApplicationData();
-        ApplicationsEntity applicationsEntityEmployee = applicationsDTO.getApplicationData();
-        ApplicationsKeyClass applicationsKeyClassStudent = new ApplicationsKeyClass();
-        ApplicationsKeyClass applicationsKeyClassEmployee = new ApplicationsKeyClass();
-        applicationsKeyClassStudent.setCreator("Student");
-        applicationsKeyClassEmployee.setCreator("Employee");
         //TODO: Implement processNumberGenerator
         UUID processNumber = UUID.randomUUID();
-        applicationsKeyClassStudent.setId(processNumber);
-        applicationsKeyClassEmployee.setId(processNumber);
-        applicationsEntityStudent.setApplicationsKeyClass(applicationsKeyClassStudent);
-        applicationsEntityEmployee.setApplicationsKeyClass(applicationsKeyClassEmployee);
-        ApplicationsEntity savedApplicationEntityStudent = applicationsRepository.save(applicationsEntityStudent);
-        ApplicationsEntity savesApplicationEntityEmployee = applicationsRepository.save(applicationsEntityEmployee);
+        ApplicationEntity savedApplicationEntityStudent = saveApplicationEntityStudent(applicationDto, processNumber);
+        ApplicationEntity savedApplicationEntityEmployee = saveApplicationEntityEmployee(applicationDto, processNumber)
 
         //Save ModulesBlocksEntities
-        List<ModulesBlockDto> modulesBlockDtos = applicationsDTO.getModuleFormsData();
-        for (ModulesBlockDto modulesBlockDto : modulesBlockDtos) {
-            ModulesBlockEntity modulesBlockEntityStudent = modulesBlockDto.getModulesBlockEntity();
-            ModulesBlockEntity modulesBlockEntityEmployee = modulesBlockDto.getModulesBlockEntity();
-            modulesBlockEntityStudent.setApplicationsEntity(savedApplicationEntityStudent);
-            modulesBlockEntityEmployee.setApplicationsEntity(savesApplicationEntityEmployee);
-            ModulesBlockEntity savedModulesBlockEntityStudent = modulesBlockRepository.save(modulesBlockEntityStudent);
-            ModulesBlockEntity savedModulesBlockEntityEmployee = modulesBlockRepository.save(modulesBlockEntityEmployee);
+        List<ModuleBlockDto> moduleBlockDtos = applicationDto.getModuleFormsData();
+        for (ModuleBlockDto moduleBlockDto : moduleBlockDtos) {
+            ModuleBlockEntity savedModuleBlockEntityStudent = saveModuleBlockEntity(moduleBlockDto, savedApplicationEntityStudent);
+            ModuleBlockEntity savedModuleBlockEntityEmployee = saveModuleBlockEntity(moduleBlockDto, savedApplicationEntityEmployee);
 
             //Save ModuleStudentEntities
-            List<ModulesStudentEntity> modulesStudentEntities = modulesBlockDto.getModulesStudent();
-            List<String> modules2bCredited = modulesBlockDto.getModules2bCredited();
+            List<ModuleStudentEntity> modulesStudentEntities = moduleBlockDto.getModulesStudent();
+            List<String> modules2bCredited = moduleBlockDto.getModules2bCredited();
             //TODO: Convert List of Strings with ModuleUniversityNames to List of ModulesUniversityLeipzigEntities
-            List<ModulesUniversityLeipzigEntity> modules2bCreditedEntities = getUniversityModulesByName(modules2bCredited);
-            for (ModulesStudentEntity modulesStudentEntity : modulesStudentEntities) {
-                ModulesStudentEntity savedModulesStudentEntityStudent = modulesStudentRepository.save(modulesStudentEntity);
-                ModulesStudentEntity savedModulesStudentEntityEmployee = modulesStudentRepository.save(modulesStudentEntity);
+            List<ModuleUniEntity> modules2bCreditedEntities = getUniversityModulesByName(modules2bCredited);
+            for (ModuleStudentEntity moduleStudentEntity : modulesStudentEntities) {
+                ModuleStudentEntity savedModuleStudentEntityStudent = moduleStudentRepository.save(moduleStudentEntity);
+                ModuleStudentEntity savedModuleStudentEntityEmployee = moduleStudentRepository.save(moduleStudentEntity);
 
-                //Save ModulesRelationEntitites
-                for (ModulesUniversityLeipzigEntity modulesUniversityLeipzigEntity : modules2bCreditedEntities) {
-                    ModulesRelationEntity modulesRelationEntityStudent = new ModulesRelationEntity();
-                    ModulesRelationEntity modulesRelationEntityEmployee = new ModulesRelationEntity();
-                    modulesRelationEntityStudent.setModulesBlockEntity(savedModulesBlockEntityStudent);
-                    modulesRelationEntityEmployee.setModulesBlockEntity(savedModulesBlockEntityEmployee);
-                    ModulesRelationKeyClass modulesRelationKeyClassStudent = new ModulesRelationKeyClass();
-                    ModulesRelationKeyClass modulesRelationKeyClassEmployee = new ModulesRelationKeyClass();
-                    modulesRelationKeyClassStudent.setModulesStudentEntity(savedModulesStudentEntityStudent);
-                    modulesRelationKeyClassEmployee.setModulesStudentEntity(savedModulesStudentEntityEmployee);
-                    modulesRelationKeyClassStudent.setModulesUniversityLeipzigEntity(modulesUniversityLeipzigEntity);
-                    modulesRelationKeyClassEmployee.setModulesUniversityLeipzigEntity(modulesUniversityLeipzigEntity);
-                    modulesRelationEntityStudent.setModulesRelationKeyClass(modulesRelationKeyClassStudent);
-                    modulesRelationEntityEmployee.setModulesRelationKeyClass(modulesRelationKeyClassEmployee);
+                //Save ModulesRelationEntities
+                for (ModuleUniEntity moduleUniEntity : modules2bCreditedEntities) {
+                    ModuleRelationEntity savedModuleRelationEntityStudent = saveModuleRelationEntity(savedModuleBlockEntityStudent, moduleUniEntity, savedModuleStudentEntityStudent);
+                    ModuleRelationEntity savedModuleRelationEntityEmployee = saveModuleRelationEntity(savedModuleBlockEntityEmployee, moduleUniEntity, savedModuleStudentEntityEmployee);
                 }
             }
         }
+    }
+
+    private ApplicationEntity saveApplicationEntityStudent(ApplicationDto applicationDto, UUID processNumber) {
+        ApplicationEntity applicationEntityStudent = applicationDto.getApplicationData();
+        ApplicationKeyClass applicationKeyClassStudent = new ApplicationKeyClass();
+        applicationKeyClassStudent.setCreator("Student");
+        applicationKeyClassStudent.setId(processNumber);
+        applicationEntityStudent.setApplicationKeyClass(applicationKeyClassStudent);
+        return applicationRepository.save(applicationEntityStudent);
+    }
+
+    private ApplicationEntity saveApplicationEntityEmployee(ApplicationDto applicationDto, UUID processNumber) {
+        ApplicationEntity applicationEntityEmployee = applicationDto.getApplicationData();
+        ApplicationKeyClass applicationKeyClassEmployee = new ApplicationKeyClass();
+        applicationKeyClassEmployee.setCreator("Employee");
+        applicationKeyClassEmployee.setId(processNumber);
+        applicationEntityEmployee.setApplicationKeyClass(applicationKeyClassEmployee);
+        return applicationRepository.save(applicationEntityEmployee);
+    }
+
+    private ModuleBlockEntity saveModuleBlockEntity(ModuleBlockDto moduleBlockDto, ApplicationEntity applicationEntity) {
+        ModuleBlockEntity moduleBlockEntity = moduleBlockDto.getModuleBlockData();
+        moduleBlockEntity.setApplicationEntity(applicationEntity);
+        return moduleBlockRepository.save(moduleBlockEntity);
+    }
+
+    private ModuleRelationEntity saveModuleRelationEntity(ModuleBlockEntity moduleBlockEntity, ModuleUniEntity moduleUniEntity, ModuleStudentEntity moduleStudentEntity) {
+        ModuleRelationEntity moduleRelationEntity = new ModuleRelationEntity();
+        moduleRelationEntity.setModuleBlockEntity(moduleBlockEntity);
+        ModuleRelationKeyClass moduleRelationKeyClassEmployee = new ModuleRelationKeyClass();
+        moduleRelationKeyClassEmployee.setModuleStudentEntity(moduleStudentEntity);
+        moduleRelationKeyClassEmployee.setModuleUniEntity(moduleUniEntity);
+        moduleRelationEntity.setModuleRelationKeyClass(moduleRelationKeyClassEmployee);
+        return moduleRelationRepository.save(moduleRelationEntity);
     }
 }

@@ -1,54 +1,52 @@
 package com.swtp4.backend.services;
 
-import com.swtp4.backend.controller.UniversityDataController;
-import com.swtp4.backend.repositories.MajorsUniversityLeipzigRepository;
-import com.swtp4.backend.repositories.ModulesUniversityLeipzigRepository;
-import com.swtp4.backend.repositories.dto.MajorsUniversityLeipzigDto;
+import com.swtp4.backend.repositories.MajorUniRepository;
+import com.swtp4.backend.repositories.ModuleUniRepository;
+import com.swtp4.backend.repositories.dto.MajorUniDto;
 import com.swtp4.backend.repositories.dto.UniDataDto;
-import com.swtp4.backend.repositories.entities.MajorsUniversityLeipzigEntity;
-import com.swtp4.backend.repositories.entities.ModulesUniversityLeipzigEntity;
+import com.swtp4.backend.repositories.entities.MajorUniEntity;
+import com.swtp4.backend.repositories.entities.ModuleUniEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class UniversityDataService {
 
-    private ModulesUniversityLeipzigRepository modulesUniversityLeipzigRepository;
-    private MajorsUniversityLeipzigRepository majorsUniversityLeipzigRepository;
+    private ModuleUniRepository moduleUniRepository;
+    private MajorUniRepository majorUniRepository;
 
     @Autowired
     public UniversityDataService(
-            ModulesUniversityLeipzigRepository modulesUniversityLeipzigRepository,
-            MajorsUniversityLeipzigRepository majorsUniversityLeipzigRepository) {
-        this.modulesUniversityLeipzigRepository = modulesUniversityLeipzigRepository;
-        this.majorsUniversityLeipzigRepository = majorsUniversityLeipzigRepository;
+            ModuleUniRepository moduleUniRepository,
+            MajorUniRepository majorUniRepository) {
+        this.moduleUniRepository = moduleUniRepository;
+        this.majorUniRepository = majorUniRepository;
     }
 
     public void update(UniDataDto uniDataDto) {
         //iteration throught the courses of the JSON (majors)
-        for (MajorsUniversityLeipzigDto majorsUniversityLeipzigDto : uniDataDto.getCourses()) {
-            MajorsUniversityLeipzigEntity existingMajorsUniversityLeipzigEntity = majorsUniversityLeipzigRepository.findByName(majorsUniversityLeipzigDto.getName());
-            if (existingMajorsUniversityLeipzigEntity == null) {
+        for (MajorUniDto majorUniDto : uniDataDto.getCourses()) {
+            MajorUniEntity existingMajorUniEntity = majorUniRepository.findByName(majorUniDto.getName());
+            MajorUniEntity savedMajorUniEntity = existingMajorUniEntity;
+            if (existingMajorUniEntity == null) {
                 //create MajorEntity
-                MajorsUniversityLeipzigEntity majorsUniversityLeipzigEntity = new MajorsUniversityLeipzigEntity();
-                majorsUniversityLeipzigEntity.setName(majorsUniversityLeipzigDto.getName());
-                existingMajorsUniversityLeipzigEntity = majorsUniversityLeipzigRepository.save(majorsUniversityLeipzigEntity);
+                MajorUniEntity newMajorUniEntity = new MajorUniEntity();
+                newMajorUniEntity.setName(majorUniDto.getName());
+                savedMajorUniEntity = majorUniRepository.save(newMajorUniEntity);
             }
             //iteration through the modules of the courses of the JSON
-            for (ModulesUniversityLeipzigEntity modulesUniversityLeipzigEntity : majorsUniversityLeipzigDto.getModules()) {
-                ModulesUniversityLeipzigEntity existingModulesUniversityLeipzigEntity = modulesUniversityLeipzigRepository.findById(modulesUniversityLeipzigEntity.getNumber());
-                if (existingModulesUniversityLeipzigEntity == null) {
+            for (ModuleUniEntity moduleUniEntity : majorUniDto.getModules()) {
+                ModuleUniEntity existingModuleUniEntity = moduleUniRepository.findByNumber(moduleUniEntity.getNumber());
+                if (existingModuleUniEntity == null) {
                     //create ModuleEntity
-                    modulesUniversityLeipzigEntity.setMajorsUniversityLeipzigEntity(existingMajorsUniversityLeipzigEntity);
-                    ModulesUniversityLeipzigEntity savedModuleUniversityLeipzigEntity = modulesUniversityLeipzigRepository.save(modulesUniversityLeipzigEntity);
+                    moduleUniEntity.setMajorUniEntity(savedMajorUniEntity);
+                    ModuleUniEntity savedModuleUniEntity = moduleUniRepository.save(moduleUniEntity);
                 } else {
                     //update ModuleEntity
-                    existingModulesUniversityLeipzigEntity.setName(modulesUniversityLeipzigEntity.getName());
-                    existingModulesUniversityLeipzigEntity.setNumber(modulesUniversityLeipzigEntity.getNumber());
-                    existingModulesUniversityLeipzigEntity.setMajorsUniversityLeipzigEntity(existingMajorsUniversityLeipzigEntity);
-                    ModulesUniversityLeipzigEntity savedModulesUniversityLeipzigEntity = modulesUniversityLeipzigRepository.save(existingModulesUniversityLeipzigEntity);
+                    existingModuleUniEntity.setName(moduleUniEntity.getName());
+                    existingModuleUniEntity.setNumber(moduleUniEntity.getNumber());
+                    existingModuleUniEntity.setMajorUniEntity(savedMajorUniEntity);
+                    ModuleUniEntity savedModuleUniEntity = moduleUniRepository.save(existingModuleUniEntity);
                 }
             }
         }

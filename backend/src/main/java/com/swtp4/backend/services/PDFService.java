@@ -1,12 +1,12 @@
 package com.swtp4.backend.services;
 
-import com.swtp4.backend.repositories.ApplicationsRepository;
-import com.swtp4.backend.repositories.ModulesStudentRepository;
+import com.swtp4.backend.repositories.ApplicationRepository;
+import com.swtp4.backend.repositories.ModuleStudentRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PDFService {
 
-    private ModulesStudentRepository modulesStudentRepository;
-    private ApplicationsRepository applicationsRepository;
+    private ModuleStudentRepository moduleStudentRepository;
+    private ApplicationRepository applicationRepository;
 }
