@@ -26,4 +26,8 @@ public class ModulesBlockEntity {
     private ApplicationsEntity applicationsEntity;
 
     private String approval;
+
+    private String commentStudent;
+
+    private String commentEmployee;
 }

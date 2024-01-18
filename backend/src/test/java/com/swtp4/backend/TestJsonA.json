@@ -13,8 +13,14 @@
   ],
   "moduleFormsData": [
     {
-      "key": 0,
-      "approval": "",
+      "moduleBlockData": [
+        {
+          "key": 0,
+          "approval": "",
+          "commentStudent": "",
+          "commentEmployee": ""
+        }
+      ],
       "modulesStudent": [
         {
           "number": "420",
@@ -43,8 +49,14 @@
       ]
     },
     {
-      "key": 1,
-      "approval": "",
+      "moduleBlockData": [
+        {
+          "key": 1,
+          "approval": "",
+          "commentStudent": "",
+          "commentEmployee": ""
+        }
+      ],
       "modulesStudent": [
         {
           "number": "81923",
