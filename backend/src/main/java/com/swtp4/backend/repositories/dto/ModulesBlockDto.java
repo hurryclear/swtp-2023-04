@@ -16,7 +16,7 @@ import java.util.List;
 public class ModulesBlockDto {
 
     //moduleBlock from moduleFormsData from JSON mapped to ModulesBlockEntity
-    private ModulesBlockEntity modulesBlockEntity;
+    private ModulesBlockEntity moduleBlockData;
 
     //modulesStudent from JSON in moduleFormsData mapped to List of ModulesStudentEntities
     private List<ModulesStudentEntity> modulesStudent;
