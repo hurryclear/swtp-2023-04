@@ -49,6 +49,7 @@ export default {
       const foundForm = this.$store.getters.formsByStatus('all').find(f => f.id === this.formId);
       if (foundForm) {
         this.form = foundForm;
+        // TODO: i18n + mapping status to i18n translations.
         this.statusMessage = `Status: ${foundForm.status}`;
         this.statusColor = this.determineStatusColor(foundForm.status);
       } else {
@@ -58,10 +59,10 @@ export default {
     },
     determineStatusColor(status) {
       switch (status) {
-        case 'Offen': return 'blue';
-        case 'in Bearbeitung': return 'orange';
-        case 'Akzeptiert': return 'green';
-        case 'Abgelehnt': return 'red';
+        case 'open': return 'blue';
+        case 'in progress': return 'orange';
+        case 'accepted': return 'green';
+        case 'denied': return 'red';
         default: return 'grey';
       }
     },
