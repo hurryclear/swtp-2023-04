@@ -27,13 +27,13 @@ const routes = [
         path: '/study-office',
         name: 'Studienbüro',
         component: () => import('@/views/StudyOfficeView.vue'),
-        meta: { requiresAuth: true, role: 'studentAffairsOffice'}
+        meta: { requiresAuth: true, role: 'ROLE_OFFICE'}
     },
     {
       path:'/pruefungsausschuss',
       name:'PrüfungsAusschuss',
       component: () => import('@/views/PruefungsAusschuss.vue'),
-      meta: { requiresAuth: true, role: 'examiningCommitteeChair'}
+      meta: { requiresAuth: true, role: 'ROLE_COMMITTEE'}
     }
     
 ]

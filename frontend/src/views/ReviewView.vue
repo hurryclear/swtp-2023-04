@@ -1,15 +1,15 @@
 <template>
   <v-container>
-    <ReviewComponant/>
+    <ReviewComponent/>
   </v-container>
 </template>
 
 <script>
-import ReviewComponant from "@/components/ReviewComponant.vue"; // Adjust the path as necessary
+import ReviewComponent from "@/components/ReviewComponent.vue"; // Adjust the path as necessary
 
 export default {
   components: {
-    ReviewComponant
+    ReviewComponent
   }
 };
 </script>

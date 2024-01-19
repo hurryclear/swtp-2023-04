@@ -25,7 +25,7 @@
           {{ $t('loginComponent.loginErrorMessage') }}
         </v-alert>
       </v-col>
-
+      <br/>
       <v-row justify="center">
         <v-btn
             color="blue"
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-
+import axios from "@/plugins/axios"
 export default {
   name: 'LoginComponent',
   data() {
@@ -48,35 +48,33 @@ export default {
       password: '',
       showPassword: false,
       loginError: false,
-      //TODO: Remove after backend implementation
-      dummyLogins: {
-        examiningCommitteeChair: {username: 'Prüfungsausschuss', password: '1234'},
-        studyOffice: {username: 'Studienbüro', password: '1234'},
-      },
     };
   },
   methods: {
-    submitLogin() {
-      let role;
-      if (this.username === this.dummyLogins.examiningCommitteeChair.username &&
-          this.password === this.dummyLogins.examiningCommitteeChair.password) {
-        role = 'examiningCommitteeChair';
-        console.log('User role set to:', role);
-      } else if (this.username === this.dummyLogins.studyOffice.username &&
-          this.password === this.dummyLogins.studyOffice.password) {
-        role = 'studentAffairsOffice';
-        console.log('User role set to:', role);
-      }
+    async submitLogin() {
+      try {
+        const response = await axios.post('/api/auth/login', {
+          username: this.username,
+          password: this.password
+        });
 
-      if (role) {
-        this.$store.dispatch('authenticateUser', {status: true, role});
-        if (role === 'examiningCommitteeChair') {
-          this.$router.push('/pruefungsausschuss');
-        } else if (role === 'studentAffairsOffice') {
+        const { token, role } = response.data;
+
+        // Store the token in local storage
+        localStorage.setItem('token', token);
+
+        // Set the user role and token in the store
+        this.$store.dispatch('authenticateUser', { status: true, role, token });
+
+        // Redirect based on user role
+        if (role === 'ROLE_OFFICE') {
           this.$router.push('/study-office');
+        } else if (role === 'ROLE_COMMITTEE') {
+          this.$router.push('/pruefungsausschuss');
         }
-      } else {
+      } catch (error) {
         this.loginError = true;
+        console.error('Login failed:', error);
       }
     },
     togglePasswordVisibility() {

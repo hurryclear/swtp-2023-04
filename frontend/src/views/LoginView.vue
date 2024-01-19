@@ -1,7 +1,7 @@
 
 <template>
   <div>
-    <LoginComponent @loginSubmitted="handleLogin"/>
+    <LoginComponent/>
   </div>
 </template>
 
@@ -12,11 +12,6 @@ export default {
   name: 'LoginView',
   components: {
     LoginComponent
-  },
-  methods: {
-    handleLogin(credentials) {
-      console.log('Login submitted', credentials);
-    }
   }
 };
 </script>

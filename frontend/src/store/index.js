@@ -3,7 +3,8 @@ import { createStore } from 'vuex';
 export default createStore({
   state: {
     isAuthenticated: false,
-    userRole: 'student',
+    userRole: 'ROLE_STUDENT',
+    token: null, // New state property for the user's token
     forms: [], // State property for forms
   },
   getters: {
@@ -16,8 +17,9 @@ export default createStore({
     },
   },
   mutations: {
-    setAuthentication(state, status) {
+    setAuthentication(state, { status, token }) {
       state.isAuthenticated = status;
+      state.token = token;
     },
     setUserRole(state, role) {
       state.userRole = role;
@@ -26,7 +28,7 @@ export default createStore({
     initializeForms(state, forms) {
       state.forms = forms.map(form => ({
         ...form,
-        status: form.status || 'Offen' // Assign 'Offen' status if not present
+        status: form.status || 'open' // Assign 'open' status if not present
       }));
     },
     // Mutation to update a form's status
@@ -45,8 +47,8 @@ export default createStore({
     }
   },
   actions: {
-    authenticateUser({ commit }, {status, role}) {
-      commit('setAuthentication', status);
+    authenticateUser({ commit }, { status, role, token }) {
+      commit('setAuthentication', { status, token });
       commit('setUserRole', role);
     },
     // Action to load and initialize forms
@@ -60,7 +62,22 @@ export default createStore({
     // Action to submit a new form
     submitForm({ commit }, form) {
       commit('addForm', form);
-    }
+    },
+    async logout({ commit }) {
+      try {
+        // Clear the stored token in local storage
+        localStorage.removeItem('token');
+
+        // Logout the user in the store
+        commit('setAuthentication', { status: false, token: null });
+        commit('setUserRole', 'ROLE_STUDENT');
+
+        // Redirect to the login page or home
+        this.$router.push('/login'); // Change to the appropriate route
+      } catch (error) {
+        console.error('Logout failed:', error);
+      }
+    },
   },
   modules: {
   }

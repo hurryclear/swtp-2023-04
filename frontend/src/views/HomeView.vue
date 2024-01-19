@@ -2,19 +2,19 @@
   <v-card>
     <v-card-text style="margin:1rem;font-size: 16px; text-align: justify;">
       <!-- Dynamic Content for Different User Roles -->
-      <v-row v-if="userRole === 'student'">
+      <v-row v-if="userRole === 'ROLE_STUDENT'">
         <p>
-          {{$t('homeView.welcomeStudent')}}
+          {{ $t('homeView.welcomeStudent') }}
         </p>
       </v-row>
-      <v-row v-else-if="userRole === 'studentAffairsOffice'">
+      <v-row v-else-if="userRole === 'ROLE_OFFICE'">
         <p>
-          {{$t('homeView.welcomeStudentAffairsOffice')}}
+          {{ $t('homeView.welcomeStudentAffairsOffice') }}
         </p>
       </v-row>
-      <v-row v-else-if="userRole === 'examiningCommitteeChair'">
+      <v-row v-else-if="userRole === 'ROLE_COMMITTEE'">
         <p>
-          {{$t('homeView.welcomeExaminingCommitteeChair')}}
+          {{ $t('homeView.welcomeExaminingCommitteeChair') }}
         </p>
       </v-row>
     </v-card-text>
@@ -25,10 +25,10 @@
 import store from "@/store";
 
 export default {
-computed: {
-  userRole() {
-    return store.state.userRole;
-  },
-}
+  computed: {
+    userRole() {
+      return store.state.userRole;
+    },
+  }
 };
 </script>
