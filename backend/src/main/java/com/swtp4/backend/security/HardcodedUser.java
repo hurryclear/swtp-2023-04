@@ -20,11 +20,17 @@ public class HardcodedUser implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         // Create a user and save to the database
-        UserEntity user = new UserEntity();
-        user.setUsername("testuser");
-        user.setPassword(new BCryptPasswordEncoder().encode("testpw"));
-        user.setRole(Role.OFFICE);
-        userRepository.save(user);
+        UserEntity office = new UserEntity();
+        office.setUsername("office");
+        office.setPassword(new BCryptPasswordEncoder().encode("pw_office"));
+        office.setRole(Role.OFFICE);
+        userRepository.save(office);
+
+        UserEntity committee = new UserEntity();
+        committee.setUsername("committee");
+        committee.setPassword(new BCryptPasswordEncoder().encode("pw_committee"));
+        committee.setRole(Role.COMMITTEE);
+        userRepository.save(committee);
     }
 }
 
