@@ -1,4 +1,5 @@
 <template>
+  <!--TODO: i18n-->
   <v-card>
     <div class="card-header">
       <v-card-title>

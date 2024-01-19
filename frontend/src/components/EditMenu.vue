@@ -1,4 +1,5 @@
 <template>
+  <!--TODO: i18n-->
   <v-card>
     <div class="card-header">
       <v-card-title>
@@ -37,7 +38,7 @@
         <u>Kommentar zu diesem Modul</u>: {{ moduleData.comment }}
       </v-card-item>
     </div>
-    <v-text-field class="text-field" label="Begründung" v-model="begruendung"/>
+    <v-text-field class="text-field" label="Begründung" v-model="reason"/>
     <v-card-actions>
         <v-btn color="blue" class="button-bottom" @click="sendToPruefungsausschuss">
           An Prüfungsausschuss senden
@@ -55,7 +56,7 @@ export default {
 
   data() {
     return {
-      begruendung: '',
+      reason: '',
     }
   },
 
@@ -67,8 +68,8 @@ export default {
       // Dispatch action to accept the form
       this.$store.dispatch('changeFormStatus', {
         formId: this.form.id,
-        newStatus: 'in Bearbeitung',
-        comment: this.begruendung
+        newStatus: 'in progress',
+        comment: this.reason
       });
       this.closeEditMenu();
     },
