@@ -9,6 +9,8 @@ services:
    depends_on:
     - backend
    restart: unless-stopped
+   environment:
+    VUE_APP_API_URL: 172.26.92.83:3000
    networks:
     - app
   
