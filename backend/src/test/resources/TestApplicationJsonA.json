@@ -1,5 +1,5 @@
 {
-  "applicationData": [
+  "applicationData":
     {
       "universityName": "University of Regenbogenland",
       "major": "B. Sc. Informatik",
@@ -9,18 +9,16 @@
       "commentEmployee": "Der bekommt nicht alle CP yalla",
       "dateOfSubmission": "2023-12-31T22:30:42.103Z",
       "dateLastEdited": "2024-01-14T14:12:14.675Z"
-    }
-  ],
+    },
   "moduleFormsData": [
     {
-      "moduleBlockData": [
+      "moduleBlockData":
         {
           "key": 0,
           "approval": "",
           "commentStudent": "",
           "commentEmployee": ""
-        }
-      ],
+        },
       "modulesStudent": [
         {
           "number": "420",
@@ -43,20 +41,20 @@
           "commentEmployee": "Da hat er mal recht"
         }
       ],
-      "module2bCredited": [
+      "modules2bCredited": [
         "Algorithmen und Datenstrukturen 1",
         "Algorithmen und Datenstrukturen 2"
       ]
     },
     {
-      "moduleBlockData": [
+      "moduleBlockData":
         {
           "key": 1,
           "approval": "",
           "commentStudent": "",
           "commentEmployee": ""
         }
-      ],
+      ,
       "modulesStudent": [
         {
           "number": "81923",
