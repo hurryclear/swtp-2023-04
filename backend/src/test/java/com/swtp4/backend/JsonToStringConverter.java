@@ -1,4 +1,4 @@
-package com.swtp4.backend.ApplicationControllerTests;
+package com.swtp4.backend;
 
 import java.net.URL;
 import java.nio.file.Files;

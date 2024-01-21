@@ -1,13 +1,10 @@
 package com.swtp4.backend.ApplicationControllerTests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.swtp4.backend.controller.ApplicationController;
 import com.swtp4.backend.repositories.MajorUniRepository;
 import com.swtp4.backend.repositories.ModuleUniRepository;
-import com.swtp4.backend.repositories.dto.ApplicationDto;
 import com.swtp4.backend.repositories.entities.ModuleUniEntity;
 import com.swtp4.backend.services.ApplicationService;
-import lombok.With;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,11 +48,11 @@ public class ApplicationControllerIntegrationTests {
     @Test
     @WithMockUser(username = "testuser", roles = {"OFFICE"})
     public void testThatSaveApplicationSuccessfullyReturnsHttp201Created() throws Exception {
-        String testApplicationJson = TestData.createTestApplicationJsonA();
-        ModuleUniEntity testModuleUniA = TestData.createTestModuleUniEntityA();
-        ModuleUniEntity testModuleUniB = TestData.createTestModuleUniEntityB();
-        ModuleUniEntity testModuleUniD = TestData.createTestModuleUniEntityD();
-        ModuleUniEntity testModuleUniE = TestData.createTestModuleUniEntityE();
+        String testApplicationJson = ApplicationTestData.createTestApplicationJsonA();
+        ModuleUniEntity testModuleUniA = ApplicationTestData.createTestModuleUniEntityA();
+        ModuleUniEntity testModuleUniB = ApplicationTestData.createTestModuleUniEntityB();
+        ModuleUniEntity testModuleUniD = ApplicationTestData.createTestModuleUniEntityD();
+        ModuleUniEntity testModuleUniE = ApplicationTestData.createTestModuleUniEntityE();
         majorUniRepository.saveAll(Arrays.asList(testModuleUniA.getMajorUniEntity(), testModuleUniB.getMajorUniEntity(), testModuleUniD.getMajorUniEntity(), testModuleUniE.getMajorUniEntity()));
         moduleUniRepository.saveAll(Arrays.asList(testModuleUniA, testModuleUniB, testModuleUniD, testModuleUniE));
         mockMvc.perform(

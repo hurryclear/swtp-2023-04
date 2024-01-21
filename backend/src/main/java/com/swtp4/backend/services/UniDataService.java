@@ -10,13 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UniversityDataService {
+public class UniDataService {
 
     private ModuleUniRepository moduleUniRepository;
     private MajorUniRepository majorUniRepository;
 
     @Autowired
-    public UniversityDataService(
+    public UniDataService(
             ModuleUniRepository moduleUniRepository,
             MajorUniRepository majorUniRepository) {
         this.moduleUniRepository = moduleUniRepository;

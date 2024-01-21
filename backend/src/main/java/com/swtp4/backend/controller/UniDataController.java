@@ -1,7 +1,7 @@
 package com.swtp4.backend.controller;
 
 import com.swtp4.backend.repositories.dto.UniDataDto;
-import com.swtp4.backend.services.UniversityDataService;
+import com.swtp4.backend.services.UniDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,17 +10,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "/unidata")
-public class UniversityDataController {
+public class UniDataController {
 
-    private UniversityDataService universityDataService;
+    private UniDataService uniDataService;
 
     @Autowired
-    public UniversityDataController(UniversityDataService universityDataService) {
-        this.universityDataService = universityDataService;
+    public UniDataController(UniDataService uniDataService) {
+        this.uniDataService = uniDataService;
     }
 
     @PutMapping(path = "/update")
     public void updateUniData(@RequestBody UniDataDto uniDataDto) {
-        universityDataService.update(uniDataDto);
+        uniDataService.update(uniDataDto);
     }
 }
