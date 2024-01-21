@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ModuleRelationRepository extends JpaRepository<ModuleRelationEntity, ModuleRelationKeyClass> {
+
+    ModuleRelationEntity findByModuleRelationKeyClass_ModuleStudentEntity_NumberAndModuleRelationKeyClass_ModuleUniEntity_NameAndModuleBlockEntity_ApplicationEntity_ApplicationKeyClass_Creator(String moduleStudentNumber, String moduleUniName, String creator);
 }
