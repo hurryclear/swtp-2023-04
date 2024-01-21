@@ -57,9 +57,11 @@ public class UniDataControllerIntegrationTests {
         ).andExpect(
                 MockMvcResultMatchers.status().isOk()
         );
+        //MajorUniEntity Check
         Optional<MajorUniEntity> resultMajorEntity = Optional.ofNullable(majorUniRepository.findByName("B.Sc. Informatik"));
         assertThat(resultMajorEntity).isPresent();
         assertThat(resultMajorEntity.get().getName()).isEqualTo("B.Sc. Informatik");
+        //ModuleUniEntity Check
         Optional<ModuleUniEntity> resultModuleEntity = Optional.ofNullable(moduleUniRepository.findByName("Programmierparadigmen"));
         assertThat(resultModuleEntity).isPresent();
         assertThat(resultModuleEntity.get().getNumber()).isEqualTo("10-201-2005-2");

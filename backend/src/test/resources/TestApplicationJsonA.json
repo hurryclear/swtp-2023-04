@@ -16,8 +16,8 @@
         {
           "key": 0,
           "approval": "",
-          "commentStudent": "",
-          "commentEmployee": ""
+          "commentStudent": "Das ist mein Block",
+          "commentEmployee": "Das ist sein Block"
         },
       "modulesStudent": [
         {

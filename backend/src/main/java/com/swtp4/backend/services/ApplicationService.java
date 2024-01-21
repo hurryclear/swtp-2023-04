@@ -41,7 +41,7 @@ public class ApplicationService {
         //TODO: Implement processNumberGenerator
         UUID processNumber = UUID.randomUUID();
         ApplicationEntity savedApplicationEntityStudent = saveApplicationEntity(applicationDto.getApplicationData(), processNumber, "Student");
-        ApplicationEntity savedApplicationEntityEmployee = saveApplicationEntity(applicationDto.getApplicationData(), processNumber, "Creator");
+        ApplicationEntity savedApplicationEntityEmployee = saveApplicationEntity(applicationDto.getApplicationData(), processNumber, "Employee");
 
         //Save ModulesBlocksEntities
         List<ModuleBlockDto> moduleBlockDtos = applicationDto.getModuleFormsData();
