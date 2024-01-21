@@ -4,6 +4,8 @@ import com.swtp4.backend.repositories.dto.ApplicationDto;
 import com.swtp4.backend.services.ApplicationService;
 import com.swtp4.backend.services.PDFService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,7 +22,8 @@ public class ApplicationController {
     }
 
     @PostMapping("/saveApplication")
-    public void saveApplication(@RequestBody ApplicationDto applicationDTO){
+    public ResponseEntity<?> saveApplication(@RequestBody ApplicationDto applicationDTO){
         applicationService.save(applicationDTO);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

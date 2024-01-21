@@ -1,9 +1,6 @@
 package com.swtp4.backend.services;
 
-import com.swtp4.backend.repositories.ApplicationRepository;
-import com.swtp4.backend.repositories.ModuleBlockRepository;
-import com.swtp4.backend.repositories.ModuleRelationRepository;
-import com.swtp4.backend.repositories.ModuleStudentRepository;
+import com.swtp4.backend.repositories.*;
 import com.swtp4.backend.repositories.dto.ApplicationDto;
 import com.swtp4.backend.repositories.dto.ModuleBlockDto;
 import com.swtp4.backend.repositories.entities.*;
@@ -12,6 +9,7 @@ import com.swtp4.backend.repositories.entities.keyClasses.ModuleRelationKeyClass
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,36 +20,38 @@ public class ApplicationService {
     private ModuleStudentRepository moduleStudentRepository;
     private ModuleBlockRepository moduleBlockRepository;
     private ModuleRelationRepository moduleRelationRepository;
+    private ModuleUniRepository moduleUniRepository;
 
     @Autowired
     public ApplicationService(
             ApplicationRepository applicationRepository,
             ModuleBlockRepository moduleBlockRepository,
             ModuleStudentRepository moduleStudentRepository,
-            ModuleRelationRepository moduleRelationRepository) {
+            ModuleRelationRepository moduleRelationRepository,
+            ModuleUniRepository moduleUniRepository) {
         this.applicationRepository = applicationRepository;
         this.moduleBlockRepository = moduleBlockRepository;
         this.moduleStudentRepository = moduleStudentRepository;
         this.moduleRelationRepository = moduleRelationRepository;
+        this.moduleUniRepository = moduleUniRepository;
     }
 
     public void save(ApplicationDto applicationDto) {
         //Save ApplicationEntities
         //TODO: Implement processNumberGenerator
         UUID processNumber = UUID.randomUUID();
-        ApplicationEntity savedApplicationEntityStudent = saveApplicationEntityStudent(applicationDto, processNumber);
-        ApplicationEntity savedApplicationEntityEmployee = saveApplicationEntityEmployee(applicationDto, processNumber)
+        ApplicationEntity savedApplicationEntityStudent = saveApplicationEntity(applicationDto.getApplicationData(), processNumber, "Student");
+        ApplicationEntity savedApplicationEntityEmployee = saveApplicationEntity(applicationDto.getApplicationData(), processNumber, "Creator");
 
         //Save ModulesBlocksEntities
         List<ModuleBlockDto> moduleBlockDtos = applicationDto.getModuleFormsData();
         for (ModuleBlockDto moduleBlockDto : moduleBlockDtos) {
-            ModuleBlockEntity savedModuleBlockEntityStudent = saveModuleBlockEntity(moduleBlockDto, savedApplicationEntityStudent);
-            ModuleBlockEntity savedModuleBlockEntityEmployee = saveModuleBlockEntity(moduleBlockDto, savedApplicationEntityEmployee);
+            ModuleBlockEntity savedModuleBlockEntityStudent = saveModuleBlockEntity(moduleBlockDto.getModuleBlockData(), savedApplicationEntityStudent);
+            ModuleBlockEntity savedModuleBlockEntityEmployee = saveModuleBlockEntity(moduleBlockDto.getModuleBlockData(), savedApplicationEntityEmployee);
 
             //Save ModuleStudentEntities
             List<ModuleStudentEntity> modulesStudentEntities = moduleBlockDto.getModulesStudent();
             List<String> modules2bCredited = moduleBlockDto.getModules2bCredited();
-            //TODO: Convert List of Strings with ModuleUniversityNames to List of ModulesUniversityLeipzigEntities
             List<ModuleUniEntity> modules2bCreditedEntities = getUniversityModulesByName(modules2bCredited);
             for (ModuleStudentEntity moduleStudentEntity : modulesStudentEntities) {
                 ModuleStudentEntity savedModuleStudentEntityStudent = moduleStudentRepository.save(moduleStudentEntity);
@@ -66,31 +66,20 @@ public class ApplicationService {
         }
     }
 
-    private ApplicationEntity saveApplicationEntityStudent(ApplicationDto applicationDto, UUID processNumber) {
-        ApplicationEntity applicationEntityStudent = applicationDto.getApplicationData();
-        ApplicationKeyClass applicationKeyClassStudent = new ApplicationKeyClass();
-        applicationKeyClassStudent.setCreator("Student");
-        applicationKeyClassStudent.setId(processNumber);
-        applicationEntityStudent.setApplicationKeyClass(applicationKeyClassStudent);
-        return applicationRepository.save(applicationEntityStudent);
+    public ApplicationEntity saveApplicationEntity(ApplicationEntity applicationEntity, UUID processNumber, String creator) {
+        ApplicationKeyClass applicationKeyClass = new ApplicationKeyClass();
+        applicationKeyClass.setCreator(creator);
+        applicationKeyClass.setId(processNumber);
+        applicationEntity.setApplicationKeyClass(applicationKeyClass);
+        return applicationRepository.save(applicationEntity);
     }
 
-    private ApplicationEntity saveApplicationEntityEmployee(ApplicationDto applicationDto, UUID processNumber) {
-        ApplicationEntity applicationEntityEmployee = applicationDto.getApplicationData();
-        ApplicationKeyClass applicationKeyClassEmployee = new ApplicationKeyClass();
-        applicationKeyClassEmployee.setCreator("Employee");
-        applicationKeyClassEmployee.setId(processNumber);
-        applicationEntityEmployee.setApplicationKeyClass(applicationKeyClassEmployee);
-        return applicationRepository.save(applicationEntityEmployee);
-    }
-
-    private ModuleBlockEntity saveModuleBlockEntity(ModuleBlockDto moduleBlockDto, ApplicationEntity applicationEntity) {
-        ModuleBlockEntity moduleBlockEntity = moduleBlockDto.getModuleBlockData();
+    public ModuleBlockEntity saveModuleBlockEntity(ModuleBlockEntity moduleBlockEntity, ApplicationEntity applicationEntity) {
         moduleBlockEntity.setApplicationEntity(applicationEntity);
         return moduleBlockRepository.save(moduleBlockEntity);
     }
 
-    private ModuleRelationEntity saveModuleRelationEntity(ModuleBlockEntity moduleBlockEntity, ModuleUniEntity moduleUniEntity, ModuleStudentEntity moduleStudentEntity) {
+    public ModuleRelationEntity saveModuleRelationEntity(ModuleBlockEntity moduleBlockEntity, ModuleUniEntity moduleUniEntity, ModuleStudentEntity moduleStudentEntity) {
         ModuleRelationEntity moduleRelationEntity = new ModuleRelationEntity();
         moduleRelationEntity.setModuleBlockEntity(moduleBlockEntity);
         ModuleRelationKeyClass moduleRelationKeyClassEmployee = new ModuleRelationKeyClass();
@@ -98,5 +87,13 @@ public class ApplicationService {
         moduleRelationKeyClassEmployee.setModuleUniEntity(moduleUniEntity);
         moduleRelationEntity.setModuleRelationKeyClass(moduleRelationKeyClassEmployee);
         return moduleRelationRepository.save(moduleRelationEntity);
+    }
+
+    public List<ModuleUniEntity> getUniversityModulesByName(List<String> moduleStrings) {
+        List<ModuleUniEntity> moduleUniEntities = new ArrayList<>();
+        for (String moduleString : moduleStrings) {
+            moduleUniEntities.add(moduleUniRepository.findByName(moduleString));
+        }
+        return moduleUniEntities;
     }
 }
