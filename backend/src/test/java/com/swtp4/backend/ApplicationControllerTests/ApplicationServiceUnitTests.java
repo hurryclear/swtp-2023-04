@@ -48,7 +48,7 @@ public class ApplicationServiceUnitTests {
 
     @Test
     public void testThatSaveApplicationEntitySuccessfullyCreatesApplication() throws Exception {
-        ApplicationEntity testApplication = TestData.createTestApplicationEntityA();
+        ApplicationEntity testApplication = ApplicationTestData.createTestApplicationEntityA();
         testApplication.setApplicationKeyClass(null);
         UUID processNumber = UUID.randomUUID();
         String creator = "Student";
@@ -61,7 +61,7 @@ public class ApplicationServiceUnitTests {
 
     @Test
     public void testThatSaveModuleBlockEntitySuccessfullyCreatesModuleBlock() throws Exception {
-        ModuleBlockEntity testModuleBlock = TestData.createTestModuleBlockEntityA();
+        ModuleBlockEntity testModuleBlock = ApplicationTestData.createTestModuleBlockEntityA();
         applicationService.saveModuleBlockEntity(testModuleBlock, testModuleBlock.getApplicationEntity());
         Optional<ModuleBlockEntity> result = moduleBlockRepository.findById(testModuleBlock.getId());
         assertThat(result).isPresent();
@@ -70,7 +70,7 @@ public class ApplicationServiceUnitTests {
 
     @Test
     public void testThatSaveModuleRelationEntitySuccessfullyCreatesModuleRelation() throws Exception {
-        ModuleRelationEntity testModuleRelation = TestData.createTestModuleRelationEntityA();
+        ModuleRelationEntity testModuleRelation = ApplicationTestData.createTestModuleRelationEntityA();
         majorUniRepository.save(testModuleRelation.getModuleRelationKeyClass().getModuleUniEntity().getMajorUniEntity());
         moduleUniRepository.save(testModuleRelation.getModuleRelationKeyClass().getModuleUniEntity());
         moduleStudentRepository.save(testModuleRelation.getModuleRelationKeyClass().getModuleStudentEntity());
@@ -82,9 +82,9 @@ public class ApplicationServiceUnitTests {
 
     @Test
     public void testThatGetUniversityModulesByNameSuccessfullyRetrieveEntities() throws Exception {
-        ModuleUniEntity testModuleUniA = TestData.createTestModuleUniEntityA();
-        ModuleUniEntity testModuleUniB = TestData.createTestModuleUniEntityB();
-        ModuleUniEntity testModuleUniC = TestData.createTestModuleUniEntityC();
+        ModuleUniEntity testModuleUniA = ApplicationTestData.createTestModuleUniEntityA();
+        ModuleUniEntity testModuleUniB = ApplicationTestData.createTestModuleUniEntityB();
+        ModuleUniEntity testModuleUniC = ApplicationTestData.createTestModuleUniEntityC();
         List<ModuleUniEntity> testModuleUniEntities = Arrays.asList(testModuleUniA, testModuleUniB, testModuleUniC);
         majorUniRepository.saveAll(Arrays.asList(testModuleUniA.getMajorUniEntity(), testModuleUniB.getMajorUniEntity(), testModuleUniC.getMajorUniEntity()));
         moduleUniRepository.saveAll(testModuleUniEntities);

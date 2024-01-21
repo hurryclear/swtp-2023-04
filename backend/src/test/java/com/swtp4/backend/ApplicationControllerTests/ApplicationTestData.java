@@ -1,14 +1,15 @@
 package com.swtp4.backend.ApplicationControllerTests;
 
+import com.swtp4.backend.JsonToStringConverter;
 import com.swtp4.backend.repositories.entities.*;
 import com.swtp4.backend.repositories.entities.keyClasses.ApplicationKeyClass;
 import com.swtp4.backend.repositories.entities.keyClasses.ModuleRelationKeyClass;
 
 import java.util.UUID;
 
-public class TestData {
+public class ApplicationTestData {
 
-    private TestData(){}
+    private ApplicationTestData(){}
 
     public static ApplicationEntity createTestApplicationEntityA() {
         return ApplicationEntity.builder()
@@ -31,7 +32,7 @@ public class TestData {
     public static ModuleBlockEntity createTestModuleBlockEntityA() {
         return ModuleBlockEntity.builder()
                 .id((long) 420)
-                .applicationEntity(TestData.createTestApplicationEntityA())
+                .applicationEntity(ApplicationTestData.createTestApplicationEntityA())
                 .approval("")
                 .commentStudent("War cool")
                 .commentEmployee("Das nicht so cool").build();
@@ -41,35 +42,35 @@ public class TestData {
         return ModuleUniEntity.builder()
                 .number("10-201-2001-1")
                 .name("Algorithmen und Datenstrukturen 1")
-                .majorUniEntity(TestData.createTestMajorUniEntityA()).build();
+                .majorUniEntity(ApplicationTestData.createTestMajorUniEntityA()).build();
     }
 
     public static ModuleUniEntity createTestModuleUniEntityB() {
         return ModuleUniEntity.builder()
                 .number("10-201-2001-2")
                 .name("Algorithmen und Datenstrukturen 2")
-                .majorUniEntity(TestData.createTestMajorUniEntityA()).build();
+                .majorUniEntity(ApplicationTestData.createTestMajorUniEntityA()).build();
     }
 
     public static ModuleUniEntity createTestModuleUniEntityC() {
         return ModuleUniEntity.builder()
                 .number("10-201-2006-1")
                 .name("Grundlagen der Technischen Informatik 1")
-                .majorUniEntity(TestData.createTestMajorUniEntityA()).build();
+                .majorUniEntity(ApplicationTestData.createTestMajorUniEntityA()).build();
     }
 
     public static ModuleUniEntity createTestModuleUniEntityD() {
         return ModuleUniEntity.builder()
                 .number("10-201-1015")
                 .name("Lineare Algebra für Informatiker")
-                .majorUniEntity(TestData.createTestMajorUniEntityA()).build();
+                .majorUniEntity(ApplicationTestData.createTestMajorUniEntityA()).build();
     }
 
     public static ModuleUniEntity createTestModuleUniEntityE() {
         return ModuleUniEntity.builder()
                 .number("10-201-1011")
                 .name("Analysis für Informatiker")
-                .majorUniEntity(TestData.createTestMajorUniEntityA()).build();
+                .majorUniEntity(ApplicationTestData.createTestMajorUniEntityA()).build();
     }
 
     public static MajorUniEntity createTestMajorUniEntityA() {
@@ -93,14 +94,14 @@ public class TestData {
 
     public static ModuleRelationEntity createTestModuleRelationEntityA() {
         return ModuleRelationEntity.builder()
-                .moduleRelationKeyClass(TestData.createTestModuleRelationKeyClassA())
-                .moduleBlockEntity(TestData.createTestModuleBlockEntityA()).build();
+                .moduleRelationKeyClass(ApplicationTestData.createTestModuleRelationKeyClassA())
+                .moduleBlockEntity(ApplicationTestData.createTestModuleBlockEntityA()).build();
     }
 
     public static ModuleRelationKeyClass createTestModuleRelationKeyClassA() {
         return ModuleRelationKeyClass.builder()
-                .moduleStudentEntity(TestData.createTestModuleStudentEnityA())
-                .moduleUniEntity(TestData.createTestModuleUniEntityA()).build();
+                .moduleStudentEntity(ApplicationTestData.createTestModuleStudentEnityA())
+                .moduleUniEntity(ApplicationTestData.createTestModuleUniEntityA()).build();
     }
 
     public static String createTestApplicationJsonA() throws Exception {
