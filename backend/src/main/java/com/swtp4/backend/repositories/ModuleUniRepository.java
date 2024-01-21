@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface ModuleUniRepository extends JpaRepository<ModuleUniEntity, String> {
 
     ModuleUniEntity findByNumber(String number);
+    ModuleUniEntity findByName(String name);
 }

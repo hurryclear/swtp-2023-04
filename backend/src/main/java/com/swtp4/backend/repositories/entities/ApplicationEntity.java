@@ -23,9 +23,9 @@ public class ApplicationEntity {
 
     private String status;
 
-    private Date dateOfSubmission;
+    private String dateOfSubmission;
 
-    private Date dateLastEdited;
+    private String dateLastEdited;
 
     private String universityName;
 
