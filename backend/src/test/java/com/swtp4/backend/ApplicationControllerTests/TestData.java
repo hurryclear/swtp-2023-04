@@ -1,6 +1,5 @@
 package com.swtp4.backend.ApplicationControllerTests;
 
-import com.swtp4.backend.repositories.dto.ApplicationDto;
 import com.swtp4.backend.repositories.entities.*;
 import com.swtp4.backend.repositories.entities.keyClasses.ApplicationKeyClass;
 import com.swtp4.backend.repositories.entities.keyClasses.ModuleRelationKeyClass;
@@ -59,10 +58,24 @@ public class TestData {
                 .majorUniEntity(TestData.createTestMajorUniEntityA()).build();
     }
 
+    public static ModuleUniEntity createTestModuleUniEntityD() {
+        return ModuleUniEntity.builder()
+                .number("10-201-1015")
+                .name("Lineare Algebra für Informatiker")
+                .majorUniEntity(TestData.createTestMajorUniEntityA()).build();
+    }
+
+    public static ModuleUniEntity createTestModuleUniEntityE() {
+        return ModuleUniEntity.builder()
+                .number("10-201-1011")
+                .name("Analysis für Informatiker")
+                .majorUniEntity(TestData.createTestMajorUniEntityA()).build();
+    }
+
     public static MajorUniEntity createTestMajorUniEntityA() {
         return MajorUniEntity.builder()
                 .id((long) 123)
-                .name("B.Sc. Informatik").build();
+                .name("B. Sc. Informatik").build();
     }
 
     public static ModuleStudentEntity createTestModuleStudentEnityA() {
@@ -88,5 +101,9 @@ public class TestData {
         return ModuleRelationKeyClass.builder()
                 .moduleStudentEntity(TestData.createTestModuleStudentEnityA())
                 .moduleUniEntity(TestData.createTestModuleUniEntityA()).build();
+    }
+
+    public static String createTestApplicationJsonA() throws Exception {
+        return JsonToStringConverter.convertJsonToString("TestApplicationJsonA.json");
     }
 }
