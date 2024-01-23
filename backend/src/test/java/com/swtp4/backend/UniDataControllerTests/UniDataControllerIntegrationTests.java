@@ -18,8 +18,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.Arrays;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -69,9 +71,12 @@ public class UniDataControllerIntegrationTests {
 
     @Test
     @WithMockUser(username = "testuser", roles = {"OFFICE"})
-    public void testThatUpdateUniDataSuccessfullyUpdatesExistingUniData() throws Exception {
-        majorUniRepository.save(UniDataTestData.createTestMajorUniEntityA());
-        //TODO: Add some ModuleUniEntities with other attributes then those in the TestJson
+    public void testThatUpdateUniDataSuccessfullyReturnsHttpStatus420AndUpdatesExistingUniData() throws Exception {
+        ModuleUniEntity testModuleA = UniDataTestData.createTestModuleUniEntityA();
+        ModuleUniEntity testModuleB = UniDataTestData.createTestModuleUniEntityB();
+        ModuleUniEntity testModuleC = UniDataTestData.createTestModuleUniEntityC();
+        majorUniRepository.saveAll(Arrays.asList(testModuleA.getMajorUniEntity(), testModuleC.getMajorUniEntity()));
+        moduleUniRepository.saveAll(Arrays.asList(testModuleA, testModuleB, testModuleC));
         String testUniDataJson = UniDataTestData.createTestUniDataJsonA();
         mockMvc.perform(
                 MockMvcRequestBuilders.put("/unidata/update")
@@ -80,6 +85,17 @@ public class UniDataControllerIntegrationTests {
         ).andExpect(
                 MockMvcResultMatchers.status().isOk()
         );
-        //TODO: Add matchers to see if attribute-values changed
+        //ModuleUniEntityA - Name should change
+        Optional<ModuleUniEntity> existingModuleUniEntityA = Optional.ofNullable(moduleUniRepository.findByNumber("10-201-2001-1"));
+        assertThat(existingModuleUniEntityA).isPresent();
+        assertThat(existingModuleUniEntityA.get().getName()).isEqualTo("Algorithmen und Datenstrukturen 1");
+        //ModuleUniEntityB - Name should change
+        Optional<ModuleUniEntity> existingModuleUniEntityB = Optional.ofNullable(moduleUniRepository.findByNumber("10-201-2006-1"));
+        assertThat(existingModuleUniEntityB).isPresent();
+        assertThat(existingModuleUniEntityB.get().getName()).isEqualTo("Grundlagen der Technischen Informatik 1");
+        //ModuleUniEntityC - Major should change
+        Optional<ModuleUniEntity> existingModuleUniEntityC = Optional.ofNullable(moduleUniRepository.findByNumber("10-201-2004"));
+        assertThat(existingModuleUniEntityC).isPresent();
+        assertThat(existingModuleUniEntityC.get().getMajorUniEntity().getName()).isEqualTo("B.Sc. Informatik");
     }
 }

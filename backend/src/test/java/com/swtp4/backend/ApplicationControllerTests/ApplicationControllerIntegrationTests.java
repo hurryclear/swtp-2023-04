@@ -34,7 +34,6 @@ public class ApplicationControllerIntegrationTests {
 
     private ApplicationService applicationService;
     private MockMvc mockMvc;
-    private ObjectMapper objectMapper;
     private MajorUniRepository majorUniRepository;
     private ModuleUniRepository moduleUniRepository;
     private ApplicationRepository applicationRepository;
@@ -54,7 +53,6 @@ public class ApplicationControllerIntegrationTests {
             ModuleRelationRepository moduleRelationRepository) {
         this.applicationService = applicationService;
         this.mockMvc = mockMvc;
-        this.objectMapper = new ObjectMapper();
         this.majorUniRepository = majorUniRepository;
         this.moduleUniRepository = moduleUniRepository;
         this.applicationRepository = applicationRepository;

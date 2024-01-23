@@ -17,7 +17,7 @@ public class ModuleUniEntity {
     @Id
     private String number;
     private String name;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name ="major_uni_name")
     private MajorUniEntity majorUniEntity;
 }
