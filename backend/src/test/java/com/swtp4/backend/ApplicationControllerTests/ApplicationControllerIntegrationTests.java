@@ -23,6 +23,7 @@ import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
@@ -94,6 +95,10 @@ public class ApplicationControllerIntegrationTests {
         assertThat(existingModuleStudentEntity).isPresent();
         assertThat(existingModuleStudentEntity.get().getTitle()).isEqualTo("AlgoDat 1.5");
         //ModuleRelationEntity Check
+
+        List<ModuleRelationEntity> allModuleRelationalEntities = moduleRelationRepository.findAll();
+        System.out.println(allModuleRelationalEntities);
+
         Optional<ModuleRelationEntity> existingModuleRelationEntity = Optional.ofNullable(moduleRelationRepository.findByModuleRelationKeyClass_ModuleStudentEntity_NumberAndModuleRelationKeyClass_ModuleUniEntity_NameAndModuleBlockEntity_ApplicationEntity_ApplicationKeyClass_Creator("69", "Algorithmen und Datenstrukturen 1", "Student"));
         //TODO: ModuleRelationEntity not found - find out why, log the steps of saving a relation. The other Entities worked so far
         assertThat(existingModuleRelationEntity).isPresent();

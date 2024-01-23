@@ -16,9 +16,7 @@ public class ModuleUniEntity {
 
     @Id
     private String number;
-
     private String name;
-
     @ManyToOne
     @JoinColumn(name ="major_uni_name")
     private MajorUniEntity majorUniEntity;
