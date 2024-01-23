@@ -6,6 +6,7 @@ import com.swtp4.backend.repositories.dto.ModuleBlockDto;
 import com.swtp4.backend.repositories.entities.*;
 import com.swtp4.backend.repositories.entities.keyClasses.ApplicationKeyClass;
 import com.swtp4.backend.repositories.entities.keyClasses.ModuleRelationKeyClass;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Service
 public class ApplicationService {
 
@@ -41,26 +43,35 @@ public class ApplicationService {
         //TODO: Implement processNumberGenerator
         UUID processNumber = UUID.randomUUID();
         ApplicationEntity savedApplicationEntityStudent = saveApplicationEntity(applicationDto.getApplicationData(), processNumber, "Student");
+        log.info("SavedApplicationEntityStudent: {}", savedApplicationEntityStudent);
         ApplicationEntity savedApplicationEntityEmployee = saveApplicationEntity(applicationDto.getApplicationData(), processNumber, "Employee");
+        log.info("SavedApplicationEntityEmployee: {}", savedApplicationEntityEmployee);
 
         //Save ModulesBlocksEntities
         List<ModuleBlockDto> moduleBlockDtos = applicationDto.getModuleFormsData();
         for (ModuleBlockDto moduleBlockDto : moduleBlockDtos) {
             ModuleBlockEntity savedModuleBlockEntityStudent = saveModuleBlockEntity(moduleBlockDto.getModuleBlockData(), savedApplicationEntityStudent);
+            log.info("SavedModuleBlockEntityStudent: {}", savedModuleBlockEntityStudent);
             ModuleBlockEntity savedModuleBlockEntityEmployee = saveModuleBlockEntity(moduleBlockDto.getModuleBlockData(), savedApplicationEntityEmployee);
+            log.info("SavedModuleBlockEntityEmployee: {}", savedModuleBlockEntityEmployee);
 
             //Save ModuleStudentEntities
             List<ModuleStudentEntity> modulesStudentEntities = moduleBlockDto.getModulesStudent();
+            log.info("ModuleStudentEntities: {}", modulesStudentEntities);
             List<String> modules2bCredited = moduleBlockDto.getModules2bCredited();
+            log.info("Modules2bCreditedStrings: {}", modules2bCredited);
             List<ModuleUniEntity> modules2bCreditedEntities = getUniversityModulesByName(modules2bCredited);
+            log.info("Modules2bCreditedEntities: {}", modules2bCreditedEntities);
             for (ModuleStudentEntity moduleStudentEntity : modulesStudentEntities) {
-                ModuleStudentEntity savedModuleStudentEntityStudent = moduleStudentRepository.save(moduleStudentEntity);
-                ModuleStudentEntity savedModuleStudentEntityEmployee = moduleStudentRepository.save(moduleStudentEntity);
+                ModuleStudentEntity savedModuleStudentEntity = saveModuleStudentEntity(moduleStudentEntity);
+                log.info("SavedModuleStudentEntityStudent: {}", savedModuleStudentEntity);
 
                 //Save ModulesRelationEntities
                 for (ModuleUniEntity moduleUniEntity : modules2bCreditedEntities) {
-                    ModuleRelationEntity savedModuleRelationEntityStudent = saveModuleRelationEntity(savedModuleBlockEntityStudent, moduleUniEntity, savedModuleStudentEntityStudent);
-                    ModuleRelationEntity savedModuleRelationEntityEmployee = saveModuleRelationEntity(savedModuleBlockEntityEmployee, moduleUniEntity, savedModuleStudentEntityEmployee);
+                    ModuleRelationEntity savedModuleRelationEntityStudent = saveModuleRelationEntity(savedModuleBlockEntityStudent, moduleUniEntity, savedModuleStudentEntity);
+                    log.info("SavedModuleRelationEntityStudent: {}", savedModuleRelationEntityStudent);
+                    ModuleRelationEntity savedModuleRelationEntityEmployee = saveModuleRelationEntity(savedModuleBlockEntityEmployee, moduleUniEntity, savedModuleStudentEntity);
+                    log.info("SavedModuleRelationEntityEmployee: {}", savedModuleRelationEntityEmployee);
                 }
             }
         }
@@ -75,8 +86,26 @@ public class ApplicationService {
     }
 
     public ModuleBlockEntity saveModuleBlockEntity(ModuleBlockEntity moduleBlockEntity, ApplicationEntity applicationEntity) {
-        moduleBlockEntity.setApplicationEntity(applicationEntity);
-        return moduleBlockRepository.save(moduleBlockEntity);
+        ModuleBlockEntity newModuleBlockEntity = new ModuleBlockEntity();
+        newModuleBlockEntity.setApplicationEntity(applicationEntity);
+        newModuleBlockEntity.setApproval(moduleBlockEntity.getApproval());
+        newModuleBlockEntity.setCommentStudent(moduleBlockEntity.getCommentStudent());
+        newModuleBlockEntity.setCommentEmployee(moduleBlockEntity.getCommentEmployee());
+        log.info("ModuleBlockEntity in save-method: {}", newModuleBlockEntity);
+        return moduleBlockRepository.save(newModuleBlockEntity);
+    }
+
+    public ModuleStudentEntity saveModuleStudentEntity(ModuleStudentEntity moduleStudentEntity) {
+        ModuleStudentEntity newModuleStudentEntity = new ModuleStudentEntity();
+        newModuleStudentEntity.setNumber(moduleStudentEntity.getNumber());
+        newModuleStudentEntity.setTitle(moduleStudentEntity.getTitle());
+        newModuleStudentEntity.setDescription_pdf(moduleStudentEntity.getDescription_pdf());
+        newModuleStudentEntity.setCredits(moduleStudentEntity.getCredits());
+        newModuleStudentEntity.setUniversity(moduleStudentEntity.getUniversity());
+        newModuleStudentEntity.setMajor(moduleStudentEntity.getMajor());
+        newModuleStudentEntity.setCommentStudent(moduleStudentEntity.getCommentStudent());
+        newModuleStudentEntity.setCommentEmployee(moduleStudentEntity.getCommentEmployee());
+        return moduleStudentRepository.save(newModuleStudentEntity);
     }
 
     public ModuleRelationEntity saveModuleRelationEntity(ModuleBlockEntity moduleBlockEntity, ModuleUniEntity moduleUniEntity, ModuleStudentEntity moduleStudentEntity) {
