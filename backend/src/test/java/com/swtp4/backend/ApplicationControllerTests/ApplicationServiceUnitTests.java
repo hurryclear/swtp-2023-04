@@ -65,6 +65,7 @@ public class ApplicationServiceUnitTests {
         applicationService.saveModuleBlockEntity(testModuleBlock, testModuleBlock.getApplicationEntity());
         Optional<ModuleBlockEntity> result = Optional.ofNullable(moduleBlockRepository.findByCommentStudentAndApplicationEntity_ApplicationKeyClass_Creator("War cool", "Student"));
         assertThat(result).isPresent();
+        //ID is set by the method, so testEntity cant be exactly same to savedEntity but all atrributes must be
         assertThat(result.get().getApplicationEntity()).isEqualTo(testModuleBlock.getApplicationEntity());
         assertThat(result.get().getApproval()).isEqualTo(testModuleBlock.getApproval());
         assertThat(result.get().getCommentStudent()).isEqualTo(testModuleBlock.getCommentStudent());
