@@ -63,9 +63,12 @@ public class ApplicationServiceUnitTests {
     public void testThatSaveModuleBlockEntitySuccessfullyCreatesModuleBlock() throws Exception {
         ModuleBlockEntity testModuleBlock = ApplicationTestData.createTestModuleBlockEntityA();
         applicationService.saveModuleBlockEntity(testModuleBlock, testModuleBlock.getApplicationEntity());
-        Optional<ModuleBlockEntity> result = moduleBlockRepository.findById(testModuleBlock.getId());
+        Optional<ModuleBlockEntity> result = Optional.ofNullable(moduleBlockRepository.findByCommentStudentAndApplicationEntity_ApplicationKeyClass_Creator("War cool", "Student"));
         assertThat(result).isPresent();
-        assertThat(result.get()).isEqualTo(testModuleBlock);
+        assertThat(result.get().getApplicationEntity()).isEqualTo(testModuleBlock.getApplicationEntity());
+        assertThat(result.get().getApproval()).isEqualTo(testModuleBlock.getApproval());
+        assertThat(result.get().getCommentStudent()).isEqualTo(testModuleBlock.getCommentStudent());
+        assertThat(result.get().getCommentEmployee()).isEqualTo(testModuleBlock.getCommentEmployee());
     }
 
     @Test

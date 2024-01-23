@@ -75,7 +75,7 @@ public class ApplicationTestData {
 
     public static MajorUniEntity createTestMajorUniEntityA() {
         return MajorUniEntity.builder()
-                .id((long) 123)
+                //.id((long) 123)
                 .name("B. Sc. Informatik").build();
     }
 

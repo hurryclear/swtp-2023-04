@@ -14,9 +14,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "major_uni")
 public class MajorUniEntity {
 
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+//    private Long id;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
     private String name;
 }

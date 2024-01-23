@@ -24,7 +24,7 @@ public class UniDataService {
     }
 
     public void update(UniDataDto uniDataDto) {
-        //iteration throught the courses of the JSON (majors)
+        //iteration through the courses of the JSON (majors)
         for (MajorUniDto majorUniDto : uniDataDto.getCourses()) {
             MajorUniEntity existingMajorUniEntity = majorUniRepository.findByName(majorUniDto.getName());
             MajorUniEntity savedMajorUniEntity = existingMajorUniEntity;
@@ -36,7 +36,7 @@ public class UniDataService {
             }
             //iteration through the modules of the courses of the JSON
             for (ModuleUniEntity moduleUniEntity : majorUniDto.getModules()) {
-                ModuleUniEntity existingModuleUniEntity = moduleUniRepository.findByNumber(moduleUniEntity.getNumber());
+                ModuleUniEntity existingModuleUniEntity = moduleUniRepository.findByNumber(moduleUniEntity.getNumber()); //findByNumber or findByName? What would be rather changed by the university
                 if (existingModuleUniEntity == null) {
                     //create ModuleEntity
                     moduleUniEntity.setMajorUniEntity(savedMajorUniEntity);
