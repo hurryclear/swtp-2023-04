@@ -63,14 +63,16 @@ public class ApplicationService {
             List<ModuleUniEntity> modules2bCreditedEntities = getUniversityModulesByName(modules2bCredited);
             log.info("Modules2bCreditedEntities: {}", modules2bCreditedEntities);
             for (ModuleStudentEntity moduleStudentEntity : modulesStudentEntities) {
-                ModuleStudentEntity savedModuleStudentEntity = saveModuleStudentEntity(moduleStudentEntity);
-                log.info("SavedModuleStudentEntityStudent: {}", savedModuleStudentEntity);
+                ModuleStudentEntity savedModuleStudentEntityStudent = saveModuleStudentEntity(moduleStudentEntity, "Student");
+                log.info("SavedModuleStudentEntityStudent: {}", savedModuleStudentEntityStudent);
+                ModuleStudentEntity savedModuleStudentEntityEmployee = saveModuleStudentEntity(moduleStudentEntity, "Employee");
+                log.info("SavedModuleStudentEntityEmployee: {}", savedModuleStudentEntityEmployee);
 
                 //Save ModulesRelationEntities
                 for (ModuleUniEntity moduleUniEntity : modules2bCreditedEntities) {
-                    ModuleRelationEntity savedModuleRelationEntityStudent = saveModuleRelationEntity(savedModuleBlockEntityStudent, moduleUniEntity, savedModuleStudentEntity);
+                    ModuleRelationEntity savedModuleRelationEntityStudent = saveModuleRelationEntity(savedModuleBlockEntityStudent, moduleUniEntity, savedModuleStudentEntityStudent);
                     log.info("SavedModuleRelationEntityStudent: {}", savedModuleRelationEntityStudent);
-                    ModuleRelationEntity savedModuleRelationEntityEmployee = saveModuleRelationEntity(savedModuleBlockEntityEmployee, moduleUniEntity, savedModuleStudentEntity);
+                    ModuleRelationEntity savedModuleRelationEntityEmployee = saveModuleRelationEntity(savedModuleBlockEntityEmployee, moduleUniEntity, savedModuleStudentEntityEmployee);
                     log.info("SavedModuleRelationEntityEmployee: {}", savedModuleRelationEntityEmployee);
                 }
             }
@@ -95,7 +97,7 @@ public class ApplicationService {
         return moduleBlockRepository.save(newModuleBlockEntity);
     }
 
-    public ModuleStudentEntity saveModuleStudentEntity(ModuleStudentEntity moduleStudentEntity) {
+    public ModuleStudentEntity saveModuleStudentEntity(ModuleStudentEntity moduleStudentEntity, String creator) {
         ModuleStudentEntity newModuleStudentEntity = new ModuleStudentEntity();
         newModuleStudentEntity.setNumber(moduleStudentEntity.getNumber());
         newModuleStudentEntity.setTitle(moduleStudentEntity.getTitle());
@@ -105,6 +107,7 @@ public class ApplicationService {
         newModuleStudentEntity.setMajor(moduleStudentEntity.getMajor());
         newModuleStudentEntity.setCommentStudent(moduleStudentEntity.getCommentStudent());
         newModuleStudentEntity.setCommentEmployee(moduleStudentEntity.getCommentEmployee());
+        newModuleStudentEntity.setCreator(creator);
         return moduleStudentRepository.save(newModuleStudentEntity);
     }
 
