@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ModuleStudentRepository extends JpaRepository<ModuleStudentEntity, Long> {
 
-    ModuleStudentEntity findByNumber(String number);
+    ModuleStudentEntity findByNumberAndCreator(String number, String creator);
 }

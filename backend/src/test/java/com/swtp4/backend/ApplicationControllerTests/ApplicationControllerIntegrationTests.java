@@ -91,16 +91,15 @@ public class ApplicationControllerIntegrationTests {
         assertThat(existingModuleBlockEntity.get().getCommentEmployee()).isEqualTo("Das ist sein Block");
         assertThat(existingModuleBlockEntity.get().getApplicationEntity().getApplicationKeyClass().getCreator()).isEqualTo("Employee");
         //ModuleStudentEntity Check
-        Optional<ModuleStudentEntity> existingModuleStudentEntity = Optional.ofNullable(moduleStudentRepository.findByNumber("420"));
+        Optional<ModuleStudentEntity> existingModuleStudentEntity = Optional.ofNullable(moduleStudentRepository.findByNumberAndCreator("420", "Student"));
         assertThat(existingModuleStudentEntity).isPresent();
         assertThat(existingModuleStudentEntity.get().getTitle()).isEqualTo("AlgoDat 1.5");
         //ModuleRelationEntity Check
 
         List<ModuleRelationEntity> allModuleRelationalEntities = moduleRelationRepository.findAll();
-        System.out.println(allModuleRelationalEntities);
+        System.out.println("RelationRepository: " + allModuleRelationalEntities);
 
         Optional<ModuleRelationEntity> existingModuleRelationEntity = Optional.ofNullable(moduleRelationRepository.findByModuleRelationKeyClass_ModuleStudentEntity_NumberAndModuleRelationKeyClass_ModuleUniEntity_NameAndModuleBlockEntity_ApplicationEntity_ApplicationKeyClass_Creator("69", "Algorithmen und Datenstrukturen 1", "Student"));
-        //TODO: ModuleRelationEntity not found - find out why, log the steps of saving a relation. The other Entities worked so far
         assertThat(existingModuleRelationEntity).isPresent();
         assertThat(existingModuleRelationEntity.get().getModuleRelationKeyClass().getModuleStudentEntity().getTitle()).isEqualTo("AlgoDat 0.5");
         assertThat(existingModuleRelationEntity.get().getModuleRelationKeyClass().getModuleUniEntity().getNumber()).isEqualTo("10-201-2001-1");

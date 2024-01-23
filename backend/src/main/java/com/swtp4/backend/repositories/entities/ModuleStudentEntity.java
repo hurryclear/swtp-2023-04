@@ -27,4 +27,5 @@ public class ModuleStudentEntity {
     private String major;
     private String commentStudent;
     private String commentEmployee;
+    private String creator;
 }
