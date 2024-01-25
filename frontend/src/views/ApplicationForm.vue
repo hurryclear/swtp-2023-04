@@ -1,28 +1,29 @@
 <template>
   <!-- Displaying UniversityForm and ModuleFormList components -->
   <UniversityForm
-    :universityData="universityData"
-    @updateUniversityData="updateUniversityData"
+      :universityData="form.university"
+      @updateUniversityData="updateUniversityData"
   />
   <br/>
   <ModuleFormList
-    :moduleForms="moduleForms"
-    @updateModuleData="updateModuleData"
-    @fillChange="(data) => this.moduleDataFilled=data"
+      :moduleForms="form.moduleMappings"
+      @updateModuleData="updateModuleData"
+      @fillChange="(data) => this.moduleDataFilled=data"
   />
-  <br />
+  <br/>
   <v-btn
-    class="userInput"
-    @click="submitWholeForm"
-    :disabled="!this.formsFilled"
-    color="primary"
-  >{{$t("applicationForm.submit")}}</v-btn>
+      class="userInput"
+      @click="submitWholeForm"
+      :disabled="!this.formsFilled"
+      color="primary"
+  >{{ $t("applicationForm.submit") }}
+  </v-btn>
 
   <div v-if="submittedFormId">
     <v-text-field
-      v-model="submittedFormId"
-      label="Application ID"
-      readonly
+        v-model="submittedFormId"
+        label="Application ID"
+        readonly
     />
     <v-btn icon="mdi-content-copy" @click="copyFormIdToClipboard"></v-btn>
     <v-btn icon="mdi-download" @click="createDownloadableJSON(generateFormData())"></v-btn>
@@ -32,17 +33,17 @@
 <script>
 import UniversityForm from "@/components/UniversityForm.vue";
 import ModuleFormList from "@/components/ModuleFormList.vue";
-import { defineComponent} from "vue";
-import { mapActions } from "vuex";
+import {defineComponent} from "vue";
+import {mapActions} from "vuex";
 
 export default defineComponent({
-  components: { ModuleFormList, UniversityForm },
+  components: {ModuleFormList, UniversityForm},
   computed: {
     universityDataFilled() {
       return (
-          this.universityData.universityName.trim() !== "" &&
-          this.universityData.studyProgram.trim() !== "" &&
-          this.universityData.country.trim() !== ""
+          this.form.university.name.trim() !== "" && //
+          this.form.university.courseOfStudy.trim() !== "" &&
+          this.form.university.country.trim() !== ""
       );
     },
     formsFilled() {
@@ -51,37 +52,72 @@ export default defineComponent({
   },
   data() {
     return {
-      submittedFormId: null,
-      universityData: {
-        universityName: "",
-        studyProgram: "",
-        country: "",
-      },
-      moduleForms: [
-        {
-          name: "",
-          comment: "",
-          description: null,
-          module2bCredited: null,
+      //NEW
+      form: {
+        meta: {
+          status: "",                 //Enum
+          comments: {
+            student: "",              //String
+            office: "",               //String
+          },
+          dateOfSubmission: "",       //String
+          dateLastEdited: "",         //String
         },
-      ],
+        university: {
+          name: "",                   //String
+          country: "",                //String
+          website: "",                //String
+          courseOfStudy: "",          //String
+        },
+        moduleMappings: [
+          {
+            meta: {
+              key: 0,               //Integer
+              approval: "",         //Enum
+              comments: {
+                student: "",        //String
+                office: "",         //String
+              },
+            },
+            previousModules: [
+              {
+                number: "",       //String (Applicable?)
+                name: "",         //String
+                description: {
+                  id: "",         //String
+                  filename: "",   //String
+                },
+                credits: 0,       //Integer
+              },
+            ],
+            modulesToBeCredited: [
+              {
+                number: "",       //String
+                name: null,         //String
+              }
+            ],
+          },
+        ],
+      },
+      //OLD
+      submittedFormId: null,
       moduleDataFilled: false,
     };
   },
   methods: {
     updateUniversityData(data) {
-      this.universityData = data;
+      this.form.university = data;
     },
     updateModuleData(data) {
-      this.moduleForms = data;
+      this.form.moduleMappings = data;
     },
-    submitWholeForm() {
+    submitWholeForm() { //TODO
       const timestamp = new Date().toISOString();
       const formData = {
         timestamp: timestamp,
-        universityData: this.universityData,
-        moduleFormsData: this.moduleForms,
-        status: 'Offen', 
+        universityData: this.form.moduleMappings,
+        moduleFormsData: this.form.moduleMappings,
+        status: 'open',
       };
 
       // Dispatch the form data to the Vuex store
@@ -104,15 +140,6 @@ export default defineComponent({
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-    },
-
-    generateFormData() {
-      return {
-        timestamp: new Date().toISOString(),
-        universityData: this.universityData,
-        moduleFormsData: this.moduleForms,
-        status: 'Offen',
-      };
     },
 
     copyFormIdToClipboard() {

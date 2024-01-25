@@ -11,8 +11,8 @@
               <span v-if="expanded" key="0">
                 {{ $t("applicationForm.moduleDescription") }}
               </span>
-              <span v-else key="1">
-                {{ module.name }}
+              <span v-else key="1"> <!--TODO:Multiple Modules here-->
+                {{ moduleForm.previousModules[0].name }}
               </span>
             </v-fade-transition>
           </v-col>
@@ -20,15 +20,17 @@
       </template>
     </v-expansion-panel-title>
     <v-expansion-panel-text>
+      <!--TODO:Multiple Modules here-->
       <v-text-field
           class="userInput"
-          v-model="formData.name"
+          v-model="moduleForm.previousModules[0].name"
           hide-details
           :label="$t('applicationForm.moduleNameLabel')"
           variant="outlined"
       />
+      <!--TODO: change v-model...-->
       <v-file-input
-          v-model="formData.description"
+          v-model="moduleForm.description"
           class="userInput"
           accept=".pdf"
           show-size
@@ -39,8 +41,9 @@
           @change="handleFileChange"
       />
       <v-select
-          v-model="formData.module2bCredited"
+          v-model="moduleForm.modulesToBeCredited"
           class="userInput"
+          item-title="name"
           :label="$t('applicationForm.moduleCreditedLabel')"
           variant="outlined"
           hide-details
@@ -48,7 +51,7 @@
           :items="moduleNamesList"
       />
       <v-text-field
-          v-model="formData.comment"
+          v-model="moduleForm.meta.comments.student"
           class="userInput"
           hide-details
           :label="$t('applicationForm.commentLabel')"
@@ -66,18 +69,18 @@
 </template>
 
 <script>
-import moduleJSON from '../assets/module_liste.json';
+import moduleJSON from '../assets/module_liste.json'; //TODO: API Request for this
 
 export default {
   props: {
-    module: Object, // Add a prop to receive module data
+    moduleMapping: Object, // Add a prop to receive module data
     removeDisabled: Boolean,
   },
   data() {
     return {
       isFilled: false,
       moduleNamesList: [],
-      formData: {...this.module},
+      moduleForm: {...this.moduleMapping},
       selectedFile: null,
     };
   },
@@ -86,13 +89,14 @@ export default {
   },
   methods: {
     extractModuleNames() {
-      this.moduleNamesList = moduleJSON.courses[0].modules.map(module => module.name);
+      this.moduleNamesList = moduleJSON.courses[0].modules;
     },
     checkFormFilled() {
-      this.formData.isFilled =
-          this.formData.name.trim() !== '' &&
-          this.formData.description !== null &&
-          this.formData.module2bCredited !== null;
+      this.moduleForm.isFilled =
+          this.moduleForm.previousModules.every((module) => module.name.trim() !== '') &&
+          //TODO Description
+          this.moduleForm.description !== null &&
+          this.moduleForm.modulesToBeCredited !== null;
     },
     removeModule() {
       this.$emit('removeModule');
@@ -103,14 +107,15 @@ export default {
     // Watch changes in module data and emit an event to the parent
     watchModuleData() {
       this.checkFormFilled();
-      this.$emit('updateModuleData', this.formData, this.selectedFile);
+      this.$emit('updateModuleData', this.moduleForm, this.selectedFile);
     },
   },
   watch: {
-    'formData.name': 'watchModuleData',
-    'formData.description': 'watchModuleData',
-    'formData.module2bCredited': 'watchModuleData',
-    'formData.comment': 'watchModuleData',
-  },
+    'moduleForm': {
+      handler: 'watchModuleData',
+      deep: true,
+    },
+  }
+
 }
 </script>
