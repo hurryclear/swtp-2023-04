@@ -13,7 +13,7 @@
                   {{ $t("applicationForm.universityDescription") }}
                 </span>
                 <span v-else key="1">
-                  {{ university.universityName }}
+                  {{ university.name }}
                 </span>
               </v-fade-transition>
             </v-col>
@@ -37,6 +37,14 @@
             variant="outlined"
             class="userInput"
         />
+        <!--TODO: i18n  -->
+        <v-text-field
+            v-model="university.website"
+            hide-details
+            :label="$t('applicationForm.websiteLabel')"
+            variant="outlined"
+            class="userInput"
+        />
       </v-expansion-panel-text>
     </v-expansion-panel>
     <v-expansion-panel>
@@ -52,7 +60,7 @@
                   {{ $t("applicationForm.studyProgramDescription") }}
                 </span>
                 <span v-else key="1">
-                  {{ university.studyProgram }}
+                  {{ university.courseOfStudy }}
                 </span>
               </v-fade-transition>
             </v-col>
@@ -61,7 +69,7 @@
       </v-expansion-panel-title>
       <v-expansion-panel-text>
         <v-text-field
-            v-model="university.studyProgram"
+            v-model="university.courseOfStudy"
             hide-details
             :label="$t('applicationForm.studyProgramLabel')"
             variant="outlined"
@@ -81,12 +89,13 @@ export default {
   data() {
     return {
       university: {
-        universityName: null,
-        studyProgram: '',
-        country: '',
+        name: null,
+        country: "",
+        website: "",
+        courseOfStudy: "",
         ...this.universityData,
       },
-      selectedUniversity:null,
+      selectedUniversity: null,
       universities: [],
     }
   },
@@ -108,16 +117,18 @@ export default {
       },
       deep: true,
     },
-    selectedUniversity: function(newValue) {
+    selectedUniversity: function (newValue) {
       if (typeof newValue === 'string') {
-        this.university.universityName = newValue
+        this.university.name = newValue
       } else {
-        if (newValue==null) {
-          this.university.universityName='';
+        if (newValue == null) {
+          this.university.name = '';
           return;
         }
-        this.university.universityName = newValue.name
+        console.log(JSON.stringify(newValue, null, 4))
+        this.university.name = newValue.name
         this.university.country = newValue.country
+        this.university.website = newValue.web_pages.toString()
       }
     },
   },
