@@ -1,0 +1,76 @@
+{
+  "applicationData":
+    {
+      "universityName": "University of Regenbogenland",
+      "major": "B. Sc. Informatik",
+      "country": "Regenbogencountry",
+      "status": "",
+      "commentStudent": "Ich will alle CP valla",
+      "commentEmployee": "Der bekommt nicht alle CP yalla",
+      "dateOfSubmission": "2023-12-31T22:30:42.103Z",
+      "dateLastEdited": "2024-01-14T14:12:14.675Z"
+    },
+  "moduleFormsData": [
+    {
+      "moduleBlockData":
+        {
+          "key": 0,
+          "approval": "",
+          "commentStudent": "Das ist mein Block",
+          "commentEmployee": "Das ist sein Block"
+        },
+      "modulesStudent": [
+        {
+          "number": "420",
+          "title": "AlgoDat 1.5",
+          "description": "",
+          "credits": "5",
+          "university": "University of Regenbogenland",
+          "major": "B. Sc. Informatik",
+          "commentStudent": "War cool",
+          "commentEmployee": "Das nicht so cool"
+        },
+        {
+          "number": "69",
+          "title": "AlgoDat 0.5",
+          "description": "",
+          "credits": "4",
+          "university": "University of Regenbogenland",
+          "major": "B. Sc. Informatik",
+          "commentStudent": "War nicht so cool",
+          "commentEmployee": "Da hat er mal recht"
+        }
+      ],
+      "modules2bCredited": [
+        "Algorithmen und Datenstrukturen 1",
+        "Algorithmen und Datenstrukturen 2"
+      ]
+    },
+    {
+      "moduleBlockData":
+        {
+          "key": 1,
+          "approval": "",
+          "commentStudent": "",
+          "commentEmployee": ""
+        }
+      ,
+      "modulesStudent": [
+        {
+          "number": "81923",
+          "title": "Das Alles-Modul",
+          "description": "",
+          "credits": "20",
+          "university": "University of Regenbogenland",
+          "major": "B. Sc. Informatik",
+          "commentStudent": "Die Beschreibung ist lang, setzen Sie schon mal Kaffee auf",
+          "commentEmployee": "Beschreibung war wirklich lang, Kaffee ist alle"
+        }
+      ],
+      "modules2bCredited": [
+        "Lineare Algebra für Informatiker",
+        "Analysis für Informatiker"
+      ]
+    }
+  ]
+}
