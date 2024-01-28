@@ -1,64 +1,87 @@
 {
+  "applicationFormView": {
+    "moduleFormList": {
+      "addMapping": "Ajouter le Mappage de Module",
+      "moduleMapping": {
+        "addModule": "Ajouter un Module",
+        "commentLabel": "Commentaire",
+        "description": "Fournir des informations sur le module à créditer !",
+        "module": "Module",
+        "moduleDescriptionLabel": "Description du Module",
+        "moduleNameLabel": "Nom du Module",
+        "modulesToBeCreditedLabel": "Module Crédité",
+        "removeModule": "Supprimer le Module"
+      },
+      "removeMapping": "Supprimer le Mappage de Module"
+    },
+    "submit": "Soumettre le Formulaire",
+    "universityForm": {
+      "courseOfStudy": {
+        "description": "Indiquez le nom de votre programme d'études précédent !",
+        "nameLabel": "Nom du Programme d'Études",
+        "previous": "Programme d'Études Précédent"
+      },
+      "university": {
+        "countryLabel": "Pays",
+        "description": "Indiquez le nom de votre université précédente !",
+        "nameLabel": "Nom de l'Université",
+        "previous": "Université Précédente",
+        "websiteLabel": "Site Web"
+      }
+    }
+  },
   "darkMode": {
     "toggleDarkMode": "Activer le Mode Sombre"
   },
-  "applicationForm": {
-    "addModule": "Ajouter un Module",
-    "module": "Module",
-    "moduleDescription": "Fournir des informations sur le module à créditer !",
-    "moduleNameLabel": "Nom du Module",
-    "moduleDescriptionLabel": "Description du Module",
-    "moduleCreditedLabel": "Module Crédité",
-    "commentLabel": "Commentaire",
-    "removeModule": "Supprimer le Module",
-    "previousUniversity": "Université Précédente",
-    "universityDescription": "Indiquez le nom de votre université précédente !",
-    "universityNameLabel": "Nom de l'Université",
-    "countryLabel": "Pays",
-    "previousStudyProgram": "Programme d'Études Précédent",
-    "studyProgramDescription": "Indiquez le nom de votre programme d'études précédent !",
-    "studyProgramLabel": "Nom du Programme d'Études",
-    "submit": "Soumettre le Formulaire"
+  "examiningCommitteeChairView": {
+    "accept": "Accepter",
+    "decline": "Refuser",
+    "moduleCount": "Nombre de Modules",
+    "studentAffairsOfficeComment": "Commentaire du Bureau des Affaires Étudiantes"
   },
-  "navBar": {
-    "main":"Page Principale",
-    "creditModules": "Créditer les Modules",
-    "review": "Examiner la Demande",
-    "login": "Connexion"
+  "formDisplay": {
+    "application": "Demande",
+    "edit": "Modifier",
+    "modules": "Modules",
+    "reason": "Raison",
+    "sendToExaminingCommitteeChair": "Envoyer au Comité d'Examen",
+    "university": "Université"
+  },
+  "homeView": {
+    "welcomeExaminingCommitteeChair": "Bienvenue, estimé président du Comité d'Examen! Sur cette plateforme, vous avez la possibilité de consulter et d'approuver ou de rejeter toutes les demandes ouvertes. Veuillez fournir une justification bien fondée pour vos décisions. Votre participation rend le processus de reconnaissance de crédits plus efficace et ciblé.",
+    "welcomeStudent": "Bienvenue sur notre nouvelle plateforme en ligne de reconnaissance de crédits à l'Université de Leipzig! Nous comprenons que le processus de reconnaissance de crédits est souvent complexe et prend du temps. Il est d'autant plus important que ce processus puisse désormais être effectué en ligne, de manière numérique et facile. En tant qu'étudiant, vous pouvez maintenant soumettre votre demande en quelques clics seulement. Cliquez sur 'Créditer les Modules' pour commencer. En soumettant votre demande, un numéro de référence unique vous sera attribué, que vous pourrez utiliser ultérieurement pour consulter votre demande et son statut.",
+    "welcomeStudentAffairsOffice": "Bienvenue, personnel du Bureau des Affaires Étudiantes! En tant que membre du personnel du Bureau des Affaires Étudiantes, vous avez accès à une vue d'ensemble de toutes les demandes ouvertes. Vous pouvez traiter, compléter et suivre le statut de traitement des demandes. Utilisez l'interface conviviale pour rendre le processus de reconnaissance de crédits plus efficace."
   },
   "loginComponent": {
-    "usernameLabel": "Nom d'Utilisateur",
-    "passwordLabel": "Mot de Passe",
     "loginButton": "Connexion",
-    "loginErrorMessage": "Nom d'utilisateur ou mot de passe incorrect."
+    "loginErrorMessage": "Nom d'utilisateur ou mot de passe incorrect.",
+    "passwordLabel": "Mot de Passe",
+    "usernameLabel": "Nom d'Utilisateur"
   },
   "logoutButton": "Déconnexion",
-  "homeView": {
-    "welcomeStudent": "Bienvenue sur notre nouvelle plateforme en ligne de reconnaissance de crédits à l'Université de Leipzig! Nous comprenons que le processus de reconnaissance de crédits est souvent complexe et prend du temps. Il est d'autant plus important que ce processus puisse désormais être effectué en ligne, de manière numérique et facile. En tant qu'étudiant, vous pouvez maintenant soumettre votre demande en quelques clics seulement. Cliquez sur 'Créditer les Modules' pour commencer. En soumettant votre demande, un numéro de référence unique vous sera attribué, que vous pourrez utiliser ultérieurement pour consulter votre demande et son statut.",
-    "welcomeStudentAffairsOffice": "Bienvenue, personnel du Bureau des Affaires Étudiantes! En tant que membre du personnel du Bureau des Affaires Étudiantes, vous avez accès à une vue d'ensemble de toutes les demandes ouvertes. Vous pouvez traiter, compléter et suivre le statut de traitement des demandes. Utilisez l'interface conviviale pour rendre le processus de reconnaissance de crédits plus efficace.",
-    "welcomeExaminingCommitteeChair": "Bienvenue, estimé président du Comité d'Examen! Sur cette plateforme, vous avez la possibilité de consulter et d'approuver ou de rejeter toutes les demandes ouvertes. Veuillez fournir une justification bien fondée pour vos décisions. Votre participation rend le processus de reconnaissance de crédits plus efficace et ciblé."
+  "navBar": {
+    "creditModules": "Créditer les Modules",
+    "examiningCommitteeChair": "Président du Comité d'Examen",
+    "login": "Connexion",
+    "main": "Page Principale",
+    "review": "Examiner la Demande",
+    "studentAffairsOffice": "Bureau des Affaires Étudiantes"
+  },
+  "reviewComponent": {
+    "checkStatus": "Vérifier le Statut",
+    "downloadApplication": "Télécharger la Demande",
+    "formID": "Numéro de Référence",
+    "reviewApplication": "Examiner la Demande"
+  },
+  "routes": {
+    "/": "Page Principale",
+    "/application-form": "Créditer les Modules",
+    "/examining-committee-chair": "Président du Comité d'Examen",
+    "/login": "Connexion",
+    "/review-application": "Examiner la Demande",
+    "/student-affairs-office": "Bureau des Affaires Étudiantes"
   },
   "studentAffairsOfficeView": {
     "openApplications": "Demandes Ouvertes"
-  },
-  "examiningCommitteeChairView": {
-    "moduleCount": "Nombre de Modules",
-    "studentAffairsOfficeComment": "Commentaire du Bureau des Affaires Étudiantes",
-    "accept": "Accepter",
-    "decline": "Refuser"
-  },
-  "reviewComponent": {
-    "reviewApplication": "Examiner la Demande",
-    "formID": "Numéro de Référence",
-    "checkStatus": "Vérifier le Statut",
-    "downloadApplication": "Télécharger la Demande"
-  },
-  "formDisplay": {
-    "university": "Université",
-    "edit": "Modifier",
-    "sendToExaminingCommitteeChair": "Envoyer au Comité d'Examen",
-    "reason": "Raison",
-    "modules": "Modules",
-    "application": "Demande"
   }
 }

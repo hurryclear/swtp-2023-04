@@ -1,3 +1,4 @@
+<!-- UniversityForm.vue -->
 <template>
   <v-expansion-panels>
     <v-expansion-panel>
@@ -5,12 +6,12 @@
         <template v-slot:default="{ expanded }">
           <v-row no-gutters>
             <v-col>
-              {{ $t("applicationForm.previousUniversity") }}
+              {{ $t("applicationFormView.universityForm.university.previous") }}
             </v-col>
             <v-col class="text-grey">
               <v-fade-transition leave-absolute>
                 <span v-if="expanded" key="0">
-                  {{ $t("applicationForm.universityDescription") }}
+                  {{ $t("applicationFormView.universityForm.university.description") }}
                 </span>
                 <span v-else key="1">
                   {{ university.name }}
@@ -26,14 +27,14 @@
             :items="universities"
             item-title="name"
             hide-details
-            :label="$t('applicationForm.universityNameLabel')"
+            :label="$t('applicationFormView.universityForm.university.nameLabel')"
             variant="outlined"
             class="userInput"
         />
         <v-text-field
             v-model="university.country"
             hide-details
-            :label="$t('applicationForm.countryLabel')"
+            :label="$t('applicationFormView.universityForm.university.countryLabel')"
             variant="outlined"
             class="userInput"
         />
@@ -41,7 +42,7 @@
         <v-text-field
             v-model="university.website"
             hide-details
-            :label="$t('applicationForm.websiteLabel')"
+            :label="$t('applicationFormView.universityForm.university.websiteLabel')"
             variant="outlined"
             class="userInput"
         />
@@ -52,12 +53,12 @@
         <template v-slot:default="{ expanded }">
           <v-row no-gutters>
             <v-col>
-              {{ $t("applicationForm.previousStudyProgram") }}
+              {{ $t("applicationFormView.universityForm.courseOfStudy.previous") }}
             </v-col>
             <v-col class="text-grey">
               <v-fade-transition leave-absolute>
                 <span v-if="expanded" key="0">
-                  {{ $t("applicationForm.studyProgramDescription") }}
+                  {{ $t("applicationFormView.universityForm.courseOfStudy.description") }}
                 </span>
                 <span v-else key="1">
                   {{ university.courseOfStudy }}
@@ -71,7 +72,7 @@
         <v-text-field
             v-model="university.courseOfStudy"
             hide-details
-            :label="$t('applicationForm.studyProgramLabel')"
+            :label="$t('applicationFormView.universityForm.courseOfStudy.nameLabel')"
             variant="outlined"
             class="userInput"
         />
@@ -125,7 +126,6 @@ export default {
           this.university.name = '';
           return;
         }
-        console.log(JSON.stringify(newValue, null, 4))
         this.university.name = newValue.name
         this.university.country = newValue.country
         this.university.website = newValue.web_pages.toString()
