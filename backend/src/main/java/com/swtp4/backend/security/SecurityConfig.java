@@ -42,7 +42,7 @@ public class SecurityConfig {
         http.cors(Customizer.withDefaults());
         // set public and secured paths and setup filter to use JSON Web Tokens (jwt)
         http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(request -> request.requestMatchers("/auth/**", "/review/**").permitAll()
+                .authorizeHttpRequests(request -> request.requestMatchers("/auth/**", "/review/**", "/application/saveApplication").permitAll()
                 .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(exceptionHandling -> exceptionHandling
