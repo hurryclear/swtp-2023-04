@@ -1,64 +1,87 @@
 {
+  "applicationFormView": {
+    "moduleFormList": {
+      "addMapping": "Modulabbildung hinzufügen",
+      "moduleMapping": {
+        "addModule": "Modul hinzufügen",
+        "commentLabel": "Bemerkung",
+        "description": "Geben Sie Angaben über die anzurechnenden Module an!",
+        "module": "Modul",
+        "moduleDescriptionLabel": "Modulbeschreibung",
+        "moduleNameLabel": "Modulname",
+        "modulesToBeCreditedLabel": "Anzurechnende Module",
+        "removeModule": "Modul entfernen"
+      },
+      "removeMapping": "Modulabbildung entfernen"
+    },
+    "submit": "Absenden",
+    "universityForm": {
+      "courseOfStudy": {
+        "description": "Geben Sie den Namen Ihres bisherigen Studiengangs an!",
+        "nameLabel": "Name des Studiengangs",
+        "previous": "Bisheriger Studiengang"
+      },
+      "university": {
+        "countryLabel": "Land",
+        "description": "Geben Sie den Namen Ihrer bisherigen Universität an!",
+        "nameLabel": "Name der Universität",
+        "previous": "Bisherige Universität",
+        "websiteLabel": "Website"
+      }
+    }
+  },
   "darkMode": {
     "toggleDarkMode": "Dunklen Modus umschalten"
   },
-  "applicationForm": {
-    "addModule": "Modul hinzufügen",
-    "module": "Modul",
-    "moduleDescription": "Geben Sie Angaben über das anzurechnende Modul an!",
-    "moduleNameLabel": "Modulname",
-    "moduleDescriptionLabel": "Modulbeschreibung",
-    "moduleCreditedLabel": "Anzurechnendes Modul",
-    "commentLabel": "Bemerkung",
-    "removeModule": "Entferne Modul",
-    "previousUniversity": "Bisherige Universität",
-    "universityDescription": "Geben Sie den Namen Ihrer bisherigen Universität an!",
-    "universityNameLabel": "Name der Universität",
-    "countryLabel": "Land",
-    "previousStudyProgram": "Bisheriger Studiengang",
-    "studyProgramDescription": "Geben Sie den Namen Ihres bisherigen Studiengangs an!",
-    "studyProgramLabel": "Name des Studiengangs",
-    "submit": "Absenden"
+  "examiningCommitteeChairView": {
+    "accept": "Annehmen",
+    "decline": "Ablehnen",
+    "moduleCount": "Anzahl der Module",
+    "studentAffairsOfficeComment": "Kommentar vom Studienbüro"
   },
-  "navBar": {
-    "main": "Hauptseite",
-    "creditModules": "Module anrechnen",
-    "review": "Antrag einsehen",
-    "login": "Login"
+  "formDisplay": {
+    "application": "Antrag",
+    "edit": "Bearbeiten",
+    "modules": "Module",
+    "reason": "Begründung",
+    "sendToExaminingCommitteeChair": "An den Prüfungsausschuss senden",
+    "university": "Universität"
+  },
+  "homeView": {
+    "welcomeExaminingCommitteeChair": "Herzlich willkommen, verehrte vorsitzende Person des Prüfungsausschusses! Auf dieser Plattform haben Sie die Möglichkeit, alle offenen Anträge zu überblicken und zu genehmigen oder abzulehnen. Bitte geben Sie eine fundierte Begründung für Ihre Entscheidungen an. Der transparente Anrechnungsprozess wird durch Ihre Teilnahme effizienter und zielführender.",
+    "welcomeStudent": "Herzlich willkommen auf unserer neuen Online-Plattform für die Anrechnung von Studienleistungen an der Universität Leipzig! Drücken Sie auf 'Module anrechnen', um zu beginnen. Mit dem Absenden Ihres Antrags wird Ihnen eine eindeutige Vorgangsnummer zugewiesen, mit dieser können Sie auch später noch Ihren Antrag sowie dessen Status einsehen.",
+    "welcomeStudentAffairsOffice": "Herzlich willkommen, Mitarbeitende des Studienbüros! Als mitarbeitende Person des Studienbüros haben Sie Zugriff auf eine Übersicht aller offenen Anträge. Sie können Anträge bearbeiten, ergänzen und den Bearbeitungsstatus verfolgen. Nutzen Sie das benutzerfreundliche Interface, um den Anrechnungsprozess effizient zu gestalten."
   },
   "loginComponent": {
-    "usernameLabel": "Benutzername",
-    "passwordLabel": "Passwort",
     "loginButton": "Einloggen",
-    "loginErrorMessage": "Falscher Benutzername oder Passwort."
+    "loginErrorMessage": "Falscher Benutzername oder Passwort.",
+    "passwordLabel": "Passwort",
+    "usernameLabel": "Benutzername"
   },
   "logoutButton": "Ausloggen",
-  "homeView": {
-    "welcomeStudent": "Herzlich willkommen auf unserer neuen Online-Plattform für die Anrechnung von Studienleistungen an der Universität Leipzig! Drücken Sie auf 'Module anrechnen', um zu beginnen. Mit dem Absenden Ihres Antrags wird Ihnen eine eindeutige Vorgangsnummer zugewiesen, mit dieser können Sie auch später noch Ihren Antrag sowie dessen Status einsehen.",
-    "welcomeStudentAffairsOffice": "Herzlich willkommen, Mitarbeitende des Studienbüros! Als mitarbeitende Person des Studienbüros haben Sie Zugriff auf eine Übersicht aller offenen Anträge. Sie können Anträge bearbeiten, ergänzen und den Bearbeitungsstatus verfolgen. Nutzen Sie das benutzerfreundliche Interface, um den Anrechnungsprozess effizient zu gestalten.",
-    "welcomeExaminingCommitteeChair": "Herzlich willkommen, verehrte vorsitzende Person des Prüfungsausschusses! Auf dieser Plattform haben Sie die Möglichkeit, alle offenen Anträge zu überblicken und zu genehmigen oder abzulehnen. Bitte geben Sie eine fundierte Begründung für Ihre Entscheidungen an. Der transparente Anrechnungsprozess wird durch Ihre Teilnahme effizienter und zielführender."
+  "navBar": {
+    "creditModules": "Module anrechnen",
+    "examiningCommitteeChair": "Vorsitzender des Prüfungsausschuss",
+    "login": "Login",
+    "main": "Hauptseite",
+    "review": "Antrag einsehen",
+    "studentAffairsOffice": "Studienbüro"
+  },
+  "reviewComponent": {
+    "checkStatus": "Status einsehen",
+    "downloadApplication": "Antrag herunterladen",
+    "formID": "Vorgangsnummer",
+    "reviewApplication": "Antrag einsehen"
+  },
+  "routes": {
+    "/": "Homepage",
+    "/application-form": "Module Anrechnen",
+    "/examining-committee-chair": "Prüfungsausschuss",
+    "/login": "Anmeldung",
+    "/review-application": "Antrag Einsehen",
+    "/student-affairs-office": "Studienbüro"
   },
   "studentAffairsOfficeView": {
     "openApplications": "Offene Anträge"
-  },
-  "examiningCommitteeChairView": {
-    "moduleCount": "Anzahl der Module",
-    "studentAffairsOfficeComment": "Kommentar vom Studienbüro",
-    "accept": "Annehmen",
-    "decline": "Ablehnen"
-  },
-  "reviewComponent": {
-    "reviewApplication": "Antrag einsehen",
-    "formID": "Vorgangsnummer",
-    "checkStatus": "Status einsehen",
-    "downloadApplication": "Antrag herunterladen"
-  },
-  "formDisplay": {
-    "university": "Universität",
-    "edit": "Bearbeiten",
-    "sendToExaminingCommitteeChair": "An den Prüfungsausschuss senden",
-    "reason": "Begründung",
-    "modules": "Module",
-    "application": "Antrag"
   }
 }

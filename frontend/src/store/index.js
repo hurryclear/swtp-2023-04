@@ -71,9 +71,6 @@ export default createStore({
         // Logout the user in the store
         commit('setAuthentication', { status: false, token: null });
         commit('setUserRole', 'ROLE_STUDENT');
-
-        // Redirect to the login page or home
-        this.$router.push('/login'); // Change to the appropriate route
       } catch (error) {
         console.error('Logout failed:', error);
       }

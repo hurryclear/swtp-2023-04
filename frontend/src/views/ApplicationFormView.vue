@@ -1,5 +1,4 @@
 <template>
-  <!-- Displaying UniversityForm and ModuleFormList components -->
   <UniversityForm
       :universityData="form.university"
       @updateUniversityData="updateUniversityData"
@@ -16,17 +15,17 @@
       @click="submitWholeForm"
       :disabled="!this.formsFilled"
       color="primary"
-  >{{ $t("applicationForm.submit") }}
+  >{{ $t("applicationFormView.submit") }}
   </v-btn>
 
-  <div v-if="submittedFormId">
+  <div v-if="applicationId">
+    <!--TODO:i18n-->
     <v-text-field
-        v-model="submittedFormId"
+        v-model="applicationId"
         label="Application ID"
         readonly
     />
-    <v-btn icon="mdi-content-copy" @click="copyFormIdToClipboard"></v-btn>
-    <v-btn icon="mdi-download" @click="createDownloadableJSON(generateFormData())"></v-btn>
+    <v-btn icon="mdi-content-copy" @click="copyApplicationIdToClipboard"></v-btn>
   </div>
 </template>
 
@@ -35,6 +34,7 @@ import UniversityForm from "@/components/UniversityForm.vue";
 import ModuleFormList from "@/components/ModuleFormList.vue";
 import {defineComponent} from "vue";
 import {mapActions} from "vuex";
+import axios from "@/plugins/axios";
 
 export default defineComponent({
   components: {ModuleFormList, UniversityForm},
@@ -52,7 +52,6 @@ export default defineComponent({
   },
   data() {
     return {
-      //NEW
       form: {
         meta: {
           status: "",                 //Enum
@@ -73,7 +72,7 @@ export default defineComponent({
           {
             meta: {
               key: 0,               //Integer
-              approval: "",         //Enum
+              approval: "",         //Enum/Boolean
               comments: {
                 student: "",        //String
                 office: "",         //String
@@ -83,10 +82,7 @@ export default defineComponent({
               {
                 number: "",       //String (Applicable?)
                 name: "",         //String
-                description: {
-                  id: "",         //String
-                  filename: "",   //String
-                },
+                description: { file: null },
                 credits: 0,       //Integer
               },
             ],
@@ -99,8 +95,7 @@ export default defineComponent({
           },
         ],
       },
-      //OLD
-      submittedFormId: null,
+      applicationId: null,
       moduleDataFilled: false,
     };
   },
@@ -111,40 +106,41 @@ export default defineComponent({
     updateModuleData(data) {
       this.form.moduleMappings = data;
     },
-    submitWholeForm() { //TODO
+    submitWholeForm() {
+      const formData = new FormData();
+      this.form.moduleMappings.forEach(
+          (moduleForm, i) => moduleForm.previousModules.forEach(
+              (module, j) => {
+                module.description.id = i + ":" + j
+                formData.append(`file-${module.description.id}`, module.description.file)
+              }
+
+          )
+      );
       const timestamp = new Date().toISOString();
-      const formData = {
-        timestamp: timestamp,
-        universityData: this.form.moduleMappings,
-        moduleFormsData: this.form.moduleMappings,
-        status: 'open',
-      };
-
-      // Dispatch the form data to the Vuex store
-      this.submitForm(formData);
-
-      this.submittedFormId = timestamp;
-
-      console.log('Whole Form submitted:', JSON.stringify(formData, null, 2));
+      this.form.meta.dateLastEdited = timestamp
+      this.form.meta.dateOfSubmission = timestamp
+      // Append form data to FormData object
+      formData.append('form', JSON.stringify(this.form));
+      // Use axios to send the FormData object to the server
+      axios.post('/api/application/saveApplication', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+          .then(response => {
+            // Handle success response (Form-ID)
+            console.log('Whole Form submitted:', response.data);
+          })
+          .catch(error => {
+            // Handle error response
+            console.error('Error submitting form:', error);
+          });
     },
 
-    createDownloadableJSON(data) {
-      const blob = new Blob([JSON.stringify(data, null, 2)], {
-        type: "application/json",
-      });
-
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob);
-      link.download = `form-${data.timestamp}.json`;
-
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    },
-
-    copyFormIdToClipboard() {
-      if (this.submittedFormId) {
-        navigator.clipboard.writeText(this.submittedFormId).then(() => {
+    copyApplicationIdToClipboard() {
+      if (this.applicationId) {
+        navigator.clipboard.writeText(this.applicationId).then(() => {
           console.log("Form ID copied to clipboard!");
         }).catch(err => {
           console.error('Could not copy text: ', err);
