@@ -1,20 +1,21 @@
+<!-- ModuleFormList.vue -->
 <template>
   <div>
     <v-expansion-panels>
       <ModuleForm
-          v-for="(form, index) in moduleMappings"
+          v-for="(moduleMapping, index) in moduleMappings"
           :key="this.moduleMappings[index].meta.key"
-          :moduleMapping="form"
+          :moduleMapping="moduleMapping"
           :removeDisabled=" removeDisabled"
           @removeModule="removeModuleForm(index)"
-          @updateModuleData="(form,file)=>updateModuleData(index,form,file)"
+          @updateModuleData="(form)=>updateModuleData(index,form)"
       />
       <v-btn
           class="userInput"
           @click="addModuleForm"
           :disabled="!this.formsFilled"
       >
-        {{ $t("applicationForm.addModule") }}
+        {{ $t("applicationFormView.moduleFormList.addMapping") }}
       </v-btn>
     </v-expansion-panels>
   </div>
@@ -40,12 +41,10 @@ export default defineComponent({
           },
           previousModules: [
             {
+              key: 0,
               number: "",
               name: "",
-              description: {
-                id: "",
-                filename: "",
-              },
+              description: { file: null },
               credits: 0,
             },
           ],
@@ -73,12 +72,10 @@ export default defineComponent({
         },
         previousModules: [
           {
+            key: 0,
             number: "",
             name: "",
-            description: {
-              id: "",
-              filename: "",
-            },
+            description: { file: null },
             credits: 0,
           },
         ],
@@ -102,9 +99,8 @@ export default defineComponent({
       }
     },
     // Listen to the emitted event from ModuleForm and propagate it to the parent (FormPage)
-    updateModuleData(index, data/*, file*/) {//TODO
+    updateModuleData(index, data) {//TODO
       this.moduleMappings[index] = data;
-      //this.moduleForms[index].file = file
       if (this.checkIfFilled()) {
         this.$emit('updateModuleData', this.moduleMappings)
       }

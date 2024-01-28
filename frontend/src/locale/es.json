@@ -1,64 +1,87 @@
 {
+  "applicationFormView": {
+    "moduleFormList": {
+      "addMapping": "Agregar Mapeo de Módulo",
+      "moduleMapping": {
+        "addModule": "Agregar Módulo",
+        "commentLabel": "Comentario",
+        "description": "¡Proporcione información sobre el módulo a ser acreditado!",
+        "module": "Módulo",
+        "moduleDescriptionLabel": "Descripción del Módulo",
+        "moduleNameLabel": "Nombre del Módulo",
+        "modulesToBeCreditedLabel": "Módulo Acreditado",
+        "removeModule": "Eliminar Módulo"
+      },
+      "removeMapping": "Eliminar Mapeo de Módulo"
+    },
+    "submit": "Enviar Formulario",
+    "universityForm": {
+      "courseOfStudy": {
+        "description": "¡Especifique el nombre de su programa de estudio anterior!",
+        "nameLabel": "Nombre del Programa de Estudio",
+        "previous": "Programa de Estudio Anterior"
+      },
+      "university": {
+        "countryLabel": "País",
+        "description": "¡Especifique el nombre de su universidad anterior!",
+        "nameLabel": "Nombre de la Universidad",
+        "previous": "Universidad Anterior",
+        "websiteLabel": "Sitio Web"
+      }
+    }
+  },
   "darkMode": {
     "toggleDarkMode": "Cambiar Modo Oscuro"
   },
-  "applicationForm": {
-    "addModule": "Agregar Módulo",
-    "module": "Módulo",
-    "moduleDescription": "¡Proporcione información sobre el módulo a ser acreditado!",
-    "moduleNameLabel": "Nombre del Módulo",
-    "moduleDescriptionLabel": "Descripción del Módulo",
-    "moduleCreditedLabel": "Módulo Acreditado",
-    "commentLabel": "Comentario",
-    "removeModule": "Eliminar Módulo",
-    "previousUniversity": "Universidad Anterior",
-    "universityDescription": "¡Especifique el nombre de su universidad anterior!",
-    "universityNameLabel": "Nombre de la Universidad",
-    "countryLabel": "País",
-    "previousStudyProgram": "Programa de Estudio Anterior",
-    "studyProgramDescription": "¡Especifique el nombre de su programa de estudio anterior!",
-    "studyProgramLabel": "Nombre del Programa de Estudio",
-    "submit": "Enviar Formulario"
+  "examiningCommitteeChairView": {
+    "accept": "Aceptar",
+    "decline": "Rechazar",
+    "moduleCount": "Número de Módulos",
+    "studentAffairsOfficeComment": "Comentario de la Oficina de Asuntos Estudiantiles"
   },
-  "navBar": {
-    "main":"Página Principal",
-    "creditModules": "Acreditar Módulos",
-    "review": "Revisar Solicitud",
-    "login": "Iniciar Sesión"
+  "formDisplay": {
+    "application": "Solicitud",
+    "edit": "Editar",
+    "modules": "Módulos",
+    "reason": "Razón",
+    "sendToExaminingCommitteeChair": "Enviar al Comité de Exámenes",
+    "university": "Universidad"
+  },
+  "homeView": {
+    "welcomeExaminingCommitteeChair": "Bienvenido, estimado presidente del Comité de Exámenes! En esta plataforma, tienes la oportunidad de revisar y aprobar o rechazar todas las solicitudes abiertas. Proporciona una razón fundamentada para tus decisiones. Tu participación hace que el proceso de reconocimiento de créditos sea más eficiente y con propósito.",
+    "welcomeStudent": "¡Bienvenido a nuestra nueva plataforma en línea para el reconocimiento de créditos en la Universidad de Leipzig! Entendemos que el proceso de reconocimiento de créditos a menudo es complejo y lleva tiempo. Es aún más importante que este proceso ahora se pueda realizar en línea, de manera digital y fácil. Como estudiante, ahora puedes enviar tu solicitud con solo unos pocos clics. Haz clic en 'Acreditar Módulos' para comenzar. Al enviar tu solicitud, se te asignará un número de referencia único, que podrás usar más tarde para ver tu solicitud y su estado.",
+    "welcomeStudentAffairsOffice": "Bienvenido, personal de la Oficina de Asuntos Estudiantiles! Como miembro del personal de la Oficina de Asuntos Estudiantiles, tienes acceso a una visión general de todas las solicitudes abiertas. Puedes procesar, complementar y hacer un seguimiento del estado de procesamiento de las solicitudes. Utiliza la interfaz fácil de usar para hacer más eficiente el proceso de reconocimiento de créditos."
   },
   "loginComponent": {
-    "usernameLabel": "Nombre de Usuario",
-    "passwordLabel": "Contraseña",
     "loginButton": "Iniciar Sesión",
-    "loginErrorMessage": "Nombre de usuario o contraseña incorrectos."
+    "loginErrorMessage": "Nombre de usuario o contraseña incorrectos.",
+    "passwordLabel": "Contraseña",
+    "usernameLabel": "Nombre de Usuario"
   },
   "logoutButton": "Cerrar Sesión",
-  "homeView": {
-    "welcomeStudent": "¡Bienvenido a nuestra nueva plataforma en línea para el reconocimiento de créditos en la Universidad de Leipzig! Entendemos que el proceso de reconocimiento de créditos a menudo es complejo y lleva tiempo. Es aún más importante que este proceso ahora se pueda realizar en línea, de manera digital y fácil. Como estudiante, ahora puedes enviar tu solicitud con solo unos pocos clics. Haz clic en 'Acreditar Módulos' para comenzar. Al enviar tu solicitud, se te asignará un número de referencia único, que podrás usar más tarde para ver tu solicitud y su estado.",
-    "welcomeStudentAffairsOffice": "Bienvenido, personal de la Oficina de Asuntos Estudiantiles! Como miembro del personal de la Oficina de Asuntos Estudiantiles, tienes acceso a una visión general de todas las solicitudes abiertas. Puedes procesar, complementar y hacer un seguimiento del estado de procesamiento de las solicitudes. Utiliza la interfaz fácil de usar para hacer más eficiente el proceso de reconocimiento de créditos.",
-    "welcomeExaminingCommitteeChair": "Bienvenido, estimado presidente del Comité de Exámenes! En esta plataforma, tienes la oportunidad de revisar y aprobar o rechazar todas las solicitudes abiertas. Proporciona una razón fundamentada para tus decisiones. Tu participación hace que el proceso de reconocimiento de créditos sea más eficiente y con propósito."
+  "navBar": {
+    "creditModules": "Acreditar Módulos",
+    "examiningCommitteeChair": "Presidente del Comité de Exámenes",
+    "login": "Iniciar Sesión",
+    "main": "Página Principal",
+    "review": "Revisar Solicitud",
+    "studentAffairsOffice": "Oficina de Asuntos Estudiantiles"
+  },
+  "reviewComponent": {
+    "checkStatus": "Ver Estado",
+    "downloadApplication": "Descargar Solicitud",
+    "formID": "Número de Referencia",
+    "reviewApplication": "Revisar Solicitud"
+  },
+  "routes": {
+    "/": "Página Principal",
+    "/application-form": "Acreditar Módulos",
+    "/examining-committee-chair": "Presidente del Comité de Exámenes",
+    "/login": "Iniciar Sesión",
+    "/review-application": "Revisar Solicitud",
+    "/student-affairs-office": "Oficina de Asuntos Estudiantiles"
   },
   "studentAffairsOfficeView": {
     "openApplications": "Solicitudes Abiertas"
-  },
-  "examiningCommitteeChairView": {
-    "moduleCount": "Número de Módulos",
-    "studentAffairsOfficeComment": "Comentario de la Oficina de Asuntos Estudiantiles",
-    "accept": "Aceptar",
-    "decline": "Rechazar"
-  },
-  "reviewComponent": {
-    "reviewApplication": "Revisar Solicitud",
-    "formID": "Número de Referencia",
-    "checkStatus": "Ver Estado",
-    "downloadApplication": "Descargar Solicitud"
-  },
-  "formDisplay": {
-    "university": "Universidad",
-    "edit": "Editar",
-    "sendToExaminingCommitteeChair": "Enviar al Comité de Exámenes",
-    "reason": "Razón",
-    "modules": "Módulos",
-    "application": "Solicitud"
   }
 }

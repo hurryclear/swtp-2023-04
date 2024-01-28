@@ -1,64 +1,87 @@
 {
+  "applicationFormView": {
+    "moduleFormList": {
+      "addMapping": "Add Module Mapping",
+      "moduleMapping": {
+        "addModule": "Add Module",
+        "commentLabel": "Comment",
+        "description": "Provide information about the module to be credited!",
+        "module": "Module",
+        "moduleDescriptionLabel": "Module Description",
+        "moduleNameLabel": "Module Name",
+        "modulesToBeCreditedLabel": "Credited Module",
+        "removeModule": "Remove Module"
+      },
+      "removeMapping": "Remove Module Mapping"
+    },
+    "submit": "Submit Form",
+    "universityForm": {
+      "courseOfStudy": {
+        "description": "Specify the name of your previous study program!",
+        "nameLabel": "Study Program Name",
+        "previous": "Previous Study Program"
+      },
+      "university": {
+        "countryLabel": "Country",
+        "description": "Specify the name of your previous university!",
+        "nameLabel": "University Name",
+        "previous": "Previous University",
+        "websiteLabel": "Website"
+      }
+    }
+  },
   "darkMode": {
     "toggleDarkMode": "Toggle Dark Mode"
   },
-  "applicationForm": {
-    "addModule": "Add Module",
-    "module": "Module",
-    "moduleDescription": "Provide information about the module to be credited!",
-    "moduleNameLabel": "Module Name",
-    "moduleDescriptionLabel": "Module Description",
-    "moduleCreditedLabel": "Credited Module",
-    "commentLabel": "Comment",
-    "removeModule": "Remove Module",
-    "previousUniversity": "Previous University",
-    "universityDescription": "Specify the name of your previous university!",
-    "universityNameLabel": "University Name",
-    "countryLabel": "Country",
-    "previousStudyProgram": "Previous Study Program",
-    "studyProgramDescription": "Specify the name of your previous study program!",
-    "studyProgramLabel": "Study Program Name",
-    "submit": "Submit Form"
+  "examiningCommitteeChairView": {
+    "accept": "Accept",
+    "decline": "Decline",
+    "moduleCount": "Number of Modules",
+    "studentAffairsOfficeComment": "Comment from Student Affairs Office"
   },
-  "navBar": {
-    "main": "Main Page",
-    "creditModules": "Credit Modules",
-    "review": "Review Application",
-    "login": "Login"
+  "formDisplay": {
+    "application": "Application",
+    "edit": "Edit",
+    "modules": "Modules",
+    "reason": "Reason",
+    "sendToExaminingCommitteeChair": "Send to Examination Committee",
+    "university": "University"
+  },
+  "homeView": {
+    "welcomeExaminingCommitteeChair": "Welcome, esteemed chairperson of the Examination Committee! On this platform, you have the opportunity to overview and approve or reject all open applications. Please provide a well-founded reason for your decisions. Your participation makes the credit recognition process more efficient and purposeful.",
+    "welcomeStudent": "Welcome to our new online platform for credit recognition at the University of Leipzig! Click on 'Credit Modules' to get started. By submitting your application, you will be assigned a unique reference number, which you can use later to view your application and its status.",
+    "welcomeStudentAffairsOffice": "Welcome, staff of the Student Affairs Office! As a staff member of the Student Affairs Office, you have access to an overview of all open applications. You can process, supplement, and track the processing status of applications. Use the user-friendly interface to make the credit recognition process more efficient."
   },
   "loginComponent": {
-    "usernameLabel": "Username",
-    "passwordLabel": "Password",
     "loginButton": "Login",
-    "loginErrorMessage": "Incorrect username or password."
+    "loginErrorMessage": "Incorrect username or password.",
+    "passwordLabel": "Password",
+    "usernameLabel": "Username"
   },
   "logoutButton": "Logout",
-  "homeView": {
-    "welcomeStudent": "Welcome to our new online platform for credit recognition at the University of Leipzig! Click on 'Credit Modules' to get started. By submitting your application, you will be assigned a unique reference number, which you can use later to view your application and its status.",
-    "welcomeStudentAffairsOffice": "Welcome, staff of the Student Affairs Office! As a staff member of the Student Affairs Office, you have access to an overview of all open applications. You can process, supplement, and track the processing status of applications. Use the user-friendly interface to make the credit recognition process more efficient.",
-    "welcomeExaminingCommitteeChair": "Welcome, esteemed chairperson of the Examination Committee! On this platform, you have the opportunity to overview and approve or reject all open applications. Please provide a well-founded reason for your decisions. Your participation makes the credit recognition process more efficient and purposeful."
+  "navBar": {
+    "creditModules": "Credit Modules",
+    "examiningCommitteeChair": "Examining Committee Chair",
+    "login": "Login",
+    "main": "Main Page",
+    "review": "Review Application",
+    "studentAffairsOffice": "Student Affairs Office"
+  },
+  "reviewComponent": {
+    "checkStatus": "Check Status",
+    "downloadApplication": "Download Application",
+    "formID": "Reference Number",
+    "reviewApplication": "Review Application"
+  },
+  "routes": {
+    "/": "Homepage",
+    "/application-form": "Credit Modules",
+    "/examining-committee-chair": "Examining Committee Chair",
+    "/login": "Login",
+    "/review-application": "Review Application",
+    "/student-affairs-office": "Student Affairs Office"
   },
   "studentAffairsOfficeView": {
     "openApplications": "Open Applications"
-  },
-  "examiningCommitteeChairView": {
-    "moduleCount": "Number of Modules",
-    "studentAffairsOfficeComment": "Comment from Student Affairs Office",
-    "accept": "Accept",
-    "decline": "Decline"
-  },
-  "reviewComponent": {
-    "reviewApplication": "Review Application",
-    "formID": "Reference Number",
-    "checkStatus": "Check Status",
-    "downloadApplication": "Download Application"
-  },
-  "formDisplay": {
-    "university": "University",
-    "edit": "Edit",
-    "sendToExaminingCommitteeChair": "Send to Examination Committee",
-    "reason": "Reason",
-    "modules": "Modules",
-    "application": "Application"
   }
 }
