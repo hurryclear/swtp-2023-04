@@ -68,9 +68,9 @@ export default {
 
         // Redirect based on user role
         if (role === 'ROLE_OFFICE') {
-          this.$router.push('/study-office');
+          this.$router.push('/student-affairs-office');
         } else if (role === 'ROLE_COMMITTEE') {
-          this.$router.push('/pruefungsausschuss');
+          this.$router.push('/examining-committee-chair');
         }
       } catch (error) {
         this.loginError = true;

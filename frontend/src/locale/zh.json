@@ -1,64 +1,87 @@
 {
+  "applicationFormView": {
+    "moduleFormList": {
+      "addMapping": "添加模块映射",
+      "moduleMapping": {
+        "addModule": "添加模块",
+        "commentLabel": "评论",
+        "description": "提供有关要认可的模块的信息！",
+        "module": "模块",
+        "moduleDescriptionLabel": "模块描述",
+        "moduleNameLabel": "模块名称",
+        "modulesToBeCreditedLabel": "已认可的模块",
+        "removeModule": "删除模块"
+      },
+      "removeMapping": "删除模块映射"
+    },
+    "submit": "提交表单",
+    "universityForm": {
+      "courseOfStudy": {
+        "description": "指定您之前学习计划的名称！",
+        "nameLabel": "学习计划名称",
+        "previous": "之前的学习计划"
+      },
+      "university": {
+        "countryLabel": "国家",
+        "description": "指定您之前大学的名称！",
+        "nameLabel": "大学名称",
+        "previous": "之前的大学",
+        "websiteLabel": "网站"
+      }
+    }
+  },
   "darkMode": {
     "toggleDarkMode": "切换暗模式"
   },
-  "applicationForm": {
-    "addModule": "添加模块",
-    "module": "模块",
-    "moduleDescription": "提供有关要认可的模块的信息！",
-    "moduleNameLabel": "模块名称",
-    "moduleDescriptionLabel": "模块描述",
-    "moduleCreditedLabel": "已认可的模块",
-    "commentLabel": "评论",
-    "removeModule": "删除模块",
-    "previousUniversity": "之前的大学",
-    "universityDescription": "指定您之前大学的名称！",
-    "universityNameLabel": "大学名称",
-    "countryLabel": "国家",
-    "previousStudyProgram": "之前的学习计划",
-    "studyProgramDescription": "指定您之前学习计划的名称！",
-    "studyProgramLabel": "学习计划名称",
-    "submit": "提交表单"
+  "examiningCommitteeChairView": {
+    "accept": "接受",
+    "decline": "拒绝",
+    "moduleCount": "模块数量",
+    "studentAffairsOfficeComment": "学生事务办公室的评论"
   },
-  "navBar": {
-    "main": "主页",
-    "creditModules": "学分模块",
-    "review": "查看申请",
-    "login": "登录"
+  "formDisplay": {
+    "application": "申请",
+    "edit": "编辑",
+    "modules": "模块",
+    "reason": "原因",
+    "sendToExaminingCommitteeChair": "发送至考试委员会",
+    "university": "大学"
+  },
+  "homeView": {
+    "welcomeExaminingCommitteeChair": "欢迎，尊敬的考试委员会主席！ 在此平台上，您有机会概览并批准或拒绝所有打开的申请。 请为您的决定提供充分的理由。 您的参与使学分认可过程更加高效和有针对性。",
+    "welcomeStudent": "欢迎来到我们在莱比锡大学的新在线平台，用于学分认可！ 我们了解学分认可的过程通常很复杂且耗时。 更重要的是，现在这个过程可以在线、数字化且轻松完成。 作为学生，您现在可以通过几次点击提交申请。 点击“学分模块”开始。 提交申请后，将分配给您一个唯一的参考号，以便以后查看申请及其状态。",
+    "welcomeStudentAffairsOffice": "欢迎，学生事务办公室的工作人员！ 作为学生事务办公室的工作人员，您可以访问所有打开申请的概述。 您可以处理、补充并跟踪申请的处理状态。 使用用户友好的界面使学分认可过程更加高效。"
   },
   "loginComponent": {
-    "usernameLabel": "用户名",
-    "passwordLabel": "密码",
     "loginButton": "登录",
-    "loginErrorMessage": "用户名或密码错误。"
+    "loginErrorMessage": "用户名或密码错误。",
+    "passwordLabel": "密码",
+    "usernameLabel": "用户名"
   },
   "logoutButton": "登出",
-  "homeView": {
-    "welcomeStudent": "欢迎来到我们在莱比锡大学的新在线平台，用于学分认可！ 我们了解学分认可的过程通常很复杂且耗时。 更重要的是，现在这个过程可以在线、数字化且轻松完成。 作为学生，您现在可以通过几次点击提交申请。 点击“学分模块”开始。 提交申请后，将分配给您一个唯一的参考号，以便以后查看申请及其状态。",
-    "welcomeStudentAffairsOffice": "欢迎，学生事务办公室的工作人员！ 作为学生事务办公室的工作人员，您可以访问所有打开申请的概述。 您可以处理、补充并跟踪申请的处理状态。 使用用户友好的界面使学分认可过程更加高效。",
-    "welcomeExaminingCommitteeChair": "欢迎，尊敬的考试委员会主席！ 在此平台上，您有机会概览并批准或拒绝所有打开的申请。 请为您的决定提供充分的理由。 您的参与使学分认可过程更加高效和有针对性。"
+  "navBar": {
+    "creditModules": "学分模块",
+    "examiningCommitteeChair": "考试委员会主席",
+    "login": "登录",
+    "main": "主页",
+    "review": "查看申请",
+    "studentAffairsOffice": "学生事务办公室"
+  },
+  "reviewComponent": {
+    "checkStatus": "查看状态",
+    "downloadApplication": "下载申请",
+    "formID": "参考号",
+    "reviewApplication": "查看申请"
+  },
+  "routes": {
+    "/": "主页",
+    "/application-form": "学分模块",
+    "/examining-committee-chair": "考试委员会主席",
+    "/login": "登录",
+    "/review-application": "查看申请",
+    "/student-affairs-office": "学生事务办公室"
   },
   "studentAffairsOfficeView": {
     "openApplications": "打开的申请"
-  },
-  "examiningCommitteeChairView": {
-    "moduleCount": "模块数量",
-    "studentAffairsOfficeComment": "学生事务办公室的评论",
-    "accept": "接受",
-    "decline": "拒绝"
-  },
-  "reviewComponent": {
-    "reviewApplication": "查看申请",
-    "formID": "参考号",
-    "checkStatus": "查看状态",
-    "downloadApplication": "下载申请"
-  },
-  "formDisplay": {
-    "university": "大学",
-    "edit": "编辑",
-    "sendToExaminingCommitteeChair": "发送至考试委员会",
-    "reason": "原因",
-    "modules": "模块",
-    "application": "申请"
   }
 }

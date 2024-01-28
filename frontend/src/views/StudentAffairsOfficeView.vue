@@ -1,9 +1,6 @@
 <template>
     <v-container fluid class="wrapper">
       <v-row>
-        <v-spacer/>
-        <v-spacer/>
-        <v-spacer/>
         <LogoutButton style="margin-left: 80%"/>
       </v-row>
       <v-row>
