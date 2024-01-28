@@ -20,7 +20,7 @@ export default {
     async logout() {
       try {
         // Send a GET request to /auth/logout
-        await axios.get('/auth/logout');
+        await axios.get('/api/auth/logout');
 
         // Logout the user in the store
         this.$store.dispatch('logout');
