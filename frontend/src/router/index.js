@@ -1,7 +1,7 @@
 import {createRouter, createWebHistory} from "vue-router";
 import Home from '@/views/HomeView.vue';
-import store from '@/store';
 import i18n from '@/plugins/i18n';
+import store from '@/store/index'
 
 const routes = [
     {
@@ -44,15 +44,15 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    console.log('Navigating to:', to.path, "\nCurrent user authenticated status:", store.state.isAuthenticated, "\nCurrent user role:", store.state.userRole);
+    console.log('Navigating to:', to.path, "\nCurrent user authenticated status:", store.state.authentication.isAuthenticated, "\nCurrent user role:", store.state.authentication.userRole);
     document.title = i18n.global.t(`routes.${to.path}`);//TODO:i18n
     if (to.matched.some(record => record.meta.requiresAuth)) {
-        if (!store.state.isAuthenticated) {
+        if (!store.state.authentication.isAuthenticated) {
             console.log('User not authenticated. Redirecting to Login.');
             next({name: 'Login'});
         } else {
             const routeRequiresRole = to.meta.role;
-            const userRole = store.state.userRole;
+            const userRole = store.state.authentication.userRole;
 
             console.log('Route requires role:', routeRequiresRole);
 

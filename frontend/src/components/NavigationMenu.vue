@@ -155,7 +155,6 @@ import DarkThemeToggle from "@/components/DarkThemeToggle.vue";
 import LanguageSwitcher from "@/components/LanguageSwitcher.vue";
 import {computed} from 'vue';
 import {useTheme} from 'vuetify';
-import store from "@/store";
 
 export default {
   setup() {
@@ -183,8 +182,8 @@ export default {
   },
   computed: {
     userRole() {
-      console.log("Logged in as",store.state.userRole);
-      return store.state.userRole;
+      console.log(JSON.stringify(this.$store.state.authentication.userRole))
+      return this.$store.state.authentication.userRole; //TODO: fix error
     },
   },
   methods: {
