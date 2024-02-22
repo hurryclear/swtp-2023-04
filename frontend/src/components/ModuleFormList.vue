@@ -41,10 +41,17 @@ export default defineComponent({
           },
           previousModules: [
             {
+              meta: {
+                comments: {
+                  student: "",
+                  office: ""
+                }
+              },
+              university: "",
               key: 0,
               number: "",
               name: "",
-              description: { file: null },
+              description: {file: null},
               credits: 0,
             },
           ],
@@ -72,10 +79,17 @@ export default defineComponent({
         },
         previousModules: [
           {
+            meta: {
+              comments: {
+                student: "",
+                office: ""
+              }
+            },
+            university: "",
             key: 0,
             number: "",
             name: "",
-            description: { file: null },
+            description: {file: null},
             credits: 0,
           },
         ],

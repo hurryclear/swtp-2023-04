@@ -56,6 +56,34 @@
               hide-details
               prepend-icon=""
           />
+          <!--TODO: new fields here!!-->
+          <v-combobox
+              v-model="module.university"
+              :items="universities"
+              item-title="name"
+              hide-details
+              :label="$t('applicationFormView.universityForm.university.nameLabel')"
+              variant="outlined"
+              class="userInput"
+          />
+          <v-text-field
+              v-model="module.credits"
+              class="userInput"
+              hide-details
+              :label="$t('applicationFormView.moduleFormList.moduleMapping.creditLabel')"
+              variant="outlined"
+              type="number"
+              single-line
+              min="0"
+              max="30"
+          />
+          <v-text-field
+              v-model="module.meta.comments.student"
+              class="userInput"
+              hide-details
+              :label="$t('applicationFormView.moduleFormList.moduleMapping.commentLabel')"
+              variant="outlined"
+          />
         </v-window-item>
       </v-window>
       <v-select
@@ -66,7 +94,7 @@
           variant="outlined"
           hide-details
           multiple
-          :items="moduleList"
+          :items="modules"
       />
       <v-text-field
           v-model="moduleForm.meta.comments.student"
@@ -87,8 +115,6 @@
 </template>
 
 <script>
-import moduleJSON from '../assets/module_liste.json'; //TODO: API Request for this (Import with ApplicationFormVue.vue)
-import axios from '@/plugins/axios'
 
 export default {
   props: {
@@ -98,19 +124,36 @@ export default {
   data() {
     return {
       isFilled: false,
-      moduleList: [],
       selectedTab: 0,
       moduleForm: {...this.moduleMapping},
       selectedFile: null,
     };
   },
-  mounted() {
-    this.extractModuleNames();
+  created() {
+    if (!this.$store.state.module.modules.length) {
+      // If modules data is not in the store, fetch it
+      this.$store.dispatch('fetchModules')
+    }
+  },
+  computed: {
+    universities() {
+      return this.$store.state.university.universities;
+    },
+    modules() {
+      return this.$store.state.module.modules;
+    }
   },
   methods: {
     addModule() {
       this.moduleForm.previousModules.push(
           {
+            meta: {
+              comments: {
+                student: "",
+                office: ""
+              }
+            },
+            university: "",
             key: (this.moduleForm.previousModules[this.moduleForm.previousModules.length - 1].key + 1),
             number: "",
             name: "",
@@ -119,17 +162,6 @@ export default {
           },
       );
       this.selectedTab = this.moduleForm.previousModules.length - 1;
-    },
-    extractModuleNames() {
-      axios.get("/i/dont/know/where/the/endpoint/is") //TODO: REPLACE WITH ACTUAL ENDPOINT
-          .then(response => {
-            this.moduleList = response.data.courses[0].modules;
-            console.log('Module names fetched successfully:', this.moduleList);
-          })
-          .catch(error => {
-            this.moduleList = moduleJSON.courses[0].modules;
-            console.error('Error fetching module names:', error.message);
-          });
     },
     checkFormFilled() {
       this.moduleForm.isFilled =
