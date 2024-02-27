@@ -177,7 +177,7 @@ The frontend sends the application ID, and the backend responds with the corresp
 <summary>Click to expand Get University Modules endpoint details</summary>
 
 #### Endpoint
-`GET /api/student/getUniversityCourses`
+`GET /api/unidata/getModules`
 
 #### Description
 The frontend sends the study program, and the backend provides the modules to be credited for this study program.
@@ -200,7 +200,7 @@ The frontend sends the study program, and the backend provides the modules to be
 <summary>Click to expand Get University Study Programs endpoint details</summary>
 
 #### Endpoint
-`GET /api/student/getUniversityModules`
+`GET /api/unidata/getMajors`
 
 #### Description
 The frontend receives a JSON with study programs that can be selected.
@@ -432,7 +432,7 @@ The frontend sends the application ID and module ID, and the backend sends modul
 <summary>Click to expand Set University Study Programs endpoint details</summary>
 
 #### Endpoint
-`POST /api/application/setCourses`
+`POST /api/unidata/update`
 
 #### Description
 The frontend provides a JSON with all study programs and their modules. The backend stores them in the database.
