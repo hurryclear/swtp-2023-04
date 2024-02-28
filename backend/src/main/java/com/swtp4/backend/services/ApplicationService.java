@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -129,4 +130,14 @@ public class ApplicationService {
         return moduleUniEntities;
     }
 
+    public List<ApplicationEntity> getAllApplications() {
+        return applicationRepository.findAll();
+    }
+    // what is Optional<T>
+    public Optional<ApplicationEntity> getApplicationByID(ApplicationKeyClass id) {
+        return applicationRepository.findById(id);
+    }
+
+//    public Iterable<ApplicationEntity> findAllApplication() {
+//    }
 }
