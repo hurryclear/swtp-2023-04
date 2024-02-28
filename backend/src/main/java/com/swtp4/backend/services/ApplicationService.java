@@ -133,11 +133,33 @@ public class ApplicationService {
     public List<ApplicationEntity> getAllApplications() {
         return applicationRepository.findAll();
     }
+
     // what is Optional<T>
     public Optional<ApplicationEntity> getApplicationByID(ApplicationKeyClass id) {
         return applicationRepository.findById(id);
     }
 
-//    public Iterable<ApplicationEntity> findAllApplication() {
-//    }
+    public List<ApplicationEntity> getApplicationsByStatus(String status) {
+        return applicationRepository.findAllByStatus(status);
+    }
+
+    public List<ApplicationEntity> getApplicationsByMajor(String major) {
+        return applicationRepository.findAllByMajor(major);
+    }
+    public List<ApplicationEntity> getApplicationsByUniversity(String university) {
+        return applicationRepository.findAllByUniversity(university);
+    }
+
+    public List<ApplicationEntity> getApplicationsByDateOfSubmission(String dateOfSubmission) {
+        return applicationRepository.findAllByDateOfSubmission(dateOfSubmission);
+    }
+
+    public List<ApplicationEntity> getApplicationsByDateOfSubmissionBefore(String dateOfSubmission) {
+        return applicationRepository.findAllByDateOfSubmissionBefore(dateOfSubmission);
+    }
+
+    public List<ApplicationEntity> getApplicationsByDateOfSubmissionAfter(String dateOfSubmission) {
+        return applicationRepository.findAllByDateOfSubmissionAfter(dateOfSubmission);
+    }
+
 }
