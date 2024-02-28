@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -40,27 +41,34 @@ public class ApplicationController {
         return "Request accepted and message is: " + message;
     }
 
+    // get all applications
     @GetMapping("/getApplication")
-    public List<ApplicationEntity> getAllApplication() {
+    public List<ApplicationEntity> getAllApplications() {
         return applicationService.getAllApplications();
     }
 
     @GetMapping("/getApplication/{id}")
-    public void getApplicationByID(@PathVariable("id") ApplicationKeyClass id) {
-        applicationService.getApplicationByID(id);
+    public Optional<ApplicationEntity> getApplicationByID(@PathVariable("id") ApplicationKeyClass id) {
+        return applicationService.getApplicationByID(id);
     }
 
-//    @GetMapping
-//    public Iterable<ApplicationEntity> findAllApplication() {
-//        return applicationService.findAllApplication();
-//    }
-//
-//    @GetMapping("/{university}")
-//    public void findByUniversity(@PathVariable("university") String university) {
-//        applicationService.findAllByUniversity(university);
-//    }
-//    @GetMapping("/{major}")
-//    public void findByMajor(@PathVariable("major") String major) {
-//        applicationService.findAllByMajor(major);
-//    }
+    @GetMapping("/getApplication/{status}")
+    public List<ApplicationEntity> getApplicationsByStatus(@PathVariable("status") String status) {
+        return applicationService.getApplicationsByStatus(status);
+    }
+
+    @GetMapping("/getApplication/{major}")
+    public List<ApplicationEntity> getApplicationsByMajor(@PathVariable("major") String major) {
+        return applicationService.getApplicationsByMajor(major);
+    }
+
+    @GetMapping("/getApplication/{university}")
+    public List<ApplicationEntity> getApplicationsByUniversity(@PathVariable("university") String university) {
+        return applicationService.getApplicationsByUniversity(university);
+    }
+
+    @GetMapping("/getApplication/{dateOfSubmission}")
+    public List<ApplicationEntity> getApplicationsByDateOfSubmission(@PathVariable("dateOfSubmission") String dateOfSubmission) {
+       return  applicationService.getApplicationsByDateOfSubmission(dateOfSubmission);
+    }
 }
