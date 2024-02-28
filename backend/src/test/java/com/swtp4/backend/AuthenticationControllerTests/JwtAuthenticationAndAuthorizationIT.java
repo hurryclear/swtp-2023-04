@@ -1,4 +1,4 @@
-package com.swtp4.backend;
+package com.swtp4.backend.AuthenticationControllerTests;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

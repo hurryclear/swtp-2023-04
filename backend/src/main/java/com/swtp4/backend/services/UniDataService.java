@@ -1,13 +1,15 @@
 package com.swtp4.backend.services;
 
+import com.swtp4.backend.exception.ResourceNotFoundException;
 import com.swtp4.backend.repositories.MajorUniRepository;
 import com.swtp4.backend.repositories.ModuleUniRepository;
-import com.swtp4.backend.repositories.dto.MajorUniDto;
-import com.swtp4.backend.repositories.dto.UniDataDto;
+import com.swtp4.backend.repositories.dto.*;
 import com.swtp4.backend.repositories.entities.MajorUniEntity;
 import com.swtp4.backend.repositories.entities.ModuleUniEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UniDataService {
@@ -50,5 +52,21 @@ public class UniDataService {
                 }
             }
         }
+    }
+
+    public UniMajorListResponse getAllMajors() {
+        List<MajorUniEntity> majorEntities = majorUniRepository.findAll();
+        return new UniMajorListResponse(majorEntities);
+    }
+
+    public UniModuleListResponse getModulesByMajor(String majorName) {
+        MajorUniEntity major = majorUniRepository.findByName(majorName);
+        if (major == null) {
+            throw new ResourceNotFoundException("Major not found");
+        }
+        List<ModuleUniEntity> modules = moduleUniRepository.findByMajorUniEntity(major);
+        List<UniModuleDto> moduleDtos = modules.stream().map(module -> new UniModuleDto(module.getNumber(), module.getName())).toList();
+        return new UniModuleListResponse(major.getName(), moduleDtos);
+
     }
 }
