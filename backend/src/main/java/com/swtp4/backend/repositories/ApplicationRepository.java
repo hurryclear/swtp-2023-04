@@ -11,10 +11,11 @@ import java.util.List;
 public interface ApplicationRepository extends JpaRepository<ApplicationEntity, ApplicationKeyClass> {
     ApplicationEntity findByDateOfSubmissionAndApplicationKeyClass_Creator(String dateOfSubmission, String creator);
 
-//    List<ApplicationEntity> findAllByStatus(String status);
-//    List<ApplicationEntity> findAllByMajor(String major);
-//    List<ApplicationEntity> findAllByDateOfSubmission(String dateOfSubmission);
-//    List<ApplicationEntity> findAllByDateLastEditedBefore(String dateOfSubmission);
-//    List<ApplicationEntity> findAllByDateLastEditedAfter(String dateOfSubmission);
+    List<ApplicationEntity> findAllByStatus(String status);
+    List<ApplicationEntity> findAllByMajor(String major);
+    List<ApplicationEntity> findAllByUniversity(String university);
+    List<ApplicationEntity> findAllByDateOfSubmission(String dateOfSubmission);
+    List<ApplicationEntity> findAllByDateOfSubmissionBefore(String dateOfSubmission);
+    List<ApplicationEntity> findAllByDateOfSubmissionAfter(String dateOfSubmission);
 
 }
