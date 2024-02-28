@@ -1,4 +1,4 @@
-package com.swtp4.backend;
+package com.swtp4.backend.AuthenticationControllerTests;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
