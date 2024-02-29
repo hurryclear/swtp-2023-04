@@ -9,15 +9,15 @@
         <v-btn @click="openComparisonMenu">Mit anderen Anträgen vergleichen</v-btn>
         <v-btn class="button-top"  icon="mdi-close" @click="closeEditMenu" variant="text"></v-btn>
     </div>
-    <v-card-item>
-      <u>Universität</u>: {{ form.universityData.universityName }}
-    </v-card-item>
-    <v-card-item>
-      <u>Bisheriger Studiengang</u>: {{ form.universityData.studyProgram }}
-    </v-card-item>
-    <v-card-item>
-      <u>Land</u>: {{ form.universityData.country }}
-    </v-card-item>
+    <v-card-text>
+      Universität: {{ form.universityData.universityName }}
+    </v-card-text>
+    <v-card-text>
+      Bisheriger Studiengang: {{ form.universityData.studyProgram }}
+    </v-card-text>
+    <v-card-text>
+      Land: {{ form.universityData.country }}
+    </v-card-text>
     <v-card-title>
       Module:
     </v-card-title>
@@ -25,18 +25,18 @@
       <v-card-subtitle>
         Modul {{ moduleData.key + 1 }}
       </v-card-subtitle>
-      <v-card-item>
+      <v-card-text>
         <u>Modulname</u>: {{ moduleData.name }}
-        <v-card-item>
+        <v-card-text>
           Gewünschte Anrechnung:
           <v-card-text v-for="modules in moduleData.module2bCredited" v-bind:key="modules">
             {{ modules}}
           </v-card-text>
-        </v-card-item>
-      </v-card-item>
-      <v-card-item>
+        </v-card-text>
+      </v-card-text>
+      <v-card-text>
         <u>Kommentar zu diesem Modul</u>: {{ moduleData.comment }}
-      </v-card-item>
+      </v-card-text>
     </div>
     <v-text-field class="text-field" label="Begründung" v-model="reason"/>
     <v-card-actions>
