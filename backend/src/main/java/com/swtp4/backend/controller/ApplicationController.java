@@ -1,6 +1,7 @@
 package com.swtp4.backend.controller;
 
 import com.swtp4.backend.repositories.dto.ApplicationDto;
+import com.swtp4.backend.repositories.dto.UniModuleDto;
 import com.swtp4.backend.services.ApplicationService;
 import com.swtp4.backend.services.PDFService;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
+@CrossOrigin
 @RequestMapping(path = "/application")
 public class ApplicationController {
 
@@ -23,10 +25,17 @@ public class ApplicationController {
         this.pdfService = pdfService;
     }
 
+    //changed to student controler
     @PostMapping("/saveApplication")
     public ResponseEntity<?> saveApplication(@RequestBody ApplicationDto applicationDTO){
         log.info("Received ApplicationDto: {}", applicationDTO);
         applicationService.save(applicationDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @PostMapping("/test")
+    public ResponseEntity<UniModuleDto> testOfficeEndpoint(@RequestBody UniModuleDto uniModuleDto){
+        return new ResponseEntity<>(uniModuleDto, HttpStatus.OK);
+    }
+
 }

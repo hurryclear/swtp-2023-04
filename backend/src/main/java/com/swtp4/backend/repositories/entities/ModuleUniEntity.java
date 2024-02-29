@@ -15,6 +15,9 @@ import lombok.NoArgsConstructor;
 public class ModuleUniEntity {
 
     @Id
+    @GeneratedValue
+    private Long id;
+//    @Id
     private String number;
     private String name;
     @ManyToOne(cascade = CascadeType.ALL)

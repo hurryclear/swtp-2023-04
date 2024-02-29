@@ -1,5 +1,8 @@
-package com.swtp4.backend.security;
+package com.swtp4.backend.DataInitializer;
 
+import com.swtp4.backend.security.Role;
+import com.swtp4.backend.security.UserEntity;
+import com.swtp4.backend.security.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;

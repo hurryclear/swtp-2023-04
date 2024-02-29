@@ -14,4 +14,6 @@ public interface ModuleUniRepository extends JpaRepository<ModuleUniEntity, Stri
     ModuleUniEntity findByName(String name);
 
     List<ModuleUniEntity> findByMajorUniEntity(MajorUniEntity majorUniEntity);
+
+    ModuleUniEntity findByNameAndMajorUniEntity(String name, MajorUniEntity majorUniEntity);
 }

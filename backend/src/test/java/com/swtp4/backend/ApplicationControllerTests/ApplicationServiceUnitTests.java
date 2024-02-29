@@ -72,7 +72,7 @@ public class ApplicationServiceUnitTests {
         assertThat(result.get().getCommentEmployee()).isEqualTo(testModuleBlock.getCommentEmployee());
     }
 
-    @Test
+    @Test //TODO: this test throws error
     public void testThatSaveModuleRelationEntitySuccessfullyCreatesModuleRelation() throws Exception {
         ModuleRelationEntity testModuleRelation = ApplicationTestData.createTestModuleRelationEntityA();
         majorUniRepository.save(testModuleRelation.getModuleRelationKeyClass().getModuleUniEntity().getMajorUniEntity());

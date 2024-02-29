@@ -15,6 +15,7 @@
 	<description>Backend for SWTP Application</description>
 	<properties>
 		<java.version>17</java.version>
+		<skip.ut>false</skip.ut>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -88,7 +89,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
-					<!-- ${skip.ut} is set in gitlab-ci, ignore the error intellij throws-->
+					<!-- ${skip.ut} is set in gitlab-ci-->
 					<skipTests>${skip.ut}</skipTests>
 				</configuration>
 			</plugin>

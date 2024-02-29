@@ -6,6 +6,7 @@ import com.swtp4.backend.repositories.ModuleUniRepository;
 import com.swtp4.backend.repositories.dto.*;
 import com.swtp4.backend.repositories.entities.MajorUniEntity;
 import com.swtp4.backend.repositories.entities.ModuleUniEntity;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,8 @@ public class UniDataService {
         this.majorUniRepository = majorUniRepository;
     }
 
+    // TODO: WIE UNTERSCHEIDEN WIR ZWISCHEN AKTUELLEN MODULEN (DIE IM FRONTEND GEWÄHLT WERDEN KÖNNEN) UND VERALTETEN (DIE NUR NOCH IN DER DATENBANK SIND WEIL ALTE ANTRÄGE SIE REFERENZIEREN)
+    @Transactional
     public void update(UniDataDto uniDataDto) {
         //iteration through the courses of the JSON (majors)
         for (MajorUniDto majorUniDto : uniDataDto.getCourses()) {
@@ -38,7 +41,12 @@ public class UniDataService {
             }
             //iteration through the modules of the courses of the JSON
             for (ModuleUniEntity moduleUniEntity : majorUniDto.getModules()) {
-                ModuleUniEntity existingModuleUniEntity = moduleUniRepository.findByNumber(moduleUniEntity.getNumber()); //findByNumber or findByName? What would be rather changed by the university
+                ModuleUniEntity existingModuleUniEntity;
+                if (moduleUniEntity.getNumber().equals(""))
+                    existingModuleUniEntity = moduleUniRepository.findByNameAndMajorUniEntity(moduleUniEntity.getName(), moduleUniEntity.getMajorUniEntity());
+                else
+                    existingModuleUniEntity = moduleUniRepository.findByNumber(moduleUniEntity.getNumber()); //findByNumber or findByName? What would be rather changed by the university
+
                 if (existingModuleUniEntity == null) {
                     //create ModuleEntity
                     moduleUniEntity.setMajorUniEntity(savedMajorUniEntity);

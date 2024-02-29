@@ -4,6 +4,7 @@ import com.swtp4.backend.repositories.MajorUniRepository;
 import com.swtp4.backend.repositories.ModuleUniRepository;
 import com.swtp4.backend.repositories.entities.MajorUniEntity;
 import com.swtp4.backend.repositories.entities.ModuleUniEntity;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -50,6 +51,11 @@ public class UniDataIT {
         moduleUniRepository.save(moduleC);
     }
 
+    @AfterEach
+    public void cleanup(){
+        majorUniRepository.deleteAll();
+        moduleUniRepository.deleteAll();
+    }
     @Test
     public void getMajors_ShouldReturnListOfMajors() throws Exception {
         mockMvc.perform(get("/unidata/getMajors"))
