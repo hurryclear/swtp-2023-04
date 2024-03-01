@@ -21,14 +21,13 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.Arrays;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @AutoConfigureMockMvc
-public class UniDataControllerIntegrationTests {
+public class UniDataControllerIT {
 
     private UniDataService uniDataService;
     private MockMvc mockMvc;
@@ -36,7 +35,7 @@ public class UniDataControllerIntegrationTests {
     private ModuleUniRepository moduleUniRepository;
 
     @Autowired
-    public UniDataControllerIntegrationTests(
+    public UniDataControllerIT(
             UniDataService uniDataService,
             MockMvc mockMvc,
             MajorUniRepository majorUniRepository,

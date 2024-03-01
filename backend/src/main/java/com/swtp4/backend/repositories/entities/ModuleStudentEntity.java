@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.sql.Blob;
 
 @Data
 @AllArgsConstructor
@@ -20,8 +19,8 @@ public class ModuleStudentEntity {
     private Long id;
     private String number;
     private String title;
-    @Lob
-    private Blob description_pdf;
+//    @Lob
+    private String description_pdf;
     private String credits;
     private String university;
     private String major;
