@@ -1,18 +1,19 @@
+<!-- ModuleForm.vue -->
 <template>
   <v-expansion-panel>
     <v-expansion-panel-title>
       <template v-slot:default="{ expanded }">
         <v-row no-gutters>
           <v-col>
-            {{ $t("applicationForm.module") }}
+            {{ $t("applicationFormView.moduleFormList.moduleMapping.module") }}
           </v-col>
           <v-col class="text-grey">
             <v-fade-transition leave-absolute>
               <span v-if="expanded" key="0">
-                {{ $t("applicationForm.moduleDescription") }}
+                {{ $t("applicationFormView.moduleFormList.moduleMapping.description") }}
               </span>
               <span v-else key="1">
-                {{ module.name }}
+                {{ moduleForm.previousModules.map((module) => module.name).join(", ") }}
               </span>
             </v-fade-transition>
           </v-col>
@@ -20,38 +21,58 @@
       </template>
     </v-expansion-panel-title>
     <v-expansion-panel-text>
-      <v-text-field
-          class="userInput"
-          v-model="formData.name"
-          hide-details
-          :label="$t('applicationForm.moduleNameLabel')"
-          variant="outlined"
-      />
-      <v-file-input
-          v-model="formData.description"
-          class="userInput"
-          accept=".pdf"
-          show-size
-          :label="$t('applicationForm.moduleDescriptionLabel')"
-          variant="outlined"
-          hide-details
-          prepend-icon=""
-          @change="handleFileChange"
-      />
+      <v-tabs v-model="selectedTab">
+        <v-tab v-for="(module, index) in moduleForm.previousModules" :key="moduleForm.previousModules[index].key"
+               :value="index">
+          {{ module.name || $t("applicationFormView.moduleFormList.moduleMapping.module") + " " + (index + 1) }}
+          <v-btn @click.stop="removeTab(index)" dense v-if="moduleForm.previousModules.length>1">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-tab>
+        <v-tab :key="moduleForm.previousModules.length" @click="addModule" class="add-module-tab">
+          {{ $t("applicationFormView.moduleFormList.moduleMapping.addModule") }}
+        </v-tab>
+      </v-tabs>
+      <v-window v-model="selectedTab"> <!--TODO: correct submission and add module behaviour-->
+        <v-window-item
+            v-for="(module, index) in moduleForm.previousModules"
+            :key="index"
+            :value="index"
+        >
+          <v-text-field
+              class="userInput"
+              v-model="module.name"
+              hide-details
+              :label="$t('applicationFormView.moduleFormList.moduleMapping.moduleNameLabel')"
+              variant="outlined"
+          />
+          <v-file-input
+              v-model="module.description.file"
+              class="userInput"
+              accept=".pdf"
+              show-size
+              :label="$t('applicationFormView.moduleFormList.moduleMapping.moduleDescriptionLabel')"
+              variant="outlined"
+              hide-details
+              prepend-icon=""
+          />
+        </v-window-item>
+      </v-window>
       <v-select
-          v-model="formData.module2bCredited"
+          v-model="moduleForm.modulesToBeCredited"
           class="userInput"
-          :label="$t('applicationForm.moduleCreditedLabel')"
+          item-title="name"
+          :label="$t('applicationFormView.moduleFormList.moduleMapping.modulesToBeCreditedLabel')"
           variant="outlined"
           hide-details
           multiple
-          :items="moduleNamesList"
+          :items="moduleList"
       />
       <v-text-field
-          v-model="formData.comment"
+          v-model="moduleForm.meta.comments.student"
           class="userInput"
           hide-details
-          :label="$t('applicationForm.commentLabel')"
+          :label="$t('applicationFormView.moduleFormList.moduleMapping.commentLabel')"
           variant="outlined"
       />
       <v-btn
@@ -59,25 +80,27 @@
           color="red"
           :disabled="removeDisabled"
       >
-        {{ $t("applicationForm.removeModule") }}
+        {{ $t("applicationFormView.moduleFormList.removeMapping") }}
       </v-btn>
     </v-expansion-panel-text>
   </v-expansion-panel>
 </template>
 
 <script>
-import moduleJSON from '../assets/module_liste.json';
+import moduleJSON from '../assets/module_liste.json'; //TODO: API Request for this (Import with ApplicationFormVue.vue)
+import axios from '@/plugins/axios'
 
 export default {
   props: {
-    module: Object, // Add a prop to receive module data
+    moduleMapping: Object, // Add a prop to receive module data
     removeDisabled: Boolean,
   },
   data() {
     return {
       isFilled: false,
-      moduleNamesList: [],
-      formData: {...this.module},
+      moduleList: [],
+      selectedTab: 0,
+      moduleForm: {...this.moduleMapping},
       selectedFile: null,
     };
   },
@@ -85,32 +108,64 @@ export default {
     this.extractModuleNames();
   },
   methods: {
+    addModule() {
+      this.moduleForm.previousModules.push(
+          {
+            key: (this.moduleForm.previousModules[this.moduleForm.previousModules.length - 1].key + 1),
+            number: "",
+            name: "",
+            description: {file: null},
+            credits: 0,
+          },
+      );
+      this.selectedTab = this.moduleForm.previousModules.length - 1;
+    },
     extractModuleNames() {
-      this.moduleNamesList = moduleJSON.courses[0].modules.map(module => module.name);
+      axios.get("/i/dont/know/where/the/endpoint/is") //TODO: REPLACE WITH ACTUAL ENDPOINT
+          .then(response => {
+            this.moduleList = response.data.courses[0].modules;
+            console.log('Module names fetched successfully:', this.moduleList);
+          })
+          .catch(error => {
+            this.moduleList = moduleJSON.courses[0].modules;
+            console.error('Error fetching module names:', error.message);
+          });
     },
     checkFormFilled() {
-      this.formData.isFilled =
-          this.formData.name.trim() !== '' &&
-          this.formData.description !== null &&
-          this.formData.module2bCredited !== null;
+      this.moduleForm.isFilled =
+          this.moduleForm.previousModules.every(
+              (module) => module.name.trim() !== '' &&
+                  module.description.file !== null
+          ) &&
+          //TODO Description
+          this.moduleForm.modulesToBeCredited !== null;
+    },
+    removeTab(index) {
+      this.moduleForm.previousModules.splice(index, 1);
+      if (this.selectedTab === this.moduleForm.previousModules.length) {
+        this.selectedTab--
+      }
+      this.watchModuleData();
     },
     removeModule() {
       this.$emit('removeModule');
     },
-    handleFileChange(event) {
-      this.selectedFile = event.target.files[0];
-    },
     // Watch changes in module data and emit an event to the parent
     watchModuleData() {
       this.checkFormFilled();
-      this.$emit('updateModuleData', this.formData, this.selectedFile);
-    },
+      this.$emit('updateModuleData', this.moduleForm, this.selectedFile);
+    }
   },
   watch: {
-    'formData.name': 'watchModuleData',
-    'formData.description': 'watchModuleData',
-    'formData.module2bCredited': 'watchModuleData',
-    'formData.comment': 'watchModuleData',
-  },
+    'moduleForm': {
+      handler: 'watchModuleData',
+      deep: true,
+    },
+    'selectedTab': function (val) {
+      if (!val) {
+        this.selectedTab = 0
+      }
+    }
+  }
 }
 </script>

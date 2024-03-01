@@ -1,64 +1,87 @@
 {
+  "applicationFormView": {
+    "moduleFormList": {
+      "addMapping": "Aggiungi Mappatura Modulo",
+      "moduleMapping": {
+        "addModule": "Aggiungi Modulo",
+        "commentLabel": "Commento",
+        "description": "Fornisci informazioni sul modulo da accredita!",
+        "module": "Modulo",
+        "moduleDescriptionLabel": "Descrizione del Modulo",
+        "moduleNameLabel": "Nome del Modulo",
+        "modulesToBeCreditedLabel": "Modulo Accreditato",
+        "removeModule": "Rimuovi Modulo"
+      },
+      "removeMapping": "Rimuovi Mappatura Modulo"
+    },
+    "submit": "Invia Modulo",
+    "universityForm": {
+      "courseOfStudy": {
+        "description": "Specifica il nome del tuo programma di studio precedente!",
+        "nameLabel": "Nome del Programma di Studio",
+        "previous": "Programma di Studio Precedente"
+      },
+      "university": {
+        "countryLabel": "Paese",
+        "description": "Specifica il nome della tua università precedente!",
+        "nameLabel": "Nome dell'Università",
+        "previous": "Università Precedente",
+        "websiteLabel": "Sito Web"
+      }
+    }
+  },
   "darkMode": {
     "toggleDarkMode": "Attiva/Disattiva Modalità Scura"
   },
-  "applicationForm": {
-    "addModule": "Aggiungi Modulo",
-    "module": "Modulo",
-    "moduleDescription": "Fornisci informazioni sul modulo da accredita!",
-    "moduleNameLabel": "Nome del Modulo",
-    "moduleDescriptionLabel": "Descrizione del Modulo",
-    "moduleCreditedLabel": "Modulo Accreditato",
-    "commentLabel": "Commento",
-    "removeModule": "Rimuovi Modulo",
-    "previousUniversity": "Università Precedente",
-    "universityDescription": "Specifica il nome della tua università precedente!",
-    "universityNameLabel": "Nome dell'Università",
-    "countryLabel": "Paese",
-    "previousStudyProgram": "Programma di Studio Precedente",
-    "studyProgramDescription": "Specifica il nome del tuo programma di studio precedente!",
-    "studyProgramLabel": "Nome del Programma di Studio",
-    "submit": "Invia Modulo"
+  "examiningCommitteeChairView": {
+    "accept": "Accetta",
+    "decline": "Rifiuta",
+    "moduleCount": "Numero di Moduli",
+    "studentAffairsOfficeComment": "Commento dell'Ufficio Affari Studenti"
   },
-  "navBar": {
-    "main":"Pagina Principale",
-    "creditModules": "Accredita Moduli",
-    "review": "Esamina Richiesta",
-    "login": "Accedi"
+  "formDisplay": {
+    "application": "Richiesta",
+    "edit": "Modifica",
+    "modules": "Moduli",
+    "reason": "Motivo",
+    "sendToExaminingCommitteeChair": "Invia al Comitato Esami",
+    "university": "Università"
+  },
+  "homeView": {
+    "welcomeExaminingCommitteeChair": "Benvenuto, stimato presidente del Comitato Esami! Su questa piattaforma, hai l'opportunità di esaminare e approvare o respingere tutte le richieste aperte. Fornisci una motivazione ben fondata per le tue decisioni. La tua partecipazione rende il processo di riconoscimento dei crediti più efficiente e mirato.",
+    "welcomeStudent": "Benvenuto nella nostra nuova piattaforma online per il riconoscimento dei crediti presso l'Università di Lipsia! Comprediamo che il processo di riconoscimento dei crediti sia spesso complesso e lungo. È ancor più importante che questo processo possa ora essere effettuato online, in modo digitale e facile. Come studente, puoi ora inviare la tua richiesta con pochi clic. Clicca su 'Accredita Moduli' per iniziare. Con l'invio della tua richiesta, ti sarà assegnato un numero di riferimento unico, che potrai utilizzare in seguito per visualizzare la tua richiesta e il suo stato.",
+    "welcomeStudentAffairsOffice": "Benvenuto, personale dell'Ufficio Affari Studenti! Come membro dello staff dell'Ufficio Affari Studenti, hai accesso a una panoramica di tutte le richieste aperte. Puoi elaborare, integrare e monitorare lo stato di elaborazione delle richieste. Utilizza l'interfaccia utente amichevole per rendere più efficiente il processo di riconoscimento dei crediti."
   },
   "loginComponent": {
-    "usernameLabel": "Nome Utente",
-    "passwordLabel": "Password",
     "loginButton": "Accedi",
-    "loginErrorMessage": "Nome utente o password errati."
+    "loginErrorMessage": "Nome utente o password errati.",
+    "passwordLabel": "Password",
+    "usernameLabel": "Nome Utente"
   },
   "logoutButton": "Esci",
-  "homeView": {
-    "welcomeStudent": "Benvenuto nella nostra nuova piattaforma online per il riconoscimento dei crediti presso l'Università di Lipsia! Comprediamo che il processo di riconoscimento dei crediti sia spesso complesso e lungo. È ancor più importante che questo processo possa ora essere effettuato online, in modo digitale e semplice. Come studente, puoi ora inviare la tua richiesta con pochi clic. Clicca su 'Accredita Moduli' per iniziare. Con l'invio della tua richiesta, ti sarà assegnato un numero di riferimento unico, che potrai utilizzare in seguito per visualizzare la tua richiesta e il suo stato.",
-    "welcomeStudentAffairsOffice": "Benvenuto, personale dell'Ufficio Affari Studenti! Come membro dello staff dell'Ufficio Affari Studenti, hai accesso a una panoramica di tutte le richieste aperte. Puoi elaborare, integrare e monitorare lo stato di elaborazione delle richieste. Utilizza l'interfaccia utente amichevole per rendere più efficiente il processo di riconoscimento dei crediti.",
-    "welcomeExaminingCommitteeChair": "Benvenuto, stimato presidente del Comitato Esami! Su questa piattaforma, hai l'opportunità di esaminare e approvare o respingere tutte le richieste aperte. Fornisci una motivazione ben fondata per le tue decisioni. La tua partecipazione rende il processo di riconoscimento dei crediti più efficiente e mirato."
+  "navBar": {
+    "creditModules": "Accredita Moduli",
+    "examiningCommitteeChair": "Presidente del Comitato Esami",
+    "login": "Accedi",
+    "main": "Pagina Principale",
+    "review": "Esamina Richiesta",
+    "studentAffairsOffice": "Ufficio Affari Studenti"
+  },
+  "reviewComponent": {
+    "checkStatus": "Verifica Stato",
+    "downloadApplication": "Scarica Richiesta",
+    "formID": "Numero di Riferimento",
+    "reviewApplication": "Esamina Richiesta"
+  },
+  "routes": {
+    "/": "Pagina Principale",
+    "/application-form": "Accredita Moduli",
+    "/examining-committee-chair": "Presidente del Comitato Esami",
+    "/login": "Accedi",
+    "/review-application": "Esamina Richiesta",
+    "/student-affairs-office": "Ufficio Affari Studenti"
   },
   "studentAffairsOfficeView": {
     "openApplications": "Richieste Aperte"
-  },
-  "examiningCommitteeChairView": {
-    "moduleCount": "Numero di Moduli",
-    "studentAffairsOfficeComment": "Commento dell'Ufficio Affari Studenti",
-    "accept": "Accetta",
-    "decline": "Rifiuta"
-  },
-  "reviewComponent": {
-    "reviewApplication": "Esamina Richiesta",
-    "formID": "Numero di Riferimento",
-    "checkStatus": "Verifica Stato",
-    "downloadApplication": "Scarica Richiesta"
-  },
-  "formDisplay": {
-    "university": "Università",
-    "edit": "Modifica",
-    "sendToExaminingCommitteeChair": "Invia al Comitato Esami",
-    "reason": "Motivo",
-    "modules": "Moduli",
-    "application": "Richiesta"
   }
 }

@@ -5,6 +5,8 @@ services:
   container_name: vue-frontend
   depends_on:
    - backend
+  environment:
+   VUE_APP_API_URL: localhost:3000
   build:
    context: ./frontend
    dockerfile: Dockerfile
@@ -25,6 +27,11 @@ services:
    SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/db_dev
    SPRING_DATASOURCE_USERNAME: dev
    SPRING_DATASOURCE_PASSWORD: dev_pw
+   # set in application.properties:
+#   OFFICE_USERNAME: office
+#   OFFICE_PASSWORD: pw_office
+#   COMMITTEE_USERNAME: committee
+#   COMMITTEE_PASSWORD: pw_committee
 #   JWT_SECRET: "kdcg/HWhPwXlI0IzwNAph97Vwv7mnQ5tM0EH//MmSjXrbGkFTB1jCupER02sJQykbmBHg8TahS7YIl2tJ8uh4A=="
 #   JWT_EXPIRATION: 3600000
 #   JWT_HEADER: Authorization

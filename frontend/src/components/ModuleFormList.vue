@@ -1,20 +1,21 @@
+<!-- ModuleFormList.vue -->
 <template>
   <div>
     <v-expansion-panels>
       <ModuleForm
-          v-for="(form, index) in moduleForms"
-          :key="moduleForms[index].key"
-          :module="form"
-          :removeDisabled =" removeDisabled"
+          v-for="(moduleMapping, index) in moduleMappings"
+          :key="this.moduleMappings[index].meta.key"
+          :moduleMapping="moduleMapping"
+          :removeDisabled=" removeDisabled"
           @removeModule="removeModuleForm(index)"
-          @updateModuleData="(form,file)=>updateModuleData(index,form,file)"
+          @updateModuleData="(form)=>updateModuleData(index,form)"
       />
       <v-btn
           class="userInput"
           @click="addModuleForm"
           :disabled="!this.formsFilled"
       >
-        {{ $t("applicationForm.addModule") }}
+        {{ $t("applicationFormView.moduleFormList.addMapping") }}
       </v-btn>
     </v-expansion-panels>
   </div>
@@ -28,46 +29,80 @@ export default defineComponent({
   components: {ModuleForm},
   data() {
     return {
-      moduleForms: [
+      moduleMappings: [
         {
-          key: 0,
-          name: '',
-          comment: '',
-          description: null,
-          file: null,
-          module2bCredited: null
-        }
+          meta: {
+            key: 0,
+            approval: "",
+            comments: {
+              student: "",
+              office: "",
+            },
+          },
+          previousModules: [
+            {
+              key: 0,
+              number: "",
+              name: "",
+              description: { file: null },
+              credits: 0,
+            },
+          ],
+          modulesToBeCredited: [],
+        },
       ],
       formsFilled: false,
     };
   },
   computed: {
-    removeDisabled(){return this.moduleForms.length === 1}
+    removeDisabled() {
+      return this.moduleMappings.length === 1
+    }
   },
   methods: {
     addModuleForm() {
-      this.moduleForms.push({
-        key: (this.moduleForms[this.moduleForms.length - 1].key + 1), name: '', comment: '', description: null,
-        file: null, module2bCredited: null, isFilled: false
+      this.moduleMappings.push({
+        meta: {
+          key: (this.moduleMappings[this.moduleMappings.length - 1].key + 1),
+          approval: "",
+          comments: {
+            student: "",
+            office: "",
+          },
+        },
+        previousModules: [
+          {
+            key: 0,
+            number: "",
+            name: "",
+            description: { file: null },
+            credits: 0,
+          },
+        ],
+        modulesToBeCredited: [
+          {
+            number: "",
+            name: null,
+          }
+        ],
       });
       this.formsFilled = false;
     },
     checkIfFilled() {
-      this.formsFilled = this.moduleForms.every(form => form.isFilled);
+      this.formsFilled = this.moduleMappings.every(form => form.isFilled);
       return this.formsFilled;
     },
     removeModuleForm(index) {
-      if (this.moduleForms.length > 1) {
-        this.moduleForms.splice(index, 1);
+      if (this.moduleMappings.length > 1) {
+        this.moduleMappings.splice(index, 1);
         this.checkIfFilled()
       }
     },
     // Listen to the emitted event from ModuleForm and propagate it to the parent (FormPage)
-    updateModuleData(index, data, file) {
-      this.moduleForms[index] = data;
-      this.moduleForms[index].file = file
+    updateModuleData(index, data) {//TODO
+      this.moduleMappings[index] = data;
       if (this.checkIfFilled()) {
-        this.$emit('updateModuleData', this.moduleForms)
+        this.$emit('updateModuleData', this.moduleMappings)
       }
     },
     emitFillChange() {

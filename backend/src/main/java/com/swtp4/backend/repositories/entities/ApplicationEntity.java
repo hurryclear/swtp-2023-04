@@ -1,35 +1,35 @@
 package com.swtp4.backend.repositories.entities;
 
+import com.swtp4.backend.repositories.entities.keyClasses.ApplicationKeyClass;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.UUID;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity(name="applications")
-@Table(name="applications")
+@Entity(name="application")
+@Table(name="application")
 
 public class ApplicationEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    @EmbeddedId
+    private ApplicationKeyClass applicationKeyClass;
 
     private String status;
 
-    private Date dateOfSubmission;
+    private String dateOfSubmission;
 
-    private Date dateLastEdited;
+    private String dateLastEdited;
 
-    private String university;
+    private String universityName;
 
     private String major;
+
+    private String commentStudent;
+
+    private String commentEmployee;
 }

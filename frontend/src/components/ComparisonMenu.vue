@@ -1,4 +1,5 @@
 <template>
+  <!--TODO: i18n-->
   <v-card>
     <div class="card-header">
       <v-card-title>
@@ -9,36 +10,36 @@
     </div>
     <div v-for="form in forms" v-bind:key="form">
       <v-card-subtitle>Antrag</v-card-subtitle>
-      <v-card-item>
+      <v-card-text>
         Universität: {{ form.universityData.universityName }}
-      </v-card-item>
-      <v-card-item>
+      </v-card-text>
+      <v-card-text>
         Bisheriger Studiengang: {{ form.universityData.studyProgram }}
-      </v-card-item>
-      <v-card-item>
+      </v-card-text>
+      <v-card-text>
         Land: {{ form.universityData.country }}
-      </v-card-item>
-      <v-card-title>
+      </v-card-text>
+      <v-card-text>
         Module:
-      </v-card-title>
+      </v-card-text>
       <div v-for="moduleData in form.moduleFormsData" v-bind:key="moduleData.key" >
         <v-card-subtitle>
           Modul {{ moduleData.key + 1 }}
         </v-card-subtitle>
-        <v-card-item>
+        <v-card-text>
           <u>Modulname</u>: {{ moduleData.name }}
-          <v-card-item>
+          <v-card-text>
             Gewünschte Anrechnung:
             <v-card-text v-for="modules in moduleData.module2bCredited" v-bind:key="modules">
               {{ modules}}
             </v-card-text>
-          </v-card-item>
-        </v-card-item>
+          </v-card-text>
+        </v-card-text>
       </div>
-      <v-card-item>
+      <v-card-text>
         Status: {{ form.status }}
-      </v-card-item>
-      <v-card-item>Begründung: {{ form.comment }}</v-card-item>
+      </v-card-text>
+      <v-card-text>Begründung: {{ form.comment }}</v-card-text>
       <br>
       <v-divider/>
     </div>

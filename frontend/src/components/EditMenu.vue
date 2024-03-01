@@ -1,4 +1,5 @@
 <template>
+  <!--TODO: i18n-->
   <v-card>
     <div class="card-header">
       <v-card-title>
@@ -8,15 +9,15 @@
         <v-btn @click="openComparisonMenu">Mit anderen Anträgen vergleichen</v-btn>
         <v-btn class="button-top"  icon="mdi-close" @click="closeEditMenu" variant="text"></v-btn>
     </div>
-    <v-card-item>
-      <u>Universität</u>: {{ form.universityData.universityName }}
-    </v-card-item>
-    <v-card-item>
-      <u>Bisheriger Studiengang</u>: {{ form.universityData.studyProgram }}
-    </v-card-item>
-    <v-card-item>
-      <u>Land</u>: {{ form.universityData.country }}
-    </v-card-item>
+    <v-card-text>
+      Universität: {{ form.universityData.universityName }}
+    </v-card-text>
+    <v-card-text>
+      Bisheriger Studiengang: {{ form.universityData.studyProgram }}
+    </v-card-text>
+    <v-card-text>
+      Land: {{ form.universityData.country }}
+    </v-card-text>
     <v-card-title>
       Module:
     </v-card-title>
@@ -24,20 +25,20 @@
       <v-card-subtitle>
         Modul {{ moduleData.key + 1 }}
       </v-card-subtitle>
-      <v-card-item>
+      <v-card-text>
         <u>Modulname</u>: {{ moduleData.name }}
-        <v-card-item>
+        <v-card-text>
           Gewünschte Anrechnung:
           <v-card-text v-for="modules in moduleData.module2bCredited" v-bind:key="modules">
             {{ modules}}
           </v-card-text>
-        </v-card-item>
-      </v-card-item>
-      <v-card-item>
+        </v-card-text>
+      </v-card-text>
+      <v-card-text>
         <u>Kommentar zu diesem Modul</u>: {{ moduleData.comment }}
-      </v-card-item>
+      </v-card-text>
     </div>
-    <v-text-field class="text-field" label="Begründung" v-model="begruendung"/>
+    <v-text-field class="text-field" label="Begründung" v-model="reason"/>
     <v-card-actions>
         <v-btn color="blue" class="button-bottom" @click="sendToPruefungsausschuss">
           An Prüfungsausschuss senden
@@ -55,7 +56,7 @@ export default {
 
   data() {
     return {
-      begruendung: '',
+      reason: '',
     }
   },
 
@@ -67,8 +68,8 @@ export default {
       // Dispatch action to accept the form
       this.$store.dispatch('changeFormStatus', {
         formId: this.form.id,
-        newStatus: 'in Bearbeitung',
-        comment: this.begruendung
+        newStatus: 'in progress',
+        comment: this.reason
       });
       this.closeEditMenu();
     },

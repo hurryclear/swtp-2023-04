@@ -6,34 +6,26 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.sql.Blob;
-import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "university_modules")
-public class UniversityModulesEntity {
+@Table(name = "module_student")
+public class ModuleStudentEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-
     private String number;
-
-    @ManyToOne
-    @JoinColumn(name = "applications_id")
-    private ApplicationEntity applicationEntity;
-
     private String title;
-
     @Lob
     private Blob description_pdf;
-
-    private int credits;
-
-    private String comment_student;
-
-    private String comment_employee;
+    private String credits;
+    private String university;
+    private String major;
+    private String commentStudent;
+    private String commentEmployee;
+    private String creator;
 }

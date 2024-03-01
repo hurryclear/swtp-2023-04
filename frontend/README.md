@@ -352,7 +352,7 @@ Includes script files, possibly for utility functions or testing. Examples inclu
 ### Views
 This directory contains Vue.js view components representing different pages or views in the application. Examples include:
 
-- [ApplicationForm.vue](./src/views/ApplicationForm.vue)
+- [ApplicationForm.vue](./src/views/ApplicationFormView.vue)
 - [HomeView.vue](./src/views/HomeView.vue)
 - [LoginView.vue](./src/views/LoginView.vue)
 - [ReviewView.vue](./src/views/ReviewView.vue)
