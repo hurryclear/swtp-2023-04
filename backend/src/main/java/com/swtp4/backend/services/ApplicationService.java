@@ -125,6 +125,8 @@ public class ApplicationService {
         List<ModuleUniEntity> moduleUniEntities = new ArrayList<>();
         for (String moduleString : moduleStrings) {
             moduleUniEntities.add(moduleUniRepository.findByName(moduleString));
+            List<ModuleUniEntity> allUniModules = moduleUniRepository.findAll();
+            log.info("this are all module entities: {}", allUniModules);
         }
         return moduleUniEntities;
     }

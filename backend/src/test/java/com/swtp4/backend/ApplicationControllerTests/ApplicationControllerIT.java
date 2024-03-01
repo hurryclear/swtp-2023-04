@@ -1,11 +1,8 @@
 package com.swtp4.backend.ApplicationControllerTests;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.swtp4.backend.repositories.*;
 import com.swtp4.backend.repositories.entities.*;
 import com.swtp4.backend.services.ApplicationService;
-import net.bytebuddy.dynamic.DynamicType;
-import org.assertj.core.api.OptionalAssert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +16,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
@@ -30,7 +26,7 @@ import java.util.Optional;
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @AutoConfigureMockMvc
-public class ApplicationControllerIntegrationTests {
+public class ApplicationControllerIT {
 
     private ApplicationService applicationService;
     private MockMvc mockMvc;
@@ -42,7 +38,7 @@ public class ApplicationControllerIntegrationTests {
     private ModuleRelationRepository moduleRelationRepository;
 
     @Autowired
-    public ApplicationControllerIntegrationTests(
+    public ApplicationControllerIT(
             ApplicationService applicationService,
             MockMvc mockMvc,
             MajorUniRepository majorUniRepository,
