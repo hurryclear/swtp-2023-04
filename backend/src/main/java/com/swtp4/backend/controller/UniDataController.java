@@ -21,19 +21,31 @@ public class UniDataController {
 
     @PutMapping(path = "/update")
     public ResponseEntity<?> updateUniData(@RequestBody UniDataDto uniDataDto) {
-        uniDataService.update(uniDataDto);
+        uniDataService.updateVisibilityBasedOnJson(uniDataDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/getMajors")
     public ResponseEntity<UniMajorListResponse> getMajors() {
-        UniMajorListResponse majors = uniDataService.getAllMajors();
+        UniMajorListResponse majors = uniDataService.getVisibleMajorNames();
         return new ResponseEntity<>(majors, HttpStatus.OK);
     }
 
     @GetMapping("/getModules")
     public ResponseEntity<UniModuleListResponse> getModulesByMajor(@RequestParam String majorName) {
-        UniModuleListResponse modules = uniDataService.getModulesByMajor(majorName);
+        UniModuleListResponse modules = uniDataService.getVisibleMajorWithModules(majorName);
+        return new ResponseEntity<>(modules, HttpStatus.OK);
+    }
+
+    @GetMapping("/getAllMajors") //unvisible inluded
+    public ResponseEntity<UniMajorsWithVisibilityResponse> getAllMajors() {
+        UniMajorsWithVisibilityResponse majors = uniDataService.getAllMajors();
+        return new ResponseEntity<>(majors, HttpStatus.OK);
+    }
+
+    @GetMapping("/getAllModules") //unvisible inluded
+    public ResponseEntity<UniModulesWithVisibilityResponse> getAllModulesByMajor(@RequestParam String majorName) {
+        UniModulesWithVisibilityResponse modules = uniDataService.getAllModulesByMajor(majorName);
         return new ResponseEntity<>(modules, HttpStatus.OK);
     }
 

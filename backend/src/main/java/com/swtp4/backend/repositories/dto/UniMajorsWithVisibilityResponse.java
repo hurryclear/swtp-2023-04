@@ -11,7 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UniDataDto {
-
-    private List<UniMajorDto> courses;
+public class UniMajorsWithVisibilityResponse {
+    private List<UniMajorWithVisibility> courses;
 }

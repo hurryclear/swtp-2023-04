@@ -31,7 +31,7 @@ public class UniDataInitializer implements CommandLineRunner {
         InputStream inputStream = TypeReference.class.getResourceAsStream("/json/initialUniData.json");
         try {
             UniDataDto uniDataDto = mapper.readValue(inputStream,typeReference);
-            uniDataService.update(uniDataDto);
+            uniDataService.updateVisibilityBasedOnJson(uniDataDto);
             System.out.println("University Majors and Modules initialized!");
         } catch (IOException e){
             System.out.println("Unable to initialize UniData: " + e.getMessage());

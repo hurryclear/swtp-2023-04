@@ -5,13 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UniDataDto {
-
-    private List<UniMajorDto> courses;
+public class UniModuleWithVisibility {
+    private String number;
+    private String name;
+    private Boolean visibleForStudents;
 }

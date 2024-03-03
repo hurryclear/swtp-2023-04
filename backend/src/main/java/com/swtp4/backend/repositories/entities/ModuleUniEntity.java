@@ -1,5 +1,6 @@
 package com.swtp4.backend.repositories.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,10 +18,11 @@ public class ModuleUniEntity {
     @Id
     @GeneratedValue
     private Long id;
-//    @Id
     private String number;
     private String name;
-    @ManyToOne(cascade = CascadeType.ALL)
+    private Boolean visibleChoice;
+    @ManyToOne
+    @JsonBackReference
     @JoinColumn(name ="major_uni_name")
     private MajorUniEntity majorUniEntity;
 }

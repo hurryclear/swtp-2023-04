@@ -59,6 +59,7 @@ public class ApplicationControllerIT {
     }
 
     @Test
+    @Transactional
     @WithMockUser(username = "testuser", roles = {"OFFICE"})
     public void testThatSaveApplicationSuccessfullyReturnsHttp201CreatedAndCreatesEntities() throws Exception {
         String testApplicationJson = ApplicationTestData.createTestApplicationJsonA();

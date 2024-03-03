@@ -59,7 +59,7 @@ public class UniDataControllerIT {
                 MockMvcResultMatchers.status().isOk()
         );
         //MajorUniEntity Check
-        Optional<MajorUniEntity> resultMajorEntity = Optional.ofNullable(majorUniRepository.findByName("B.Sc. Informatik"));
+        Optional<MajorUniEntity> resultMajorEntity = majorUniRepository.findByName("B.Sc. Informatik");
         assertThat(resultMajorEntity).isPresent();
         assertThat(resultMajorEntity.get().getName()).isEqualTo("B.Sc. Informatik");
         //ModuleUniEntity Check
