@@ -50,10 +50,6 @@ public class ApplicationController {
         return applicationService.getAllApplications();
     }
 
-    @GetMapping("/getApplication/{id}")
-    public Optional<ApplicationEntity> getApplicationByID(@PathVariable("id") ApplicationKeyClass id) {
-        return applicationService.getApplicationByID(id);
-    }
 
     @GetMapping("/getApplication/{status}")
     public List<ApplicationEntity> getApplicationsByStatus(@PathVariable("status") String status) {
