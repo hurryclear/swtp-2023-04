@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -85,6 +86,7 @@ public class ApplicationServiceUnitTests {
     }
 
     @Test
+    @Transactional
     public void testThatGetUniversityModulesByNameSuccessfullyRetrieveEntities() throws Exception {
         ModuleUniEntity testModuleUniA = ApplicationTestData.createTestModuleUniEntityA();
         ModuleUniEntity testModuleUniB = ApplicationTestData.createTestModuleUniEntityB();

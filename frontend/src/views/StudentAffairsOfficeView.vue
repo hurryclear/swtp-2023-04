@@ -53,9 +53,7 @@
 
 <style scoped>
   .comparison {
-    border: 2px solid gray;
-    border-radius: 10px;
-    width: 80%;
+
   }
 
   .col-left {
@@ -63,8 +61,6 @@
   }
 
   .edit-menu {
-    border: 2px solid gray;
-    border-radius: 10px;
-    width: 80%;
+
   }
 </style>
