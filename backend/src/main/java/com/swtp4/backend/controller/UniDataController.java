@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/unidata")
 public class UniDataController {
 
-    private UniDataService uniDataService;
+    private final UniDataService uniDataService;
 
     @Autowired
     public UniDataController(UniDataService uniDataService) {
@@ -22,7 +22,7 @@ public class UniDataController {
     @PutMapping(path = "/update")
     public ResponseEntity<?> updateUniData(@RequestBody UniDataDto uniDataDto) {
         uniDataService.updateVisibilityBasedOnJson(uniDataDto);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/getMajors")

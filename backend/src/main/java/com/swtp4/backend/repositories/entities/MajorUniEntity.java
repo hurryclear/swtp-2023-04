@@ -2,10 +2,7 @@ package com.swtp4.backend.repositories.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -25,5 +22,6 @@ public class MajorUniEntity {
     private Boolean visibleChoice;
     @OneToMany(mappedBy = "majorUniEntity", cascade = CascadeType.ALL)
     @JsonManagedReference
+    @ToString.Exclude
     private List<ModuleUniEntity> modules;
 }

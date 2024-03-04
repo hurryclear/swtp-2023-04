@@ -1,29 +1,31 @@
-[
-  {
-    "name": "B.Sc. Informatik",
-    "visibleForStudents": true,
-    "modules": [
-      {
-        "number": "10-201-2012",
-        "name": "Einführung Programmierung",
-        "visibleForStudents": false
-      },
-      {
-        "number": "10-201-2005-2",
-        "name": "Programmierparadigmen",
-        "visibleForStudents": true
-      }
-    ]
-  },
-  {
-    "name": "M.Sc. Informatik",
-    "visibleForStudents": false,
-    "modules": [
-      {
-        "number": "",
-        "name": "Kermodul (Wahlpflichtfach)",
-        "visibleForStudents": false
-      }
-    ]
-  }
-]
+{
+  "courses": [
+    {
+      "name": "B.Sc. Informatik",
+      "visibleForStudents": true,
+      "modules": [
+        {
+          "number": "10-201-2012",
+          "name": "Einführung Programmierung",
+          "visibleForStudents": false
+        },
+        {
+          "number": "10-201-2005-2",
+          "name": "Programmierparadigmen",
+          "visibleForStudents": true
+        }
+      ]
+    },
+    {
+      "name": "M.Sc. Informatik",
+      "visibleForStudents": false,
+      "modules": [
+        {
+          "number": "",
+          "name": "Kermodul (Wahlpflichtfach)",
+          "visibleForStudents": false
+        }
+      ]
+    }
+  ]
+}

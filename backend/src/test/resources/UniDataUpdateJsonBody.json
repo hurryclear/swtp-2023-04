@@ -1,0 +1,26 @@
+{
+  "courses": [
+    {
+      "name": "M.Sc. Informatik",
+      "modules": [
+        {
+          "number": "",
+          "name": "Kermodul (Wahlpflichtfach)"
+        },
+        {
+          "number": "187-123-123-2",
+          "name": "Master-Coding"
+        }
+      ]
+    },
+    {
+      "name": "B.Sc. Bio-Informatik",
+      "modules": [
+        {
+          "number": "123-13-132",
+          "name": "Evolutionstheorie"
+        }
+      ]
+    }
+  ]
+}
