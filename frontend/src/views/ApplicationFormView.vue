@@ -123,7 +123,7 @@ export default defineComponent({
       // Append form data to FormData object
       formData.append('form', JSON.stringify(this.form));
       // Use axios to send the FormData object to the server
-      axios.post('/api/application/saveApplication', formData, {
+      axios.post('/api/student/submitApplication', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

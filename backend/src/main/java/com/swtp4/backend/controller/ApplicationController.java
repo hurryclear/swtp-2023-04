@@ -1,6 +1,7 @@
 package com.swtp4.backend.controller;
 
 import com.swtp4.backend.repositories.dto.ApplicationDto;
+import com.swtp4.backend.repositories.dto.UniModuleDto;
 import com.swtp4.backend.repositories.entities.ApplicationEntity;
 import com.swtp4.backend.repositories.entities.keyClasses.ApplicationKeyClass;
 import com.swtp4.backend.services.ApplicationService;
@@ -16,6 +17,7 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
+@CrossOrigin
 @RequestMapping(path = "/application")
 public class ApplicationController {
 
@@ -28,6 +30,7 @@ public class ApplicationController {
         this.pdfService = pdfService;
     }
 
+    //changed to student controler
     @PostMapping("/saveApplication")
     public ResponseEntity<?> saveApplication(@RequestBody ApplicationDto applicationDTO){
         log.info("Received ApplicationDto: {}", applicationDTO);
@@ -71,4 +74,10 @@ public class ApplicationController {
     public List<ApplicationEntity> getApplicationsByDateOfSubmission(@PathVariable("dateOfSubmission") String dateOfSubmission) {
        return  applicationService.getApplicationsByDateOfSubmission(dateOfSubmission);
     }
+
+    @PostMapping("/test")
+    public ResponseEntity<UniModuleDto> testOfficeEndpoint(@RequestBody UniModuleDto uniModuleDto){
+        return new ResponseEntity<>(uniModuleDto, HttpStatus.OK);
+    }
+
 }

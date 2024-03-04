@@ -183,13 +183,25 @@ The frontend sends the application ID, and the backend responds with the corresp
 The frontend sends the study program, and the backend provides the modules to be credited for this study program.
 
 #### Request Body
-```json
-    Request placeholder
+```http request
+http://localhost:3000/api/unidata/getModules?majorName=B.Sc. Informatik
 ```
 
 #### Response Body
 ```json
-    Response placeholder
+{
+  "name": "B.Sc. Informatik",
+  "modules": [
+    {
+      "number": "10-201-2005-2",
+      "name": "Programmierparadigmen"
+    },
+    {
+      "number": "10-201-2001-1",
+      "name": "Algorithmen und Datenstrukturen 1"
+    }
+  ]
+}
 ```
 
 </details>
@@ -207,12 +219,21 @@ The frontend receives a JSON with study programs that can be selected.
 
 #### Request Body
 ```json
-    Request placeholder
+-
 ```
 
 #### Response Body
 ```json
-    Response placeholder
+{
+  "courses": [
+    {
+      "name": "B.Sc. Informatik"
+    },
+    {
+      "name": "B.Sc. Bio-Informatik"
+    }
+  ]
+}
 ```
 
 </details>
@@ -439,15 +460,114 @@ The frontend provides a JSON with all study programs and their modules. The back
 
 #### Request Body
 ```json
-    Request placeholder
+{
+  "courses": [
+    {
+      "name": "B.Sc. Informatik",
+      "modules" : [
+        {
+          "name": "Programmierparadigmen",
+          "number": "10-201-2005-2"
+        },
+        {
+          "name": "Algorithmen und Datenstrukturen 1",
+          "number": "10-201-2001-1"
+        }
+      ]
+    },
+    {
+      "name": "B.Sc. Bio-Informatik",
+      "modules" : [
+        {
+          "name": "Evolutiontheorie",
+          "number": "9-144-1024-4"
+        }
+      ]
+    }
+  ]
+}
 ```
 
 #### Response Body
 ```json
-    Response placeholder
+    200 HTTP ok response
 ```
 
 </details>
+
+### Employee Get ALL University Modules and their Visibility
+
+<details>
+<summary>Click to expand Get University Modules endpoint details</summary>
+
+#### Endpoint
+`GET /api/unidata/getAllModules`
+
+#### Description
+The frontend sends the study program, and the backend provides visible AND invisible modules for this study program.
+
+#### Request Body
+```http request
+http://localhost:3000/api/unidata/getAllModules?majorName=B.Sc. Informatik
+```
+
+#### Response Body
+```json
+{
+  "name": "B.Sc. Informatik",
+  "visibleForStudents": true,
+  "modules": [
+    {
+      "number": "10-201-2012",
+      "name": "Einführung in die objektorientierte Modellierung und Programmierung",
+      "visibleForStudents": false
+    },
+    {
+      "number": "10-201-2005-2",
+      "name": "Programmierparadigmen",
+      "visibleForStudents": true
+    }
+  ]
+}
+```
+
+</details>
+
+### Employee Get ALL University Study Programs
+
+<details>
+<summary>Click to expand Get University Study Programs endpoint details</summary>
+
+#### Endpoint
+`GET /api/unidata/getAllMajors`
+
+#### Description
+The frontend receives a JSON with ALL study programs and their Visibilly.
+
+#### Request Body
+```json
+-
+```
+
+#### Response Body
+```json
+{
+  "courses": [
+    {
+      "name": "M.Sc. Informatik",
+      "visibleForStudents": false
+    },
+    {
+      "name": "B.Sc. Informatik",
+      "visibleForStudents": true
+    }
+  ]
+}
+```
+
+</details>
+
+
 
 ## Additional Notes
 

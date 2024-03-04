@@ -6,12 +6,19 @@ import com.swtp4.backend.repositories.ModuleUniRepository;
 import com.swtp4.backend.repositories.dto.*;
 import com.swtp4.backend.repositories.entities.MajorUniEntity;
 import com.swtp4.backend.repositories.entities.ModuleUniEntity;
+import com.swtp4.backend.repositories.projections.MajorNameAndVisibilityProjection;
+import com.swtp4.backend.repositories.projections.MajorNameProjection;
+import org.springframework.transaction.annotation.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class UniDataService {
 
     private ModuleUniRepository moduleUniRepository;
@@ -25,48 +32,108 @@ public class UniDataService {
         this.majorUniRepository = majorUniRepository;
     }
 
-    public void update(UniDataDto uniDataDto) {
-        //iteration through the courses of the JSON (majors)
-        for (MajorUniDto majorUniDto : uniDataDto.getCourses()) {
-            MajorUniEntity existingMajorUniEntity = majorUniRepository.findByName(majorUniDto.getName());
-            MajorUniEntity savedMajorUniEntity = existingMajorUniEntity;
-            if (existingMajorUniEntity == null) {
-                //create MajorEntity
-                MajorUniEntity newMajorUniEntity = new MajorUniEntity();
-                newMajorUniEntity.setName(majorUniDto.getName());
-                savedMajorUniEntity = majorUniRepository.save(newMajorUniEntity);
-            }
-            //iteration through the modules of the courses of the JSON
-            for (ModuleUniEntity moduleUniEntity : majorUniDto.getModules()) {
-                ModuleUniEntity existingModuleUniEntity = moduleUniRepository.findByNumber(moduleUniEntity.getNumber()); //findByNumber or findByName? What would be rather changed by the university
-                if (existingModuleUniEntity == null) {
-                    //create ModuleEntity
-                    moduleUniEntity.setMajorUniEntity(savedMajorUniEntity);
-                    ModuleUniEntity savedModuleUniEntity = moduleUniRepository.save(moduleUniEntity);
-                } else {
-                    //update ModuleEntity
-                    existingModuleUniEntity.setName(moduleUniEntity.getName());
-                    existingModuleUniEntity.setNumber(moduleUniEntity.getNumber());
-                    existingModuleUniEntity.setMajorUniEntity(savedMajorUniEntity);
-                    ModuleUniEntity savedModuleUniEntity = moduleUniRepository.save(existingModuleUniEntity);
-                }
+    public UniMajorListResponse getVisibleMajorNames() {
+        // Retrieve all visible majors using the projection
+        List<MajorNameProjection> visibleMajors = majorUniRepository.findByVisibleChoiceTrue();
+
+        // Extract the names of the majors
+        List<UniMajorName> visibleMajorNames = visibleMajors.stream()
+                .map(majorName -> new UniMajorName(majorName.getName()))
+                .collect(Collectors.toList());
+
+        return new UniMajorListResponse(visibleMajorNames);
+    }
+
+
+    public UniMajorsWithVisibilityResponse getAllMajors() {
+        // Retrieve ALL majors using the projection
+        List<MajorNameAndVisibilityProjection> allMajorsProjections = majorUniRepository.findAllProjectedBy();
+
+        // Extract the names of the majors
+        List<UniMajorWithVisibility> allMajors = allMajorsProjections.stream()
+                .map(majorProjection -> new UniMajorWithVisibility(majorProjection.getName(), majorProjection.getVisibleChoice()))
+                .collect(Collectors.toList());
+        return new UniMajorsWithVisibilityResponse(allMajors);
+    }
+
+    @Transactional(readOnly = true)
+    public UniModuleListResponse getVisibleMajorWithModules(String majorName) {
+        MajorUniEntity major = majorUniRepository.findByNameAndVisibleChoiceTrue(majorName)
+                .orElseThrow(() -> new ResourceNotFoundException("Major not found"));
+
+        List<UniModuleDto> visibleModules = major.getModules().stream()
+                .filter(ModuleUniEntity::getVisibleChoice)
+                .map(module -> UniModuleDto.builder()
+                        .number(module.getNumber())
+                        .name(module.getName())
+                        .build())
+                .collect(Collectors.toList());
+
+        return UniModuleListResponse.builder()
+                .name(major.getName())
+                .modules(visibleModules)
+                .build();
+    }
+
+    @Transactional(readOnly = true)
+    public UniModulesWithVisibilityResponse getAllModulesByMajor(String majorName) {
+        MajorUniEntity major = majorUniRepository.findByName(majorName)
+                .orElseThrow(() -> new ResourceNotFoundException("Major not found"));
+
+        List<UniModuleWithVisibility> allModules = major.getModules().stream()
+                .map(module -> UniModuleWithVisibility.builder()
+                        .number(module.getNumber())
+                        .name(module.getName())
+                        .visibleForStudents(module.getVisibleChoice())
+                        .build())
+                .collect(Collectors.toList());
+
+        return UniModulesWithVisibilityResponse.builder()
+                .name(major.getName())
+                .visibleForStudents(major.getVisibleChoice())
+                .modules(allModules)
+                .build();
+    }
+
+    @Transactional
+    public void updateVisibilityBasedOnJson(UniDataDto uniDataDto) {
+        // Set all existing majors and modules to not visible
+        majorUniRepository.findAll().forEach(major -> {
+            major.setVisibleChoice(false);
+            majorUniRepository.save(major);
+        });
+
+        moduleUniRepository.findAll().forEach(module -> {
+            module.setVisibleChoice(false);
+            moduleUniRepository.save(module);
+        });
+
+        // Iterate over the majors and modules in the JSON
+        for (UniMajorDto majorDto : uniDataDto.getCourses()) {
+            MajorUniEntity major = majorUniRepository.findById(majorDto.getName())
+                    .orElse(MajorUniEntity.builder()
+                            .name(majorDto.getName())
+                            .visibleChoice(true)
+                            .modules(new ArrayList<>())
+                            .build());
+
+            major.setVisibleChoice(true);
+            majorUniRepository.save(major);
+
+            for (UniModuleDto moduleDto : majorDto.getModules()) {
+                ModuleUniEntity module = moduleUniRepository.findByNumberAndNameAndMajorUniEntity(moduleDto.getNumber(), moduleDto.getName(), major)
+                        .orElse(ModuleUniEntity.builder()
+                                .number(moduleDto.getNumber())
+                                .name(moduleDto.getName())
+                                .visibleChoice(true)
+                                .majorUniEntity(major)
+                                .build());
+
+                module.setVisibleChoice(true);
+                module.setMajorUniEntity(major);
+                moduleUniRepository.save(module);
             }
         }
     }
 
-    public UniMajorListResponse getAllMajors() {
-        List<MajorUniEntity> majorEntities = majorUniRepository.findAll();
-        return new UniMajorListResponse(majorEntities);
-    }
-
-    public UniModuleListResponse getModulesByMajor(String majorName) {
-        MajorUniEntity major = majorUniRepository.findByName(majorName);
-        if (major == null) {
-            throw new ResourceNotFoundException("Major not found");
-        }
-        List<ModuleUniEntity> modules = moduleUniRepository.findByMajorUniEntity(major);
-        List<UniModuleDto> moduleDtos = modules.stream().map(module -> new UniModuleDto(module.getNumber(), module.getName())).toList();
-        return new UniModuleListResponse(major.getName(), moduleDtos);
-
-    }
 }

@@ -1,6 +1,5 @@
 package com.swtp4.backend.repositories.dto;
 
-import com.swtp4.backend.repositories.entities.ModuleUniEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,9 +11,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MajorUniDto {
-
+public class UniModulesWithVisibilityResponse {
     private String name;
-
-    private List<ModuleUniEntity> modules;
+    private Boolean visibleForStudents;
+    private List<UniModuleWithVisibility> modules;
 }

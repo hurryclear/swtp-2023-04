@@ -6,7 +6,7 @@ WORKDIR /app
 FROM development as build
 WORKDIR /app
 COPY . .
-RUN mvn clean package -DskipTests
+RUN mvn clean package -DskipTests -Dskip.ut=true
 
 # Production Stage
 FROM amazoncorretto:17 as production
