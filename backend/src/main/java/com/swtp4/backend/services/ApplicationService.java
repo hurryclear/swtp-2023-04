@@ -134,9 +134,9 @@ public class ApplicationService {
         return applicationRepository.findAll();
     }
 
-    // what is Optional<T>
-    public Optional<ApplicationEntity> getApplicationByID(ApplicationKeyClass id) {
-        return applicationRepository.findById(id);
+    // get unique application by applicationkeyclass (id, creator)
+    public ApplicationEntity getApplicationByApplicationKeyClass(UUID id, String creator) {
+        return applicationRepository.findByApplicationKeyClass(id, creator);
     }
 
     public List<ApplicationEntity> getApplicationsByStatus(String status) {

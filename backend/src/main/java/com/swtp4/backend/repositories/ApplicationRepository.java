@@ -6,11 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 public interface ApplicationRepository extends JpaRepository<ApplicationEntity, ApplicationKeyClass> {
     ApplicationEntity findByDateOfSubmissionAndApplicationKeyClass_Creator(String dateOfSubmission, String creator);
 
+    ApplicationEntity findByApplicationKeyClass(UUID id, String creator);
     List<ApplicationEntity> findAllByStatus(String status);
     List<ApplicationEntity> findAllByMajor(String major);
     List<ApplicationEntity> findAllByUniversity(String university);
