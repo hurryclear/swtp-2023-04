@@ -1,15 +1,21 @@
-// UniversityService.js
+// ModuleService.js
 import axios from '@/plugins/axios';
-import moduleJSON from "@/assets/module_liste.json";
 
 export default {
-    async fetchModules() {
+    async fetchStudyPlans() {
         try {
-            const response = axios.get("/i/dont/know/where/the/endpoint/is") //TODO: REPLACE WITH ACTUAL ENDPOINT
-            return response.data.courses[0].modules
+            const response = axios.get("/api/unidata/getMajors");
+            return response.data.courses;
         } catch (error) {
             console.error(error)
-            return moduleJSON.courses[0].modules;
+        }
+    },
+    async fetchModules(studyPlan) {
+        try {
+            const response = axios.get(`/api/unidata/getModules?majorName=${studyPlan}`);
+            return response.data.modules;
+        } catch (error) {
+            console.error(error)
         }
     },
 };

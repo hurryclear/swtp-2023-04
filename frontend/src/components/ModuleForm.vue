@@ -56,7 +56,6 @@
               hide-details
               prepend-icon=""
           />
-          <!--TODO: new fields here!!-->
           <v-combobox
               v-model="module.university"
               :items="universities"
@@ -73,7 +72,6 @@
               :label="$t('applicationFormView.moduleFormList.moduleMapping.creditLabel')"
               variant="outlined"
               type="number"
-              single-line
               min="0"
               max="30"
           />
@@ -128,12 +126,6 @@ export default {
       moduleForm: {...this.moduleMapping},
       selectedFile: null,
     };
-  },
-  created() {
-    if (!this.$store.state.module.modules.length) {
-      // If modules data is not in the store, fetch it
-      this.$store.dispatch('fetchModules')
-    }
   },
   computed: {
     universities() {
