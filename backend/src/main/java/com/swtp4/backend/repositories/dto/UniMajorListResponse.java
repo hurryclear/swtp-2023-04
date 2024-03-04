@@ -1,6 +1,5 @@
 package com.swtp4.backend.repositories.dto;
 
-import com.swtp4.backend.repositories.entities.MajorUniEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,5 +12,5 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class UniMajorListResponse {
-    private List<MajorUniEntity> courses;
+    private List<UniMajorName> courses;
 }

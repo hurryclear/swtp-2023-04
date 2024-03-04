@@ -5,28 +5,30 @@ import com.swtp4.backend.repositories.ModuleUniRepository;
 import com.swtp4.backend.repositories.entities.MajorUniEntity;
 import com.swtp4.backend.repositories.entities.ModuleUniEntity;
 import com.swtp4.backend.services.UniDataService;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.event.annotation.BeforeTestClass;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Slf4j
 @SpringBootTest
-@ExtendWith(SpringExtension.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@Transactional
 @AutoConfigureMockMvc
+@ActiveProfiles("integration")
 public class UniDataControllerIT {
 
     private UniDataService uniDataService;
@@ -47,54 +49,79 @@ public class UniDataControllerIT {
         this.moduleUniRepository = moduleUniRepository;
     }
 
-    @Test
-    @WithMockUser(username = "testuser", roles = {"OFFICE"})
-    public void testThatUpdateUniDataSuccessfullyReturnsHttpStatus420AndSavesMissingUniData() throws Exception{
-        String testUniDataJson = UniDataTestData.createTestUniDataJsonA();
-        mockMvc.perform(
-                MockMvcRequestBuilders.put("/unidata/update")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(testUniDataJson)
-        ).andExpect(
-                MockMvcResultMatchers.status().isOk()
-        );
-        //MajorUniEntity Check
-        Optional<MajorUniEntity> resultMajorEntity = Optional.ofNullable(majorUniRepository.findByName("B.Sc. Informatik"));
-        assertThat(resultMajorEntity).isPresent();
-        assertThat(resultMajorEntity.get().getName()).isEqualTo("B.Sc. Informatik");
-        //ModuleUniEntity Check
-        Optional<ModuleUniEntity> resultModuleEntity = Optional.ofNullable(moduleUniRepository.findByName("Programmierparadigmen"));
-        assertThat(resultModuleEntity).isPresent();
-        assertThat(resultModuleEntity.get().getNumber()).isEqualTo("10-201-2005-2");
+    @BeforeTestClass
+    public void setupTestData() {
+        // Clear the database before each test
+        majorUniRepository.deleteAll();
+        moduleUniRepository.deleteAll();
     }
 
     @Test
+    @Sql("/MultipleMajorsAndModules.sql")
     @WithMockUser(username = "testuser", roles = {"OFFICE"})
-    public void testThatUpdateUniDataSuccessfullyReturnsHttpStatus420AndUpdatesExistingUniData() throws Exception {
-        ModuleUniEntity testModuleA = UniDataTestData.createTestModuleUniEntityA();
-        ModuleUniEntity testModuleB = UniDataTestData.createTestModuleUniEntityB();
-        ModuleUniEntity testModuleC = UniDataTestData.createTestModuleUniEntityC();
-        majorUniRepository.saveAll(Arrays.asList(testModuleA.getMajorUniEntity(), testModuleC.getMajorUniEntity()));
-        moduleUniRepository.saveAll(Arrays.asList(testModuleA, testModuleB, testModuleC));
-        String testUniDataJson = UniDataTestData.createTestUniDataJsonA();
-        mockMvc.perform(
-                MockMvcRequestBuilders.put("/unidata/update")
+    public void updateWithValidData_shouldUpdateVisibility() throws Exception {
+        String jsonBody = UniDataTestData.createUniDataUpdateJsonBody();
+
+        mockMvc.perform(put("/unidata/update")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(testUniDataJson)
-        ).andExpect(
-                MockMvcResultMatchers.status().isOk()
-        );
-        //ModuleUniEntityA - Name should change
-        Optional<ModuleUniEntity> existingModuleUniEntityA = Optional.ofNullable(moduleUniRepository.findByNumber("10-201-2001-1"));
-        assertThat(existingModuleUniEntityA).isPresent();
-        assertThat(existingModuleUniEntityA.get().getName()).isEqualTo("Algorithmen und Datenstrukturen 1");
-        //ModuleUniEntityB - Name should change
-        Optional<ModuleUniEntity> existingModuleUniEntityB = Optional.ofNullable(moduleUniRepository.findByNumber("10-201-2006-1"));
-        assertThat(existingModuleUniEntityB).isPresent();
-        assertThat(existingModuleUniEntityB.get().getName()).isEqualTo("Grundlagen der Technischen Informatik 1");
-        //ModuleUniEntityC - Major should change
-        Optional<ModuleUniEntity> existingModuleUniEntityC = Optional.ofNullable(moduleUniRepository.findByNumber("10-201-2004"));
-        assertThat(existingModuleUniEntityC).isPresent();
-        assertThat(existingModuleUniEntityC.get().getMajorUniEntity().getName()).isEqualTo("B.Sc. Informatik");
+                        .content(jsonBody))
+                .andExpect(status().isCreated());
+
+        // MajorUniEntity Check
+        Optional<MajorUniEntity> updatedMaster = majorUniRepository.findByName("M.Sc. Informatik");
+        assertThat(updatedMaster).isPresent();
+        assertThat(updatedMaster.get().getVisibleChoice()).isTrue();
+
+        // ModuleUniEntity Check
+        Optional<ModuleUniEntity> updatedMasterModule = moduleUniRepository.findByNumberAndNameAndMajorUniEntity("", "Kermodul (Wahlpflichtfach)", updatedMaster.get());
+        assertThat(updatedMasterModule).isPresent();
+        assertThat(updatedMasterModule.get().getVisibleChoice()).isTrue();
+
+        // MajorUniEntity Check
+        Optional<MajorUniEntity> updatedBachelor = majorUniRepository.findByName("B.Sc. Informatik");
+        assertThat(updatedBachelor).isPresent();
+        assertThat(updatedBachelor.get().getVisibleChoice()).isFalse();
+
+        // ModuleUniEntity Check
+        Optional<ModuleUniEntity> updatedBachelorModule = moduleUniRepository.findByNumberAndNameAndMajorUniEntity("10-201-2012", "Einführung Programmierung", updatedBachelor.get());
+        assertThat(updatedBachelorModule).isPresent();
+        assertThat(updatedBachelorModule.get().getVisibleChoice()).isFalse();
+
+        // ModuleUniEntity Check
+        Optional<ModuleUniEntity> inactiveBachelorModule = moduleUniRepository.findByNumberAndNameAndMajorUniEntity("10-201-2012", "Einführung Programmierung", updatedBachelor.get());
+        assertThat(inactiveBachelorModule).isPresent();
+        assertThat(inactiveBachelorModule.get().getVisibleChoice()).isFalse();
+    }
+
+    @Test
+    @Sql("/MultipleMajorsAndModules.sql")
+    @WithMockUser(username = "testuser", roles = {"OFFICE"})
+    public void updateNonExisting_shouldCreateNewEntities() throws Exception {
+        String jsonBody = UniDataTestData.createUniDataUpdateJsonBody();
+
+        mockMvc.perform(put("/unidata/update")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonBody))
+                .andExpect(status().isCreated());
+
+        // MajorUniEntity Check
+        Optional<MajorUniEntity> updatedMaster = majorUniRepository.findByName("M.Sc. Informatik");
+        assertThat(updatedMaster).isPresent();
+        assertThat(updatedMaster.get().getVisibleChoice()).isTrue();
+
+        // ModuleUniEntity Check
+        Optional<ModuleUniEntity> newMasterModule = moduleUniRepository.findByNumberAndNameAndMajorUniEntity("187-123-123-2", "Master-Coding", updatedMaster.get());
+        assertThat(newMasterModule).isPresent();
+        assertThat(newMasterModule.get().getVisibleChoice()).isTrue();
+
+        // MajorUniEntity Check
+        Optional<MajorUniEntity> newBachelor = majorUniRepository.findByName("B.Sc. Bio-Informatik");
+        assertThat(newBachelor).isPresent();
+        assertThat(newBachelor.get().getVisibleChoice()).isTrue();
+
+        // ModuleUniEntity Check
+        Optional<ModuleUniEntity> newBachelorModule = moduleUniRepository.findByNumberAndNameAndMajorUniEntity("123-13-132", "Evolutionstheorie", newBachelor.get());
+        assertThat(newBachelorModule).isPresent();
+        assertThat(newBachelorModule.get().getVisibleChoice()).isTrue();
     }
 }

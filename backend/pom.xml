@@ -89,7 +89,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
-					<!-- ${skip.ut} is set in gitlab-ci, ignore the error intellij throws-->
+					<!-- ${skip.ut} is set in gitlab-ci-->
 					<skipTests>${skip.ut}</skipTests>
 					<argLine>-Dfile.encoding=UTF-8</argLine>
 				</configuration>

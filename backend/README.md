@@ -183,13 +183,25 @@ The frontend sends the application ID, and the backend responds with the corresp
 The frontend sends the study program, and the backend provides the modules to be credited for this study program.
 
 #### Request Body
-```json
-    Request placeholder
+```http request
+http://localhost:3000/api/unidata/getModules?majorName=B.Sc. Informatik
 ```
 
 #### Response Body
 ```json
-    Response placeholder
+{
+  "name": "B.Sc. Informatik",
+  "modules": [
+    {
+      "number": "10-201-2005-2",
+      "name": "Programmierparadigmen"
+    },
+    {
+      "number": "10-201-2001-1",
+      "name": "Algorithmen und Datenstrukturen 1"
+    }
+  ]
+}
 ```
 
 </details>
@@ -207,12 +219,21 @@ The frontend receives a JSON with study programs that can be selected.
 
 #### Request Body
 ```json
-    Request placeholder
+-
 ```
 
 #### Response Body
 ```json
-    Response placeholder
+{
+  "courses": [
+    {
+      "name": "B.Sc. Informatik"
+    },
+    {
+      "name": "B.Sc. Bio-Informatik"
+    }
+  ]
+}
 ```
 
 </details>
@@ -439,12 +460,37 @@ The frontend provides a JSON with all study programs and their modules. The back
 
 #### Request Body
 ```json
-    Request placeholder
+{
+  "courses": [
+    {
+      "name": "B.Sc. Informatik",
+      "modules" : [
+        {
+          "name": "Programmierparadigmen",
+          "number": "10-201-2005-2"
+        },
+        {
+          "name": "Algorithmen und Datenstrukturen 1",
+          "number": "10-201-2001-1"
+        }
+      ]
+    },
+    {
+      "name": "B.Sc. Bio-Informatik",
+      "modules" : [
+        {
+          "name": "Evolutiontheorie",
+          "number": "9-144-1024-4"
+        }
+      ]
+    }
+  ]
+}
 ```
 
 #### Response Body
 ```json
-    Response placeholder
+    200 HTTP ok response
 ```
 
 </details>

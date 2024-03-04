@@ -16,8 +16,11 @@ import lombok.NoArgsConstructor;
 public class ModuleUniEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String number;
     private String name;
+    private Boolean visibleChoice;
     @ManyToOne
     @JsonBackReference
     @JoinColumn(name ="major_uni_name")

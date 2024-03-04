@@ -12,6 +12,10 @@ public class UniDataTestData {
         return JsonToStringConverter.convertJsonToString("UniMajorsAndModulesJsonA.json");
     }
 
+    public static String createUniDataUpdateJsonBody() throws Exception{
+        return JsonToStringConverter.convertJsonToString("UniDataUpdateJsonBody.json");
+    }
+
     public static MajorUniEntity createTestMajorUniEntityA() {
         return MajorUniEntity.builder()
                 //.id(null)
