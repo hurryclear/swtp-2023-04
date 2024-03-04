@@ -1,23 +1,23 @@
 <template>
   <v-container>
-      <v-col >
-        <v-card>
-          <v-card-title>{{ $t('reviewComponent.reviewApplication') }}</v-card-title>
-          <v-card-text>
-            <v-text-field
+    <v-col>
+      <v-card>
+        <v-card-title>{{ $t('reviewComponent.reviewApplication') }}</v-card-title>
+        <v-card-text>
+          <v-text-field
               :label="$t('reviewComponent.formID')"
               v-model="formId"
               @keyup.enter="checkStatus"
               outlined
               dense
-            />
-            <v-btn @click="checkStatus" color="primary" >{{ $t('reviewComponent.checkStatus') }}</v-btn>
-          </v-card-text>
-        </v-card>
-      </v-col>
+          />
+          <v-btn @click="checkStatus" color="primary">{{ $t('reviewComponent.checkStatus') }}</v-btn>
+        </v-card-text>
+      </v-card>
+    </v-col>
 
-      <v-col v-if="form">
-      <v-alert :color="statusColor" >
+    <v-col v-if="form">
+      <v-alert :color="statusColor">
         <div>
           {{ statusMessage }}
         </div>
@@ -25,11 +25,11 @@
       </v-alert>
     </v-col>
 
-      <v-col v-else-if="status">
-        <v-alert  type="info">
-          {{ status }}
-        </v-alert>
-      </v-col>
+    <v-col v-else-if="status">
+      <v-alert type="info">
+        {{ status }}
+      </v-alert>
+    </v-col>
   </v-container>
 </template>
 
@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     checkStatus() {
-      const foundForm = this.$store.getters.formsByStatus('all').find(f => f.id === this.formId);
+      const foundForm = this.$store.getters.form.formsByStatus('all').find(f => f.id === this.formId);
       if (foundForm) {
         this.form = foundForm;
         // TODO: i18n + mapping status to i18n translations.
@@ -59,11 +59,16 @@ export default {
     },
     determineStatusColor(status) {
       switch (status) {
-        case 'open': return 'blue';
-        case 'in progress': return 'orange';
-        case 'accepted': return 'green';
-        case 'denied': return 'red';
-        default: return 'grey';
+        case 'open':
+          return 'blue';
+        case 'in progress':
+          return 'orange';
+        case 'accepted':
+          return 'green';
+        case 'denied':
+          return 'red';
+        default:
+          return 'grey';
       }
     },
 
@@ -82,12 +87,12 @@ export default {
       URL.revokeObjectURL(link.href); // Clean up
     }
   }
-  
+
 };
 </script>
 
 <style scoped>
-  .mt-2 {
-    margin-top: 8px;
-  }
+.mt-2 {
+  margin-top: 8px;
+}
 </style>
