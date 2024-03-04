@@ -44,6 +44,12 @@ public class ApplicationController {
         return "Request accepted and message is: " + message;
     }
 
+    //test
+    @GetMapping("/hello")
+    public String sayHello() {
+        return "Hello from my test get mapping";
+    }
+
     // get all applications
     @GetMapping("/getApplication")
     public List<ApplicationEntity> getAllApplications() {
@@ -61,9 +67,9 @@ public class ApplicationController {
         return applicationService.getApplicationsByMajor(major);
     }
 
-    @GetMapping("/getApplication/{university}")
-    public List<ApplicationEntity> getApplicationsByUniversity(@PathVariable("university") String university) {
-        return applicationService.getApplicationsByUniversity(university);
+    @GetMapping("/getApplication/{universityName}")
+    public List<ApplicationEntity> getApplicationsByUniversity(@PathVariable("universityName") String universityName) {
+        return applicationService.getApplicationsByUniversityName(universityName);
     }
 
     @GetMapping("/getApplication/{dateOfSubmission}")

@@ -137,8 +137,8 @@ public class ApplicationService {
     }
 
     // get unique application by applicationkeyclass (id, creator)
-    public ApplicationEntity getApplicationByApplicationKeyClass(UUID id, String creator) {
-        return applicationRepository.findByApplicationKeyClass(id, creator);
+    public ApplicationEntity getApplicationByApplicationKeyClass(ApplicationKeyClass applicationKeyClass) {
+        return applicationRepository.findByApplicationKeyClass(applicationKeyClass);
     }
 
     public List<ApplicationEntity> getApplicationsByStatus(String status) {
@@ -148,8 +148,8 @@ public class ApplicationService {
     public List<ApplicationEntity> getApplicationsByMajor(String major) {
         return applicationRepository.findAllByMajor(major);
     }
-    public List<ApplicationEntity> getApplicationsByUniversity(String university) {
-        return applicationRepository.findAllByUniversity(university);
+    public List<ApplicationEntity> getApplicationsByUniversityName(String universityName) {
+        return applicationRepository.findAllByUniversityName(universityName);
     }
 
     public List<ApplicationEntity> getApplicationsByDateOfSubmission(String dateOfSubmission) {
