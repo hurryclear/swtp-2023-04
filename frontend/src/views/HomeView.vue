@@ -22,12 +22,11 @@
 </template>
 
 <script>
-import store from "@/store";
 
 export default {
   computed: {
     userRole() {
-      return store.state.userRole;
+      return this.$store.state.authentication.userRole;
     },
   }
 };

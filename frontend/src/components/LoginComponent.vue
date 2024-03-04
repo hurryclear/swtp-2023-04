@@ -39,7 +39,6 @@
 </template>
 
 <script>
-import axios from "@/plugins/axios"
 export default {
   name: 'LoginComponent',
   data() {
@@ -53,20 +52,13 @@ export default {
   methods: {
     async submitLogin() {
       try {
-        const response = await axios.post('/api/auth/login', {
+        await this.$store.dispatch('authenticateUser', {
           username: this.username,
-          password: this.password
+          password: this.password,
         });
 
-        const { token, role } = response.data;
-
-        // Store the token in local storage
-        localStorage.setItem('token', token);
-
-        // Set the user role and token in the store
-        this.$store.dispatch('authenticateUser', { status: true, role, token });
-
         // Redirect based on user role
+        const role = this.$store.state.authentication.userRole;
         if (role === 'ROLE_OFFICE') {
           this.$router.push('/student-affairs-office');
         } else if (role === 'ROLE_COMMITTEE') {
