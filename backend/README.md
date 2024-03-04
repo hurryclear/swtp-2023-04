@@ -495,6 +495,80 @@ The frontend provides a JSON with all study programs and their modules. The back
 
 </details>
 
+### Employee Get ALL University Modules and their Visibility
+
+<details>
+<summary>Click to expand Get University Modules endpoint details</summary>
+
+#### Endpoint
+`GET /api/unidata/getAllModules`
+
+#### Description
+The frontend sends the study program, and the backend provides visible AND invisible modules for this study program.
+
+#### Request Body
+```http request
+http://localhost:3000/api/unidata/getAllModules?majorName=B.Sc. Informatik
+```
+
+#### Response Body
+```json
+{
+  "name": "B.Sc. Informatik",
+  "visibleForStudents": true,
+  "modules": [
+    {
+      "number": "10-201-2012",
+      "name": "Einführung in die objektorientierte Modellierung und Programmierung",
+      "visibleForStudents": false
+    },
+    {
+      "number": "10-201-2005-2",
+      "name": "Programmierparadigmen",
+      "visibleForStudents": true
+    }
+  ]
+}
+```
+
+</details>
+
+### Employee Get ALL University Study Programs
+
+<details>
+<summary>Click to expand Get University Study Programs endpoint details</summary>
+
+#### Endpoint
+`GET /api/unidata/getAllMajors`
+
+#### Description
+The frontend receives a JSON with ALL study programs and their Visibilly.
+
+#### Request Body
+```json
+-
+```
+
+#### Response Body
+```json
+{
+  "courses": [
+    {
+      "name": "M.Sc. Informatik",
+      "visibleForStudents": false
+    },
+    {
+      "name": "B.Sc. Informatik",
+      "visibleForStudents": true
+    }
+  ]
+}
+```
+
+</details>
+
+
+
 ## Additional Notes
 
 - All endpoints should return appropriate HTTP status codes to indicate success or failure.
