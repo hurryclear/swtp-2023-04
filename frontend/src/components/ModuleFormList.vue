@@ -4,7 +4,7 @@
     <v-expansion-panels>
       <ModuleForm
           v-for="(moduleMapping, index) in moduleMappings"
-          :key="this.moduleMappings[index].meta.key"
+          :key="moduleMapping.meta.key"
           :moduleMapping="moduleMapping"
           :removeDisabled=" removeDisabled"
           @removeModule="removeModuleForm(index)"
@@ -41,10 +41,17 @@ export default defineComponent({
           },
           previousModules: [
             {
+              meta: {
+                comments: {
+                  student: "",
+                  office: ""
+                }
+              },
+              university: "",
               key: 0,
               number: "",
               name: "",
-              description: { file: null },
+              description: {file: null},
               credits: 0,
             },
           ],
@@ -63,7 +70,7 @@ export default defineComponent({
     addModuleForm() {
       this.moduleMappings.push({
         meta: {
-          key: (this.moduleMappings[this.moduleMappings.length - 1].key + 1),
+          key: (this.moduleMappings[this.moduleMappings.length - 1].meta.key + 1),
           approval: "",
           comments: {
             student: "",
@@ -72,10 +79,17 @@ export default defineComponent({
         },
         previousModules: [
           {
+            meta: {
+              comments: {
+                student: "",
+                office: ""
+              }
+            },
+            university: "",
             key: 0,
             number: "",
             name: "",
-            description: { file: null },
+            description: {file: null},
             credits: 0,
           },
         ],

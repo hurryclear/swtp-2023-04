@@ -10,7 +10,8 @@
         "moduleDescriptionLabel": "Module Description",
         "moduleNameLabel": "Module Name",
         "modulesToBeCreditedLabel": "Credited Module",
-        "removeModule": "Remove Module"
+        "removeModule": "Remove Module",
+        "creditLabel": "Credits (ECTS)"
       },
       "removeMapping": "Remove Module Mapping"
     },
