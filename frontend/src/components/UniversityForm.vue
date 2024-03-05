@@ -100,9 +100,10 @@
       </v-expansion-panel-title>
       <v-expansion-panel-text>
         <v-select
-            v-model="university.newCourseOfStudy"
+            v-model="newCourseOfStudy"
             hide-details
             :items="studyPlans"
+            item-title="name"
             :label="$t('applicationFormView.universityForm.courseOfStudy.nameLabel')"
             variant="outlined"
             class="userInput"
@@ -124,9 +125,9 @@ export default {
         country: "",
         website: "",
         courseOfStudy: "",
-        newCourseOfStudy: "",
         ...this.universityData,
       },
+      newCourseOfStudy: "",
       selectedUniversity: null,
     }
   },
@@ -162,12 +163,12 @@ export default {
       this.$store.dispatch('fetchModules', newValue);
     }
   },
-  created() {
-    if (!this.$store.state.university.universities.length) {
+  beforeCreate() {
+    if (!this.$store.state.module.universities || !this.$store.state.module.universities.length) {
       // If universities data is not in the store, fetch it
-      this.$store.dispatch('fetchUniversities')
+      this.$store.dispatch('fetchUniversities');
     }
-    if (!this.$store.state.module.studyPlans.length) {
+    if (!this.$store.state.module.studyPlans || !this.$store.state.module.studyPlans.length) {
       // If modules data is not in the store, fetch it
       this.$store.dispatch('fetchStudyPlans');
     }

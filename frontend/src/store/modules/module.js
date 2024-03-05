@@ -10,13 +10,14 @@ export default {
         setModules(state, modules) {
             state.modules = modules;
         },
-        setStudyPlan(state, studyPlans) {
+        setStudyPlans(state, studyPlans) {
             state.studyPlans = studyPlans;
         },
     },
     actions: {
         async fetchModules({commit},studyPlan) {
             try {
+                console.log("Fetching Modules for course of Study", studyPlan)
                 const modules = await ModuleService.fetchModules(studyPlan);
                 commit('setModules', modules);
                 console.log('Modules fetched and stored in the store.');

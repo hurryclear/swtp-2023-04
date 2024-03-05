@@ -13,6 +13,7 @@ export default {
     actions: {
         async fetchUniversities({commit}) {
             try {
+                console.log("Fetching Universities.")
                 const universities = await UniversityService.fetchUniversities();
                 commit('setUniversities', universities);
                 console.log('Universities fetched and stored in the store.');
