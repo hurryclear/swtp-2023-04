@@ -1,5 +1,6 @@
 package com.swtp4.backend.services;
 
+import com.swtp4.backend.exception.ResourceNotFoundException;
 import com.swtp4.backend.repositories.*;
 import com.swtp4.backend.repositories.dto.ApplicationDto;
 import com.swtp4.backend.repositories.dto.ModuleBlockDto;
@@ -9,6 +10,7 @@ import com.swtp4.backend.repositories.entities.keyClasses.ModuleRelationKeyClass
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +40,7 @@ public class ApplicationService {
         this.moduleUniRepository = moduleUniRepository;
     }
 
+    @Transactional
     public void save(ApplicationDto applicationDto) {
         //Save ApplicationEntities
         //TODO: Implement processNumberGenerator
@@ -124,9 +127,12 @@ public class ApplicationService {
     public List<ModuleUniEntity> getUniversityModulesByName(List<String> moduleStrings) {
         List<ModuleUniEntity> moduleUniEntities = new ArrayList<>();
         for (String moduleString : moduleStrings) {
-            moduleUniEntities.add(moduleUniRepository.findByName(moduleString));
-            List<ModuleUniEntity> allUniModules = moduleUniRepository.findAll();
-            log.info("this are all module entities: {}", allUniModules);
+            ModuleUniEntity moduleUni = moduleUniRepository.findByName(moduleString);
+            if (moduleUni == null)
+                throw new ResourceNotFoundException("Module "+ moduleString + " not found in Uni Modules");
+            moduleUniEntities.add(moduleUni);
+//            List<ModuleUniEntity> allUniModules = moduleUniRepository.findAll();
+//            log.info("this are all module entities: {}", allUniModules);
         }
         return moduleUniEntities;
     }
