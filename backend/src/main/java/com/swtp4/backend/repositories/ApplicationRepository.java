@@ -12,12 +12,12 @@ import java.util.UUID;
 public interface ApplicationRepository extends JpaRepository<ApplicationEntity, ApplicationKeyClass> {
     ApplicationEntity findByDateOfSubmissionAndApplicationKeyClass_Creator(String dateOfSubmission, String creator);
 
-    ApplicationEntity findByApplicationKeyClass(ApplicationKeyClass applicationKeyClass);
-    List<ApplicationEntity> findAllByStatus(String status);
-    List<ApplicationEntity> findAllByMajor(String major);
-    List<ApplicationEntity> findAllByUniversityName(String universityName);
-    List<ApplicationEntity> findAllByDateOfSubmission(String dateOfSubmission);
-    List<ApplicationEntity> findAllByDateOfSubmissionBefore(String dateOfSubmission);
-    List<ApplicationEntity> findAllByDateOfSubmissionAfter(String dateOfSubmission);
+//    ApplicationEntity findByIdAndCreator(UUID id,String creator);
+    List<ApplicationEntity> findByStatus(String status);
+    List<ApplicationEntity> findByMajor(String major);
+    List<ApplicationEntity> findByUniversityName(String universityName);
+    List<ApplicationEntity> findByDateOfSubmission(String dateOfSubmission);
+    List<ApplicationEntity> findByDateOfSubmissionBefore(String dateOfSubmission);
+    List<ApplicationEntity> findByDateOfSubmissionAfter(String dateOfSubmission);
 
 }

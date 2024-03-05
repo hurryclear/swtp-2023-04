@@ -1,5 +1,7 @@
 package com.swtp4.backend.controller;
 
+import ch.qos.logback.core.read.ListAppender;
+import com.swtp4.backend.repositories.ApplicationRepository;
 import com.swtp4.backend.repositories.dto.ApplicationDto;
 import com.swtp4.backend.repositories.dto.UniModuleDto;
 import com.swtp4.backend.repositories.entities.ApplicationEntity;
@@ -7,6 +9,7 @@ import com.swtp4.backend.repositories.entities.keyClasses.ApplicationKeyClass;
 import com.swtp4.backend.services.ApplicationService;
 import com.swtp4.backend.services.PDFService;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.weaver.ast.And;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,13 +17,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @RestController
 @CrossOrigin
 @RequestMapping(path = "/application")
 public class ApplicationController {
-
+    private ApplicationRepository applicationRepository; // test, delete later
     private ApplicationService applicationService;
     private PDFService pdfService;
 
@@ -40,40 +44,36 @@ public class ApplicationController {
 
     //test
     @PostMapping("/post")
-    public String sayHello(String message) {
+    public String sayHello1(String message) {
         return "Request accepted and message is: " + message;
     }
 
-    //test
-    @GetMapping("/hello")
-    public String sayHello() {
-        return "Hello from my test get mapping";
-    }
-
-    // get all applications
-    @GetMapping("/getApplication")
+    @GetMapping("/getApplications")
     public List<ApplicationEntity> getAllApplications() {
         return applicationService.getAllApplications();
     }
+//    @GetMapping("/getApplicationByIdAndCreator")
+//    public ApplicationEntity getApplicationByIdAndCreator(@RequestParam("id") UUID id, @RequestParam("creator") String creator){
+//        return applicationService.getApplicationByIdAndCreator(id, creator);
+//    }
 
-
-    @GetMapping("/getApplication/{status}")
-    public List<ApplicationEntity> getApplicationsByStatus(@PathVariable("status") String status) {
+    @GetMapping("/getApplicationsByStatus")
+    public List<ApplicationEntity> getApplicationsByStatus(@RequestParam("status") String status) {
         return applicationService.getApplicationsByStatus(status);
     }
 
-    @GetMapping("/getApplication/{major}")
-    public List<ApplicationEntity> getApplicationsByMajor(@PathVariable("major") String major) {
+    @GetMapping("/getApplicationsByMajor")
+    public List<ApplicationEntity> getApplicationsByMajor(@RequestParam("major") String major) {
         return applicationService.getApplicationsByMajor(major);
     }
 
-    @GetMapping("/getApplication/{universityName}")
-    public List<ApplicationEntity> getApplicationsByUniversity(@PathVariable("universityName") String universityName) {
+    @GetMapping("/getApplicationsByUniversity")
+    public List<ApplicationEntity> getApplicationsByUniversity(@RequestParam("universityName") String universityName) {
         return applicationService.getApplicationsByUniversityName(universityName);
     }
 
-    @GetMapping("/getApplication/{dateOfSubmission}")
-    public List<ApplicationEntity> getApplicationsByDateOfSubmission(@PathVariable("dateOfSubmission") String dateOfSubmission) {
+    @GetMapping("/getApplicationsByDateOfSubmission")
+    public List<ApplicationEntity> getApplicationsByDateOfSubmission(@RequestParam("dateOfSubmission") String dateOfSubmission) {
        return  applicationService.getApplicationsByDateOfSubmission(dateOfSubmission);
     }
 

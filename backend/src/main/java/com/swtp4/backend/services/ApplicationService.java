@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -137,31 +136,31 @@ public class ApplicationService {
     }
 
     // get unique application by applicationkeyclass (id, creator)
-    public ApplicationEntity getApplicationByApplicationKeyClass(ApplicationKeyClass applicationKeyClass) {
-        return applicationRepository.findByApplicationKeyClass(applicationKeyClass);
-    }
+//    public ApplicationEntity getApplicationByIdAndCreator(UUID id, String creator) {
+//        return applicationRepository.findByIdAndCreator(id, creator);
+//    }
 
     public List<ApplicationEntity> getApplicationsByStatus(String status) {
-        return applicationRepository.findAllByStatus(status);
+        return applicationRepository.findByStatus(status);
     }
 
     public List<ApplicationEntity> getApplicationsByMajor(String major) {
-        return applicationRepository.findAllByMajor(major);
+        return applicationRepository.findByMajor(major);
     }
     public List<ApplicationEntity> getApplicationsByUniversityName(String universityName) {
-        return applicationRepository.findAllByUniversityName(universityName);
+        return applicationRepository.findByUniversityName(universityName);
     }
 
     public List<ApplicationEntity> getApplicationsByDateOfSubmission(String dateOfSubmission) {
-        return applicationRepository.findAllByDateOfSubmission(dateOfSubmission);
+        return applicationRepository.findByDateOfSubmission(dateOfSubmission);
     }
 
     public List<ApplicationEntity> getApplicationsByDateOfSubmissionBefore(String dateOfSubmission) {
-        return applicationRepository.findAllByDateOfSubmissionBefore(dateOfSubmission);
+        return applicationRepository.findByDateOfSubmissionBefore(dateOfSubmission);
     }
 
     public List<ApplicationEntity> getApplicationsByDateOfSubmissionAfter(String dateOfSubmission) {
-        return applicationRepository.findAllByDateOfSubmissionAfter(dateOfSubmission);
+        return applicationRepository.findByDateOfSubmissionAfter(dateOfSubmission);
     }
 
 }
