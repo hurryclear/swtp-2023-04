@@ -77,6 +77,15 @@ public class ApplicationController {
        return  applicationService.getApplicationsByDateOfSubmission(dateOfSubmission);
     }
 
+    // still have to adjust
+    @GetMapping("/getApplicationsByDateOfSubmissionBefore")
+    public List<ApplicationEntity> getApplicationsByDateOfSubmissionBefore(@RequestParam("dateOfSubmission") String dateOfSubmission) {
+        return  applicationService.getApplicationsByDateOfSubmissionBefore(dateOfSubmission);
+    }
+    @GetMapping("/getApplicationsByDateOfSubmissionAfter")
+    public List<ApplicationEntity> getApplicationsByDateOfSubmissionAfter(@RequestParam("dateOfSubmission") String dateOfSubmission) {
+        return applicationService.getApplicationsByDateOfSubmissionAfter(dateOfSubmission);
+    }
     @PostMapping("/test")
     public ResponseEntity<UniModuleDto> testOfficeEndpoint(@RequestBody UniModuleDto uniModuleDto){
         return new ResponseEntity<>(uniModuleDto, HttpStatus.OK);
