@@ -9,14 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BackendApplication {
 
 
-//	public static void main(String[] args) {
-//		SpringApplication.run(BackendApplication.class, args);
-//	}
-
 	public static void main(String[] args) {
-		var ctx = SpringApplication.run(BackendApplication.class, args);
-		ApplicationService applicationService = ctx.getBean(ApplicationService.class);
-		System.out.println(applicationService.getApplicationsByStatus("open"));
+		SpringApplication.run(BackendApplication.class, args);
 	}
 
 }
