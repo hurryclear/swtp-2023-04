@@ -4,6 +4,7 @@ import com.swtp4.backend.repositories.applicationDtos.SubmittedApplicationDto;
 import com.swtp4.backend.repositories.dto.UniModuleDto;
 import com.swtp4.backend.services.ApplicationService;
 import com.swtp4.backend.services.PDFService;
+import com.swtp4.backend.services.SubmitService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
@@ -20,11 +22,11 @@ import java.util.Map;
 @CrossOrigin
 @RequestMapping(path = "/student")
 public class StudentController {
-    private ApplicationService applicationService;
+    private SubmitService applicationService;
     private PDFService pdfService;
 
     @Autowired
-    public StudentController(ApplicationService applicationService, PDFService pdfService){
+    public StudentController(SubmitService applicationService, PDFService pdfService){
         this.applicationService = applicationService;
         this.pdfService = pdfService;
     }
@@ -57,7 +59,9 @@ public class StudentController {
         });
         //System.out.println("Received JSON: " + submittedApplicationDto);
 
-        String applicationID = applicationService.saveSubmitted(submittedApplicationDto);
+        HashMap<String, String> file_paths = applicationService.saveSubmitted(submittedApplicationDto);
+
+        // TODO: here you can implement pdf saving by using multipart field names and provided paths in file_paths
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

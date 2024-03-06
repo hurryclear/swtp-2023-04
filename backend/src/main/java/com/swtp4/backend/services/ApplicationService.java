@@ -85,6 +85,7 @@ public class ApplicationService {
         }
     }
 
+    //TODO: Entity mit DATes würde passen
     public ApplicationEntity saveApplicationEntity(ApplicationEntity applicationEntity, String processNumber, String creator) {
         ApplicationKeyClass applicationKeyClass = new ApplicationKeyClass();
         applicationKeyClass.setCreator(creator);
@@ -140,8 +141,6 @@ public class ApplicationService {
         return moduleUniEntities;
     }
 
-    public String saveSubmitted(SubmittedApplicationDto submittedApplicationDto) {
-        String applicationID = uniqueNumberService.generateUniqueNumber();
-        return applicationID;
-    }
+
+
 }

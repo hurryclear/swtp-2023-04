@@ -85,7 +85,7 @@ public class ApplicationTestData {
                 .number("420")
                 .title("AlgoDat 1.5")
                 .description_pdf(null)
-                .credits("5")
+                .credits(5)
                 .university("University of Regenbogenland")
                 .major("B. Sc. Informatik")
                 .commentStudent("War cool")

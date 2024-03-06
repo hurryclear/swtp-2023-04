@@ -21,10 +21,11 @@ public class ModuleStudentEntity {
     private String title;
 //    @Lob
     private String description_pdf;
-    private String credits;
+    private Integer credits;
     private String university;
     private String major;
     private String commentStudent;
     private String commentEmployee;
     private String creator;
+    private Integer frontendKey;
 }
