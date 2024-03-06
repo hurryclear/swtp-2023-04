@@ -1,0 +1,65 @@
+{
+  "meta": {
+    "dateOfSubmission": "2023-12-31T22:30:42.103Z",
+    "dateLastEdited": "2024-01-14T14:12:14.675Z",
+    "status": ""
+  },
+  "university": {
+    "name": "University of Regenbogenland",
+    "country": "Regenbogencountry",
+    "website": "http://www.uni-halle.de/",
+    "courseOfStudy": "B. Sc. Informatik",
+    "newCourseOfStudy": "B.Sc. Informatik"
+  },
+  "moduleMappings": [
+    {
+      "meta": {
+        "key": 0
+      },
+      "previousModules": [
+        {
+          "meta": {
+            "approval": "",
+            "comments": {
+              "student": "War cool"
+            }
+          },
+          "major": "B. Sc. Informatik",
+          "university": {
+            "alpha_two_code": "RE",
+            "web_pages": [
+              "http://www.regenbogen.re/"
+            ],
+            "state-province": null,
+            "name": "University of Regenbogenland",
+            "domains": [
+              "regenbogen.re"
+            ],
+            "country": "Regenbogenland"
+          },
+          "key": 0,
+          "number": "420",
+          "name": "AlgoDat 1.5",
+          "description": {
+            "filename": "Modulbeschreibung AlgoDat 1.5.pdf",
+            "id": "0:0"
+          },
+          "credits": 5
+        }
+      ],
+      "modulesToBeCredited": [
+        {
+          "name": "Algorithmen und Datenstrukturen 1",
+          "number":"10-201-2001-1",
+          "id": 3
+        },
+        {
+          "name": "Algorithmen und Datenstrukturen 2",
+          "number":"10-201-2001-2",
+          "id": 4
+        }
+      ],
+      "isFilled": true
+    }
+  ]
+}

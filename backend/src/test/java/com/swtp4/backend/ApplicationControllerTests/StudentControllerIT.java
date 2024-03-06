@@ -27,7 +27,7 @@ import java.util.Optional;
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @AutoConfigureMockMvc
-public class ApplicationControllerIT {
+public class StudentControllerIT {
 
     private ApplicationService applicationService;
     private MockMvc mockMvc;
@@ -39,7 +39,7 @@ public class ApplicationControllerIT {
     private ModuleRelationRepository moduleRelationRepository;
 
     @Autowired
-    public ApplicationControllerIT(
+    public StudentControllerIT(
             ApplicationService applicationService,
             MockMvc mockMvc,
             MajorUniRepository majorUniRepository,
@@ -60,7 +60,6 @@ public class ApplicationControllerIT {
 
     @Test
     @Transactional
-    @WithMockUser(username = "testuser", roles = {"OFFICE"})
     public void testThatSaveApplicationSuccessfullyReturnsHttp201CreatedAndCreatesEntities() throws Exception {
         String testApplicationJson = ApplicationTestData.createTestApplicationJsonA();
         ModuleUniEntity testModuleUniA = ApplicationTestData.createTestModuleUniEntityA();
@@ -70,7 +69,7 @@ public class ApplicationControllerIT {
         majorUniRepository.saveAll(Arrays.asList(testModuleUniA.getMajorUniEntity(), testModuleUniB.getMajorUniEntity(), testModuleUniD.getMajorUniEntity(), testModuleUniE.getMajorUniEntity()));
         moduleUniRepository.saveAll(Arrays.asList(testModuleUniA, testModuleUniB, testModuleUniD, testModuleUniE));
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/application/saveApplication")
+                MockMvcRequestBuilders.post("/student/submitApplication")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(testApplicationJson)
         ).andExpect(
