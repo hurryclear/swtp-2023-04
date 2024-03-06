@@ -42,47 +42,40 @@ public class ApplicationController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    //test
-    @PostMapping("/post")
-    public String sayHello1(String message) {
-        return "Request accepted and message is: " + message;
-    }
-
-    @GetMapping("/getApplications")
+    // the following gets are for employee, it will only return applications with creator "Employee"
+    @GetMapping("/get-all-applications")
     public List<ApplicationEntity> getAllApplications() {
         return applicationService.getAllApplications();
     }
-//    @GetMapping("/getApplicationByIdAndCreator")
-//    public ApplicationEntity getApplicationByIdAndCreator(@RequestParam("id") UUID id, @RequestParam("creator") String creator){
-//        return applicationService.getApplicationByIdAndCreator(id, creator);
-//    }
 
-    @GetMapping("/getApplicationsByStatus")
+    @GetMapping("/get-applications-by-status")
     public List<ApplicationEntity> getApplicationsByStatus(@RequestParam("status") String status) {
         return applicationService.getApplicationsByStatus(status);
     }
 
-    @GetMapping("/getApplicationsByMajor")
+    @GetMapping("/get-applications-by-major")
     public List<ApplicationEntity> getApplicationsByMajor(@RequestParam("major") String major) {
         return applicationService.getApplicationsByMajor(major);
     }
 
-    @GetMapping("/getApplicationsByUniversity")
+    @GetMapping("/get-applications-by-university")
     public List<ApplicationEntity> getApplicationsByUniversity(@RequestParam("universityName") String universityName) {
         return applicationService.getApplicationsByUniversityName(universityName);
     }
 
-    @GetMapping("/getApplicationsByDateOfSubmission")
-    public List<ApplicationEntity> getApplicationsByDateOfSubmission(@RequestParam("dateOfSubmission") String dateOfSubmission) {
+    @GetMapping("/get-applications-by-date-of-submission")
+    public ApplicationEntity getApplicationsByDateOfSubmission(@RequestParam("dateOfSubmission") String dateOfSubmission) {
        return  applicationService.getApplicationsByDateOfSubmission(dateOfSubmission);
     }
 
-    // still have to adjust
-    @GetMapping("/getApplicationsByDateOfSubmissionBefore")
+    // not complete
+    @GetMapping("/get-applications-before-date-of-submission")
     public List<ApplicationEntity> getApplicationsByDateOfSubmissionBefore(@RequestParam("dateOfSubmission") String dateOfSubmission) {
         return  applicationService.getApplicationsByDateOfSubmissionBefore(dateOfSubmission);
     }
-    @GetMapping("/getApplicationsByDateOfSubmissionAfter")
+
+    // not complete
+    @GetMapping("/get-applications-after-date-of-submission")
     public List<ApplicationEntity> getApplicationsByDateOfSubmissionAfter(@RequestParam("dateOfSubmission") String dateOfSubmission) {
         return applicationService.getApplicationsByDateOfSubmissionAfter(dateOfSubmission);
     }

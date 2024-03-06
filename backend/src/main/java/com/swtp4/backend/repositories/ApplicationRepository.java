@@ -10,14 +10,19 @@ import java.util.UUID;
 
 @Repository
 public interface ApplicationRepository extends JpaRepository<ApplicationEntity, ApplicationKeyClass> {
+
+    ApplicationEntity findByApplicationKeyClass_IdAndApplicationKeyClass_Creator(UUID id, String creator);
+    List<ApplicationEntity> findByApplicationKeyClass_Creator(String creator);
+    List<ApplicationEntity> findByStatusAndApplicationKeyClass_Creator(String status, String creator);
+    List<ApplicationEntity> findByMajorAndApplicationKeyClass_Creator(String major, String creator);
+    List<ApplicationEntity> findByUniversityNameAndApplicationKeyClass_Creator(String universityName, String creator);
+
+    // dateOfSubmission includes also time, but when we search we actually want to search only with date, that's enough, so how can I transfer
     ApplicationEntity findByDateOfSubmissionAndApplicationKeyClass_Creator(String dateOfSubmission, String creator);
 
-//    ApplicationEntity findByIdAndCreator(UUID id,String creator);
-    List<ApplicationEntity> findByStatus(String status);
-    List<ApplicationEntity> findByMajor(String major);
-    List<ApplicationEntity> findByUniversityName(String universityName);
-    List<ApplicationEntity> findByDateOfSubmission(String dateOfSubmission);
-    List<ApplicationEntity> findByDateOfSubmissionBefore(String dateOfSubmission);
-    List<ApplicationEntity> findByDateOfSubmissionAfter(String dateOfSubmission);
+    // how can I find only by certain date without timing
+
+    List<ApplicationEntity> findByDateOfSubmissionBeforeAndApplicationKeyClass_Creator(String dateOfSubmission, String creator);
+    List<ApplicationEntity> findByDateOfSubmissionAfterAndApplicationKeyClass_Creator(String dateOfSubmission, String creator);
 
 }
