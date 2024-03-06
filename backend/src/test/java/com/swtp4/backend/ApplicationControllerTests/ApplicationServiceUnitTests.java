@@ -51,7 +51,7 @@ public class ApplicationServiceUnitTests {
     public void testThatSaveApplicationEntitySuccessfullyCreatesApplication() throws Exception {
         ApplicationEntity testApplication = ApplicationTestData.createTestApplicationEntityA();
         testApplication.setApplicationKeyClass(null);
-        UUID processNumber = UUID.randomUUID();
+        String processNumber = UUID.randomUUID().toString();
         String creator = "Student";
         applicationService.saveApplicationEntity(testApplication, processNumber, creator);
         ApplicationKeyClass testApplicationKeyClass = ApplicationKeyClass.builder().id(processNumber).creator(creator).build();

@@ -2,6 +2,7 @@ package com.swtp4.backend.services;
 
 import com.swtp4.backend.exception.ResourceNotFoundException;
 import com.swtp4.backend.repositories.*;
+import com.swtp4.backend.repositories.applicationDtos.SubmittedApplicationDto;
 import com.swtp4.backend.repositories.dto.ApplicationDto;
 import com.swtp4.backend.repositories.dto.ModuleBlockDto;
 import com.swtp4.backend.repositories.entities.*;
@@ -14,12 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @Service
 public class ApplicationService {
 
+    private UniqueNumberService uniqueNumberService;
     private ApplicationRepository applicationRepository;
     private ModuleStudentRepository moduleStudentRepository;
     private ModuleBlockRepository moduleBlockRepository;
@@ -28,11 +29,13 @@ public class ApplicationService {
 
     @Autowired
     public ApplicationService(
+            UniqueNumberService uniqueNumberService,
             ApplicationRepository applicationRepository,
             ModuleBlockRepository moduleBlockRepository,
             ModuleStudentRepository moduleStudentRepository,
             ModuleRelationRepository moduleRelationRepository,
             ModuleUniRepository moduleUniRepository) {
+        this.uniqueNumberService = uniqueNumberService;
         this.applicationRepository = applicationRepository;
         this.moduleBlockRepository = moduleBlockRepository;
         this.moduleStudentRepository = moduleStudentRepository;
@@ -44,7 +47,7 @@ public class ApplicationService {
     public void save(ApplicationDto applicationDto) {
         //Save ApplicationEntities
         //TODO: Implement processNumberGenerator
-        UUID processNumber = UUID.randomUUID();
+        String processNumber = uniqueNumberService.generateUniqueNumber();
         ApplicationEntity savedApplicationEntityStudent = saveApplicationEntity(applicationDto.getApplicationData(), processNumber, "Student");
         log.info("SavedApplicationEntityStudent: {}", savedApplicationEntityStudent);
         ApplicationEntity savedApplicationEntityEmployee = saveApplicationEntity(applicationDto.getApplicationData(), processNumber, "Employee");
@@ -82,7 +85,7 @@ public class ApplicationService {
         }
     }
 
-    public ApplicationEntity saveApplicationEntity(ApplicationEntity applicationEntity, UUID processNumber, String creator) {
+    public ApplicationEntity saveApplicationEntity(ApplicationEntity applicationEntity, String processNumber, String creator) {
         ApplicationKeyClass applicationKeyClass = new ApplicationKeyClass();
         applicationKeyClass.setCreator(creator);
         applicationKeyClass.setId(processNumber);
@@ -135,5 +138,10 @@ public class ApplicationService {
 //            log.info("this are all module entities: {}", allUniModules);
         }
         return moduleUniEntities;
+    }
+
+    public String saveSubmitted(SubmittedApplicationDto submittedApplicationDto) {
+        String applicationID = uniqueNumberService.generateUniqueNumber();
+        return applicationID;
     }
 }

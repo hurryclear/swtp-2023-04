@@ -25,7 +25,7 @@ public class ApplicationTestData {
 
     public static ApplicationKeyClass createTestApplicationKeyClassA() {
         return ApplicationKeyClass.builder()
-                .id(UUID.randomUUID())
+                .id(UUID.randomUUID().toString())
                 .creator("Student").build();
     }
 

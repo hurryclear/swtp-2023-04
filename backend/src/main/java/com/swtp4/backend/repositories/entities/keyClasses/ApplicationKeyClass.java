@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.UUID;
 
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,7 +17,7 @@ import java.util.UUID;
 public class ApplicationKeyClass implements Serializable {
 
     @Column(name = "id")
-    private UUID id; //TODO ID-Generator Datentyp
+    private String id; //TODO ID-Generator Datentyp
 
     @Column(name = "creator")
     private String creator;

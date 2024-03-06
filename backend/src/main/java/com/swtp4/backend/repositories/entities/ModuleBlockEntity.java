@@ -18,7 +18,7 @@ public class ModuleBlockEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumns({
             @JoinColumn(name = "application_id"),
             @JoinColumn(name = "application_creator")
