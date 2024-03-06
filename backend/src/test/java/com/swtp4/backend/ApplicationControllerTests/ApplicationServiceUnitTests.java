@@ -2,11 +2,12 @@ package com.swtp4.backend.ApplicationControllerTests;
 
 
 import com.swtp4.backend.repositories.*;
-import com.swtp4.backend.repositories.entities.*;
+import com.swtp4.backend.repositories.entities.ApplicationEntity;
+import com.swtp4.backend.repositories.entities.ModuleBlockEntity;
+import com.swtp4.backend.repositories.entities.ModuleRelationEntity;
+import com.swtp4.backend.repositories.entities.ModuleUniEntity;
 import com.swtp4.backend.repositories.entities.keyClasses.ApplicationKeyClass;
 import com.swtp4.backend.services.ApplicationService;
-import org.aspectj.lang.annotation.Before;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,7 +24,8 @@ import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
