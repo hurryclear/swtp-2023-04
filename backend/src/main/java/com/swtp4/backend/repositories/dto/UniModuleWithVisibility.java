@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class UniModuleWithVisibility {
+    private Long id;
     private String number;
     private String name;
     private Boolean visibleForStudents;
