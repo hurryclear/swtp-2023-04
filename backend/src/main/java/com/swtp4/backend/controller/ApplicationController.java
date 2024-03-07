@@ -44,7 +44,7 @@ public class ApplicationController {
         return applicationService.getAllApplications();
     }
 
-    @GetMapping("/get-applications-by-id")
+    @GetMapping("/get-application-by-id")
     public ApplicationEntity getApplicationById(@RequestParam("id") UUID id) {
         return applicationService.getApplicationById(id);
     }
