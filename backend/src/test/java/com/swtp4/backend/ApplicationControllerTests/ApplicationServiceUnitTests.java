@@ -74,17 +74,17 @@ public class ApplicationServiceUnitTests {
     @Test
     public void testThatSaveApplicationEntitySuccessfullyCreatesApplication() throws Exception {
         //Given
-        ApplicationEntity testApplicationEntityA = ApplicationTestData.createTestApplicationEntityA();
-        testApplicationEntityA.setApplicationKeyClass(null);
+        ApplicationEntity mockApplicationEntity = ApplicationTestData.createTestApplicationEntityA();
         UUID processNumber = UUID.randomUUID();
         String creator = "Student";
-        //when
-        ApplicationEntity mockApplicationEntity = applicationService.saveApplicationEntity(testApplicationEntityA, processNumber, creator);
-        //Then
+        ApplicationKeyClass testApplicationKeyClass = ApplicationKeyClass.builder().id(processNumber).creator(creator).build();
+        mockApplicationEntity.setApplicationKeyClass(testApplicationKeyClass);
         //Mock the calls
-        when(applicationRepository.findByApplicationKeyClass_IdAndApplicationKeyClass_Creator(processNumber, creator)).thenReturn(mockApplicationEntity);
+        when(applicationRepository.save(mockApplicationEntity)).thenReturn(mockApplicationEntity);
+        //when
+        ApplicationEntity resultApplicationEntity = applicationService.saveApplicationEntity(mockApplicationEntity, processNumber, creator);
+        //Then
         //Verify the result and mock
-        ApplicationEntity resultApplicationEntity = applicationService.getApplicationById(processNumber); // this still use other method in service, is this ok?
         assertEquals(mockApplicationEntity, resultApplicationEntity);
     }
 
