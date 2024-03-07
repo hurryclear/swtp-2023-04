@@ -19,8 +19,9 @@ public class ApplicationTestData {
                 .dateLastEdited("2024-01-14T14:12:14.675Z")
                 .universityName("University of Regenbogenland")
                 .major("B. Sc. Informatik")
-                .commentStudent("Ich will alle CP valla")
-                .commentEmployee("Der bekommt nicht alle CP yalla").build();
+                //.commentStudent("Ich will alle CP valla")
+                //.commentEmployee("Der bekommt nicht alle CP yalla")
+                .build();
     }
 
     public static ApplicationKeyClass createTestApplicationKeyClassA() {
@@ -33,9 +34,7 @@ public class ApplicationTestData {
         return ModuleBlockEntity.builder()
                 .id((long) 420)
                 .applicationEntity(ApplicationTestData.createTestApplicationEntityA())
-                .approval("")
-                .commentStudent("War cool")
-                .commentEmployee("Das nicht so cool").build();
+                .build();
     }
 
     public static ModuleUniEntity createTestModuleUniEntityA() {
@@ -85,7 +84,7 @@ public class ApplicationTestData {
                 .number("420")
                 .title("AlgoDat 1.5")
                 .description_pdf(null)
-                .credits(5)
+                .credits(5L)
                 .university("University of Regenbogenland")
                 .major("B. Sc. Informatik")
                 .commentStudent("War cool")

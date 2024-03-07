@@ -24,12 +24,5 @@ public class ModuleBlockEntity {
             @JoinColumn(name = "application_creator")
     })
     private ApplicationEntity applicationEntity;
-    private Integer frontendKey;
-
-    private String approval;
-
-    private String commentStudent;
-
-    private String commentEmployee;
-
+    private Long frontendKey;
 }

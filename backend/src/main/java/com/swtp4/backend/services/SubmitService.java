@@ -64,7 +64,7 @@ public class SubmitService {
 
                 ModuleStudentEntity moduleEmployee = saveModuleStudentEntity("Employee", moduleDto, pdf_path);
 
-                for(Integer uniModuleID : blockDto.uniModulesIDs()) {
+                for(Long uniModuleID : blockDto.uniModulesIDs()) {
                     saveModuleRelationEntity(blockStudent, moduleStudent, uniModuleID);
                     saveModuleRelationEntity(blockEmployee, moduleEmployee, uniModuleID);
                 }
@@ -106,8 +106,8 @@ public class SubmitService {
                 .build());
     }
 
-    private void saveModuleRelationEntity(ModuleBlockEntity block, ModuleStudentEntity studentModule, Integer uniModuleID) {
-        ModuleUniEntity uniModule = moduleUniRepository.findById(uniModuleID.longValue())
+    private void saveModuleRelationEntity(ModuleBlockEntity block, ModuleStudentEntity studentModule, Long uniModuleID) {
+        ModuleUniEntity uniModule = moduleUniRepository.findById(uniModuleID)
                 .orElseThrow(() -> new ResourceNotFoundException("Major not found. The University Module with ID " + uniModuleID + " does not exist and therefore can't be credited."));
         moduleRelationRepository.save(ModuleRelationEntity.builder()
                 .moduleBlockEntity(block)

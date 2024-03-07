@@ -18,7 +18,7 @@ import java.io.Serializable;
 @Builder
 public class ModuleRelationKeyClass implements Serializable {
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "module_student_id")
     private ModuleStudentEntity moduleStudentEntity;
 

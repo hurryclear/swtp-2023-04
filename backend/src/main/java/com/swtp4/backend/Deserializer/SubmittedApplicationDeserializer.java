@@ -24,10 +24,10 @@ public class SubmittedApplicationDeserializer extends JsonDeserializer<Submitted
         if(moduleMappings.isArray()) {
             for(JsonNode block : moduleMappings){
                 JsonNode modulesToBeCredited = block.get("modulesToBeCredited");
-                List<Integer> modulesCreditedIDs = new ArrayList<>();
+                List<Long> modulesCreditedIDs = new ArrayList<>();
                 if(modulesToBeCredited.isArray()) {
                     for(JsonNode module : modulesToBeCredited) {
-                        modulesCreditedIDs.add(module.get("id").asInt());
+                        modulesCreditedIDs.add(module.get("id").asLong());
                     }
                 }
                 JsonNode previousModules = block.get("previousModules");
@@ -37,17 +37,17 @@ public class SubmittedApplicationDeserializer extends JsonDeserializer<Submitted
                         SubmittedStudentModule submittedModule = new SubmittedStudentModule(
                                 moduleNode.get("number").asText(),
                                 moduleNode.get("name").asText(),
-                                moduleNode.get("credits").asInt(),
+                                moduleNode.get("credits").asLong(),
                                 moduleNode.get("university").get("name").asText(),
                                 moduleNode.get("major").asText(),
                                 moduleNode.get("meta").get("comments").get("student").asText(),
-                                moduleNode.get("key").asInt()
+                                moduleNode.get("key").asLong()
                         );
                         submittedStudentModules.add(submittedModule);
                     }
                 }
                 SubmittedBlock submittedBlock = new SubmittedBlock(
-                        block.get("meta").get("key").asInt(),
+                        block.get("meta").get("key").asLong(),
                         submittedStudentModules,
                         modulesCreditedIDs
                 );

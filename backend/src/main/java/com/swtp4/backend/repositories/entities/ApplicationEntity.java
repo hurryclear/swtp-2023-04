@@ -29,7 +29,5 @@ public class ApplicationEntity {
 
     private String major;
 
-    private String commentStudent;
-
-    private String commentEmployee;
+    private String formalRejectionReason;
 }
