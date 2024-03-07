@@ -136,4 +136,39 @@ public class ApplicationService {
         }
         return moduleUniEntities;
     }
+
+    public List<ApplicationEntity> getAllApplications() {
+        return applicationRepository.findByApplicationKeyClass_Creator("Employee");
+    }
+
+    //get unique application by applicationkeyclass (id, creator)
+    public ApplicationEntity getApplicationById(UUID id) {
+        return applicationRepository.findByApplicationKeyClass_IdAndApplicationKeyClass_Creator(id, "Employee");
+    }
+
+    public List<ApplicationEntity> getApplicationsByStatus(String status) {
+        return applicationRepository.findByStatusAndApplicationKeyClass_Creator(status, "Employee");
+    }
+
+    public List<ApplicationEntity> getApplicationsByMajor(String major) {
+        return applicationRepository.findByMajorAndApplicationKeyClass_Creator(major, "Employee");
+    }
+    public List<ApplicationEntity> getApplicationsByUniversityName(String universityName) {
+        return applicationRepository.findByUniversityNameAndApplicationKeyClass_Creator(universityName, "Employee");
+    }
+
+    public ApplicationEntity getApplicationsByDateOfSubmission(String dateOfSubmission) {
+        return applicationRepository.findByDateOfSubmissionAndApplicationKeyClass_Creator(dateOfSubmission, "Employee");
+    }
+
+    // not complete
+    public List<ApplicationEntity> getApplicationsByDateOfSubmissionBefore(String dateOfSubmission) {
+        return applicationRepository.findByDateOfSubmissionBeforeAndApplicationKeyClass_Creator(dateOfSubmission, "Employee");
+    }
+
+    // not complete
+    public List<ApplicationEntity> getApplicationsByDateOfSubmissionAfter(String dateOfSubmission) {
+        return applicationRepository.findByDateOfSubmissionAfterAndApplicationKeyClass_Creator(dateOfSubmission, "Employee");
+    }
+
 }
