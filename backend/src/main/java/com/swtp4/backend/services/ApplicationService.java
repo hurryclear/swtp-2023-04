@@ -135,10 +135,10 @@ public class ApplicationService {
         return applicationRepository.findByApplicationKeyClass_Creator("Employee");
     }
 
-    // get unique application by applicationkeyclass (id, creator)
-//    public ApplicationEntity getApplicationByIdAndCreator(UUID id, String creator) {
-//        return applicationRepository.findByIdAndCreator(id, creator);
-//    }
+    //get unique application by applicationkeyclass (id, creator)
+    public ApplicationEntity getApplicationById(UUID id) {
+        return applicationRepository.findByApplicationKeyClass_IdAndApplicationKeyClass_Creator(id, "Employee");
+    }
 
     public List<ApplicationEntity> getApplicationsByStatus(String status) {
         return applicationRepository.findByStatusAndApplicationKeyClass_Creator(status, "Employee");

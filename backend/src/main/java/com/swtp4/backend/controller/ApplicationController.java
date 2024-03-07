@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -43,6 +44,10 @@ public class ApplicationController {
         return applicationService.getAllApplications();
     }
 
+    @GetMapping("/get-applications-by-id")
+    public ApplicationEntity getApplicationById(@RequestParam("id") UUID id) {
+        return applicationService.getApplicationById(id);
+    }
     @GetMapping("/get-applications-by-status")
     public List<ApplicationEntity> getApplicationsByStatus(@RequestParam("status") String status) {
         return applicationService.getApplicationsByStatus(status);

@@ -24,8 +24,7 @@ import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -147,6 +146,25 @@ public class ApplicationServiceUnitTests {
         assertEquals(mockApplicationEntityList, applicationEntityList1);
     }
 
+    @Test
+    public void shouldGetApplicationsById() {
+        //Given
+        UUID id = UUID.randomUUID();
+        String creator = "Employee";
+        ApplicationKeyClass testApplicationKeyClass = ApplicationKeyClass.builder().id(id).creator(creator).build();
+        ApplicationEntity mockApplicationEntity = ApplicationTestData.createTestApplicationEntityA();
+        mockApplicationEntity.setApplicationKeyClass(testApplicationKeyClass);
+        //Mock the calls
+        when(applicationRepository.findByApplicationKeyClass_IdAndApplicationKeyClass_Creator(eq(id), eq(creator)))
+                .thenReturn(mockApplicationEntity);
+        //When
+        ApplicationEntity resultApplicationEntity = applicationService.getApplicationById(id);
+        //Then
+        //Verify that the repository method was called with the correct parameter
+        verify(applicationRepository).findByApplicationKeyClass_IdAndApplicationKeyClass_Creator(eq(id), eq(creator));
+        //Verify that result is the same sa the mock
+        assertEquals(mockApplicationEntity, resultApplicationEntity);
+    }
     @Test
     public void shouldGetApplicationsByStatus() {
         //Given
