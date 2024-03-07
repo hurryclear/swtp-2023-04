@@ -59,17 +59,34 @@ public class ApplicationServiceUnitTests {
         this.majorUniRepository = majorUniRepository;
     }
 
+//    @Test
+//    public void testThatSaveApplicationEntitySuccessfullyCreatesApplication() throws Exception {
+//        ApplicationEntity testApplication = ApplicationTestData.createTestApplicationEntityA();
+//        testApplication.setApplicationKeyClass(null);
+//        UUID processNumber = UUID.randomUUID();
+//        String creator = "Student";
+//        applicationService.saveApplicationEntity(testApplication, processNumber, creator);
+//        ApplicationKeyClass testApplicationKeyClass = ApplicationKeyClass.builder().id(processNumber).creator(creator).build();
+//        Optional<ApplicationEntity> result = applicationRepository.findById(testApplicationKeyClass); // can't use applicationRepository because of independence?
+//        assertThat(result).isPresent();
+//        assertThat(result.get()).isEqualTo(testApplication);
+//    }
+
     @Test
     public void testThatSaveApplicationEntitySuccessfullyCreatesApplication() throws Exception {
-        ApplicationEntity testApplication = ApplicationTestData.createTestApplicationEntityA();
-        testApplication.setApplicationKeyClass(null);
+        //Given
+        ApplicationEntity testApplicationEntityA = ApplicationTestData.createTestApplicationEntityA();
+        testApplicationEntityA.setApplicationKeyClass(null);
         UUID processNumber = UUID.randomUUID();
         String creator = "Student";
-        applicationService.saveApplicationEntity(testApplication, processNumber, creator);
-        ApplicationKeyClass testApplicationKeyClass = ApplicationKeyClass.builder().id(processNumber).creator(creator).build();
-        Optional<ApplicationEntity> result = applicationRepository.findById(testApplicationKeyClass);
-        assertThat(result).isPresent();
-        assertThat(result.get()).isEqualTo(testApplication);
+        //when
+        ApplicationEntity mockApplicationEntity = applicationService.saveApplicationEntity(testApplicationEntityA, processNumber, creator);
+        //Then
+        //Mock the calls
+        when(applicationRepository.findByApplicationKeyClass_IdAndApplicationKeyClass_Creator(processNumber, creator)).thenReturn(mockApplicationEntity);
+        //Verify the result and mock
+        ApplicationEntity resultApplicationEntity = applicationService.getApplicationById(processNumber); // this still use other method in service, is this ok?
+        assertEquals(mockApplicationEntity, resultApplicationEntity);
     }
 
     @Test
