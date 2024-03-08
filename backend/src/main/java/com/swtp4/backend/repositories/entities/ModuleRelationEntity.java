@@ -18,7 +18,7 @@ public class ModuleRelationEntity {
     @EmbeddedId
     private ModuleRelationKeyClass moduleRelationKeyClass;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne//(cascade = CascadeType.ALL)
     @JoinColumn(name = "module_block_id")
     private ModuleBlockEntity moduleBlockEntity;
 }

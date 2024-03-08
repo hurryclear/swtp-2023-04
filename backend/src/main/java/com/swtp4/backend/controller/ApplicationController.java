@@ -2,6 +2,7 @@ package com.swtp4.backend.controller;
 
 import com.swtp4.backend.repositories.ApplicationRepository;
 import com.swtp4.backend.repositories.dto.ApplicationDto;
+import com.swtp4.backend.repositories.applicationDtos.EditedApplicationDto;
 import com.swtp4.backend.repositories.dto.UniModuleDto;
 import com.swtp4.backend.repositories.entities.ApplicationEntity;
 import com.swtp4.backend.services.ApplicationService;
@@ -20,7 +21,6 @@ import java.util.UUID;
 @CrossOrigin
 @RequestMapping(path = "/application")
 public class ApplicationController {
-    private ApplicationRepository applicationRepository; // test, delete later
     private ApplicationService applicationService;
     private PDFService pdfService;
 
@@ -31,10 +31,10 @@ public class ApplicationController {
     }
 
     //changed to student controler
-    @PostMapping("/saveApplication")
-    public ResponseEntity<?> saveApplication(@RequestBody ApplicationDto applicationDTO) {
+    @PostMapping("/saveEdited")
+    public ResponseEntity<?> saveApplication(@RequestBody EditedApplicationDto applicationDTO){
         log.info("Received ApplicationDto: {}", applicationDTO);
-        applicationService.save(applicationDTO);
+        applicationService.updateApplication(applicationDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -45,7 +45,7 @@ public class ApplicationController {
     }
 
     @GetMapping("/get-application-by-id")
-    public ApplicationEntity getApplicationById(@RequestParam("id") UUID id) {
+    public ApplicationEntity getApplicationById(@RequestParam("id") String id) {
         return applicationService.getApplicationById(id);
     }
     @GetMapping("/get-applications-by-status")
@@ -81,7 +81,7 @@ public class ApplicationController {
     }
 
     @PostMapping("/test")
-    public ResponseEntity<UniModuleDto> testOfficeEndpoint(@RequestBody UniModuleDto uniModuleDto) {
+    public ResponseEntity<UniModuleDto> testOfficeEndpoint(@RequestBody UniModuleDto uniModuleDto){
         return new ResponseEntity<>(uniModuleDto, HttpStatus.OK);
     }
 

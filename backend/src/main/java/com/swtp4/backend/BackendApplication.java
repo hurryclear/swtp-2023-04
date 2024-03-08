@@ -1,7 +1,5 @@
 package com.swtp4.backend;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
-import com.swtp4.backend.services.ApplicationService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

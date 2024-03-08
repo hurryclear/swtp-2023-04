@@ -17,14 +17,16 @@ public class ModuleStudentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+    private Long frontendKey;
+    private String approval;
+    private String approvalReason;
     private String number;
     private String title;
-//    @Lob
-    private String description_pdf;
-    private String credits;
+    private Long credits;
     private String university;
     private String major;
     private String commentStudent;
     private String commentEmployee;
+    private String description_pdf;
     private String creator;
 }

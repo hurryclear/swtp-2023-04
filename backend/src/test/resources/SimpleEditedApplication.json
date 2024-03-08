@@ -1,0 +1,183 @@
+
+// das senden und empfangen Backend UND Frontend
+{
+  "original": {
+    "applicationData": {
+      "applicationID": "23-23-23-23-23-23-23-23-23-23-23",
+      "status": "",
+      //offen, in bearbeitung, formal abgelehnt,     aber nicht abgelehnt, angenommen
+      "formalReject": "JO du hast das völlig falsch gemacht mach den antrag nochmal",
+      "dateOfSubmission": "2024-03-05T13:56:51.560Z",
+      "dateLastEdited": "2024-03-05T13:56:51.560Z",
+      "university": "University of Regenbogenland",
+      "oldCourseOfStudy": "B.Sc Informatik",       //alter studiengang default
+      "newCourseOfStudy": "B.Sc Informatik"   //Studiengang Uni leipzig kann nicht verändert werden!!
+    },
+    "moduleFormsData": [
+      {
+        "frontend_key": 0,
+        "backend_block_id": 1,
+        // backend Id zur identifikation des blocks
+        "modulesStudent": [
+          {
+            "frontend_key": 0,
+            // frontend key eines Moduls in einem block, hier ist es das 1. Modul des 1. Blocks
+            "backend_module_id": 3,
+            // backend id des student moduls zur eindeutigen identifikation
+            "approval": "angenommen",
+            "reason": "ja das kann man so machen passt alles soweit.",
+            "number": "420",
+            "title": "AlgoDat 1.5",
+            "path": "/23-23-23-23-23-23-23-23-23-23-23/S-3",
+            "credits": "5",
+            "university": "University of Regenbogenland",
+            "major": "B.Sc. Informatik",
+            "commentStudent": "War cool",
+            "commentEmployee": "Das nicht so cool"
+          },
+          {
+            "frontend_key": 1,
+            // frontend key eines Moduls in einem block, hier ist es das 1. Modul des 1. Blocks
+            "backend_module_id": 5,
+            // backend id des student moduls zur eindeutigen identifikation
+            "approval": "angenommen",
+            "reason": "ja das kann man so machen passt alles soweit.",
+            "number": "4202",
+            "title": "AlgoDat 0.5",
+            "path": "/23-23-23-23-23-23-23-23-23-23-23/S-5",
+            "credits": "5",
+            "university": "University of Regenbogenland",
+            "major": "B.Sc. Informatik",
+            "commentStudent": "War easy",
+            "commentEmployee": "Das nicht so cool"
+          }
+        ],
+        "modules2bCredited": [
+          1,
+          //id vom Uni Modul Alg 1
+          2
+          //id vom Uni Modul Alg 2
+        ]
+      },
+      {
+        "frontend_key": 1,
+        "backend_block_id": 3,
+        // backend Id zur identifikation des blocks
+        "modulesStudent": [
+          {
+            "frontend_key": 0,
+            // frontend key eines Moduls in einem block, hier ist es das 1. Modul des 1. Blocks
+            "backend_module_id": 5,
+            // backend id des student moduls zur eindeutigen identifikation
+            "approval": "angenommen",
+            "reason": "ja das kann man so machen passt alles soweit.",
+            "number": "81923",
+            "title": "Das Alles-Modul",
+            "path": "/23-23-23-23-23-23-23-23-23-23-23/S-5",
+            "credits": "20",
+            "university": "University of Regenbogenland",
+            "major": "B. Sc. Informatik",
+            "commentStudent": "Die Beschreibung ist lang, setzen Sie schon mal Kaffee auf",
+            "commentEmployee": "Beschreibung war wirklich lang, Kaffee ist alle"
+          }
+        ],
+        "modules2bCredited": [
+          5,
+          //id vom Uni Modul Alg 1
+          8
+          //id vom Uni Modul Alg 2
+        ]
+      }
+    ]
+  },
+  "edited": {
+    "applicationData": {
+      "applicationID": 23-23-23-23-23-23-23-23-23-23-23
+      "status": "",
+      //offen, in bearbeitung, formal abgelehnt,     aber nicht abgelehnt, angenommen
+      "formalReject": "JO du hast das völlig falsch gemacht mach den antrag nochmal",
+      "dateOfSubmission": "2024-03-05T13:56:51.560Z",
+      "dateLastEdited": "2024-03-05T13:56:51.560Z",
+      "university": "University of Regenbogenland",
+      "oldCourseOfStudy": "B.Sc Informatik",       //alter studiengang default
+      "newCourseOfStudy": "B.Sc Informatik"   //Studiengang Uni leipzig kann nicht verändert werden!!
+
+    },
+    "moduleFormsData": [
+      {
+        "frontend_key": 0,
+        "backend_block_id": 1,
+        // backend Id zur identifikation des blocks
+        "modulesStudent": [
+          {
+            "frontend_key": 0,
+            // frontend key eines Moduls in einem block, hier ist es das 1. Modul des 1. Blocks
+            "backend_module_id": 3,
+            // backend id des student moduls zur eindeutigen identifikation
+            "approval": "angenommen",
+            "reason": "ja das kann man so machen passt alles soweit.",
+            "number": "420",
+            "title": "AlgoDat 1.5",
+            "path": "/23-23-23-23-23-23-23-23-23-23-23/S-3",
+            "credits": "5",
+            "university": "University of Regenbogenland",
+            "major": "B.Sc. Informatik",
+            "commentStudent": "War cool",
+            "commentEmployee": "Das nicht so cool"
+          },
+          {
+            "frontend_key": 1,
+            // frontend key eines Moduls in einem block, hier ist es das 1. Modul des 1. Blocks
+            "backend_module_id": 5,
+            // backend id des student moduls zur eindeutigen identifikation
+            "approval": "angenommen",
+            "reason": "ja das kann man so machen passt alles soweit.",
+            "number": "4202",
+            "title": "AlgoDat 0.5",
+            "path": "/23-23-23-23-23-23-23-23-23-23-23/S-5",
+            "credits": "5",
+            "university": "University of Regenbogenland",
+            "major": "B.Sc. Informatik",
+            "commentStudent": "War easy",
+            "commentEmployee": "Das nicht so cool"
+          }
+        ],
+        "modules2bCredited": [
+          1,
+          //id vom Uni Modul Alg 1
+          2
+          //id vom Uni Modul Alg 2
+        ]
+      },
+      {
+        "frontend_key": 1,
+        "backend_block_id": 3,
+        // backend Id zur identifikation des blocks
+        "modulesStudent": [
+          {
+            "frontend_key": 0,
+            // frontend key eines Moduls in einem block, hier ist es das 1. Modul des 1. Blocks
+            "backend_module_id": 5,
+            // backend id des student moduls zur eindeutigen identifikation
+            "approval": "angenommen",
+            "reason": "ja das kann man so machen passt alles soweit.",
+            "number": "81923",
+            "title": "Das Alles-Modul",
+            "path": "/23-23-23-23-23-23-23-23-23-23-23/S-5",
+            "credits": "20",
+            "university": "University of Regenbogenland",
+            "major": "B. Sc. Informatik",
+            "commentStudent": "Die Beschreibung ist lang, setzen Sie schon mal Kaffee auf",
+            "commentEmployee": "Beschreibung war wirklich lang, Kaffee ist alle"
+          }
+        ],
+        "modules2bCredited": [
+          5,
+          //id vom Uni Modul Alg 1
+          8
+          //id vom Uni Modul Alg 2
+        ]
+      }
+    ]
+  }
+}

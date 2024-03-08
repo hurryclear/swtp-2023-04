@@ -1,0 +1,56 @@
+{
+  "meta": {
+    "comments": {
+      "student": ""
+    },
+    "dateOfSubmission": "2024-03-05T13:56:51.560Z",
+    "dateLastEdited": "2024-03-05T13:56:51.560Z"
+  },
+  "university": {
+    "name": "Martin-Luther Universität Halle-Wittenberg",
+    "country": "Germany",
+    "website": "http://www.uni-halle.de/",
+    "courseOfStudy": "B.Sc Informatik",
+    "newCourseOfStudy": ""
+  },
+  "moduleMappings": [
+    {
+      "meta": {
+        "key": 0
+      },
+      "previousModules": [
+        {
+          "meta": {
+            "approval": "", //pro Modul
+            "comments": {
+              "student": "fff",
+            }
+          },
+          //Studiengang
+          "university": {
+            "alpha_two_code": "DE",
+            "web_pages": [
+              "http://www.uni-halle.de/"
+            ],
+            "state-province": null,
+            "name": "Martin-Luther Universität Halle-Wittenberg",
+            "domains": [
+              "uni-halle.de"
+            ],
+            "country": "Germany"
+          },
+          "key": 0,
+          "number": "",
+          "name": "Algen",
+          "description": {
+            "filename": "Modulbeschreibung Algen.pdf",
+            "id": "0:0"  //File ID (Feldname)
+          },
+          "credits": "5"
+        }
+      ],
+      "modulesToBeCredited": [],
+      "isFilled": true
+    }
+  ]
+}

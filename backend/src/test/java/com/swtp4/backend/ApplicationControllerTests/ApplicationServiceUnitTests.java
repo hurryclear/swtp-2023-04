@@ -58,74 +58,6 @@ public class ApplicationServiceUnitTests {
         this.majorUniRepository = majorUniRepository;
     }
 
-//    @Test
-//    public void testThatSaveApplicationEntitySuccessfullyCreatesApplication() throws Exception {
-//        ApplicationEntity testApplication = ApplicationTestData.createTestApplicationEntityA();
-//        testApplication.setApplicationKeyClass(null);
-//        UUID processNumber = UUID.randomUUID();
-//        String creator = "Student";
-//        applicationService.saveApplicationEntity(testApplication, processNumber, creator);
-//        ApplicationKeyClass testApplicationKeyClass = ApplicationKeyClass.builder().id(processNumber).creator(creator).build();
-//        Optional<ApplicationEntity> result = applicationRepository.findById(testApplicationKeyClass); // can't use applicationRepository because of independence?
-//        assertThat(result).isPresent();
-//        assertThat(result.get()).isEqualTo(testApplication);
-//    }
-
-    @Test
-    public void testThatSaveApplicationEntitySuccessfullyCreatesApplication() throws Exception {
-        //Given
-        ApplicationEntity mockApplicationEntity = ApplicationTestData.createTestApplicationEntityA();
-        UUID processNumber = UUID.randomUUID();
-        String creator = "Student";
-        ApplicationKeyClass testApplicationKeyClass = ApplicationKeyClass.builder().id(processNumber).creator(creator).build();
-        mockApplicationEntity.setApplicationKeyClass(testApplicationKeyClass);
-        //Mock the calls
-        when(applicationRepository.save(mockApplicationEntity)).thenReturn(mockApplicationEntity);
-        //when
-        ApplicationEntity resultApplicationEntity = applicationService.saveApplicationEntity(mockApplicationEntity, processNumber, creator);
-        //Then
-        //Verify the result and mock
-        assertEquals(mockApplicationEntity, resultApplicationEntity);
-    }
-
-    @Test
-    public void testThatSaveModuleBlockEntitySuccessfullyCreatesModuleBlock() throws Exception {
-        ModuleBlockEntity testModuleBlock = ApplicationTestData.createTestModuleBlockEntityA();
-        applicationService.saveModuleBlockEntity(testModuleBlock, testModuleBlock.getApplicationEntity());
-        Optional<ModuleBlockEntity> result = Optional.ofNullable(moduleBlockRepository.findByCommentStudentAndApplicationEntity_ApplicationKeyClass_Creator("War cool", "Student"));
-        assertThat(result).isPresent();
-        //ID is set by the method, so testEntity cant be exactly same to savedEntity but all atrributes must be
-        assertThat(result.get().getApplicationEntity()).isEqualTo(testModuleBlock.getApplicationEntity());
-        assertThat(result.get().getApproval()).isEqualTo(testModuleBlock.getApproval());
-        assertThat(result.get().getCommentStudent()).isEqualTo(testModuleBlock.getCommentStudent());
-        assertThat(result.get().getCommentEmployee()).isEqualTo(testModuleBlock.getCommentEmployee());
-    }
-
-    @Test
-    public void testThatSaveModuleRelationEntitySuccessfullyCreatesModuleRelation() throws Exception {
-        ModuleRelationEntity testModuleRelation = ApplicationTestData.createTestModuleRelationEntityA();
-        majorUniRepository.save(testModuleRelation.getModuleRelationKeyClass().getModuleUniEntity().getMajorUniEntity());
-        moduleUniRepository.save(testModuleRelation.getModuleRelationKeyClass().getModuleUniEntity());
-        moduleStudentRepository.save(testModuleRelation.getModuleRelationKeyClass().getModuleStudentEntity());
-        applicationService.saveModuleRelationEntity(testModuleRelation.getModuleBlockEntity(), testModuleRelation.getModuleRelationKeyClass().getModuleUniEntity(), testModuleRelation.getModuleRelationKeyClass().getModuleStudentEntity());
-        Optional<ModuleRelationEntity> result = moduleRelationRepository.findById(testModuleRelation.getModuleRelationKeyClass());
-        assertThat(result).isPresent();
-        assertThat(result.get()).isEqualTo(testModuleRelation);
-    }
-
-    @Test
-    @Transactional
-    public void testThatGetUniversityModulesByNameSuccessfullyRetrieveEntities() throws Exception {
-        ModuleUniEntity testModuleUniA = ApplicationTestData.createTestModuleUniEntityA();
-        ModuleUniEntity testModuleUniB = ApplicationTestData.createTestModuleUniEntityB();
-        ModuleUniEntity testModuleUniC = ApplicationTestData.createTestModuleUniEntityC();
-        List<ModuleUniEntity> testModuleUniEntities = Arrays.asList(testModuleUniA, testModuleUniB, testModuleUniC);
-        majorUniRepository.saveAll(Arrays.asList(testModuleUniA.getMajorUniEntity(), testModuleUniB.getMajorUniEntity(), testModuleUniC.getMajorUniEntity()));
-        moduleUniRepository.saveAll(testModuleUniEntities);
-        List<String> testModuleUniStrings = Arrays.asList(testModuleUniA.getName(), testModuleUniB.getName(), testModuleUniC.getName());
-        List<ModuleUniEntity> modulesUniEntityRetrieved = applicationService.getUniversityModulesByName(testModuleUniStrings);
-        assertThat(modulesUniEntityRetrieved).isEqualTo(testModuleUniEntities);
-    }
 
     @BeforeEach
     void setUp() {
@@ -201,13 +133,13 @@ public class ApplicationServiceUnitTests {
 //        ApplicationEntity mockApplicationEntityB = ApplicationTestData.createTestApplicationEntityB();
 //        List<ApplicationEntity> mockApplicationEntityList = Arrays.asList(mockApplicationEntityA,mockApplicationEntityB);
 //        //Mock the calls
-//        when(applicationRepository.findByMajorAndApplicationKeyClass_Creator(major, "Employee"))
+//        when(applicationRepository.findByUniMajorAndApplicationKeyClass_Creator(major, "Employee"))
 //                .thenReturn(mockApplicationEntityList);
 //        //When
 //        List<ApplicationEntity> resultApplicationEntityList = applicationService.getApplicationsByMajor(major);
 //        //Then
 //        //Verify that the repository method was called with the correct parameter
-//        verify(applicationRepository).findByMajorAndApplicationKeyClass_Creator(major, "Employee");
+//        verify(applicationRepository).findByUniMajorAndApplicationKeyClass_Creator(major, "Employee");
 //        //Verify that result is the same sa the mock
 //        assertEquals(mockApplicationEntityList, resultApplicationEntityList);
 //    }

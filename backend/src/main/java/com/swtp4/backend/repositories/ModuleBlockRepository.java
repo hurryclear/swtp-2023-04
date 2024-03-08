@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ModuleBlockRepository extends JpaRepository<ModuleBlockEntity, Long> {
 
-    ModuleBlockEntity findByCommentStudentAndApplicationEntity_ApplicationKeyClass_Creator(String commentStudent, String creator);
+    ModuleBlockEntity findByApplicationEntity_ApplicationKeyClass_Creator( String creator);
 }

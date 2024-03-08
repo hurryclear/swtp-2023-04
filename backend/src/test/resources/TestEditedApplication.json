@@ -1,0 +1,81 @@
+{
+  "original": {
+    "info": "NUR EDITED FELDER WERDEN EINGELESEN; ORIGINAL KANN NICHT BEARBEITET WERDEN"
+    },
+  "edited": {
+    "applicationData": {
+      "applicationID": "edited",
+      "status": "edited",
+      "formalReject": "edited",
+      "dateOfSubmission": "2040-03-05T13:56:51.560Z",
+      "dateLastEdited": "2040-03-05T13:56:51.560Z",
+      "university": "edited",
+      "oldCourseOfStudy": "edited",
+      "newCourseOfStudy": "edited"
+
+    },
+    "moduleFormsData": [
+      {
+        "frontend_key": 0,
+        "backend_block_id": 2,
+        "modulesStudent": [
+          {
+            "frontend_key": 0,
+            "backend_module_id": 2,
+            "approval": "edited",
+            "reason": "edited",
+            "number": "edited",
+            "title": "edited",
+            "path": "edited",
+            "credits": "0",
+            "university": "edited",
+            "major": "edited",
+            "commentStudent": "edited",
+            "commentEmployee": "edited"
+          },
+          {
+            "frontend_key": 1,
+            "backend_module_id": 6,
+            "approval": "edited",
+            "reason": "edited",
+            "number": "edited",
+            "title": "edited",
+            "path": "edited",
+            "credits": "0",
+            "university": "edited",
+            "major": "edited",
+            "commentStudent": "edited",
+            "commentEmployee": "edited"
+          }
+        ],
+        "modules2bCredited": [
+          1
+        ]
+      },
+      {
+        "frontend_key": 1,
+        "backend_block_id": 4,
+        "modulesStudent": [
+          {
+            "frontend_key": 0,
+            "backend_module_id": 4,
+            "approval": "edited",
+            "reason": "edited",
+            "number": "edited",
+            "title": "edited",
+            "path": "edited",
+            "credits": "0",
+            "university": "edited",
+            "major": "edited",
+            "commentStudent": "edited",
+            "commentEmployee": "edited"
+          }
+        ],
+        "modules2bCredited": [
+          5,
+          6
+        ]
+      }
+    ]
+  }
+}
