@@ -66,6 +66,7 @@ public class UniDataService {
                 .map(module -> UniModuleDto.builder()
                         .number(module.getNumber())
                         .name(module.getName())
+                        .id(module.getId())
                         .build())
                 .collect(Collectors.toList());
 
@@ -84,6 +85,7 @@ public class UniDataService {
                 .map(module -> UniModuleWithVisibility.builder()
                         .number(module.getNumber())
                         .name(module.getName())
+                        .id(module.getId())
                         .visibleForStudents(module.getVisibleChoice())
                         .build())
                 .collect(Collectors.toList());

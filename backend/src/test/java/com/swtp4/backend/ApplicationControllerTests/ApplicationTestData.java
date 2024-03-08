@@ -41,7 +41,7 @@ public class ApplicationTestData {
     public static ApplicationEntity createTestApplicationEntityA() {
         return ApplicationEntity.builder()
                 .applicationKeyClass(createTestApplicationKeyClassA())
-                .status(null)
+                .status("open")
                 .dateOfSubmission("2023-12-31T22:30:42.103Z")
                 .dateLastEdited("2024-01-14T14:12:14.675Z")
                 .universityName("University of Regenbogenland")
@@ -49,6 +49,42 @@ public class ApplicationTestData {
                 //.commentStudent("Ich will alle CP valla")
                 //.commentEmployee("Der bekommt nicht alle CP yalla")
                 .build();
+    }
+
+    public static ApplicationEntity createTestApplicationEntityB() {
+        return ApplicationEntity.builder()
+                .applicationKeyClass(createTestApplicationKeyClassA())
+                .status("open")
+                .dateOfSubmission("2023-10-31T22:30:42.103Z")
+                .dateLastEdited("2024-01-14T14:12:14.675Z")
+                .universityName("University of Halle")
+                .major("B. Sc. Informatik")
+                .commentStudent("Ich will alle CP valla")
+                .commentEmployee("Der bekommt nicht alle CP yalla").build();
+    }
+
+    public static ApplicationEntity createTestApplicationEntityC() {
+        return ApplicationEntity.builder()
+                .applicationKeyClass(createTestApplicationKeyClassA())
+                .status("close")
+                .dateOfSubmission("2023-07-31T22:30:42.103Z")
+                .dateLastEdited("2024-01-14T14:12:14.675Z")
+                .universityName("University of Halle")
+                .major("B. Sc. Informatik")
+                .commentStudent("Ich will alle CP valla")
+                .commentEmployee("Der bekommt nicht alle CP yalla").build();
+    }
+
+    public static ApplicationEntity createTestApplicationEntityD() {
+        return ApplicationEntity.builder()
+                .applicationKeyClass(createTestApplicationKeyClassA())
+                .status("close")
+                .dateOfSubmission("2023-01-31T22:30:42.103Z")
+                .dateLastEdited("2024-01-14T14:12:14.675Z")
+                .universityName("University of Dresden")
+                .major("B. Sc. Informatik")
+                .commentStudent("Ich will alle CP valla")
+                .commentEmployee("Der bekommt nicht alle CP yalla").build();
     }
 
     public static ApplicationKeyClass createTestApplicationKeyClassA() {

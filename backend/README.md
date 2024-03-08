@@ -195,11 +195,13 @@ http://localhost:3000/api/unidata/getModules?majorName=B.Sc. Informatik
   "modules": [
     {
       "number": "10-201-2005-2",
-      "name": "Programmierparadigmen"
+      "name": "Programmierparadigmen",
+      "id": 2
     },
     {
       "number": "10-201-2001-1",
-      "name": "Algorithmen und Datenstrukturen 1"
+      "name": "Algorithmen und Datenstrukturen 1",
+      "id": 3
     }
   ]
 }
@@ -521,11 +523,13 @@ http://localhost:3000/api/unidata/getAllModules?majorName=B.Sc. Informatik
     {
       "number": "10-201-2012",
       "name": "Einführung in die objektorientierte Modellierung und Programmierung",
+      "id": 1,
       "visibleForStudents": false
     },
     {
       "number": "10-201-2005-2",
       "name": "Programmierparadigmen",
+      "id": 2,
       "visibleForStudents": true
     }
   ]
