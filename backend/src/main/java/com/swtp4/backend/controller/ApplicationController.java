@@ -21,7 +21,6 @@ import java.util.UUID;
 @CrossOrigin
 @RequestMapping(path = "/application")
 public class ApplicationController {
-    private ApplicationRepository applicationRepository; // test, delete later
     private ApplicationService applicationService;
     private PDFService pdfService;
 
@@ -46,7 +45,7 @@ public class ApplicationController {
     }
 
     @GetMapping("/get-application-by-id")
-    public ApplicationEntity getApplicationById(@RequestParam("id") UUID id) {
+    public ApplicationEntity getApplicationById(@RequestParam("id") String id) {
         return applicationService.getApplicationById(id);
     }
     @GetMapping("/get-applications-by-status")
@@ -82,7 +81,7 @@ public class ApplicationController {
     }
 
     @PostMapping("/test")
-    public ResponseEntity<UniModuleDto> testOfficeEndpoint(@RequestBody UniModuleDto uniModuleDto) {
+    public ResponseEntity<UniModuleDto> testOfficeEndpoint(@RequestBody UniModuleDto uniModuleDto){
         return new ResponseEntity<>(uniModuleDto, HttpStatus.OK);
     }
 

@@ -133,13 +133,13 @@ public class ApplicationServiceUnitTests {
 //        ApplicationEntity mockApplicationEntityB = ApplicationTestData.createTestApplicationEntityB();
 //        List<ApplicationEntity> mockApplicationEntityList = Arrays.asList(mockApplicationEntityA,mockApplicationEntityB);
 //        //Mock the calls
-//        when(applicationRepository.findByMajorAndApplicationKeyClass_Creator(major, "Employee"))
+//        when(applicationRepository.findByUniMajorAndApplicationKeyClass_Creator(major, "Employee"))
 //                .thenReturn(mockApplicationEntityList);
 //        //When
 //        List<ApplicationEntity> resultApplicationEntityList = applicationService.getApplicationsByMajor(major);
 //        //Then
 //        //Verify that the repository method was called with the correct parameter
-//        verify(applicationRepository).findByMajorAndApplicationKeyClass_Creator(major, "Employee");
+//        verify(applicationRepository).findByUniMajorAndApplicationKeyClass_Creator(major, "Employee");
 //        //Verify that result is the same sa the mock
 //        assertEquals(mockApplicationEntityList, resultApplicationEntityList);
 //    }

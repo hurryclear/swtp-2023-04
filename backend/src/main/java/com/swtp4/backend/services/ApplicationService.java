@@ -73,6 +73,7 @@ public class ApplicationService {
                     saveModuleRelationEntity(blockStudent, moduleStudent, uniModuleID);
                     saveModuleRelationEntity(blockEmployee, moduleEmployee, uniModuleID);
                 }
+
             }
         }
 
@@ -226,7 +227,7 @@ public class ApplicationService {
     }
 
     //get unique application by applicationkeyclass (id, creator)
-    public ApplicationEntity getApplicationById(UUID id) {
+    public ApplicationEntity getApplicationById(String id) {
         return applicationRepository.findByApplicationKeyClass_IdAndApplicationKeyClass_Creator(id, "Employee");
     }
 
@@ -235,7 +236,7 @@ public class ApplicationService {
     }
 
     public List<ApplicationEntity> getApplicationsByMajor(String major) {
-        return applicationRepository.findByMajorAndApplicationKeyClass_Creator(major, "Employee");
+        return applicationRepository.findByUniMajorAndApplicationKeyClass_Creator(major, "Employee");
     }
     public List<ApplicationEntity> getApplicationsByUniversityName(String universityName) {
         return applicationRepository.findByUniversityNameAndApplicationKeyClass_Creator(universityName, "Employee");

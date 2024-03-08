@@ -58,9 +58,8 @@ public class ApplicationTestData {
                 .dateOfSubmission("2023-10-31T22:30:42.103Z")
                 .dateLastEdited("2024-01-14T14:12:14.675Z")
                 .universityName("University of Halle")
-                .major("B. Sc. Informatik")
-                .commentStudent("Ich will alle CP valla")
-                .commentEmployee("Der bekommt nicht alle CP yalla").build();
+                .studentMajor("B. Sc. Informatik")
+                .build();
     }
 
     public static ApplicationEntity createTestApplicationEntityC() {
@@ -70,9 +69,8 @@ public class ApplicationTestData {
                 .dateOfSubmission("2023-07-31T22:30:42.103Z")
                 .dateLastEdited("2024-01-14T14:12:14.675Z")
                 .universityName("University of Halle")
-                .major("B. Sc. Informatik")
-                .commentStudent("Ich will alle CP valla")
-                .commentEmployee("Der bekommt nicht alle CP yalla").build();
+                .studentMajor("B. Sc. Informatik")
+                .build();
     }
 
     public static ApplicationEntity createTestApplicationEntityD() {
@@ -82,9 +80,8 @@ public class ApplicationTestData {
                 .dateOfSubmission("2023-01-31T22:30:42.103Z")
                 .dateLastEdited("2024-01-14T14:12:14.675Z")
                 .universityName("University of Dresden")
-                .major("B. Sc. Informatik")
-                .commentStudent("Ich will alle CP valla")
-                .commentEmployee("Der bekommt nicht alle CP yalla").build();
+                .studentMajor("B. Sc. Informatik")
+                .build();
     }
 
     public static ApplicationKeyClass createTestApplicationKeyClassA() {
