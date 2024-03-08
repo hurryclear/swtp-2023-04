@@ -26,6 +26,7 @@ http://VM_IP_ADDRESS:3000/api
 
 Frontend developers should use relative paths in Axios requests:
 
+
 ```javascript
 axios.get('/api/auth/logout');
 ```
