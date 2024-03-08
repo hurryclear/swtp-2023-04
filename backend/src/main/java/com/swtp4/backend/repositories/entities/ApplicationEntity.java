@@ -27,7 +27,8 @@ public class ApplicationEntity {
 
     private String universityName;
 
-    private String major;
+    private String studentMajor;
+    private String uniMajor;
 
     private String formalRejectionReason;
 }

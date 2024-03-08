@@ -1,6 +1,6 @@
 package com.swtp4.backend.controller;
 
-import com.swtp4.backend.repositories.dto.ApplicationDto;
+import com.swtp4.backend.repositories.applicationDtos.EditedApplicationDto;
 import com.swtp4.backend.repositories.dto.UniModuleDto;
 import com.swtp4.backend.services.ApplicationService;
 import com.swtp4.backend.services.PDFService;
@@ -26,10 +26,10 @@ public class ApplicationController {
     }
 
     //changed to student controler
-    @PostMapping("/saveApplication")
-    public ResponseEntity<?> saveApplication(@RequestBody ApplicationDto applicationDTO){
+    @PostMapping("/saveEdited")
+    public ResponseEntity<?> saveApplication(@RequestBody EditedApplicationDto applicationDTO){
         log.info("Received ApplicationDto: {}", applicationDTO);
-        applicationService.save(applicationDTO);
+        applicationService.updateApplication(applicationDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

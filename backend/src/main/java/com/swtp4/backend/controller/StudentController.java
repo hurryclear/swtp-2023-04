@@ -4,7 +4,6 @@ import com.swtp4.backend.repositories.applicationDtos.SubmittedApplicationDto;
 import com.swtp4.backend.repositories.dto.UniModuleDto;
 import com.swtp4.backend.services.ApplicationService;
 import com.swtp4.backend.services.PDFService;
-import com.swtp4.backend.services.SubmitService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,11 +21,11 @@ import java.util.Map;
 @CrossOrigin
 @RequestMapping(path = "/student")
 public class StudentController {
-    private SubmitService applicationService;
+    private ApplicationService applicationService;
     private PDFService pdfService;
 
     @Autowired
-    public StudentController(SubmitService applicationService, PDFService pdfService){
+    public StudentController(ApplicationService applicationService, PDFService pdfService){
         this.applicationService = applicationService;
         this.pdfService = pdfService;
     }

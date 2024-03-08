@@ -45,6 +45,35 @@
             "id": "0:0"
           },
           "credits": 5
+        },
+        {
+          "meta": {
+            "approval": "",
+            "comments": {
+              "student": "War nicht so cool"
+            }
+          },
+          "major": "B. Sc. Informatik",
+          "university": {
+            "alpha_two_code": "RE",
+            "web_pages": [
+              "http://www.regenbogen.re/"
+            ],
+            "state-province": null,
+            "name": "University of Regenbogenland",
+            "domains": [
+              "regenbogen.re"
+            ],
+            "country": "Regenbogenland"
+          },
+          "key": 1,
+          "number": "69",
+          "name": "AlgoDat 0.5",
+          "description": {
+            "filename": "Modulbeschreibung AlgoDat 0.5.pdf",
+            "id": "0:1"
+          },
+          "credits": 4
         }
       ],
       "modulesToBeCredited": [
@@ -57,6 +86,56 @@
           "name": "Algorithmen und Datenstrukturen 2",
           "number":"10-201-2001-2",
           "id": 4
+        }
+      ],
+      "isFilled": true
+    },
+    {
+      "meta": {
+        "key": 1
+      },
+      "previousModules": [
+        {
+          "meta": {
+            "approval": "",
+            "comments": {
+              "student": "Die Beschreibung ist lang, setzen Sie schon mal Kaffee auf",
+              "employee": "Beschreibung war wirklich lang, Kaffee ist alle"
+            }
+          },
+          "major": "B. Sc. Informatik",
+          "university": {
+            "alpha_two_code": "RE",
+            "web_pages": [
+              "http://www.regenbogen.re/"
+            ],
+            "state-province": null,
+            "name": "University of Regenbogenland",
+            "domains": [
+              "regenbogen.re"
+            ],
+            "country": "Regenbogenland"
+          },
+          "key": 0,
+          "number": "81923",
+          "name": "Das Alles-Modul",
+          "description": {
+            "filename": "Modulbeschreibung Alles-Modul.pdf",
+            "id": "1:0"
+          },
+          "credits": 20
+        }
+      ],
+      "modulesToBeCredited": [
+        {
+          "name": "Analysis",
+          "number": "10-201-1011",
+          "id": 15
+        },
+        {
+          "name": "Lineare Algebra",
+          "number": "10-201-1015",
+          "id":16
         }
       ],
       "isFilled": true

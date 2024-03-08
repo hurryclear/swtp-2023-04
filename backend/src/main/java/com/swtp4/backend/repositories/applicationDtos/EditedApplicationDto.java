@@ -6,6 +6,7 @@ public record EditedApplicationDto (
        String applicationID,
        String dateLastEdited,
        String university,
+       String oldCourseOfStudy,
        String formalRejection,
        List<EditedBlock> editedBlocks
 ){

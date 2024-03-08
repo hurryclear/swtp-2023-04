@@ -58,6 +58,9 @@ public class SubmittedApplicationDeserializer extends JsonDeserializer<Submitted
         return new SubmittedApplicationDto(
                 jsonNode.get("meta").get("dateOfSubmission").asText(), // TODO: change to extractDate to create date and not string to sort by date in database
                 jsonNode.get("meta").get("dateLastEdited").asText(),
+                jsonNode.get("university").get("name").asText(),
+                jsonNode.get("university").get("courseOfStudy").asText(),
+                jsonNode.get("university").get("newCourseOfStudy").asText(),
                 submittedBlocks
         );
     }

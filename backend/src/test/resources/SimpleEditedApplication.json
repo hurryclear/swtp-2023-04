@@ -10,8 +10,8 @@
       "dateOfSubmission": "2024-03-05T13:56:51.560Z",
       "dateLastEdited": "2024-03-05T13:56:51.560Z",
       "university": "University of Regenbogenland",
-      "courseOfStudy": "B.Sc Informatik"
-      //alter studiengang default
+      "oldCourseOfStudy": "B.Sc Informatik",       //alter studiengang default
+      "newCourseOfStudy": "B.Sc Informatik"   //Studiengang Uni leipzig kann nicht verändert werden!!
     },
     "moduleFormsData": [
       {
@@ -99,8 +99,9 @@
       "dateOfSubmission": "2024-03-05T13:56:51.560Z",
       "dateLastEdited": "2024-03-05T13:56:51.560Z",
       "university": "University of Regenbogenland",
-      "courseOfStudy": "B.Sc Informatik"
-      //alter studiengang default
+      "oldCourseOfStudy": "B.Sc Informatik",       //alter studiengang default
+      "newCourseOfStudy": "B.Sc Informatik"   //Studiengang Uni leipzig kann nicht verändert werden!!
+
     },
     "moduleFormsData": [
       {

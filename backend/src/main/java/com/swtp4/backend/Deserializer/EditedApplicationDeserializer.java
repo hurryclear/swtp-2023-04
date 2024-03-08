@@ -68,6 +68,7 @@ public class EditedApplicationDeserializer extends JsonDeserializer<EditedApplic
                 editedApplicationData.get("dateLastEdited").asText(),
                 editedApplicationData.get("university").asText(),
                 editedApplicationData.get("formalReject").asText(),
+                editedApplicationData.get("oldCourseOfStudy").asText(),
                 editedBlocks
         );
     }
