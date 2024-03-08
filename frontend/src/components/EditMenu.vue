@@ -6,37 +6,47 @@
         <u>Antrag</u>
       </v-card-title>
       <v-spacer/>
-      <v-btn @click="openComparisonMenu">Mit anderen Anträgen vergleichen</v-btn>
-      <v-btn class="button-top"  icon="mdi-close" @click="closeEditMenu" variant="text"></v-btn>
+      <v-btn-toggle class="button-top" v-model="isEdited" mandatory shaped variant="outlined">
+        <v-btn :value="false">
+          Original
+        </v-btn>
+        <v-btn :value="true">
+          Bearbeitet
+        </v-btn>
+      </v-btn-toggle>
+      <v-btn class="button-top" variant="tonal" @click="openComparisonMenu">Mit anderen Anträgen vergleichen</v-btn>
+      <v-btn class="button-top" variant="tonal" icon="mdi-close" @click="closeEditMenu"></v-btn>
     </div>
     <v-card-text>
-      Universität: {{ form.universityData.universityName }}
+      Vorherige Universität: {{ applicationVersion.applicationData.university }}
     </v-card-text>
     <v-card-text>
-      Bisheriger Studiengang: {{ form.universityData.studyProgram }}
+      Vorheriger Studiengang: {{ applicationVersion.applicationData.oldCourseOfStudy }}
     </v-card-text>
     <v-card-text>
-      Land: {{ form.universityData.country }}
+      Jetziger Studiengang: {{ applicationVersion.applicationData.newCourseOfStudy }}
     </v-card-text>
     <v-card-title>
       Module:
     </v-card-title>
-    <div v-for="(moduleData, index) in form.moduleFormsData" v-bind:key="moduleData.key">
+    <div v-for="(moduleData, index) in applicationVersion.moduleFormsData" v-bind:key="moduleData.frontend_key">
       <v-card-subtitle>
-        Mapping {{ moduleData.key + 1 }}
+        <br>
+        Mapping {{ index + 1}}
       </v-card-subtitle>
+      <v-card-text><u>Modulnamen:</u></v-card-text>
+      <div v-for="(studentModules) in moduleData.modulesStudent" v-bind:key="studentModules.frontend_key">
+        <v-autocomplete class="text-field" :items="getMajorModulesName()" :label="studentModules.title" :disabled="!isEdited"></v-autocomplete>
+      </div>
       <v-card-text>
-        <u>Modulnamen</u>: {{ moduleData.name }}
-        <br> <br>
         Anrechnen für:
-        <div v-for="(modules, index2) in moduleData.module2bCredited" v-bind:key="modules">
-          <v-autocomplete :items="this.allModules" :label="modules" v-model="editedModules[index][index2]"></v-autocomplete>
+        <br>
+        <div v-for="(module) in moduleData.modules2bCredited" v-bind:key="module">
+          <v-autocomplete class="text-field" :items="getMajorModulesName()" :label="findModule(module)" :disabled="!isEdited"></v-autocomplete>
         </div>
       </v-card-text>
-      <v-card-text>
-        <u>Kommentar zu diesem Modul</u>: {{ moduleData.comment }}
-      </v-card-text>
     </div>
+    <v-divider/>
     <v-text-field class="text-field" label="Begründung" v-model="reason"/>
     <v-card-actions>
       <v-btn
@@ -67,11 +77,14 @@
 
 
 <script>
-import module_list from "@/assets/module_liste.json"
 import axios from "@/plugins/axios";
 export default {
   props: {
     form: JSON
+  },
+
+  created() {
+    this.getModules()
   },
 
   data() {
@@ -81,9 +94,27 @@ export default {
       showCommentWarning: false,
       loadingSaveButton: false,
       loadingSendButton: false,
-      editedForm: this.form,
-      editedModules: [[]],
-      allModules: module_list.courses[0].modules.map(module => module.name)
+      isEdited: false,
+      editedForm: null,
+      editedModules: "",
+      majorModules: [
+        {
+          "number": "10-201-2005-2",
+          "name": "Programmierparadigmen",
+          "id": 2
+        },
+        {
+          "number": "10-201-2001-1",
+          "name": "Algorithmen und Datenstrukturen 1",
+          "id": 3
+        }
+      ]
+    }
+  },
+
+  computed: {
+    applicationVersion() {
+      return this.isEdited ? this.form.edited : this.form.original
     }
   },
 
@@ -91,18 +122,33 @@ export default {
     closeEditMenu() {
       this.$emit("close-edit-menu");
     },
+
     sendToPruefungsausschuss() {
       // Dispatch action to accept the form
-      this.$store.dispatch('changeFormStatus', {
-        formId: this.form.id,
-        newStatus: 'in progress',
-        comment: this.reason
-      });
-      this.closeEditMenu();
+      console.log(this.isEdited === 1)
     },
+
     openComparisonMenu() {
       this.$emit("open-comparison");
     },
+
+    async getModules() {
+      await axios.get(`/api/unidata/getModules?majorName=${this.form.original.applicationData.newCourseOfStudy}`).then(
+          res => this.modules = res.data.modules
+      ).catch(err => {
+        console.log(err);
+      });
+    },
+
+    findModule(module) {
+      const foundModule = this.majorModules.find(item => item.id === module);
+      return foundModule ? foundModule.name : "Module not found";
+    },
+
+    getMajorModulesName() {
+      return this.majorModules.map(module => module.name)
+    },
+
     async saveEditedForm() {
       //Check if any of the fields are empty
       for(let i = 0; i < this.editedForm.moduleFormsData.length; i++) {
@@ -136,7 +182,7 @@ export default {
 
       this.loadingSaveButton = false;
     }
-  },
+  }
 }
 </script>
 
@@ -150,11 +196,12 @@ export default {
 }
 
 .button-top {
-  margin-right: 1%;
+  margin: 1%;
 }
 
 .card-header {
   display: flex;
   align-items: center;
 }
+
 </style>
