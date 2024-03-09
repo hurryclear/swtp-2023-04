@@ -36,6 +36,8 @@ services:
     OFFICE_PASSWORD: 1234
     COMMITTEE_USERNAME: Prüfungsausschuss
     COMMITTEE_PASSWORD: 1234
+   volumes:
+    - pdf_files:/app/pdf-files
    networks:
     - app
 
@@ -60,3 +62,4 @@ networks:
 
 volumes:
  postgres_data:
+ pdf_files:
