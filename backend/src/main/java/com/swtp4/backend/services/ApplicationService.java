@@ -4,6 +4,7 @@ import com.swtp4.backend.exception.ResourceNotFoundException;
 import com.swtp4.backend.repositories.*;
 import com.swtp4.backend.repositories.applicationDtos.*;
 import com.swtp4.backend.repositories.dto.ApplicationDto;
+import com.swtp4.backend.repositories.dto.ApplicationIDWithFilePaths;
 import com.swtp4.backend.repositories.dto.ModuleBlockDto;
 import com.swtp4.backend.repositories.entities.*;
 import com.swtp4.backend.repositories.entities.keyClasses.ApplicationKeyClass;
@@ -46,7 +47,7 @@ public class ApplicationService {
     }
 
 
-    public HashMap<String, String> saveSubmitted(SubmittedApplicationDto applicationDto) {
+    public ApplicationIDWithFilePaths saveSubmitted(SubmittedApplicationDto applicationDto) {
         String applicationID = uniqueNumberService.generateUniqueNumber();
         HashMap<String, String> file_paths = new HashMap<>();
 
@@ -77,7 +78,7 @@ public class ApplicationService {
             }
         }
 
-        return file_paths;
+        return new ApplicationIDWithFilePaths(applicationID, file_paths);
     }
 
     private ApplicationEntity saveApplicationEntity(String applicationID, String creator, SubmittedApplicationDto applicationDto) {

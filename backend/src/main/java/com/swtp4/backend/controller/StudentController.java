@@ -1,6 +1,8 @@
 package com.swtp4.backend.controller;
 
 import com.swtp4.backend.repositories.applicationDtos.SubmittedApplicationDto;
+import com.swtp4.backend.repositories.dto.ApplicationIDWithFilePaths;
+import com.swtp4.backend.repositories.dto.ApplicationIdDto;
 import com.swtp4.backend.repositories.dto.UniModuleDto;
 import com.swtp4.backend.services.ApplicationService;
 import com.swtp4.backend.services.PDFService;
@@ -57,11 +59,13 @@ public class StudentController {
             }
         });
         //System.out.println("Received JSON: " + submittedApplicationDto);
+        ApplicationIDWithFilePaths applicationIDWithFilePaths = applicationService.saveSubmitted(submittedApplicationDto);
 
-        HashMap<String, String> file_paths = applicationService.saveSubmitted(submittedApplicationDto);
+        ApplicationIdDto applicationID = new ApplicationIdDto(applicationIDWithFilePaths.getApplicationID());
+        HashMap<String, String> file_paths = applicationIDWithFilePaths.getFilesAndPaths();
 
         // TODO: here you can implement pdf saving by using multipart field names and provided paths in file_paths
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(applicationID, HttpStatus.CREATED);
     }
 }

@@ -4,6 +4,7 @@ package com.swtp4.backend.ApplicationControllerTests;
 import com.swtp4.backend.exception.ResourceNotFoundException;
 import com.swtp4.backend.repositories.*;
 import com.swtp4.backend.repositories.applicationDtos.*;
+import com.swtp4.backend.repositories.dto.ApplicationIDWithFilePaths;
 import com.swtp4.backend.repositories.entities.*;
 import com.swtp4.backend.repositories.entities.keyClasses.ApplicationKeyClass;
 import com.swtp4.backend.services.ApplicationService;
@@ -116,7 +117,7 @@ public class ApplicationServiceTests {
     }
 
     @Test
-    public void whenSaveSubmittedSuccesfully_HashMapIsReturned() throws Exception {
+    public void whenSaveSubmittedSuccessfully_IdAndHashMapIsReturned() throws Exception {
         when(uniqueNumberService.generateUniqueNumber()).thenReturn("123ID");
         when(applicationRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
         when(moduleStudentRepository.save(any())).thenAnswer(invocation -> {
@@ -150,11 +151,19 @@ public class ApplicationServiceTests {
                 )));
 
         HashMap<String, String> expected_file_path = new HashMap<String, String>();
+        String expected_applicationID = "123ID";
         expected_file_path.put("file-0:0", "/123ID/S-0");
-        HashMap<String, String> actual_file_path = applicationService.saveSubmitted(applicationDto);
+
+        ApplicationIDWithFilePaths applicationIDWithFilePaths = applicationService.saveSubmitted(applicationDto);
+
+        HashMap<String, String> actual_file_path = applicationIDWithFilePaths.getFilesAndPaths();
+        String actual_applicationID = applicationIDWithFilePaths.getApplicationID();
+
         System.out.println(actual_file_path);
+
         assertEquals(expected_file_path, actual_file_path);
         assertNotNull(actual_file_path);
+        assertEquals(expected_applicationID, actual_applicationID);
     }
 
     @Test

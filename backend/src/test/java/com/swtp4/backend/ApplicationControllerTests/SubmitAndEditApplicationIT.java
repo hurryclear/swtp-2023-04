@@ -26,13 +26,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD) //IMPORTANT, this resets Application Context, ID Sequences start at 1 again
 @Transactional
 @AutoConfigureMockMvc
 @ActiveProfiles("integration")
@@ -65,7 +66,6 @@ public class SubmitAndEditApplicationIT {
 
     @Test
     @Transactional
-
     public void testThatSubmitApplicationSuccessfullyReturnsHttp201CreatedAndCreatesEntities() throws Exception {
         applicationTestData.loadMajorAndModulesIntoDataBase();
         String testApplicationJson = ApplicationTestData.createSubmitApplicationJson();
@@ -78,7 +78,9 @@ public class SubmitAndEditApplicationIT {
                         .file(jsonPart)// specify your endpoint here
                         .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
                 )
-                .andExpect(status().isCreated());
+                .andExpect(status().isCreated())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.applicationID", not(is(emptyString()))));
 
         //ApplicationEntity Check
         Example<ApplicationEntity> application = Example.of(ApplicationEntity.builder()
@@ -260,7 +262,7 @@ public class SubmitAndEditApplicationIT {
                 .commentEmployee("edited")
                 .creator("Employee")
                 .build());
-        assertThat(moduleStudentRepository.findAll(module1))
+        assertThat(moduleStudentRepository.findAll(module2))
                 .hasSize(1)
                 .extracting(ModuleStudentEntity::getDescription_pdf)
                 .doesNotContain("edited");
@@ -280,7 +282,7 @@ public class SubmitAndEditApplicationIT {
                 .commentEmployee("edited")
                 .creator("Employee")
                 .build());
-        assertThat(moduleStudentRepository.findAll(module1))
+        assertThat(moduleStudentRepository.findAll(module3))
                 .hasSize(1)
                 .extracting(ModuleStudentEntity::getDescription_pdf)
                 .doesNotContain("edited");
