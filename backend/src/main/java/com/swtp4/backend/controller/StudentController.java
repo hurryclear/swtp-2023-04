@@ -65,7 +65,7 @@ public class StudentController {
         HashMap<String, String> file_paths = applicationIDWithFilePaths.getFilesAndPaths();
 
         // TODO: here you can implement pdf saving by using multipart field names and provided paths in file_paths
-
+        pdfService.saveModulePDFs(fileMap, file_paths);
         return new ResponseEntity<>(applicationID, HttpStatus.CREATED);
     }
 }
