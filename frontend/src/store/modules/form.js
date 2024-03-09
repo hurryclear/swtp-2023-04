@@ -1,8 +1,11 @@
 // form.js
+import FormService from '@/services/FormService';
 
 export default {
     state: {
         forms: [],
+        currentForm: null,
+        currentFormPdf: null,
     },
     getters: {
         formsByStatus: (state) => (status) => {
@@ -31,6 +34,12 @@ export default {
         addForm(state, form) {
             state.forms.push({...form, id: form.timestamp});
         },
+        setCurrentForm(state, form) {
+            state.currentForm = form;
+        },
+        setCurrentFormPdf(state, pdf) {
+            state.currentFormPdf = pdf;
+        }
     },
     actions: {
         loadForms({commit}, forms) {
@@ -41,6 +50,14 @@ export default {
         },
         submitForm({commit}, form) {
             commit('addForm', form);
+        },
+        async fetchApplicationSummary({ commit }, applicationId) {
+            const form = await FormService.fetchApplicationSummary(applicationId);
+            commit('setCurrentForm', form);
+        },
+        async fetchPdfSummary({ commit }, applicationId) {
+            const pdfData = await FormService.fetchPdfSummary(applicationId);
+            commit('setCurrentFormPdf', pdfData);
         },
     },
 };
