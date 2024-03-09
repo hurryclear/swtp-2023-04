@@ -1,5 +1,6 @@
 package com.swtp4.backend.services;
 
+import com.swtp4.backend.exception.InvalidApplicationStateException;
 import com.swtp4.backend.exception.ResourceNotFoundException;
 import com.swtp4.backend.repositories.*;
 import com.swtp4.backend.repositories.applicationDtos.*;
@@ -86,7 +87,7 @@ public class ApplicationService {
                 .applicationKeyClass(ApplicationKeyClass.builder()
                         .id(applicationID)
                         .creator(creator).build())
-                .status("offen")
+                .status("open")
                 .formalRejectionReason("")
                 .dateOfSubmission(applicationDto.dateOfSubmission())
                 .dateLastEdited(applicationDto.dateLastEdited())
@@ -217,17 +218,117 @@ public class ApplicationService {
                 .orElseThrow(() -> new ResourceNotFoundException("Application with applicationID "
                         + applicationDto.applicationID() + " not found, and therefore can't be updated."));
 
+        if(applicationEmployee.getStatus().equals("edited")||applicationEmployee.getStatus().equals("formally rejected"))
+            applicationEmployee.setFormalRejectionReason(applicationDto.formalRejection());
+        else
+            applicationEmployee.setFormalRejectionReason("");
         applicationEmployee.setDateLastEdited(applicationDto.dateLastEdited());
         applicationEmployee.setUniversityName(applicationDto.university());
         applicationEmployee.setStudentMajor(applicationDto.oldCourseOfStudy());
         return applicationRepository.save(applicationEmployee);
     }
 
+    public void updateStatus(String applicationID, String newStatus){
+        ApplicationEntity application = applicationRepository.findById(ApplicationKeyClass.builder()
+                        .id(applicationID)
+                        .creator("Employee")
+                        .build())
+                .orElseThrow(() -> new ResourceNotFoundException("Application with ID "+applicationID+" not found. Status can't be changed."));
+        String oldStatus = application.getStatus();
+        if(oldStatus.equals("editing in progress") && newStatus.equals("edited")){
+            application.setStatus(newStatus);
+        }
+        else if((oldStatus.equals("open") || oldStatus.equals("edited")) && newStatus.equals("editing in progress")){
+            application.setStatus(newStatus);
+        }
+        else if(oldStatus.equals("editing in progress") && newStatus.equals("ready for approval")){
+            application.setStatus(newStatus);
+        }
+        else if((oldStatus.equals("ready for approval") || oldStatus.equals("edited approval")) && newStatus.equals("approval in progress")){
+            application.setStatus(newStatus);
+        }
+        else if(oldStatus.equals("approval in progress") && newStatus.equals("edited approval")){
+            application.setStatus(newStatus);
+        }
+        else{
+            throw new InvalidApplicationStateException("Status can't change from "+oldStatus+" to "+newStatus);
+        }
+        applicationRepository.save(application);
+    }
+
+    public void statusFormalRejection(EditedApplicationDto applicationDto) {
+        ApplicationEntity application = applicationRepository.findById(ApplicationKeyClass.builder()
+                        .id(applicationDto.applicationID())
+                        .creator("Employee")
+                        .build())
+                .orElseThrow(() -> new ResourceNotFoundException("Application with ID "+applicationDto.applicationID()+" not found. Status can't be changed."));
+        if(application.getStatus().equals("editing in progress")){
+            if (applicationDto.formalRejection().isEmpty()){
+                throw new InvalidApplicationStateException("Formal Rejection Reason is empty, but required to change Application Status to formally rejected.");
+            }
+            application.setStatus("formally rejected");
+            applicationRepository.save(application);
+        }
+        else{
+            throw new InvalidApplicationStateException("Setting status to formally rejected requires previous status editing in progress");
+        }
+    }
+
+    public void partialFormalRejection(EditedApplicationDto applicationDTO) {
+        boolean allAreRejected = true;
+        for (EditedBlock block : applicationDTO.editedBlocks()){
+            for (EditedStudentModule module : block.editedModules()){
+                ModuleStudentEntity moduleStudent = moduleStudentRepository.findById(module.moduleID())
+                        .orElseThrow(() -> new ResourceNotFoundException("Student Module with ID " +module.moduleID() + "not found"));
+                if (!module.reason().isEmpty() && module.approval().equals("formally rejected")) {
+                    moduleStudent.setApproval("formally rejected");
+                }
+                else {
+                    allAreRejected = false;
+                }
+                moduleStudent.setApprovalReason(module.reason());
+                moduleStudentRepository.save(moduleStudent);
+            }
+        }
+        if(allAreRejected) {
+            ApplicationEntity application = applicationRepository.findById(new ApplicationKeyClass(applicationDTO.applicationID(), "Employee"))
+                    .orElseThrow(() -> new ResourceNotFoundException("Application" + applicationDTO.applicationID()+ "not found"));
+            application.setStatus("approval finished");
+            applicationRepository.save(application);
+        }
+    }
+
+    public void updateApproval(EditedApplicationDto applicationDto, List<String> validApprovals) {
+        boolean allAreApproved = true;
+        for (EditedBlock block : applicationDto.editedBlocks()){
+            for(EditedStudentModule module : block.editedModules()){
+                ModuleStudentEntity moduleStudent = moduleStudentRepository.findById(module.moduleID())
+                        .orElseThrow(() -> new ResourceNotFoundException("Student Module with ID " +module.moduleID() + "not found"));
+                if (!module.reason().isEmpty() && validApprovals.contains(module.approval())){
+                    moduleStudent.setApproval(module.approval());
+                }
+                else{
+                    allAreApproved = false;
+                }
+                moduleStudent.setApprovalReason(module.reason());
+                moduleStudentRepository.save(moduleStudent);
+            }
+        }
+        if(allAreApproved) {
+            ApplicationEntity application = applicationRepository.findById(new ApplicationKeyClass(applicationDto.applicationID(), "Employee"))
+                    .orElseThrow(() -> new ResourceNotFoundException("Application" + applicationDto.applicationID()+ "not found"));
+            application.setStatus("approval finished");
+            applicationRepository.save(application);
+        }
+    }
+
+
+
     public List<ApplicationEntity> getAllApplications() {
         return applicationRepository.findByApplicationKeyClass_Creator("Employee");
     }
-
     //get unique application by applicationkeyclass (id, creator)
+
     public ApplicationEntity getApplicationById(String id) {
         return applicationRepository.findByApplicationKeyClass_IdAndApplicationKeyClass_Creator(id, "Employee");
     }
@@ -235,10 +336,10 @@ public class ApplicationService {
     public List<ApplicationEntity> getApplicationsByStatus(String status) {
         return applicationRepository.findByStatusAndApplicationKeyClass_Creator(status, "Employee");
     }
-
     public List<ApplicationEntity> getApplicationsByMajor(String major) {
         return applicationRepository.findByUniMajorAndApplicationKeyClass_Creator(major, "Employee");
     }
+
     public List<ApplicationEntity> getApplicationsByUniversityName(String universityName) {
         return applicationRepository.findByUniversityNameAndApplicationKeyClass_Creator(universityName, "Employee");
     }
@@ -246,15 +347,14 @@ public class ApplicationService {
     public ApplicationEntity getApplicationsByDateOfSubmission(String dateOfSubmission) {
         return applicationRepository.findByDateOfSubmissionAndApplicationKeyClass_Creator(dateOfSubmission, "Employee");
     }
-
     // not complete
+
     public List<ApplicationEntity> getApplicationsByDateOfSubmissionBefore(String dateOfSubmission) {
         return applicationRepository.findByDateOfSubmissionBeforeAndApplicationKeyClass_Creator(dateOfSubmission, "Employee");
     }
-
     // not complete
+
     public List<ApplicationEntity> getApplicationsByDateOfSubmissionAfter(String dateOfSubmission) {
         return applicationRepository.findByDateOfSubmissionAfterAndApplicationKeyClass_Creator(dateOfSubmission, "Employee");
     }
-
 }

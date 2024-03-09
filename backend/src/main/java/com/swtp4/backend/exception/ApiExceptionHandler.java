@@ -12,4 +12,10 @@ public class ApiExceptionHandler {
         CustomErrorResponse error = new CustomErrorResponse(ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(InvalidApplicationStateException.class)
+    public ResponseEntity<CustomErrorResponse> handleResourceNotFoundException(InvalidApplicationStateException ex) {
+        CustomErrorResponse error = new CustomErrorResponse(ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
 }

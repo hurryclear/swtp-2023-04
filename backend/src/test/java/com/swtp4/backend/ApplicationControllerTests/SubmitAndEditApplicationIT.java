@@ -84,7 +84,7 @@ public class SubmitAndEditApplicationIT {
 
         //ApplicationEntity Check
         Example<ApplicationEntity> application = Example.of(ApplicationEntity.builder()
-                .status("offen")
+                .status("open")
                 .dateOfSubmission("2023-12-31T22:30:42.103Z")
                 .dateLastEdited("2024-01-14T14:12:14.675Z")
                 .universityName("University of Regenbogenland")
@@ -193,7 +193,7 @@ public class SubmitAndEditApplicationIT {
 
         String editedApplicationJson = ApplicationTestData.createEditedApplicationJson(savedApplicationID);
 
-        mockMvc.perform(post("/application/saveEdited")
+        mockMvc.perform(put("/application/saveEdited")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(editedApplicationJson))
                 .andExpect(status().isCreated());
