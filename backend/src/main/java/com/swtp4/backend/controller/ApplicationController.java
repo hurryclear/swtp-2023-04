@@ -11,10 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -30,13 +31,61 @@ public class ApplicationController {
         this.pdfService = pdfService;
     }
 
-    //changed to student controler
-    @PostMapping("/saveEdited")
-    public ResponseEntity<?> saveApplication(@RequestBody EditedApplicationDto applicationDTO){
-        log.info("Received ApplicationDto: {}", applicationDTO);
-        applicationService.updateApplication(applicationDTO);
+    @PutMapping("/editingInProgress")
+    public ResponseEntity<?> continueEditing(@RequestParam String applicationID) {
+        applicationService.updateStatus(applicationID, "editing in progress");
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/saveEdited")
+    @Transactional
+    public ResponseEntity<?> saveApplication(@RequestBody EditedApplicationDto applicationDto){
+        log.info("Received applicationDto: {}", applicationDto);
+        applicationService.updateStatus(applicationDto.applicationID(), "edited");
+        applicationService.updateApproval(applicationDto, List.of("formally rejected"));
+        applicationService.updateApplication(applicationDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @PutMapping("/formalRejection")
+    @Transactional
+    public ResponseEntity<?> formalRejectApplication(@RequestBody EditedApplicationDto applicationDto){
+        log.info("Received ApplicationDto: {}", applicationDto);
+        applicationService.statusFormalRejection(applicationDto);
+        applicationService.updateApplication(applicationDto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/readyForApproval")
+    @Transactional
+    public ResponseEntity<?> readyForApproval(@RequestBody EditedApplicationDto applicationDto){
+        log.info("Received applicationDto: {}", applicationDto);
+        applicationService.updateStatus(applicationDto.applicationID(), "ready for approval");
+        applicationService.updateApproval(applicationDto, List.of("formally rejected"));
+        applicationService.updateApplication(applicationDto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('COMMITTEE')")
+    @PutMapping("/approvalInProgress")
+    @Transactional
+    public ResponseEntity<?> approvalInProgress(@RequestParam String applicationID){
+        applicationService.updateStatus(applicationID, "approval in progress");
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('COMMITTEE')")
+    @PutMapping("/saveApproval")
+    @Transactional
+    public ResponseEntity<?> saveApproval(@RequestBody EditedApplicationDto applicationDto){
+        applicationService.updateStatus(applicationDto.applicationID(), "edited approval");
+        applicationService.updateApproval(applicationDto, List.of("accepted", "rejected"));
+        applicationService.updateApplication(applicationDto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+
 
     // the following gets are for employee, it will only return applications with creator "Employee"
     @GetMapping("/get-all-applications")

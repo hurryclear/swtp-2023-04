@@ -42,6 +42,8 @@ services:
   ports:
    - "3001:8080"
   restart: unless-stopped
+  volumes:
+   - pdf_files:/app/pdf-files
   networks:
    - app
 
@@ -62,3 +64,6 @@ services:
 networks:
  app:
   driver: bridge
+
+volumes:
+ pdf_files:

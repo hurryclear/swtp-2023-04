@@ -193,6 +193,7 @@ public class ApplicationServiceTests {
                         .id("123ID")
                         .creator("Employee")
                         .build())
+                .status("")
                 .build()));
         when(moduleStudentRepository.save(any())).thenAnswer(invocation -> {
             ModuleStudentEntity module = invocation.getArgument(0);

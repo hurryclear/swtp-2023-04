@@ -256,12 +256,190 @@ Allows office employees to save their changes to an application.
 
 #### Request Body
 ```json
-    Request placeholder
+{
+  "original": {
+    "applicationData": {
+      "applicationID": "23-23-23-23-23-23-23-23-23-23-23",
+      "status": "",
+      "formalReject": "JO du hast das völlig falsch gemacht mach den antrag nochmal",
+      "dateOfSubmission": "2024-03-05T13:56:51.560Z",
+      "dateLastEdited": "2024-03-05T13:56:51.560Z",
+      "university": "University of Regenbogenland",
+      "oldCourseOfStudy": "B.Sc Informatik",       
+      "newCourseOfStudy": "B.Sc Informatik"
+    },
+    "moduleFormsData": [
+      {
+        "frontend_key": 0,
+        "backend_block_id": 1,
+        "modulesStudent": [
+          {
+            "frontend_key": 0,
+            "backend_module_id": 3,
+            "approval": "angenommen",
+            "reason": "ja das kann man so machen passt alles soweit.",
+            "number": "420",
+            "title": "AlgoDat 1.5",
+            "path": "/23-23-23-23-23-23-23-23-23-23-23/S-3",
+            "credits": "5",
+            "university": "University of Regenbogenland",
+            "major": "B.Sc. Informatik",
+            "commentStudent": "War cool",
+            "commentEmployee": "Das nicht so cool"
+          },
+          {
+            "frontend_key": 1,
+            "backend_module_id": 5,
+            "approval": "angenommen",
+            "reason": "ja das kann man so machen passt alles soweit.",
+            "number": "4202",
+            "title": "AlgoDat 0.5",
+            "path": "/23-23-23-23-23-23-23-23-23-23-23/S-5",
+            "credits": "5",
+            "university": "University of Regenbogenland",
+            "major": "B.Sc. Informatik",
+            "commentStudent": "War easy",
+            "commentEmployee": "Das nicht so cool"
+          }
+        ],
+        "modules2bCredited": [
+          1,
+          2
+        ]
+      },
+      {
+        "frontend_key": 1,
+        "backend_block_id": 3,
+        "modulesStudent": [
+          {
+            "frontend_key": 0,
+            "backend_module_id": 5,
+            "approval": "angenommen",
+            "reason": "ja das kann man so machen passt alles soweit.",
+            "number": "81923",
+            "title": "Das Alles-Modul",
+            "path": "/23-23-23-23-23-23-23-23-23-23-23/S-5",
+            "credits": "20",
+            "university": "University of Regenbogenland",
+            "major": "B. Sc. Informatik",
+            "commentStudent": "Die Beschreibung ist lang, setzen Sie schon mal Kaffee auf",
+            "commentEmployee": "Beschreibung war wirklich lang, Kaffee ist alle"
+          }
+        ],
+        "modules2bCredited": [
+          5,
+          8
+        ]
+      }
+    ]
+  },
+  "edited": {
+    "applicationData": {
+      "applicationID": "23-23-23-23-23-23-23-23-23-23-23"
+      "status": "",
+      "formalReject": "JO du hast das völlig falsch gemacht mach den antrag nochmal",
+      "dateOfSubmission": "2024-03-05T13:56:51.560Z",
+      "dateLastEdited": "2024-03-05T13:56:51.560Z",
+      "university": "University of Regenbogenland",
+      "oldCourseOfStudy": "B.Sc Informatik",      
+      "newCourseOfStudy": "B.Sc Informatik"  
+
+    },
+    "moduleFormsData": [
+      {
+        "frontend_key": 0,
+        "backend_block_id": 1,
+        "modulesStudent": [
+          {
+            "frontend_key": 0,
+            "backend_module_id": 3,
+            "approval": "angenommen",
+            "reason": "ja das kann man so machen passt alles soweit.",
+            "number": "420",
+            "title": "AlgoDat 1.5",
+            "path": "/23-23-23-23-23-23-23-23-23-23-23/S-3",
+            "credits": "5",
+            "university": "University of Regenbogenland",
+            "major": "B.Sc. Informatik",
+            "commentStudent": "War cool",
+            "commentEmployee": "Das nicht so cool"
+          },
+          {
+            "frontend_key": 1,
+            "backend_module_id": 5,
+            "approval": "angenommen",
+            "reason": "ja das kann man so machen passt alles soweit.",
+            "number": "4202",
+            "title": "AlgoDat 0.5",
+            "path": "/23-23-23-23-23-23-23-23-23-23-23/S-5",
+            "credits": "5",
+            "university": "University of Regenbogenland",
+            "major": "B.Sc. Informatik",
+            "commentStudent": "War easy",
+            "commentEmployee": "Das nicht so cool"
+          }
+        ],
+        "modules2bCredited": [
+          1,
+          2
+        ]
+      },
+      {
+        "frontend_key": 1,
+        "backend_block_id": 3,
+        "modulesStudent": [
+          {
+            "frontend_key": 0,
+            "backend_module_id": 5,
+            "approval": "angenommen",
+            "reason": "ja das kann man so machen passt alles soweit.",
+            "number": "81923",
+            "title": "Das Alles-Modul",
+            "path": "/23-23-23-23-23-23-23-23-23-23-23/S-5",
+            "credits": "20",
+            "university": "University of Regenbogenland",
+            "major": "B. Sc. Informatik",
+            "commentStudent": "Die Beschreibung ist lang, setzen Sie schon mal Kaffee auf",
+            "commentEmployee": "Beschreibung war wirklich lang, Kaffee ist alle"
+          }
+        ],
+        "modules2bCredited": [
+          5,
+          8
+        ]
+      }
+    ]
+  }
+}
 ```
 
 #### Response Body
 ```json
-    Response placeholder
+    201 Http.Created
+```
+
+</details>
+
+
+### Application is Edited right now
+
+<details>
+<summary>Click to expand Application Ready for Approval endpoint details</summary>
+
+#### Endpoint
+`PUT /api/application/editingInProgress`
+
+#### Description
+Someone edits the application right now. Should not be edited simultaneously
+
+#### Request Body
+```json
+ /editingInProgress?applicationID=lasfjlksf
+```
+
+#### Response Body
+```json
+    200 Ok
 ```
 
 </details>
@@ -272,19 +450,19 @@ Allows office employees to save their changes to an application.
 <summary>Click to expand Application Ready for Approval endpoint details</summary>
 
 #### Endpoint
-`POST /api/application/readyForApproval`
+`PUT /api/application/readyForApproval`
 
 #### Description
 Marks an application as ready to be reviewed by the committee. This may involve saving the edited application again and setting the status to "ReadyForApproval."
 
 #### Request Body
 ```json
-    Request placeholder
+    same Json as in saveEdited
 ```
 
 #### Response Body
 ```json
-    Response placeholder
+    200 Ok
 ```
 
 </details>

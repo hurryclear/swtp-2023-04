@@ -84,7 +84,7 @@ public class SubmitAndEditApplicationIT {
 
         //ApplicationEntity Check
         Example<ApplicationEntity> application = Example.of(ApplicationEntity.builder()
-                .status("offen")
+                .status("open")
                 .dateOfSubmission("2023-12-31T22:30:42.103Z")
                 .dateLastEdited("2024-01-14T14:12:14.675Z")
                 .universityName("University of Regenbogenland")
@@ -193,7 +193,10 @@ public class SubmitAndEditApplicationIT {
 
         String editedApplicationJson = ApplicationTestData.createEditedApplicationJson(savedApplicationID);
 
-        mockMvc.perform(post("/application/saveEdited")
+        mockMvc.perform(put("/application/editingInProgress?applicationID="+savedApplicationID))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(put("/application/saveEdited")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(editedApplicationJson))
                 .andExpect(status().isCreated());
@@ -209,14 +212,14 @@ public class SubmitAndEditApplicationIT {
                 .universityName("edited")
                 .studentMajor("edited")
                 .uniMajor("B.Sc. Informatik")
-                .formalRejectionReason("")
+                .formalRejectionReason("edited")
                 .build());
 
         List<ApplicationEntity> allApplications = applicationRepository.findAll();
         assertThat(applicationRepository.findAll(application))
                 .hasSize(1)
                 .extracting(savedApplication-> savedApplication.getStatus())
-                .doesNotContain("edited");
+                .contains("edited");
 
         //BlockEntity check
         Example<ModuleBlockEntity> block1 = Example.of(ModuleBlockEntity.builder()
@@ -232,7 +235,7 @@ public class SubmitAndEditApplicationIT {
                 .id(2L)
                 .frontendKey(0L)
                 .approval("")
-                .approvalReason("")
+                .approvalReason("edited")
                 .number("edited")
                 .title("edited")
                 .credits(0L)
@@ -252,7 +255,7 @@ public class SubmitAndEditApplicationIT {
                 .id(4L)
                 .frontendKey(0L)
                 .approval("")
-                .approvalReason("")
+                .approvalReason("edited")
                 .number("edited")
                 .title("edited")
                 .credits(0L)
@@ -272,7 +275,7 @@ public class SubmitAndEditApplicationIT {
                 .id(6L)
                 .frontendKey(1L)
                 .approval("")
-                .approvalReason("")
+                .approvalReason("edited")
                 .number("edited")
                 .title("edited")
                 .credits(0L)
