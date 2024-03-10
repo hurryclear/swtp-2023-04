@@ -14,7 +14,7 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler(InvalidApplicationStateException.class)
-    public ResponseEntity<CustomErrorResponse> handleResourceNotFoundException(InvalidApplicationStateException ex) {
+    public ResponseEntity<CustomErrorResponse> handleInvalidApplicationStateException(InvalidApplicationStateException ex) {
         CustomErrorResponse error = new CustomErrorResponse(ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
