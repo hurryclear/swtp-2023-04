@@ -274,6 +274,7 @@ public class ApplicationService {
         }
     }
 
+    //gerade nicht benutzt
     public void partialFormalRejection(EditedApplicationDto applicationDTO) {
         boolean allAreRejected = true;
         for (EditedBlock block : applicationDTO.editedBlocks()){
@@ -308,7 +309,9 @@ public class ApplicationService {
                     moduleStudent.setApproval(module.approval());
                 }
                 else{
-                    allAreApproved = false;
+                    // if there is still a module without reason or valid approval-state then approval has not finished yet
+                    if(module.reason().isEmpty() || !module.approval().equals("formally rejected"))
+                        allAreApproved = false;
                 }
                 moduleStudent.setApprovalReason(module.reason());
                 moduleStudentRepository.save(moduleStudent);
