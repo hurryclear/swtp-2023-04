@@ -17,6 +17,8 @@ public class PDFService {
 
     private ModuleStudentRepository moduleStudentRepository;
     private ApplicationRepository applicationRepository;
+
+    public PDFService() {}
     
     public void saveModulePDFs(Map<String, MultipartFile> fileMap, HashMap<String, String> file_paths) {
         for (Map.Entry<String, MultipartFile> entry : fileMap.entrySet()) {
