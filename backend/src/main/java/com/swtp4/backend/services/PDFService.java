@@ -2,10 +2,13 @@ package com.swtp4.backend.services;
 
 import com.swtp4.backend.repositories.ApplicationRepository;
 import com.swtp4.backend.repositories.ModuleStudentRepository;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -34,12 +37,25 @@ public class PDFService {
                     Files.write(path, bytes);
                     System.out.println("File saved successfully: " + filePath);
                 } catch (IOException e) {
-                    System.out.println("Failed to save file: " + filePath);
-                    throw new RuntimeException();
+                    throw new RuntimeException("Failed to save file: " + filePath);
                 }
             } else {
                 System.out.println("File is empty or null for key: " + fileKey);
             }
+        }
+    }
+
+    public Resource getModulePDF(String filePathString) throws MalformedURLException {
+        Path filePath = Paths.get(filePathString);
+        Resource resource = new UrlResource(filePath.toUri());
+        if (resource.exists()) {
+            if (resource.isReadable()) {
+                return resource;
+            } else {
+                throw new RuntimeException("File not readable");
+            }
+        } else {
+            throw new RuntimeException("File not found");
         }
     }
 }
