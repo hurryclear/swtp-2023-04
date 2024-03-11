@@ -11,7 +11,9 @@ import com.swtp4.backend.repositories.entities.*;
 import com.swtp4.backend.repositories.entities.keyClasses.ApplicationKeyClass;
 import com.swtp4.backend.repositories.entities.keyClasses.ModuleRelationKeyClass;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.query.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -374,4 +376,10 @@ public class ApplicationService {
         }
         return applicationEntityList;
     }
+
+    // 2. pagination
+    public Page getEntireOriginalAndEditedApplications(PageRequest pageRequest) {
+        return null;
+    }
+
 }

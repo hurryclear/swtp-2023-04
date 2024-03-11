@@ -1,5 +1,8 @@
 package com.swtp4.backend.controller;
 
+import com.swtp4.backend.repositories.ApplicationRepository;
+import com.swtp4.backend.repositories.applicationDtos.EditedApplicationDto;
+import com.swtp4.backend.repositories.applicationDtos.EntireOriginalAndEditedApplicationDto;
 import com.swtp4.backend.repositories.applicationDtos.SubmittedApplicationDto;
 import com.swtp4.backend.repositories.dto.ApplicationIDWithFilePaths;
 import com.swtp4.backend.repositories.dto.ApplicationIdDto;
@@ -7,7 +10,9 @@ import com.swtp4.backend.repositories.dto.UniModuleDto;
 import com.swtp4.backend.services.ApplicationService;
 import com.swtp4.backend.services.PDFService;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.query.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

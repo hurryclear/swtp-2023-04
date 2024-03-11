@@ -1,6 +1,7 @@
 package com.swtp4.backend.controller;
 
 import com.swtp4.backend.repositories.ApplicationRepository;
+import com.swtp4.backend.repositories.applicationDtos.EntireOriginalAndEditedApplicationDto;
 import com.swtp4.backend.repositories.dto.ApplicationDto;
 import com.swtp4.backend.repositories.applicationDtos.EditedApplicationDto;
 import com.swtp4.backend.repositories.dto.UniModuleDto;
@@ -8,7 +9,9 @@ import com.swtp4.backend.repositories.entities.ApplicationEntity;
 import com.swtp4.backend.services.ApplicationService;
 import com.swtp4.backend.services.PDFService;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.query.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -141,6 +144,13 @@ public class ApplicationController {
     @GetMapping("/get-applications-with-sorting/{field}")
     public List<ApplicationEntity> getAllApplicationsWithSorting(@PathVariable String field) {
         return applicationService.getAllApplicationsWithSorting(field);
+    }
+
+    //pagination
+    @GetMapping
+    public Page<EntireOriginalAndEditedApplicationDto> findAll(@RequestParam int page, @RequestParam int size) {
+        PageRequest pageRequest = PageRequest.of(page,size);
+        return applicationService.getEntireOriginalAndEditedApplications(pageRequest);
     }
 
     @PostMapping("/test")
