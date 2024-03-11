@@ -367,9 +367,11 @@ public class ApplicationService {
                 .id(applicationID)
                 .creator("Employee")
                 .build();
+        ApplicationEntity applicationEntity = applicationRepository.findById(applicationIDAndCreator)
+                .orElseThrow(() -> new ResourceNotFoundException("Application Id not found" + applicationID));
 
-        List<ModuleBlockEntity> moduleBlockEntityList = moduleBlockRepository.findAllByApplicationKeyClass(
-                applicationIDAndCreator);
+        List<ModuleBlockEntity> moduleBlockEntityList = moduleBlockRepository.findAllByApplicationEntity(
+                applicationEntity);
 
         List<ReviewBlock> reviewBlockList = new ArrayList<>();
 
@@ -427,8 +429,7 @@ public class ApplicationService {
             ));
         }
 
-        ApplicationEntity applicationEntity = applicationRepository.findById(applicationIDAndCreator)
-                .orElseThrow(() -> new ResourceNotFoundException("Application Id not found" + applicationID));
+
         ReviewApplicationDetails reviewApplicationDetails = new ReviewApplicationDetails(
                 applicationID,
                 applicationEntity.getStatus(),

@@ -1,5 +1,6 @@
 package com.swtp4.backend.repositories;
 
+import com.swtp4.backend.repositories.entities.ApplicationEntity;
 import com.swtp4.backend.repositories.entities.ModuleBlockEntity;
 import com.swtp4.backend.repositories.entities.ModuleRelationEntity;
 import com.swtp4.backend.repositories.entities.keyClasses.ApplicationKeyClass;
@@ -12,5 +13,5 @@ public interface ModuleBlockRepository extends JpaRepository<ModuleBlockEntity, 
 
     ModuleBlockEntity findByApplicationEntity_ApplicationKeyClass_Creator( String creator);
 
-    List<ModuleBlockEntity> findAllByApplicationKeyClass(ApplicationKeyClass applicationKeyClass);
+    List<ModuleBlockEntity> findAllByApplicationEntity(ApplicationEntity applicationEntity);
 }
