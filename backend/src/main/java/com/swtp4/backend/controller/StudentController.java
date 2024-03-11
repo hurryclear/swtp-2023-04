@@ -1,5 +1,6 @@
 package com.swtp4.backend.controller;
 
+import com.swtp4.backend.repositories.applicationDtos.ReviewApplicationDto;
 import com.swtp4.backend.repositories.applicationDtos.SubmittedApplicationDto;
 import com.swtp4.backend.repositories.dto.ApplicationIDWithFilePaths;
 import com.swtp4.backend.repositories.dto.ApplicationIdDto;
