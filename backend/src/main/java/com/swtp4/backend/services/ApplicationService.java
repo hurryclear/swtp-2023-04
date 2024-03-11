@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -359,5 +360,87 @@ public class ApplicationService {
 
     public List<ApplicationEntity> getApplicationsByDateOfSubmissionAfter(String dateOfSubmission) {
         return applicationRepository.findByDateOfSubmissionAfterAndApplicationKeyClass_Creator(dateOfSubmission, "Employee");
+    }
+
+    public ReviewApplicationDto getReviewApplication(String applicationID) {
+        ApplicationKeyClass applicationIDAndCreator = ApplicationKeyClass.builder()
+                .id(applicationID)
+                .creator("Employee")
+                .build();
+
+        List<ModuleBlockEntity> moduleBlockEntityList = moduleBlockRepository.findAllByApplicationKeyClass(
+                applicationIDAndCreator);
+
+        List<ReviewBlock> reviewBlockList = new ArrayList<>();
+
+        for (ModuleBlockEntity moduleBlockEntity: moduleBlockEntityList) {
+            List<ModuleRelationEntity> moduleRelationEntityList = moduleRelationRepository.findByModuleBlockEntity(moduleBlockEntity);
+            List<ModuleStudentEntity> moduleStudentEntityList = new ArrayList<>();
+            List<ModuleUniEntity> moduleUniEntityList = new ArrayList<>();
+
+            for (ModuleRelationEntity moduleRelationEntity : moduleRelationEntityList) {
+                ModuleStudentEntity moduleStudentEntity = moduleRelationEntity.getModuleRelationKeyClass().getModuleStudentEntity();
+                boolean isNewStudentModule = !moduleStudentEntityList.stream()
+                        .map(ModuleStudentEntity::getId)
+                        .toList()
+                        .contains(moduleStudentEntity.getId());
+                if (isNewStudentModule) {
+                    moduleStudentEntityList.add(moduleStudentEntity);
+                }
+                ModuleUniEntity moduleUniEntity = moduleRelationEntity.getModuleRelationKeyClass().getModuleUniEntity();
+                boolean isNewUniModule = !moduleUniEntityList.stream()
+                        .map(ModuleUniEntity::getId)
+                        .toList()
+                        .contains(moduleUniEntity.getId());
+                if (isNewUniModule) {
+                    moduleUniEntityList.add(moduleUniEntity);
+                }
+            }
+
+            List<ReviewStudentModule> reviewStudentModuleList = new ArrayList<>();
+            for (ModuleStudentEntity moduleStudentEntity : moduleStudentEntityList) {
+                reviewStudentModuleList.add(new ReviewStudentModule(
+                        moduleStudentEntity.getFrontendKey(),
+                        moduleStudentEntity.getApproval(),
+                        moduleStudentEntity.getApprovalReason(),
+                        moduleStudentEntity.getNumber(),
+                        moduleStudentEntity.getTitle(),
+                        moduleStudentEntity.getCredits(),
+                        moduleStudentEntity.getUniversity(),
+                        moduleStudentEntity.getMajor(),
+                        moduleStudentEntity.getCommentStudent()
+                ));
+            }
+
+            List<ReviewUniModule> reviewUniModuleList = new ArrayList<>();
+            for(ModuleUniEntity moduleUniEntity : moduleUniEntityList) {
+                reviewUniModuleList.add(new ReviewUniModule(
+                        moduleUniEntity.getName(),
+                        moduleUniEntity.getNumber()
+                ));
+            }
+
+            reviewBlockList.add(new ReviewBlock(
+                    moduleBlockEntity.getFrontendKey(),
+                    reviewStudentModuleList,
+                    reviewUniModuleList
+            ));
+        }
+
+        ApplicationEntity applicationEntity = applicationRepository.findById(applicationIDAndCreator)
+                .orElseThrow(() -> new ResourceNotFoundException("Application Id not found" + applicationID));
+        ReviewApplicationDetails reviewApplicationDetails = new ReviewApplicationDetails(
+                applicationID,
+                applicationEntity.getStatus(),
+                applicationEntity.getFormalRejectionReason(),
+                applicationEntity.getDateOfSubmission(),
+                applicationEntity.getDateLastEdited(),
+                applicationEntity.getUniversityName(),
+                applicationEntity.getStudentMajor(),
+                applicationEntity.getUniMajor()
+        );
+
+        return new ReviewApplicationDto(reviewApplicationDetails, reviewBlockList);
+
     }
 }
