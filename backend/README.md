@@ -103,6 +103,107 @@ Allows a student to submit their application for the first time. The response in
 
 </details>
 
+### Reviewing Application
+
+<details>
+<summary>Click to expand Reviewing Application endpoint details</summary>
+
+#### Endpoint
+`GET /api/student/reviewApplication`
+
+#### Description
+Student get his application for reviewing.
+
+#### Request Body
+```json
+  /reviewApplication?applicationID=123-123-123-123
+```
+
+#### Response Body
+```json
+{
+  "applicationData": {
+    "applicationID": "23-23-23-23-23-23-23-23-23-23-23",
+    "status": "edited approval",
+    "formalRejection": "Begründungsfeld für formale Ablehnung des Gesamten Antrags ist leer außer status is formally rejected",
+    "dateOfSubmission": "2024-03-05T13:56:51.560Z",
+    "dateLastEdited": "2024-03-05T13:56:51.560Z",
+    "university": "University of Regenbogenland",
+    "oldCourseOfStudy": "B.Sc Informatik",
+    "newCourseOfStudy": "B.Sc Informatik"
+  },
+  "moduleFormsData": [
+    {
+      "frontend_key": 0,
+      "modulesStudent": [
+        {
+          "frontend_key": 0,
+          "approval": "angenommen",
+          "reason": "ja das kann man so machen passt alles soweit.",
+          "number": "420",
+          "title": "AlgoDat 1.5",
+          "credits": "5",
+          "university": "University of Regenbogenland",
+          "major": "B.Sc. Informatik",
+          "commentStudent": "War cool"
+        },
+        {
+          "frontend_key": 1,
+          "approval": "angenommen",
+          "reason": "ja das kann man so machen passt alles soweit.",
+          "number": "4202",
+          "title": "AlgoDat 0.5",
+          "credits": "5",
+          "university": "University of Regenbogenland",
+          "major": "B.Sc. Informatik",
+          "commentStudent": "War easy"
+        }
+      ],
+      "modules2bCredited": [
+        {
+          "name": "Einführung in die Objectorientierte Programmierung",
+          "number": "123-231-213-1"
+        },
+        {
+          "name": "Programmierparadigmen",
+          "number": "123-231-213-2"
+        }
+      ]
+    },
+    {
+      "frontend_key": 1,
+      "modulesStudent": [
+        {
+          "frontend_key": 0,
+          "approval": "",
+          "reason": "bin mir noch unsicher deshalb noch kein approval",
+          "number": "81923",
+          "title": "Das Alles-Modul",
+          "credits": "20",
+          "university": "University of Regenbogenland",
+          "major": "B. Sc. Informatik",
+          "commentStudent": "Die Beschreibung ist lang, setzen Sie schon mal Kaffee auf"
+        }
+      ],
+      "modules2bCredited": [
+        {
+          "name": "Grundlagen der Technischen Informatik 1",
+          "number": "123-231-213-3"
+        },
+        {
+          "name": "Analysis",
+          "number": "123-231-213-4"
+        }
+      ]
+    }
+  ]
+}
+
+```
+
+</details>
+
+
 ### Student Resubmit Application
 
 <details>
