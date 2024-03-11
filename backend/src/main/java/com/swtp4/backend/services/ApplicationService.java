@@ -12,6 +12,7 @@ import com.swtp4.backend.repositories.entities.keyClasses.ApplicationKeyClass;
 import com.swtp4.backend.repositories.entities.keyClasses.ModuleRelationKeyClass;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -359,5 +360,18 @@ public class ApplicationService {
 
     public List<ApplicationEntity> getApplicationsByDateOfSubmissionAfter(String dateOfSubmission) {
         return applicationRepository.findByDateOfSubmissionAfterAndApplicationKeyClass_Creator(dateOfSubmission, "Employee");
+    }
+
+    // from here is pagination and sorting
+    // 1. get all applications with different sorting parameter
+    public List<ApplicationEntity> getAllApplicationsWithSorting(String field) {
+        List<ApplicationEntity> applicationEntityList = new ArrayList<>();
+        List<ApplicationEntity> applicationEntityList1= applicationRepository.findAll(Sort.by(Sort.Direction.ASC, field));
+        for (ApplicationEntity applicationEntity : applicationEntityList1) {
+            if (Objects.equals(applicationEntity.getApplicationKeyClass().getCreator(), "Employee")){
+                applicationEntityList.add(applicationEntity);
+            }
+        }
+        return applicationEntityList;
     }
 }

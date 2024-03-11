@@ -129,6 +129,20 @@ public class ApplicationController {
         return applicationService.getApplicationsByDateOfSubmissionAfter(dateOfSubmission);
     }
 
+    // from here is pagination and sorting
+
+    /**
+     * get all applications with dynamic sorting field, but not with id or creator
+     * and only for creator "Employee"
+     * @author Huo Jiang
+     * @param field
+     * @return List<ApplicationEntity>
+     */
+    @GetMapping("/get-applications-with-sorting/{field}")
+    public List<ApplicationEntity> getAllApplicationsWithSorting(@PathVariable String field) {
+        return applicationService.getAllApplicationsWithSorting(field);
+    }
+
     @PostMapping("/test")
     public ResponseEntity<UniModuleDto> testOfficeEndpoint(@RequestBody UniModuleDto uniModuleDto){
         return new ResponseEntity<>(uniModuleDto, HttpStatus.OK);
