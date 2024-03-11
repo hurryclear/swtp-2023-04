@@ -444,4 +444,8 @@ public class ApplicationService {
         return new ReviewApplicationDto(reviewApplicationDetails, reviewBlockList);
 
     }
+
+    public EditedApplicationDto getEditedApplication(String applicationID) {
+        return null;
+    }
 }

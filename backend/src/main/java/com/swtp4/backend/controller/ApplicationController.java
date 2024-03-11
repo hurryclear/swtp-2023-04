@@ -92,10 +92,10 @@ public class ApplicationController {
     public List<ApplicationEntity> getAllApplications() {
         return applicationService.getAllApplications();
     }
-
-    @GetMapping("/get-application-by-id")
-    public ApplicationEntity getApplicationById(@RequestParam("id") String id) {
-        return applicationService.getApplicationById(id);
+    @GetMapping("/getApplicationByID")
+    public ResponseEntity<?> getApplicationByID(@RequestParam("applicationID") String applicationID) {
+        EditedApplicationDto editedApplicationDto = applicationService.getEditedApplication(applicationID);
+        return new ResponseEntity<>(editedApplicationDto, HttpStatus.OK);
     }
     @GetMapping("/get-applications-by-status")
     public List<ApplicationEntity> getApplicationsByStatus(@RequestParam("status") String status) {
