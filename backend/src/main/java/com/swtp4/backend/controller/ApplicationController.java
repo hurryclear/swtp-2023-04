@@ -2,14 +2,18 @@ package com.swtp4.backend.controller;
 
 import com.swtp4.backend.repositories.ApplicationRepository;
 import com.swtp4.backend.repositories.applicationDtos.EntireOriginalAndEditedApplicationDto;
+import com.swtp4.backend.repositories.applicationDtos.OverviewApplicationDto;
 import com.swtp4.backend.repositories.applicationDtos.ReviewApplicationDto;
 import com.swtp4.backend.repositories.dto.ApplicationDto;
 import com.swtp4.backend.repositories.applicationDtos.EditedApplicationDto;
 import com.swtp4.backend.repositories.dto.UniModuleDto;
 import com.swtp4.backend.repositories.entities.ApplicationEntity;
+import com.swtp4.backend.repositories.model.ApplicationPage;
+import com.swtp4.backend.repositories.model.ApplicationSearchCriteria;
 import com.swtp4.backend.services.ApplicationService;
 import com.swtp4.backend.services.PDFService;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.internal.bytebuddy.build.Plugin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -134,8 +138,6 @@ public class ApplicationController {
         return applicationService.getApplicationsByDateOfSubmissionAfter(dateOfSubmission);
     }
 
-    // from here is pagination and sorting
-
     /**
      * get all applications with dynamic sorting field, but not with id or creator
      * and only for creator "Employee"
@@ -148,24 +150,15 @@ public class ApplicationController {
         return applicationService.getAllApplicationsWithSorting(field);
     }
 
-    //pagination
-    @GetMapping("/getEditedApplication")
-    public ResponseEntity<?> getEditedApplication(@RequestParam int page, @RequestParam int size) {
-        PageRequest pageRequest = PageRequest.of(page,size);
-        Page<EntireOriginalAndEditedApplicationDto>  test= applicationService.getEntireOriginalAndEditedApplicationsWithPagination(pageRequest);
-        return new ResponseEntity<>(test, HttpStatus.OK);
-    }
-
     // "/getApplication?filters=__&sortBy=__&sortOrder=__&page=__&size=__"
-    @GetMapping("/getCertainApplications")
-    public Page<ApplicationEntity> getCertainApplications(
-            @RequestParam Map<String, String> filters,
-            @RequestParam String sortBy,
-            @RequestParam(defaultValue = "asc") String sortOrder,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
-            ) {
-        return applicationService.getCertainApplications(filters, sortBy, sortOrder, page, size);
+    // from here is sorting, filtering and paging
+    @GetMapping("/overviewOffice")
+    public ResponseEntity<Page<OverviewApplicationDto>> getOverviewApplications(ApplicationPage applicationPage,
+                                                                                ApplicationSearchCriteria applicationSearchCriteria) {
+        return new ResponseEntity<>(applicationService.getApplications(
+                applicationPage, applicationSearchCriteria),
+                HttpStatus.OK
+                );
     }
 
 
@@ -174,9 +167,9 @@ public class ApplicationController {
         return new ResponseEntity<>(uniModuleDto, HttpStatus.OK);
     }
 
-    @GetMapping("/book/search/filter")
-    public ResponseEntity readBooksWithFilter (@RequestParam("query") String query, Pageable pageable) {
-        return ResponseEntity.ok(libraryService.filterBooks(query, pageable));
-    }
+//    @GetMapping("/book/search/filter")
+//    public ResponseEntity readBooksWithFilter (@RequestParam("query") String query, Pageable pageable) {
+//        return ResponseEntity.ok(libraryService.filterBooks(query, pageable));
+//    }
 
 }
