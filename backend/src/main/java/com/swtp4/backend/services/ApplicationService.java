@@ -362,6 +362,7 @@ public class ApplicationService {
         return applicationRepository.findByDateOfSubmissionAfterAndApplicationKeyClass_Creator(dateOfSubmission, "Employee");
     }
 
+    // get review of application by ID(for student)
     public ReviewApplicationDto getReviewApplication(String applicationID) {
         ApplicationKeyClass applicationIDAndCreator = ApplicationKeyClass.builder()
                 .id(applicationID)
@@ -369,12 +370,23 @@ public class ApplicationService {
                 .build();
         ApplicationEntity applicationEntity = applicationRepository.findById(applicationIDAndCreator)
                 .orElseThrow(() -> new ResourceNotFoundException("Application Id not found" + applicationID));
-
+        // what to return
+        ReviewApplicationDto reviewApplicationDto;
+        // 1. applicationData (ReviewApplicationDetails)
+        ReviewApplicationDetails reviewApplicationDetails = new ReviewApplicationDetails(
+                applicationID,
+                applicationEntity.getStatus(),
+                applicationEntity.getFormalRejectionReason(),
+                applicationEntity.getDateOfSubmission(),
+                applicationEntity.getDateLastEdited(),
+                applicationEntity.getUniversityName(),
+                applicationEntity.getStudentMajor(),
+                applicationEntity.getUniMajor()
+        );
+        // 2. moduleFormsData (List<ReviewBlock>)
         List<ModuleBlockEntity> moduleBlockEntityList = moduleBlockRepository.findAllByApplicationEntity(
                 applicationEntity);
-
         List<ReviewBlock> reviewBlockList = new ArrayList<>();
-
         for (ModuleBlockEntity moduleBlockEntity: moduleBlockEntityList) {
             List<ModuleRelationEntity> moduleRelationEntityList = moduleRelationRepository.findByModuleBlockEntity(moduleBlockEntity);
             List<ModuleStudentEntity> moduleStudentEntityList = new ArrayList<>();
@@ -428,20 +440,9 @@ public class ApplicationService {
                     reviewUniModuleList
             ));
         }
-
-
-        ReviewApplicationDetails reviewApplicationDetails = new ReviewApplicationDetails(
-                applicationID,
-                applicationEntity.getStatus(),
-                applicationEntity.getFormalRejectionReason(),
-                applicationEntity.getDateOfSubmission(),
-                applicationEntity.getDateLastEdited(),
-                applicationEntity.getUniversityName(),
-                applicationEntity.getStudentMajor(),
-                applicationEntity.getUniMajor()
-        );
-
-        return new ReviewApplicationDto(reviewApplicationDetails, reviewBlockList);
+        // instanilize reviewApplicationDto
+        reviewApplicationDto = new ReviewApplicationDto(reviewApplicationDetails, reviewBlockList);
+        return reviewApplicationDto;
 
     }
 
