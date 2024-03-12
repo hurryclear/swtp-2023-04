@@ -378,7 +378,7 @@ public class ApplicationService {
     }
 
     // 2. pagination
-    public Page getEntireOriginalAndEditedApplications(PageRequest pageRequest) {
+    public Page getEntireOriginalAndEditedApplicationsWithPagination(PageRequest pageRequest) {
         return null;
     }
 

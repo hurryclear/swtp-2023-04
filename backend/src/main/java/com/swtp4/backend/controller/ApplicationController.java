@@ -150,7 +150,7 @@ public class ApplicationController {
     @GetMapping
     public Page<EntireOriginalAndEditedApplicationDto> findAll(@RequestParam int page, @RequestParam int size) {
         PageRequest pageRequest = PageRequest.of(page,size);
-        return applicationService.getEntireOriginalAndEditedApplications(pageRequest);
+        return applicationService.getEntireOriginalAndEditedApplicationsWithPagination(pageRequest);
     }
 
     @PostMapping("/test")
