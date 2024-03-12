@@ -14,14 +14,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.query.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -380,6 +378,15 @@ public class ApplicationService {
     // 2. pagination
     public Page<EntireOriginalAndEditedApplicationDto> getEntireOriginalAndEditedApplicationsWithPagination(PageRequest pageRequest) {
         return null;
+    }
+
+    // 3. combine all
+    public org.springframework.data.domain.Page<ApplicationEntity> getCertainApplications(
+            Map<String, String> filters,
+            String sortBy,
+            String sortOrder,
+            int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.Direction.fromString(sortOrder), sortBy);
     }
 
 }

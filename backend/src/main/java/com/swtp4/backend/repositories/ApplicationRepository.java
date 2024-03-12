@@ -26,4 +26,5 @@ public interface ApplicationRepository extends JpaRepository<ApplicationEntity, 
     List<ApplicationEntity> findByDateOfSubmissionBeforeAndApplicationKeyClass_Creator(String dateOfSubmission, String creator);
     List<ApplicationEntity> findByDateOfSubmissionAfterAndApplicationKeyClass_Creator(String dateOfSubmission, String creator);
 
+
 }

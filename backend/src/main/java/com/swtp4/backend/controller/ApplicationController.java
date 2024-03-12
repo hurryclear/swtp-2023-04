@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -154,6 +155,19 @@ public class ApplicationController {
         Page<EntireOriginalAndEditedApplicationDto>  test= applicationService.getEntireOriginalAndEditedApplicationsWithPagination(pageRequest);
         return new ResponseEntity<>(test, HttpStatus.OK);
     }
+
+    // "/getApplication?filters=__&sortBy=__&sortOrder=__&page=__&size=__"
+    @GetMapping("/getCertainApplications")
+    public Page<ApplicationEntity> getCertainApplications(
+            @RequestParam Map<String, String> filters,
+            @RequestParam String sortBy,
+            @RequestParam(defaultValue = "asc") String sortOrder,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+            ) {
+        return applicationService.getCertainApplications(filters, sortBy, sortOrder, page, size);
+    }
+
 
     @PostMapping("/test")
     public ResponseEntity<UniModuleDto> testOfficeEndpoint(@RequestBody UniModuleDto uniModuleDto){
