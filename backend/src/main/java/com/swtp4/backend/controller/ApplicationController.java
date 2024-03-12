@@ -1,6 +1,7 @@
 package com.swtp4.backend.controller;
 
 import com.swtp4.backend.repositories.ApplicationRepository;
+import com.swtp4.backend.repositories.applicationDtos.EntireOriginalAndEditedApplicationDto;
 import com.swtp4.backend.repositories.dto.ApplicationDto;
 import com.swtp4.backend.repositories.applicationDtos.EditedApplicationDto;
 import com.swtp4.backend.repositories.dto.UniModuleDto;
@@ -92,11 +93,7 @@ public class ApplicationController {
     public List<ApplicationEntity> getAllApplications() {
         return applicationService.getAllApplications();
     }
-    @GetMapping("/getApplicationByID")
-    public ResponseEntity<?> getApplicationByID(@RequestParam("applicationID") String applicationID) {
-        EditedApplicationDto editedApplicationDto = applicationService.getEditedApplication(applicationID);
-        return new ResponseEntity<>(editedApplicationDto, HttpStatus.OK);
-    }
+
     @GetMapping("/get-applications-by-status")
     public List<ApplicationEntity> getApplicationsByStatus(@RequestParam("status") String status) {
         return applicationService.getApplicationsByStatus(status);
@@ -127,6 +124,13 @@ public class ApplicationController {
     @GetMapping("/get-applications-after-date-of-submission")
     public List<ApplicationEntity> getApplicationsByDateOfSubmissionAfter(@RequestParam("dateOfSubmission") String dateOfSubmission) {
         return applicationService.getApplicationsByDateOfSubmissionAfter(dateOfSubmission);
+    }
+
+    // endpoint for employee to get application by id
+    @GetMapping("/getApplication")
+    public ResponseEntity<?> getApplicationByID(@RequestParam("applicationID") String applicationID) {
+        EntireOriginalAndEditedApplicationDto entireOriginalAndEditedApplicationDto = applicationService.getApplicationByID(applicationID);
+        return new ResponseEntity<>(entireOriginalAndEditedApplicationDto, HttpStatus.OK);
     }
 
     @PostMapping("/test")
