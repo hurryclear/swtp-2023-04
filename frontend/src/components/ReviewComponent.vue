@@ -1,142 +1,152 @@
 <template>
   <v-container>
-    <!-- Formular-Überprüfungsbereich -->
-    <v-col>
-      <v-card>
+    <!-- Form validation area -->
+    <v-col v-if="!isDataVisible">
+      <v-card class="mb-4" elevation="10">
+        <!-- Card title for review application -->
         <v-card-title :style="{fontWeight: 'bold'}">{{ $t('reviewComponent.reviewApplication') }}</v-card-title>
-        <v-card-text>
-          <v-text-field
-              :label="$t('reviewComponent.formID')"
-              v-model="formId"
-              @keyup.enter="checkStatus"
-              variant="outlined"
-              dense
-          />
-          <v-btn @click="checkStatus" color="primary">{{ $t('reviewComponent.checkStatus') }}</v-btn>
+          <v-card-text>
+            <!-- Text field for entering form ID -->
+            <v-text-field
+                :label="$t('reviewComponent.formID')"
+                v-model="formId"
+                @keyup.enter="checkStatus"
+                variant="outlined"
+                dense
+            />
+            <!-- Button to check the status -->
+            <v-btn @click="checkStatus" color="primary">{{ $t('reviewComponent.checkStatus') }}</v-btn>
         </v-card-text>
       </v-card>
     </v-col>
+    
+    <!-- Area to display data if it is visible -->
+    <v-row v-if="isDataVisible">
+        <v-col cols="12">
+          <v-card class="mb-4" elevation="10">
+            <v-card-title>
+              <v-row justify="space-between" no-gutters>
+                <v-col cols="auto" class="text-left">
+                  <!-- Overview title -->
+                  <span style="font-weight: bold; font-size: large;">{{ $t('reviewComponent.overview') }}:</span>
+                </v-col>
+              </v-row>
+            </v-card-title>
 
-    <!-- Angezeigte Datenbereich -->
-    <v-col v-if="editedForm">
-      <v-alert class="text-center mb-4" :color="statusColor">
-        <div class="text-center" :style="{ fontSize: '24px', fontWeight: 'bold' }">
-          {{ statusMessage }}
-        </div>
-        <v-btn class="text-center" @click="downloadForm" append-icon="mdi-download">
-          {{ $t('reviewComponent.downloadApplication') }}
-        </v-btn>
-      </v-alert>
-    
-      <div class="text-center mb-4" :style="{ fontSize: '24px', fontWeight: 'bold' }">
-        Antrag: {{ editedForm.applicationData.applicationID }}
-      </div>
-    
+            <v-col cols="12">
+              <!-- Card showing the application status -->
+              <v-card :color="determineStatusColor(form.applicationData.status)">
+                <v-card-text class="text-center" style="color: white;">
+                  <!-- Status information -->
+                  <span style="font-weight: bold;">{{determineStatusTranslations(form.applicationData.status)}}</span>
+                </v-card-text>
+              </v-card>
+            </v-col>
 
-      <!-- Tabs für den Wechsel zwischen Original und Bearbeitet -->
-    
+            <v-row>
+              <!-- Displaying application details -->
+              <v-col cols="12" sm="6">
+                <v-card-text>
+                  <!-- Information fields for the application -->
+                  <div><span style="font-weight: bold;">{{$t('reviewComponent.currentUniversity')}}:</span> {{ form.applicationData.university }}</div>
+                  <div><span style="font-weight: bold;">{{$t('reviewComponent.oldCourseOfStudy')}}:</span> {{ form.applicationData.oldCourseOfStudy }}</div>
+                  <div><span style="font-weight: bold;">{{$t('reviewComponent.newCourseOfStudy')}}:</span> {{ form.applicationData.newCourseOfStudy }}</div>
+                  <div><span style="font-weight: bold;">{{$t('reviewComponent.dateOfSubmission')}}:</span> {{ new Date(form.applicationData.dateOfSubmission).toLocaleString() }}</div>
+                  <div><span style="font-weight: bold;">{{$t('reviewComponent.dateLastEdited')}}:</span> {{ new Date(form.applicationData.dateLastEdited).toLocaleString() }}</div>
+                </v-card-text>
+              </v-col>
+
+              <!-- Button for downloading the application form -->
+              <v-col cols="12" sm="6" class="d-flex align-center justify-center">
+                <v-btn class="mb-4" color="primary" @click="downloadForm" append-icon="mdi-download">
+                  <span style="font-weight: bold;">{{ $t('reviewComponent.downloadApplication') }}</span>
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-card>
+        </v-col>
+      
+      <!-- Modules Section -->
       <v-row>
-        <v-col>
-          <v-tabs v-model="tab" background-color="primary" dark>
-            <v-tab>Original</v-tab>
-            <v-tab>Bearbeitet</v-tab>
-          </v-tabs>
-          <v-window v-model="tab">
-            <v-window-item>
-              <!-- Hier kommt der Inhalt des Originalformulars -->
+        <v-col cols="12">
+          <v-expansion-panels>
+            <!-- Loop over module forms -->
+            <v-expansion-panel 
+              v-for="moduleForm in form.moduleFormsData" 
+              :key="moduleForm.frontend_key"
+              class="elevation-10"
+            >
+              <!-- Expansion panel title -->
+              <v-expansion-panel-title class="hide-actions">
+                <template v-slot:default>
+                  <v-row no-gutters>
+                    <v-col cols="8" class="d-flex align-center">
+                      <!-- Module block title -->
+                      {{$t('reviewComponent.moduleBlock')}} {{ moduleForm.frontend_key + 1 }}
+                    </v-col>
 
-              <v-card class="mb-4">
-                <v-card-title><span style="font-weight: bold;">{{ originalForm.applicationData.universityName }}</span></v-card-title>
-                <v-card-text>
-                  <div><span style="font-weight: bold;">Major:</span> {{ originalForm.applicationData.applicationID }}</div>
-                  <div><span style="font-weight: bold;">Land:</span> {{ originalForm.applicationData.country }}</div>
-                  <div><span style="font-weight: bold;">Status:</span> {{ originalForm.applicationData.status }}</div>
-                  <div><span style="font-weight: bold;">Kommentar Student:</span> {{ originalForm.applicationData.commentStudent }}</div>
-                  <div><span style="font-weight: bold;">Kommentar Mitarbeiter:</span> {{ originalForm.applicationData.commentEmployee }}</div>
-                  <div><span style="font-weight: bold;">Datum der Einreichung:</span> {{ new Date(originalForm.applicationData.dateOfSubmission).toLocaleString() }}</div>
-                  <div><span style="font-weight: bold;">Letzte Bearbeitung:</span> {{ new Date(originalForm.applicationData.dateLastEdited).toLocaleString() }}</div>
-                </v-card-text>
-              </v-card>
+                    <v-col cols="4">
+                      <!-- Card displaying approval status of the module block -->
+                      <v-card :color="getBlockApprovalColor(moduleForm.modulesStudent)">
+                          <v-card-text class="text-center"><span style="font-weight: bold; color: white;"> {{ getBlockApprovalStatus(moduleForm.modulesStudent) }}</span></v-card-text>
+                      </v-card>
+                    </v-col>
+                  </v-row>
+                </template>
+              </v-expansion-panel-title>
+              
+              <!-- Expansion panel content -->
+              <v-expansion-panel-text>
+                <!-- Detailed module information -->
+                <div class="my-content" v-for="module in moduleForm.modulesStudent" :key="module.frontend_key">
+                  <div>
+                    <!-- Module details -->
+                    <span style="font-weight: bold;">{{$t('reviewComponent.modulName')}}:</span> {{ module.title }} |     
+                    <span style="font-weight: bold;">{{$t('reviewComponent.moduleNumber')}}:</span> {{ module.number }} |  
+                    <span style="font-weight: bold;">{{$t('reviewComponent.moduleCredits')}}:</span> {{ module.credits }} 
+                  </div>
+                  
+                  <!-- Module approval information -->
+                  <div v-if="module.approval !== ''">
+                    <span style="font-weight: bold;">{{$t('reviewComponent.moduleApproval')}}: </span> 
+                    <span :style="{ color: detrermineTextColor(module.approval) }">{{ statusTranslation(module.approval) }}</span>
+                  </div>
+                  <div v-else>
+                    <span style="font-weight: bold;">{{$t('reviewComponent.moduleApproval')}}: </span> 
+                    <span style="color: blue;" >{{$t('reviewComponent.moduleApprovalOpen')}}</span>
+                  </div>
+                  
+                  <!-- Reason for module approval or disapproval -->
+                  <div v-if="module.reason !== ''">
+                    <span style="font-weight: bold;">{{$t('reviewComponent.moduleApprovalReason')}}: </span> {{ module.reason }}
+                  </div>
+                </div>
+                <v-divider class="my-divider"></v-divider>
 
-              <!-- Module -->
-              <div v-for="moduleForm in originalForm.moduleFormsData" :key="moduleForm.backend_block_id">
-                <v-card class="mb-4">
-                  <v-card-title><span style="font-weight: bold;">Modul Block</span> {{ moduleForm.backend_block_id }}</v-card-title>
-                  <v-card-text>
-                    <div v-for="module in moduleForm.modulesStudent" :key="module.backend_module_id">
-                      <div><span style="font-weight: bold;">Modulnummer:</span> {{ module.number }}</div>
-                      <div><span style="font-weight: bold;">Titel:</span> {{ module.title }}</div>
-                      <div><span style="font-weight: bold;">Beschreibung:</span> {{ module.description }}</div>
-                      <div><span style="font-weight: bold;">Credits:</span> {{ module.credits }}</div>
-                      <div><span style="font-weight: bold;">Universität:</span> {{ module.university }}</div>
-                      <div><span style="font-weight: bold;">Studiengang:</span> {{ module.major }}</div>
-                      <div><span style="font-weight: bold;">Kommentar Student:</span> {{ module.commentStudent }}</div>
-                      <div><span style="font-weight: bold;">Kommentar Mitarbeiter:</span> {{ module.commentEmployee }}</div>
-                    </div>
+                <!-- Displaying modules to be credited -->
+                <div class="my-content" v-if="moduleForm.modules2bCredited && moduleForm.modules2bCredited.length">
+                  <div>
+                    <span style="font-weight: bold;">{{$t('reviewComponent.modules2bCredited')}}:</span>
+                  </div>
 
-                    <!-- Anzurechnende Module -->
-                    <div v-if="moduleForm.modules2bCredited && moduleForm.modules2bCredited.length">
-                      <div><span style="font-weight: bold;">Anzurechnende Module:</span></div>
-                      <ul class="indented-list">
-                        <li v-for="moduleToCredit in moduleForm.modules2bCredited" :key="moduleToCredit">{{ moduleToCredit }}</li>
-                      </ul>
-                    </div>
-                  </v-card-text>
-                </v-card>
-              </div>
-            </v-window-item>
-
-            <v-window-item>
-              <!-- Hier kommt der Inhalt des bearbeiteten Formulars -->
-              <v-card class="mb-4">
-                <v-card-title><span style="font-weight: bold;">{{ editedForm.applicationData.universityName }}</span></v-card-title>
-                <v-card-text>
-                  <div><span style="font-weight: bold;">Major:</span> {{ editedForm.applicationData.applicationID }}</div>
-                  <div><span style="font-weight: bold;">Land:</span> {{ editedForm.applicationData.country }}</div>
-                  <div><span style="font-weight: bold;">Status:</span> {{ editedForm.applicationData.status }}</div>
-                  <div><span style="font-weight: bold;">Kommentar Student:</span> {{ editedForm.applicationData.commentStudent }}</div>
-                  <div><span style="font-weight: bold;">Kommentar Mitarbeiter:</span> {{ editedForm.applicationData.commentEmployee }}</div>
-                  <div><span style="font-weight: bold;">Datum der Einreichung:</span> {{ new Date(editedForm.applicationData.dateOfSubmission).toLocaleString() }}</div>
-                  <div><span style="font-weight: bold;">Letzte Bearbeitung:</span> {{ new Date(editedForm.applicationData.dateLastEdited).toLocaleString() }}</div>
-                </v-card-text>
-              </v-card>
-
-              <!-- Module -->
-              <div v-for="moduleForm in editedForm.moduleFormsData" :key="moduleForm.backend_block_id">
-                <v-card class="mb-4">
-                  <v-card-title><span style="font-weight: bold;">Modul Block</span> {{ moduleForm.backend_block_id }}</v-card-title>
-                  <v-card-text>
-                    <div v-for="module in moduleForm.modulesStudent" :key="module.backend_module_id">
-                      <div><span style="font-weight: bold;">Modulnummer:</span> {{ module.number }}</div>
-                      <div><span style="font-weight: bold;">Titel:</span> {{ module.title }}</div>
-                      <div><span style="font-weight: bold;">Beschreibung:</span> {{ module.description }}</div>
-                      <div><span style="font-weight: bold;">Credits:</span> {{ module.credits }}</div>
-                      <div><span style="font-weight: bold;">Universität:</span> {{ module.university }}</div>
-                      <div><span style="font-weight: bold;">Studiengang:</span> {{ module.major }}</div>
-                      <div><span style="font-weight: bold;">Kommentar Student:</span> {{ module.commentStudent }}</div>
-                      <div><span style="font-weight: bold;">Kommentar Mitarbeiter:</span> {{ module.commentEmployee }}</div>
-                    </div>
-
-                    <!-- Anzurechnende Module -->
-                    <div v-if="moduleForm.modules2bCredited && moduleForm.modules2bCredited.length">
-                      <div><span style="font-weight: bold;">Anzurechnende Module:</span></div>
-                      <ul class="indented-list">
-                        <li v-for="moduleToCredit in moduleForm.modules2bCredited" :key="moduleToCredit">{{ moduleToCredit }}</li>
-                      </ul>
-                    </div>
-                  </v-card-text>
-                </v-card>
-              </div>
-            </v-window-item>
-          </v-window>
+                  <!-- List of modules to be credited -->
+                  <ul class="indented-list">
+                    <li v-for="moduleToCredit in moduleForm.modules2bCredited" :key="moduleToCredit.number">
+                      {{ moduleToCredit.name }} ({{ moduleToCredit.number }})
+                    </li>
+                  </ul>
+                </div>
+              </v-expansion-panel-text>
+            </v-expansion-panel>
+          </v-expansion-panels>
         </v-col>
       </v-row>
-    </v-col>
+    </v-row>
 
-    <!-- Statusmeldungsbereich -->
+    <!-- Alert section for status messages -->
     <v-col v-else-if="status">
       <v-alert type="info" :color="statusColor">
-        {{ status }}
+        {{ determineStatusTranslations(status) }}
       </v-alert>
     </v-col>
   </v-container>
@@ -145,267 +155,116 @@
 <script>
 import { mapActions } from 'vuex';
 
+
 export default {
+  /**
+   * Data properties of the Vue component.
+   * @returns {Object} The initial data for the Vue component.
+   */
   data() {
     return {
-      formId: '',
-
-      //hardcoded form, plese remove after backend is implemented
-      form: {
-          // das senden und empfangen Backend UND Frontend
-          
-            "original": {
-              "applicationData": {
-                "applicationID": "23-23-23-23-23-23-23-23-23-23-23 test",
-                "status": "",
-                //offen, in bearbeitung, formal abgelehnt,     aber nicht abgelehnt, angenommen
-                "formalReject": "JO du hast das völlig falsch gemacht mach den antrag nochmal",
-                "dateOfSubmission": "2024-03-05T13:56:51.560Z",
-                "dateLastEdited": "2024-03-05T13:56:51.560Z",
-                "university": "University of Regenbogenland",
-                "oldCourseOfStudy": "B.Sc Informatik",       //alter studiengang default
-                "newCourseOfStudy": "B.Sc Informatik"   //Studiengang Uni leipzig kann nicht verändert werden!!
-              },
-              "moduleFormsData": [
-                {
-                  "frontend_key": 0,
-                  "backend_block_id": 1,
-                  // backend Id zur identifikation des blocks
-                  "modulesStudent": [
-                    {
-                      "frontend_key": 0,
-                      // frontend key eines Moduls in einem block, hier ist es das 1. Modul des 1. Blocks
-                      "backend_module_id": 3,
-                      // backend id des student moduls zur eindeutigen identifikation
-                      "approval": "angenommen",
-                      "reason": "ja das kann man so machen passt alles soweit.",
-                      "number": "420",
-                      "title": "AlgoDat 1.5",
-                      "path": "/23-23-23-23-23-23-23-23-23-23-23/S-3",
-                      "credits": "5",
-                      "university": "University of Regenbogenland",
-                      "major": "B.Sc. Informatik",
-                      "commentStudent": "War cool",
-                      "commentEmployee": "Das nicht so cool"
-                    },
-                    {
-                      "frontend_key": 1,
-                      // frontend key eines Moduls in einem block, hier ist es das 1. Modul des 1. Blocks
-                      "backend_module_id": 5,
-                      // backend id des student moduls zur eindeutigen identifikation
-                      "approval": "angenommen",
-                      "reason": "ja das kann man so machen passt alles soweit.",
-                      "number": "4202",
-                      "title": "AlgoDat 0.5",
-                      "path": "/23-23-23-23-23-23-23-23-23-23-23/S-5",
-                      "credits": "5",
-                      "university": "University of Regenbogenland",
-                      "major": "B.Sc. Informatik",
-                      "commentStudent": "War easy",
-                      "commentEmployee": "Das nicht so cool"
-                    }
-                  ],
-                  "modules2bCredited": [
-                    1,
-                    //id vom Uni Modul Alg 1
-                    2
-                    //id vom Uni Modul Alg 2
-                  ]
-                },
-                {
-                  "frontend_key": 1,
-                  "backend_block_id": 3,
-                  // backend Id zur identifikation des blocks
-                  "modulesStudent": [
-                    {
-                      "frontend_key": 0,
-                      // frontend key eines Moduls in einem block, hier ist es das 1. Modul des 1. Blocks
-                      "backend_module_id": 5,
-                      // backend id des student moduls zur eindeutigen identifikation
-                      "approval": "angenommen",
-                      "reason": "ja das kann man so machen passt alles soweit.",
-                      "number": "81923",
-                      "title": "Das Alles-Modul",
-                      "path": "/23-23-23-23-23-23-23-23-23-23-23/S-5",
-                      "credits": "20",
-                      "university": "University of Regenbogenland",
-                      "major": "B. Sc. Informatik",
-                      "commentStudent": "Die Beschreibung ist lang, setzen Sie schon mal Kaffee auf",
-                      "commentEmployee": "Beschreibung war wirklich lang, Kaffee ist alle"
-                    }
-                  ],
-                  "modules2bCredited": [
-                    5,
-                    //id vom Uni Modul Alg 1
-                    8
-                    //id vom Uni Modul Alg 2
-                  ]
-                }
-              ]
-            },
-            "edited": {
-              "applicationData": {
-                "applicationID": "23-23-23-23-23-23-23-23-23-23-23",
-                "status": "open",
-                //offen, in bearbeitung, formal abgelehnt,     aber nicht abgelehnt, angenommen
-                "formalReject": "JO du hast das völlig falsch gemacht mach den antrag nochmal",
-                "dateOfSubmission": "2024-03-05T13:56:51.560Z",
-                "dateLastEdited": "2024-03-05T13:56:51.560Z",
-                "university": "University of Regenbogenland",
-                "oldCourseOfStudy": "B.Sc Informatik",       //alter studiengang default
-                "newCourseOfStudy": "B.Sc Informatik"   //Studiengang Uni leipzig kann nicht verändert werden!!
-              },
-              "moduleFormsData": [
-                {
-                  "frontend_key": 0,
-                  "backend_block_id": 1,
-                  // backend Id zur identifikation des blocks
-                  "modulesStudent": [
-                    {
-                      "frontend_key": 0,
-                      // frontend key eines Moduls in einem block, hier ist es das 1. Modul des 1. Blocks
-                      "backend_module_id": 3,
-                      // backend id des student moduls zur eindeutigen identifikation
-                      "approval": "angenommen",
-                      "reason": "ja das kann man so machen passt alles soweit.",
-                      "number": "420",
-                      "title": "AlgoDat 1.5",
-                      "path": "/23-23-23-23-23-23-23-23-23-23-23/S-3",
-                      "credits": "5",
-                      "university": "University of Regenbogenland",
-                      "major": "B.Sc. Informatik",
-                      "commentStudent": "War cool",
-                      "commentEmployee": "Das nicht so cool"
-                    },
-                    {
-                      "frontend_key": 1,
-                      // frontend key eines Moduls in einem block, hier ist es das 1. Modul des 1. Blocks
-                      "backend_module_id": 5,
-                      // backend id des student moduls zur eindeutigen identifikation
-                      "approval": "angenommen",
-                      "reason": "ja das kann man so machen passt alles soweit.",
-                      "number": "4202",
-                      "title": "AlgoDat 0.5",
-                      "path": "/23-23-23-23-23-23-23-23-23-23-23/S-5",
-                      "credits": "5",
-                      "university": "University of Regenbogenland",
-                      "major": "B.Sc. Informatik",
-                      "commentStudent": "War easy",
-                      "commentEmployee": "Das nicht so cool"
-                    }
-                  ],
-                  "modules2bCredited": [
-                    1,
-                    //id vom Uni Modul Alg 1
-                    2
-                    //id vom Uni Modul Alg 2
-                  ]
-                },
-                {
-                  "frontend_key": 1,
-                  "backend_block_id": 3,
-                  // backend Id zur identifikation des blocks
-                  "modulesStudent": [
-                    {
-                      "frontend_key": 0,
-                      // frontend key eines Moduls in einem block, hier ist es das 1. Modul des 1. Blocks
-                      "backend_module_id": 5,
-                      // backend id des student moduls zur eindeutigen identifikation
-                      "approval": "angenommen",
-                      "reason": "ja das kann man so machen passt alles soweit.",
-                      "number": "81923",
-                      "title": "Das Alles-Modul",
-                      "path": "/23-23-23-23-23-23-23-23-23-23-23/S-5",
-                      "credits": "20",
-                      "university": "University of Regenbogenland",
-                      "major": "B. Sc. Informatik",
-                      "commentStudent": "Die Beschreibung ist lang, setzen Sie schon mal Kaffee auf",
-                      "commentEmployee": "Beschreibung war wirklich lang, Kaffee ist alle"
-                    }
-                  ],
-                  "modules2bCredited": [
-                    5,
-                    //id vom Uni Modul Alg 1
-                    8
-                    //id vom Uni Modul Alg 2
-                  ]
-                }
-              ]
-            }
-          },
-      editedForm: null,
-      originalForm: null,
-      status: null,
-      statusMessage: '',
-      statusColor: '',
-      tab: 0,
+      form: null,                    // Represents the form data
+      isDataVisible: false,          // Determines if the data should be visible
+      formId: '',                    // Stores the form ID
+      status: null,                  // Stores the current status of the form
+      statusMessage: '',             // Message representing the current status
+      statusColor: '',               // Color representing the current status
     };
   },
-  methods: {
-    ...mapActions(['fetchApplicationSummary', 'fetchPdfSummary']),
 
-    async checkStatus() {
-      //uncomment after backend is implemented
-      
-      // try {
-      //   const form = await this.fetchApplicationSummary(this.formId);
-      //   if (form && form.edited) {
-      //     this.editedForm = form.edited;
-      //     this.statusMessage = `Status: ${form.edited.applicationData.status}`;
-      //     this.statusColor = this.determineStatusColor(form.edited.applicationData.status);
-      //   } else {
-      //     this.editedForm = null;
-      //     this.status = 'Form not found';
-      //     this.statusColor = this.determineStatusColor(this.status);
-      //   }
-      // } catch (error) {
-      //   console.error('Error in checkStatus:', error);
-      //   this.status = 'Error fetching form';
-      //   this.statusColor = this.determineStatusColor(this.status);
-      // }
-
-      //remove after backend is implemented just for testing the hardcoded form
-      
-      this.editedForm = this.form.edited;
-      this.originalForm = this.form.original;
-      if(this.editedForm.applicationData.applicationID === this.formId){
-        this.statusMessage = `Status: ${this.editedForm.applicationData.status}`;
-        this.statusColor = this.determineStatusColor(this.editedForm.applicationData.status);
-      } else {
-        this.editedForm = null;
-        this.status = 'Form not found';
-        this.statusColor = this.determineStatusColor(this.status);
+  // Watchers for Vue component
+  watch: {
+    /**
+     * Watcher for changes in the current form in the Vuex store.
+     */
+    '$store.state.form.currentForm': {
+      immediate: true,
+      handler(newVal) {
+        this.form = newVal; // Update the local form data when the store's form data changes
       }
+    }
+  },
 
+  // Methods of the Vue component
+  methods: {
+    ...mapActions(['fetchApplicationSummary', 'fetchPdfSummary']), // Mapping Vuex actions for reuse
+
+    /**
+     * Checks the status of an application.
+     * Asynchronous method to fetch the application summary and update the component's state.
+     */
+    async checkStatus() {
+      try {
+        await this.fetchApplicationSummary(this.formId); // Fetch the application summary based on form ID
+        console.log('Form:', this.form); 
+
+        // Check if the form data is available and match the form ID
+        if (this.form && this.form.applicationData.applicationID === this.formId) {
+          this.isDataVisible = true;
+          this.statusMessage = `Status: ${this.form.applicationData.status}`;
+          this.statusColor = this.determineStatusColor(this.form.applicationData.status);
+        } else {
+          this.isDataVisible = false;
+          this.status = 'Form not found';
+          this.statusColor = 'red';
+        }
+      } catch (error) {
+        console.error('Error in checkStatus:', error);
+        this.isDataVisible = false;
+        this.status = 'Error fetching form';
+        this.statusColor = 'red';
+      }
     },
 
+    /**
+     * Downloads the form as a PDF.
+     * Asynchronous method to fetch PDF data and trigger a download.
+     */
     async downloadForm() {
-      if (!this.editedForm) return;
+      if (!this.form) return; // Exit if no form is available
 
       try {
-        const pdfData = await this.fetchPdfSummary(this.editedForm.id);
+        const pdfData = await this.fetchPdfSummary(this.formId); // Fetch the PDF summary
         const blob = new Blob([pdfData], { type: 'application/pdf' });
 
+        // Create a temporary link to download the file
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = `application-${this.editedForm.id}.pdf`;
+        link.download = `application-${this.formId}.pdf`;
         link.click();
 
-        URL.revokeObjectURL(link.href); // Clean up
+        URL.revokeObjectURL(link.href); // Clean up by revoking the object URL
       } catch (error) {
         console.error('Error downloading PDF:', error);
       }
-    },
+    },  
 
+    /**
+     * Determines the color associated with a given status.
+     * @param {string} status - The current status of the item.
+     * @returns {string} The color corresponding to the status.
+     */
     determineStatusColor(status) {
       switch (status) {
         case 'open':
           return 'blue';
-        case 'in progress':
+        case 'editing in progress':
+          return 'orange';
+        case 'edited':
+          return 'orange';
+        case 'ready for approval':
+          return 'orange';
+        case 'approval in progress':
+          return 'orange';
+        case 'edited approval':
+          return 'orange';
+        case 'approval finished':
           return 'orange';
         case 'accepted':
           return 'green';
-        case 'denied':
+        case 'rejected':
+          return 'red';
+        case 'formally rejected':
           return 'red';
         case 'Error fetching form':
           return 'red';
@@ -415,8 +274,116 @@ export default {
           return 'grey';
       }
     },
-  },
+
+    /**
+     * Retrieves the translation for a given status.
+     * @param {string} status - The current status of the item.
+     * @returns {string} The translated status text.
+     */
+    determineStatusTranslations(status) {
+      switch (status) {
+        case 'open':
+          return this.$t('reviewComponent.open');
+        case 'editing in progress':
+          return this.$t('reviewComponent.editingInProgress');
+        case 'edited':
+          return this.$t('reviewComponent.edited');
+        case 'ready for approval':
+          return this.$t('reviewComponent.readyForApproval');
+        case 'approval in progress':
+          return this.$t('reviewComponent.approvalInProgress');
+        case 'edited approval':
+          return this.$t('reviewComponent.editedApproval');
+        case 'approval finished':
+          return this.$t('reviewComponent.approvalFinished');
+        case 'accepted':
+          return this.$t('reviewComponent.accepted');
+        case 'rejected':
+          return this.$t('reviewComponent.rejected');
+        case 'formally rejected':
+          return this.$t('reviewComponent.formallyRejected');
+        case 'Error fetching form':
+          return this.$t('reviewComponent.errorFetchingForm');
+        case 'Form not found':
+          return this.$t('reviewComponent.formNotFound');
+        default:
+          return this.$t('reviewComponent.pending');
+      }
+    },
+
+    /**
+     * Gets the overall approval status of a block based on its modules.
+     * @param {Array} modules - Array of modules, each with an approval status.
+     * @returns {string} The overall approval status.
+     */
+    getBlockApprovalStatus(modules) {
+      const allApproved = modules.every(module => module.approval === 'accepted');
+      const someApproved = modules.some(module => module.approval === 'accepted');
+
+      if (allApproved) {
+        return this.$t('reviewComponent.accepted');
+      } else if (someApproved) {
+        return this.$t('reviewComponent.partiallyAccepted');
+      } else {
+        return this.$t('reviewComponent.rejected');
+      }
+    },
+
+    /**
+     * Determines the color representing the overall approval status of a block.
+     * @param {Array} modules - Array of modules, each with an approval status.
+     * @returns {string} The color representing the overall approval status.
+     */
+    getBlockApprovalColor(modules) {
+      const allApproved = modules.every(module => module.approval === 'accepted');
+      const someApproved = modules.some(module => module.approval === 'accepted');
+
+      if (allApproved) {
+        return 'green';
+      } else if (someApproved) {
+        return 'orange';
+      } else {
+        return 'red';
+      }
+    },
+
+    /**
+     * Determines the text color based on the approval status.
+     * @param {string} approval - The approval status.
+     * @returns {string} The color representing the text based on approval status.
+     */
+    determineTextColor(approval) {
+      if (approval === 'accepted') {
+        return 'green';
+      } else if (approval === 'rejected') {
+        return 'red';
+      } else if (approval === 'formally rejected') {
+        return 'red';
+      } else {
+        return 'black';
+      }
+    },
+
+    /**
+     * Gets the translation of an approval status.
+     * @param {string} approval - The approval status.
+     * @returns {string} The translated text of the approval status.
+     */
+    statusTranslation(approval) {
+      if (approval === 'accepted') {
+        return this.$t('reviewComponent.accepted');
+      } else if (approval === 'rejected') {
+        return this.$t('reviewComponent.rejected');
+      } else if (approval === 'formally rejected') {
+        return this.$t('reviewComponent.formallyRejected');
+      } else {
+        return 'pending';
+      }
+    },
+  }
 };
+
+
 </script>
 
 <style scoped>
@@ -437,12 +404,17 @@ export default {
   font-size: 1rem;
 }
 
-.divider-custom {
-  margin-top: 16px;
-  margin-bottom: 16px;
+.indented-list {
+  padding-left: 20px;  
 }
 
-.indented-list {
-  padding-left: 20px;  /* Oder einen anderen Wert nach Wahl */
+.equal-height .v-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.my-content {
+  margin-bottom: 10px; 
+  margin-top: 10px;
 }
 </style>
