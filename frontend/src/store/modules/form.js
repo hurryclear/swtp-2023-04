@@ -16,6 +16,7 @@ export default {
         },
     },
     mutations: {
+
         initializeForms(state, forms) {
             state.forms = forms.map(form => ({
                 ...form,
@@ -35,7 +36,8 @@ export default {
             state.forms.push({...form, id: form.timestamp});
         },
         setCurrentForm(state, form) {
-            state.currentForm = form;
+            state.currentForm = {...form};
+            console.log('Current form:', state.currentForm);
         },
         setCurrentFormPdf(state, pdf) {
             state.currentFormPdf = pdf;
@@ -54,6 +56,7 @@ export default {
         async fetchApplicationSummary({ commit }, applicationId) {
             const form = await FormService.fetchApplicationSummary(applicationId);
             commit('setCurrentForm', form);
+            
         },
         async fetchPdfSummary({ commit }, applicationId) {
             const pdfData = await FormService.fetchPdfSummary(applicationId);
