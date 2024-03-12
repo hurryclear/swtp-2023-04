@@ -67,12 +67,43 @@
     "review": "申請の確認",
     "studentAffairsOffice": "学務オフィス"
   },
-  "reviewComponent": {
-    "checkStatus": "ステータスの確認",
-    "downloadApplication": "申請のダウンロード",
+  "reviewComponent": 
+  {
+    "checkStatus": "申請のステータスを確認",
+    "downloadApplication": "要約をダウンロード",
     "formID": "参照番号",
-    "reviewApplication": "申請の確認"
+    "reviewApplication": "申請をレビュー",
+    "currentUniversity": "現在の大学",
+    "oldCourseOfStudy": "以前の学習プログラム",
+    "newCourseOfStudy": "新しい学習プログラム",
+    "dateOfSubmission": "提出日",
+    "dateLastEdited": "最終編集日",
+    "application": "申請",
+    "overview": "申請の概要",
+    "modulName": "モジュール名",
+    "moduleNumber": "モジュール番号",
+    "moduleCredits": "単位数（ECTS）",
+    "moduleApproval": "承認",
+    "moduleApprovalReason": "決定の理由",
+    "accepted": "承認済み",
+    "rejected": "却下",
+    "formallyRejected": "学生事務所により正式に却下",
+    "modules2bCredited": "単位認定対象モジュール",
+    "moduleApprovalOpen": "未決定",
+    "partiallyAccepted": "部分的に承認済み",
+    "open": "未決定",
+    "editingInProgress": "学生事務所による編集中",
+    "edited": "学生事務所により編集済み",
+    "readyForApproval": "試験委員会の承認待ち",
+    "approvalInProgress": "試験委員会による承認作業中",
+    "editedApproval": "試験委員会により編集済み",
+    "approvalFinished": "試験委員会による承認完了",
+    "errorFetchingForm": "フォーム取得エラー",
+    "formNotFound": "フォームが見つからない",
+    "pending": "保留中",
+    "moduleBlock": "モジュールブロック"
   },
+  
   "routes": {
     "/": "メインページ",
     "/application-form": "クレジットモジュール",
