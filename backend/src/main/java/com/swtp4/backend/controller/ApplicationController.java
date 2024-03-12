@@ -174,4 +174,9 @@ public class ApplicationController {
         return new ResponseEntity<>(uniModuleDto, HttpStatus.OK);
     }
 
+    @GetMapping("/book/search/filter")
+    public ResponseEntity readBooksWithFilter (@RequestParam("query") String query, Pageable pageable) {
+        return ResponseEntity.ok(libraryService.filterBooks(query, pageable));
+    }
+
 }
