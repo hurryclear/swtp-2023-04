@@ -4,20 +4,17 @@ import com.swtp4.backend.exception.InvalidApplicationStateException;
 import com.swtp4.backend.exception.ResourceNotFoundException;
 import com.swtp4.backend.repositories.*;
 import com.swtp4.backend.repositories.applicationDtos.*;
-import com.swtp4.backend.repositories.dto.ApplicationDto;
 import com.swtp4.backend.repositories.dto.ApplicationIDWithFilePaths;
-import com.swtp4.backend.repositories.dto.ModuleBlockDto;
 import com.swtp4.backend.repositories.entities.*;
 import com.swtp4.backend.repositories.entities.keyClasses.ApplicationKeyClass;
 import com.swtp4.backend.repositories.entities.keyClasses.ModuleRelationKeyClass;
+import com.swtp4.backend.repositories.model.ApplicationPage;
+import com.swtp4.backend.repositories.model.ApplicationSearchCriteria;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.query.Page;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -31,6 +28,7 @@ public class ApplicationService {
     private ModuleBlockRepository moduleBlockRepository;
     private ModuleRelationRepository moduleRelationRepository;
     private ModuleUniRepository moduleUniRepository;
+    private ApplicationCriteriaRepository applicationCriteriaRepository;
 
     @Autowired
     public ApplicationService(
@@ -375,18 +373,10 @@ public class ApplicationService {
         return applicationEntityList;
     }
 
-    // 2. pagination
-    public Page<EntireOriginalAndEditedApplicationDto> getEntireOriginalAndEditedApplicationsWithPagination(PageRequest pageRequest) {
-        return null;
-    }
 
-    // 3. combine all
-    public org.springframework.data.domain.Page<ApplicationEntity> getCertainApplications(
-            Map<String, String> filters,
-            String sortBy,
-            String sortOrder,
-            int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.Direction.fromString(sortOrder), sortBy);
+    public Page<OverviewApplicationDto> getApplications(
+            ApplicationPage applicationPage,
+            ApplicationSearchCriteria applicationSearchCriteria) {
+        return applicationCriteriaRepository.findAllWithFilters(applicationPage, applicationSearchCriteria);
     }
-
 }
