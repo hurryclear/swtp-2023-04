@@ -1,0 +1,153 @@
+{
+  "original": {
+    "applicationData": {
+      "applicationID": "1234-1234",
+      "status": "open",
+      "formalReject": "",
+      "dateOfSubmission": "2020-03-05T13:56:51.560Z",
+      "dateLastEdited": "2020-03-05T13:56:51.560Z",
+      "university": "original",
+      "oldCourseOfStudy": "original",
+      "newCourseOfStudy": "original"
+    },
+    "moduleFormsData": [
+      {
+        "frontend_key": 0,
+        "backend_block_id": 1,
+        "modulesStudent": [
+          {
+            "frontend_key": 0,
+            "backend_module_id": 1,
+            "approval": "",
+            "reason": "",
+            "number": "original",
+            "title": "original",
+            "path": "/path",
+            "credits": 5,
+            "university": "original",
+            "major": "original",
+            "commentStudent": "original",
+            "commentEmployee": ""
+          },
+          {
+            "frontend_key": 1,
+            "backend_module_id": 3,
+            "approval": "",
+            "reason": "",
+            "number": "original",
+            "title": "original",
+            "path": "/path",
+            "credits": 5,
+            "university": "original",
+            "major": "original",
+            "commentStudent": "original",
+            "commentEmployee": ""
+          }
+        ],
+        "modules2bCredited": [
+          1,
+          2
+        ]
+      },
+      {
+        "frontend_key": 1,
+        "backend_block_id": 3,
+        "modulesStudent": [
+          {
+            "frontend_key": 0,
+            "backend_module_id": 5,
+            "approval": "",
+            "reason": "",
+            "number": "original",
+            "title": "original",
+            "path": "/path",
+            "credits": 5,
+            "university": "original",
+            "major": "original",
+            "commentStudent": "original",
+            "commentEmployee": ""
+          }
+        ],
+        "modules2bCredited": [
+          7
+        ]
+      }
+    ]
+  },
+  "edited": {
+    "applicationData": {
+      "applicationID": "1234-1234",
+      "status": "edited approval",
+      "formalReject": "edited",
+      "dateOfSubmission": "2020-03-05T13:56:51.560Z",
+      "dateLastEdited": "2023-03-05T13:56:51.560Z",
+      "university": "edited",
+      "oldCourseOfStudy": "edited",
+      "newCourseOfStudy": "original"
+
+    },
+    "moduleFormsData": [
+      {
+        "frontend_key": 0,
+        "backend_block_id": 2,
+        "modulesStudent": [
+          {
+            "frontend_key": 0,
+            "backend_module_id": 2,
+            "approval": "accepted",
+            "reason": "edited",
+            "number": "edited",
+            "title": "edited",
+            "path": "/path",
+            "credits": 0,
+            "university": "edited",
+            "major": "edited",
+            "commentStudent": "edited",
+            "commentEmployee": "edited"
+          },
+          {
+            "frontend_key": 1,
+            "backend_module_id": 6,
+            "approval": "rejected",
+            "reason": "edited",
+            "number": "edited",
+            "title": "edited",
+            "path": "/path",
+            "credits": 0,
+            "university": "edited",
+            "major": "edited",
+            "commentStudent": "edited",
+            "commentEmployee": "edited"
+          }
+        ],
+        "modules2bCredited": [
+          1
+        ]
+      },
+      {
+        "frontend_key": 1,
+        "backend_block_id": 4,
+        "modulesStudent": [
+          {
+            "frontend_key": 0,
+            "backend_module_id": 4,
+            "approval": "",
+            "reason": "edited",
+            "number": "edited",
+            "title": "edited",
+            "path": "/path",
+            "credits": 0,
+            "university": "edited",
+            "major": "edited",
+            "commentStudent": "edited",
+            "commentEmployee": "edited"
+          }
+        ],
+        "modules2bCredited": [
+          5,
+          6
+        ]
+      }
+    ]
+  }
+}
