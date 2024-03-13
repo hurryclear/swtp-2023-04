@@ -230,6 +230,23 @@ public class ApplicationService {
         return applicationRepository.save(applicationEmployee);
     }
 
+
+    public void resetStatus(String applicationID) {
+        ApplicationEntity application = applicationRepository.findById(ApplicationKeyClass.builder()
+                        .id(applicationID)
+                        .creator("Employee")
+                        .build())
+                .orElseThrow(() -> new ResourceNotFoundException("Application with ID "+applicationID+" not found. Status can't be changed."));
+        String oldStatus = application.getStatus();
+        if(oldStatus.equals("editing in progress")){
+            application.setStatus("edited");
+        }
+        else if(oldStatus.equals("approval in progress")){
+            application.setStatus("edited approval");
+        }
+        applicationRepository.save(application);
+    }
+
     public void updateStatus(String applicationID, String newStatus){
         ApplicationEntity application = applicationRepository.findById(ApplicationKeyClass.builder()
                         .id(applicationID)
@@ -537,4 +554,6 @@ public class ApplicationService {
                 entireOriginalAndEditedApplication.get("Student"),
                 entireOriginalAndEditedApplication.get("Employee"));
     }
+
+
 }

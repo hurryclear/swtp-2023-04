@@ -32,6 +32,13 @@ public class ApplicationController {
         this.pdfService = pdfService;
     }
 
+    @PutMapping("/resetStatusInProgress")
+    public ResponseEntity<?> resetStatus(@RequestParam String applicationID) {
+        applicationService.resetStatus(applicationID);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
     @PutMapping("/editingInProgress")
     public ResponseEntity<?> continueEditing(@RequestParam String applicationID) {
         applicationService.updateStatus(applicationID, "editing in progress");
