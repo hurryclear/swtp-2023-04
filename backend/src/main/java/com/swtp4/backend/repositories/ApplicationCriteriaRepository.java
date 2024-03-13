@@ -54,7 +54,19 @@ public class ApplicationCriteriaRepository {
 
         long applicationsCount = getApplicationsCount(predicate);
 
-        return new PageImpl<>(typedQuery.getResultList(), pageable, applicationsCount);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+        List<ApplicationEntity> applicationEntityResultList = typedQuery.getResultList();
+        List<OverviewApplicationDto> overviewApplicationDtoList = applicationEntityResultList
+                .stream()
+                .map(entity -> new OverviewApplicationDto(entity.getApplicationKeyClass().getId(),
+                        entity.getUniversityName(),
+                        dateFormat.format(entity.getDateOfSubmission()),
+                        entity.getStatus()
+                        )).toList();
+
+        log.info("OverviewApplicationDtos: {}", overviewApplicationDtoList);
+        return new PageImpl<>(overviewApplicationDtoList, pageable, 1);
     }
 
     // filtering
