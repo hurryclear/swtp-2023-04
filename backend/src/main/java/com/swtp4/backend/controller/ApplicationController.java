@@ -10,12 +10,17 @@ import com.swtp4.backend.services.ApplicationService;
 import com.swtp4.backend.services.PDFService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
 import java.util.List;
 
 @Slf4j
@@ -145,4 +150,16 @@ public class ApplicationController {
         return new ResponseEntity<>(uniModuleDto, HttpStatus.OK);
     }
 
+    @GetMapping(path = "/getModulePDF", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<Resource> getPDF(@RequestParam String filePath) {
+        try {
+            Resource pdfResource = pdfService.getModulePDF("/app/pdf-files" + filePath);
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filepath = " + filePath)
+                    .body(pdfResource);
+        } catch (FileNotFoundException | MalformedURLException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
 }

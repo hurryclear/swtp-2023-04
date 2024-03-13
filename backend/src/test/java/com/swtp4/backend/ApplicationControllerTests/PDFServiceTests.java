@@ -9,6 +9,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -87,10 +88,10 @@ public class PDFServiceTests {
     }
 
     @Test
-    public void whenGetModulePDF_NonExistingFilePath_ThrowsRuntimeException() {
+    public void whenGetModulePDF_NonExistingFilePath_ThrowsFileNotFoundException() {
         String nonExistingFilePath = "/path/to/non/existing/file.pdf";
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+       FileNotFoundException exception = assertThrows(FileNotFoundException.class, () -> {
             Resource resource = pdfService.getModulePDF(nonExistingFilePath);
         });
 

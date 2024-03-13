@@ -7,6 +7,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -45,7 +46,7 @@ public class PDFService {
         }
     }
 
-    public Resource getModulePDF(String filePathString) throws MalformedURLException {
+    public Resource getModulePDF(String filePathString) throws MalformedURLException, FileNotFoundException {
         Path filePath = Paths.get(filePathString);
         Resource resource = new UrlResource(filePath.toUri());
         if (resource.exists()) {
@@ -55,7 +56,7 @@ public class PDFService {
                 throw new RuntimeException("File not readable");
             }
         } else {
-            throw new RuntimeException("File not found");
+            throw new FileNotFoundException("File not found");
         }
     }
 }
