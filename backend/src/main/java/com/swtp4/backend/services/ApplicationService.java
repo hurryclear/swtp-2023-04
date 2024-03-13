@@ -12,15 +12,12 @@ import com.swtp4.backend.repositories.model.ApplicationPage;
 import com.swtp4.backend.repositories.model.ApplicationSearchCriteria;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Block;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.stream.Collectors;
 import java.util.*;
 
 @Slf4j
@@ -479,26 +476,6 @@ public class ApplicationService {
 
     }
 
-    // from here is pagination and sorting
-    // 1. get all applications with different sorting parameter
-    public List<ApplicationEntity> getAllApplicationsWithSorting(String field) {
-        List<ApplicationEntity> applicationEntityList = new ArrayList<>();
-        List<ApplicationEntity> applicationEntityList1= applicationRepository.findAll(Sort.by(Sort.Direction.ASC, field));
-        for (ApplicationEntity applicationEntity : applicationEntityList1) {
-            if (Objects.equals(applicationEntity.getApplicationKeyClass().getCreator(), "Employee")){
-                applicationEntityList.add(applicationEntity);
-            }
-        }
-        return applicationEntityList;
-    }
-
-
-    public Page<OverviewApplicationDto> getApplications(
-            ApplicationPage applicationPage,
-            ApplicationSearchCriteria applicationSearchCriteria) {
-        return applicationCriteriaRepository.findAllWithFilters(applicationPage, applicationSearchCriteria);
-    }
-
     // get edited application by ID (for employee)
     public EntireOriginalAndEditedApplicationDto getApplicationByID(String applicationID) {
 
@@ -599,5 +576,22 @@ public class ApplicationService {
                 entireOriginalAndEditedApplication.get("Employee"));
     }
 
+    public Page<OverviewApplicationDto> getApplications(
+            ApplicationPage applicationPage,
+            ApplicationSearchCriteria applicationSearchCriteria) {
+        return applicationCriteriaRepository.findAllWithFilters(applicationPage, applicationSearchCriteria);
+    }
 
+    // from here is pagination and sorting
+    // 1. get all applications with different sorting parameter
+    public List<ApplicationEntity> getAllApplicationsWithSorting(String field) {
+        List<ApplicationEntity> applicationEntityList = new ArrayList<>();
+        List<ApplicationEntity> applicationEntityList1= applicationRepository.findAll(Sort.by(Sort.Direction.ASC, field));
+        for (ApplicationEntity applicationEntity : applicationEntityList1) {
+            if (Objects.equals(applicationEntity.getApplicationKeyClass().getCreator(), "Employee")){
+                applicationEntityList.add(applicationEntity);
+            }
+        }
+        return applicationEntityList;
+    }
 }
