@@ -343,24 +343,6 @@ public class ApplicationService {
         }
     }
 
-
-
-    public List<ApplicationEntity> getAllApplications() {
-        return applicationRepository.findByApplicationKeyClass_Creator("Employee");
-    }
-    //get unique application by applicationkeyclass (id, creator)
-
-    public List<ApplicationEntity> getApplicationsByStatus(String status) {
-        return applicationRepository.findByStatusAndApplicationKeyClass_Creator(status, "Employee");
-    }
-    public List<ApplicationEntity> getApplicationsByMajor(String major) {
-        return applicationRepository.findByUniMajorAndApplicationKeyClass_Creator(major, "Employee");
-    }
-
-    public List<ApplicationEntity> getApplicationsByUniversityName(String universityName) {
-        return applicationRepository.findByUniversityNameAndApplicationKeyClass_Creator(universityName, "Employee");
-    }
-
     private Date parseDate(String dateString) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         try {
@@ -374,16 +356,6 @@ public class ApplicationService {
     public ApplicationEntity getApplicationsByDateOfSubmission(String dateOfSubmission) {
         return applicationRepository.findByDateOfSubmissionAndApplicationKeyClass_Creator(
                 parseDate(dateOfSubmission), "Employee");
-    }
-    // not complete
-
-    public List<ApplicationEntity> getApplicationsByDateOfSubmissionBefore(String dateOfSubmission) {
-        return applicationRepository.findByDateOfSubmissionBeforeAndApplicationKeyClass_Creator(parseDate(dateOfSubmission), "Employee");
-    }
-    // not complete
-
-    public List<ApplicationEntity> getApplicationsByDateOfSubmissionAfter(String dateOfSubmission) {
-        return applicationRepository.findByDateOfSubmissionAfterAndApplicationKeyClass_Creator(parseDate(dateOfSubmission), "Employee");
     }
 
     // get review of application by ID(for student)
@@ -576,10 +548,35 @@ public class ApplicationService {
                 entireOriginalAndEditedApplication.get("Employee"));
     }
 
+    // get overview of applications for employees with certain searching criteria
     public Page<OverviewApplicationDto> getApplications(
             ApplicationPage applicationPage,
             ApplicationSearchCriteria applicationSearchCriteria) {
         return applicationCriteriaRepository.findAllWithFilters(applicationPage, applicationSearchCriteria);
+    }
+
+    public List<ApplicationEntity> getAllApplications() {
+        return applicationRepository.findByApplicationKeyClass_Creator("Employee");
+    }
+    //get unique application by applicationkeyclass (id, creator)
+
+    public List<ApplicationEntity> getApplicationsByStatus(String status) {
+        return applicationRepository.findByStatusAndApplicationKeyClass_Creator(status, "Employee");
+    }
+    public List<ApplicationEntity> getApplicationsByMajor(String major) {
+        return applicationRepository.findByUniMajorAndApplicationKeyClass_Creator(major, "Employee");
+    }
+
+    public List<ApplicationEntity> getApplicationsByUniversityName(String universityName) {
+        return applicationRepository.findByUniversityNameAndApplicationKeyClass_Creator(universityName, "Employee");
+    }
+    public List<ApplicationEntity> getApplicationsByDateOfSubmissionBefore(String dateOfSubmission) {
+        return applicationRepository.findByDateOfSubmissionBeforeAndApplicationKeyClass_Creator(parseDate(dateOfSubmission), "Employee");
+    }
+    // not complete
+
+    public List<ApplicationEntity> getApplicationsByDateOfSubmissionAfter(String dateOfSubmission) {
+        return applicationRepository.findByDateOfSubmissionAfterAndApplicationKeyClass_Creator(parseDate(dateOfSubmission), "Employee");
     }
 
     // from here is pagination and sorting
