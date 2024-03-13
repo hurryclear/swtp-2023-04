@@ -9,7 +9,14 @@
           <ComparisonMenu class="comparison" v-if="CMisDisplayed" @close-comparison="closeComparisonMenu"/>
         </v-col>
         <v-col>
-          <EditMenu class="edit-menu" v-if="EMisDisplayed" :form="EMformContent" @close-edit-menu="closeEditMenu" @open-comparison="openComparison"/>
+          <EditMenu
+              class="edit-menu"
+              v-if="EMisDisplayed"
+              :form="EMformContent"
+              @close-edit-menu="closeEditMenu"
+              @open-comparison="openComparison"
+              @close-edit-menu-by-saving="closeEditMenuBySaving"
+          />
         </v-col>
       </v-row>
     </v-container>
@@ -20,6 +27,7 @@
   import FormDisplay from "@/components/FormDisplay.vue";
   import LogoutButton from "@/components/LogoutButton.vue";
   import ComparisonMenu from "@/components/ComparisonMenu.vue";
+  import axios from "@/plugins/axios";
   export default {
     components: {ComparisonMenu, EditMenu, FormDisplay, LogoutButton},
     data() {
@@ -31,18 +39,32 @@
       }
     },
     methods: {
-      openEditMenu(form){
+      openEditMenu(form) {
         this.EMisDisplayed = true;
+        axios.put(`/api/application/editingInProgress?applicationID=${form.edited.applicationData.applicationID}`)
+            .then(response => console.log(response))
+            .catch(err => console.error("Error putting status to editing in progress: ", err));
         this.EMformContent = form;
       },
-      closeEditMenu() {
+
+      closeEditMenu(form) {
+        this.EMisDisplayed = false;
+        axios.put(`/api/application/resetStatusInProgress?applicationID=${form.edited.applicationData.applicationID}`)
+            .then(response => console.log(response))
+            .catch(err => console.error("Error putting status to edited: ", err));
+        this.EMformContent = {};
+      },
+
+      closeEditMenuBySaving() {
         this.EMisDisplayed = false;
         this.EMformContent = {};
       },
+
       openComparison() {
         this.FDisDisplayed = false;
         this.CMisDisplayed = true;
       },
+
       closeComparisonMenu() {
         this.CMisDisplayed = false;
         this.FDisDisplayed = true;
