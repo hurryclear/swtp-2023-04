@@ -1,11 +1,7 @@
 package com.swtp4.backend.controller;
 
-import com.swtp4.backend.repositories.ApplicationRepository;
 import com.swtp4.backend.repositories.applicationDtos.EntireOriginalAndEditedApplicationDto;
 import com.swtp4.backend.repositories.applicationDtos.OverviewApplicationDto;
-import com.swtp4.backend.repositories.applicationDtos.ReviewApplicationDto;
-import com.swtp4.backend.repositories.applicationDtos.EntireOriginalAndEditedApplicationDto;
-import com.swtp4.backend.repositories.dto.ApplicationDto;
 import com.swtp4.backend.repositories.applicationDtos.EditedApplicationDto;
 import com.swtp4.backend.repositories.dto.UniModuleDto;
 import com.swtp4.backend.repositories.entities.ApplicationEntity;
@@ -14,12 +10,10 @@ import com.swtp4.backend.repositories.model.ApplicationSearchCriteria;
 import com.swtp4.backend.services.ApplicationService;
 import com.swtp4.backend.services.PDFService;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.internal.bytebuddy.build.Plugin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +24,6 @@ import org.springframework.web.bind.annotation.*;
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RestController
@@ -106,8 +99,46 @@ public class ApplicationController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    // "/getApplication?filters=__&sortBy=__&sortOrder=__&page=__&size=__"
+    // from here is sorting, filtering and paging
+    @GetMapping("/overviewOffice")
+    public ResponseEntity<Page<OverviewApplicationDto>> getOverviewApplications(ApplicationPage applicationPage,
+                                                                                ApplicationSearchCriteria applicationSearchCriteria) {
+        return new ResponseEntity<>(applicationService.getApplications(
+                applicationPage, applicationSearchCriteria),
+                HttpStatus.OK
+                );
+    }
 
+    // endpoint for employee to get application by id
+    @GetMapping("/getApplication")
+    public ResponseEntity<?> getApplicationByID(@RequestParam("applicationID") String applicationID) {
+        EntireOriginalAndEditedApplicationDto entireOriginalAndEditedApplicationDto = applicationService.getApplicationByID(applicationID);
+        return new ResponseEntity<>(entireOriginalAndEditedApplicationDto, HttpStatus.OK);
+    }
 
+    @PostMapping("/test")
+    public ResponseEntity<UniModuleDto> testOfficeEndpoint(@RequestBody UniModuleDto uniModuleDto){
+        return new ResponseEntity<>(uniModuleDto, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/getModulePDF", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<Resource> getPDF(@RequestParam String filePath) {
+        try {
+            Resource pdfResource = pdfService.getModulePDF("/app/pdf-files" + filePath);
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filepath = " + filePath)
+                    .body(pdfResource);
+        } catch (FileNotFoundException | MalformedURLException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @GetMapping("/get-applications-with-sorting/{field}")
+    public List<ApplicationEntity> getAllApplicationsWithSorting(@PathVariable String field) {
+        return applicationService.getAllApplicationsWithSorting(field);
+    }
 
     // the following gets are for employee, it will only return applications with creator "Employee"
     @GetMapping("/get-all-applications")
@@ -147,57 +178,4 @@ public class ApplicationController {
         return applicationService.getApplicationsByDateOfSubmissionAfter(dateOfSubmission);
     }
 
-    /**
-     * get all applications with dynamic sorting field, but not with id or creator
-     * and only for creator "Employee"
-     * @author Huo Jiang
-     * @param field
-     * @return List<ApplicationEntity>
-     */
-    @GetMapping("/get-applications-with-sorting/{field}")
-    public List<ApplicationEntity> getAllApplicationsWithSorting(@PathVariable String field) {
-        return applicationService.getAllApplicationsWithSorting(field);
-    }
-
-    // "/getApplication?filters=__&sortBy=__&sortOrder=__&page=__&size=__"
-    // from here is sorting, filtering and paging
-    @GetMapping("/overviewOffice")
-    public ResponseEntity<Page<OverviewApplicationDto>> getOverviewApplications(ApplicationPage applicationPage,
-                                                                                ApplicationSearchCriteria applicationSearchCriteria) {
-        return new ResponseEntity<>(applicationService.getApplications(
-                applicationPage, applicationSearchCriteria),
-                HttpStatus.OK
-                );
-    }
-
-
-    // endpoint for employee to get application by id
-    @GetMapping("/getApplication")
-    public ResponseEntity<?> getApplicationByID(@RequestParam("applicationID") String applicationID) {
-        EntireOriginalAndEditedApplicationDto entireOriginalAndEditedApplicationDto = applicationService.getApplicationByID(applicationID);
-        return new ResponseEntity<>(entireOriginalAndEditedApplicationDto, HttpStatus.OK);
-    }
-
-    @PostMapping("/test")
-    public ResponseEntity<UniModuleDto> testOfficeEndpoint(@RequestBody UniModuleDto uniModuleDto){
-        return new ResponseEntity<>(uniModuleDto, HttpStatus.OK);
-    }
-
-//    @GetMapping("/book/search/filter")
-//    public ResponseEntity readBooksWithFilter (@RequestParam("query") String query, Pageable pageable) {
-//        return ResponseEntity.ok(libraryService.filterBooks(query, pageable));
-//    }
-
-    @GetMapping(path = "/getModulePDF", produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<Resource> getPDF(@RequestParam String filePath) {
-        try {
-            Resource pdfResource = pdfService.getModulePDF("/app/pdf-files" + filePath);
-            return ResponseEntity.ok()
-                    .contentType(MediaType.APPLICATION_PDF)
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filepath = " + filePath)
-                    .body(pdfResource);
-        } catch (FileNotFoundException | MalformedURLException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-    }
 }
