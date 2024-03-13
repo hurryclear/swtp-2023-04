@@ -145,9 +145,9 @@ public class ApplicationController {
             Resource pdfResource = pdfService.getModulePDF("/app/pdf-files" + filePath);
             return ResponseEntity.ok()
                     .contentType(MediaType.APPLICATION_PDF)
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filepath= " + filePath)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filepath = " + filePath)
                     .body(pdfResource);
-        } catch (MalformedURLException e) {
+        } catch (FileNotFoundException | MalformedURLException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
