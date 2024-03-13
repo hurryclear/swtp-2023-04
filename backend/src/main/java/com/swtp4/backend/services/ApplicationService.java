@@ -16,10 +16,9 @@ import org.springframework.cglib.core.Block;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -362,18 +361,29 @@ public class ApplicationService {
         return applicationRepository.findByUniversityNameAndApplicationKeyClass_Creator(universityName, "Employee");
     }
 
+    private Date parseDate(String dateString) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        try {
+            return dateFormat.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace(); // Handle parsing exception appropriately
+            return null;
+        }
+    }
+
     public ApplicationEntity getApplicationsByDateOfSubmission(String dateOfSubmission) {
-        return applicationRepository.findByDateOfSubmissionAndApplicationKeyClass_Creator(dateOfSubmission, "Employee");
+        return applicationRepository.findByDateOfSubmissionAndApplicationKeyClass_Creator(
+                parseDate(dateOfSubmission), "Employee");
     }
     // not complete
 
     public List<ApplicationEntity> getApplicationsByDateOfSubmissionBefore(String dateOfSubmission) {
-        return applicationRepository.findByDateOfSubmissionBeforeAndApplicationKeyClass_Creator(dateOfSubmission, "Employee");
+        return applicationRepository.findByDateOfSubmissionBeforeAndApplicationKeyClass_Creator(parseDate(dateOfSubmission), "Employee");
     }
     // not complete
 
     public List<ApplicationEntity> getApplicationsByDateOfSubmissionAfter(String dateOfSubmission) {
-        return applicationRepository.findByDateOfSubmissionAfterAndApplicationKeyClass_Creator(dateOfSubmission, "Employee");
+        return applicationRepository.findByDateOfSubmissionAfterAndApplicationKeyClass_Creator(parseDate(dateOfSubmission), "Employee");
     }
 
     // get review of application by ID(for student)
@@ -386,13 +396,19 @@ public class ApplicationService {
                 .orElseThrow(() -> new ResourceNotFoundException("Application Id not found" + applicationID));
         // what to return
         ReviewApplicationDto reviewApplicationDto;
+
+
+        //format Date to correct String: "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        String dateOfSubmission = dateFormat.format(applicationEntity.getDateOfSubmission());
+        String dateLastEdited = dateFormat.format(applicationEntity.getDateLastEdited());
         // 1. applicationData (ReviewApplicationDetails)
         ReviewApplicationDetails reviewApplicationDetails = new ReviewApplicationDetails(
                 applicationID,
                 applicationEntity.getStatus(),
                 applicationEntity.getFormalRejectionReason(),
-                applicationEntity.getDateOfSubmission(),
-                applicationEntity.getDateLastEdited(),
+                dateOfSubmission,
+                dateLastEdited,
                 applicationEntity.getUniversityName(),
                 applicationEntity.getStudentMajor(),
                 applicationEntity.getUniMajor()
@@ -473,13 +489,18 @@ public class ApplicationService {
             ApplicationEntity applicationEntity = applicationRepository.findById(applicationIDAndCreator)
                     .orElseThrow(() -> new ResourceNotFoundException("Application Id not found" + applicationID));
 
+
+            //format Date to correct String: "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            String dateOfSubmission = dateFormat.format(applicationEntity.getDateOfSubmission());
+            String dateLastEdited = dateFormat.format(applicationEntity.getDateLastEdited());
             // 1. applicationData (ReviewApplicationDetails)
             EntireApplicationDetails applicationData = new EntireApplicationDetails(
                     applicationID,
                     applicationEntity.getStatus(),
                     applicationEntity.getFormalRejectionReason(),
-                    applicationEntity.getDateOfSubmission(),
-                    applicationEntity.getDateLastEdited(),
+                    dateOfSubmission,
+                    dateLastEdited,
                     applicationEntity.getUniversityName(),
                     applicationEntity.getStudentMajor(),
                     applicationEntity.getUniMajor()

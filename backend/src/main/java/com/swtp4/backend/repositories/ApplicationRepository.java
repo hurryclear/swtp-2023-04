@@ -5,6 +5,7 @@ import com.swtp4.backend.repositories.entities.keyClasses.ApplicationKeyClass;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.Optional;
 import java.util.List;
 
@@ -19,11 +20,11 @@ public interface ApplicationRepository extends JpaRepository<ApplicationEntity, 
 
     List<ApplicationEntity> findByUniversityNameAndApplicationKeyClass_Creator(String universityName, String creator);
     // dateOfSubmission includes also time, but when we search we actually want to search only with date, that's enough, so how can I transfer
-    ApplicationEntity findByDateOfSubmissionAndApplicationKeyClass_Creator(String dateOfSubmission, String creator);
+    ApplicationEntity findByDateOfSubmissionAndApplicationKeyClass_Creator(Date dateOfSubmission, String creator);
 
     // how can I find only by certain date without timing
 
-    List<ApplicationEntity> findByDateOfSubmissionBeforeAndApplicationKeyClass_Creator(String dateOfSubmission, String creator);
-    List<ApplicationEntity> findByDateOfSubmissionAfterAndApplicationKeyClass_Creator(String dateOfSubmission, String creator);
+    List<ApplicationEntity> findByDateOfSubmissionBeforeAndApplicationKeyClass_Creator(Date dateOfSubmission, String creator);
+    List<ApplicationEntity> findByDateOfSubmissionAfterAndApplicationKeyClass_Creator(Date dateOfSubmission, String creator);
 
 }

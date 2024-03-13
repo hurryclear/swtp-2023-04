@@ -11,7 +11,10 @@ import com.swtp4.backend.repositories.applicationDtos.EditedStudentModule;
 import org.springframework.boot.jackson.JsonComponent;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @JsonComponent
@@ -65,11 +68,21 @@ public class EditedApplicationDeserializer extends JsonDeserializer<EditedApplic
 
         return new EditedApplicationDto(
                 editedApplicationData.get("applicationID").asText(),
-                editedApplicationData.get("dateLastEdited").asText(),
+                parseDate(editedApplicationData.get("dateLastEdited").asText()),
                 editedApplicationData.get("university").asText(),
                 editedApplicationData.get("formalReject").asText(),
                 editedApplicationData.get("oldCourseOfStudy").asText(),
                 editedBlocks
         );
+    }
+
+    private Date parseDate(String dateString) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        try {
+            return dateFormat.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace(); // Handle parsing exception appropriately
+            return null;
+        }
     }
 }

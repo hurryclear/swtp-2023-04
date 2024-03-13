@@ -61,8 +61,9 @@ public class ApplicationServiceTests {
 
 
 
-        SubmittedApplicationDto applicationDto = new SubmittedApplicationDto("",
-                "",
+        SubmittedApplicationDto applicationDto = new SubmittedApplicationDto(
+                null,
+                null,
                 ""  ,
                 "",
                 "",
@@ -100,8 +101,9 @@ public class ApplicationServiceTests {
 
 
 
-        SubmittedApplicationDto applicationDto = new SubmittedApplicationDto("",
-                "",
+        SubmittedApplicationDto applicationDto = new SubmittedApplicationDto(
+                null,
+                null,
                 ""  ,
                 "",
                 "",
@@ -139,8 +141,9 @@ public class ApplicationServiceTests {
 
 
 
-        SubmittedApplicationDto applicationDto = new SubmittedApplicationDto("",
-                "",
+        SubmittedApplicationDto applicationDto = new SubmittedApplicationDto(
+                null,
+                null,
                 ""  ,
                 "",
                 "",
@@ -169,7 +172,9 @@ public class ApplicationServiceTests {
     @Test
     public void whenEditedApplicationIDNotExists_ItThrowsResourceNotFound() throws Exception {
         when(applicationRepository.findById(any())).thenReturn(Optional.empty());
-        EditedApplicationDto applicationDto = new EditedApplicationDto("asdfklfjf","",
+        EditedApplicationDto applicationDto = new EditedApplicationDto(
+                "asdfklfjf",
+                null,
                 "",
                 ""  ,
                 "",
@@ -225,7 +230,9 @@ public class ApplicationServiceTests {
                 null,
                 List.of(new EditedStudentModule(0L, 0L,"","","3L","",3L,"","", "", "")),
                 List.of(1L));
-        EditedApplicationDto applicationDto = new EditedApplicationDto("asdfklfjf","",
+        EditedApplicationDto applicationDto = new EditedApplicationDto(
+                "asdfklfjf",
+                null,
                 "",
                 ""  ,
                 "",

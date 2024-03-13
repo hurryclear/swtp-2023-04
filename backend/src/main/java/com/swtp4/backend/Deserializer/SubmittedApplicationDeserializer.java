@@ -11,7 +11,10 @@ import com.swtp4.backend.repositories.applicationDtos.SubmittedStudentModule;
 import org.springframework.boot.jackson.JsonComponent;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @JsonComponent
@@ -56,12 +59,25 @@ public class SubmittedApplicationDeserializer extends JsonDeserializer<Submitted
         }
 
         return new SubmittedApplicationDto(
-                jsonNode.get("meta").get("dateOfSubmission").asText(), // TODO: change to extractDate to create date and not string to sort by date in database
-                jsonNode.get("meta").get("dateLastEdited").asText(),
+                parseDate(jsonNode.get("meta").get("dateOfSubmission").asText()), // TODO: change to extractDate to create date and not string to sort by date in database
+                parseDate(jsonNode.get("meta").get("dateLastEdited").asText()),
                 jsonNode.get("university").get("name").asText(),
                 jsonNode.get("university").get("courseOfStudy").asText(),
                 jsonNode.get("university").get("newCourseOfStudy").asText(),
                 submittedBlocks
         );
     }
+
+    private Date parseDate(String dateString) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        try {
+            return dateFormat.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace(); // Handle parsing exception appropriately
+            return null;
+        }
+    }
+
+
+
 }

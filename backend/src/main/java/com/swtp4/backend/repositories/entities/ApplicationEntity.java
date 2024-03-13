@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,9 +23,11 @@ public class ApplicationEntity {
 
     private String status;
 
-    private String dateOfSubmission;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateOfSubmission;
 
-    private String dateLastEdited;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateLastEdited;
 
     private String universityName;
 
