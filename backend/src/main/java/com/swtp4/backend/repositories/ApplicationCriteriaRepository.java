@@ -3,23 +3,23 @@ package com.swtp4.backend.repositories;
 import com.swtp4.backend.repositories.applicationDtos.OverviewApplicationDto;
 import com.swtp4.backend.repositories.dto.ApplicationDto;
 import com.swtp4.backend.repositories.entities.ApplicationEntity;
+import com.swtp4.backend.repositories.entities.ModuleBlockEntity;
 import com.swtp4.backend.repositories.model.ApplicationPage;
 import com.swtp4.backend.repositories.model.ApplicationSearchCriteria;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 import lombok.Data;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Repository;
 
+import javax.swing.text.html.parser.Entity;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
-@Data
 @Repository
 public class ApplicationCriteriaRepository {
 
@@ -31,7 +31,7 @@ public class ApplicationCriteriaRepository {
         this.criteriaBuilder = entityManager.getCriteriaBuilder();
     }
 
-    public Page<ApplicationEntity> findAllWithFilters(
+    public Page<OverviewApplicationDto> findAllWithFilters(
             ApplicationPage applicationPage,
             ApplicationSearchCriteria applicationSearchCriteria) {
 
@@ -40,7 +40,7 @@ public class ApplicationCriteriaRepository {
         Root<ApplicationEntity> applicationEntityRoot = criteriaQuery.from(ApplicationEntity.class);
         // predicate represents the conditions that will be applied to filter the results
         Predicate predicate = getPredicate(applicationSearchCriteria, applicationEntityRoot);
-        criteriaQuery.where(predicate);
+        criteriaQuery.distinct(true).where(predicate);
         //order the results
         setOrder(applicationPage, criteriaQuery, applicationEntityRoot);
 
@@ -108,13 +108,15 @@ public class ApplicationCriteriaRepository {
                             applicationEntityRoot.get("dateOfSubmission"),
                             "%" + applicationSearchCriteria.getDateOfSubmission() + "%"));
         }
-        if(Objects.nonNull(applicationSearchCriteria.getDateOfSubmission())) {
-            predicates.add(
-                    criteriaBuilder.like(
-                            applicationEntityRoot.get("dateOfSubmission"),
-                            "%" + applicationSearchCriteria.getDateOfSubmission() + "%"));
-        }
-        criteriaBuilder.or();
+        //todo
+//        if(Objects.nonNull(applicationSearchCriteria.getModule())) {
+//            Root<ModuleBlockEntity> moduleBlockEntityRoot = criteriaQuery.from(ModuleBlockEntity.class);
+//            Join<ApplicationEntity, ModuleBlockEntity> joinModulBlock = applicationEntityRoot.join();
+//            predicates.add(
+//                    criteriaBuilder.like(
+//                            applicationEntityRoot.get("dateOfSubmission"),
+//                            "%" + applicationSearchCriteria.getDateOfSubmission() + "%"));
+//        }
         return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
     }
 
@@ -123,12 +125,19 @@ public class ApplicationCriteriaRepository {
                           CriteriaQuery<ApplicationEntity> criteriaQuery,
                           Root<ApplicationEntity> applicationEntityRoot) {
         if(applicationPage.getSortDirection().equals(Sort.Direction.ASC)) {
-            criteriaQuery.orderBy(criteriaBuilder.asc(applicationEntityRoot.get(applicationPage.getSortBy())));
+            if(applicationPage.getSortBy().equals("applicationID")) {
+                criteriaQuery.orderBy(criteriaBuilder.asc(applicationEntityRoot.get("applicationKeyClass").get("id")));
+            } else {
+                criteriaQuery.orderBy(criteriaBuilder.asc(applicationEntityRoot.get(applicationPage.getSortBy())));
+            }
         } else {
-            criteriaQuery.orderBy(criteriaBuilder.desc(applicationEntityRoot.get(applicationPage.getSortBy())));
+            if(applicationPage.getSortBy().equals("applicationID")) {
+                criteriaQuery.orderBy(criteriaBuilder.desc(applicationEntityRoot.get("applicationKeyClass").get("id")));
+            } else {
+                criteriaQuery.orderBy(criteriaBuilder.desc(applicationEntityRoot.get(applicationPage.getSortBy())));
+            }
         }
     }
-
     // paging
     private Pageable getPageable(ApplicationPage applicationPage) {
         Sort sort = Sort.by(applicationPage.getSortDirection(), applicationPage.getSortBy());
@@ -137,7 +146,7 @@ public class ApplicationCriteriaRepository {
 
     private long getApplicationsCount(Predicate predicate) {
         CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
-        Root<OverviewApplicationDto> countRoot = countQuery.from(OverviewApplicationDto.class);
+        Root<ApplicationEntity> countRoot = countQuery.from(ApplicationEntity.class);
         countQuery.select(criteriaBuilder.count(countRoot)).where(predicate);
         return entityManager.createQuery(countQuery).getSingleResult();
     }
