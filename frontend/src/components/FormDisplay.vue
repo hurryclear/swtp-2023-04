@@ -12,54 +12,57 @@
           single-line
       ></v-text-field>
     </template>
-  <v-data-table :headers="headers" :items="forms" :search="search" item-key="id" class="table">
+  <v-data-table :headers="headers" :items="forms" :search="search" item-key="id">
     <template v-slot:[`item.actions`]="{ item }">
-      <v-btn @click="openEditMenu(item)" icon="mdi-pencil"></v-btn>
+      <v-btn
+          @click="openEditMenu(item)"
+          :disabled="item.edited.applicationData.status === 'editing in progress'"
+          icon="mdi-pencil"
+      ></v-btn>
     </template>
   </v-data-table>
   </v-card>
 </template>
 
 <script>
-// <!-----formArray and imports are strictly for testing purposes-----!>
-/*import form1 from "@/assets/form-2017-10-21T22_11_56.973Z.json"
-import form2 from "@/assets/form-2023-12-13T6_45_30.512.json"
-import form3 from "@/assets/form-2023-12-15T10_34_51.207Z.json"
-import form4 from "@/assets/form4.json"*/
+import axios from "@/plugins/axios";
 export default {
     data() {
       return {
         search: "",
-        //formArray: [form1,form2,form3,form4],
+        forms: [] ,
         //TODO i18n
         headers: [
-          { title: "ID", key: "id" },
-          { title: "University" , key: "universityData.universityName" },
-          { title: "Number of Modules", key: "moduleFormsData.length" },
-          { title: "Previous Study Program", key: "universityData.studyProgram" },
-          { title: "Edit", value: "actions", sortable: false}
+          { title: "ID", key: "edited.applicationData.applicationID" },
+          { title: "Universität" , key: "edited.applicationData.university" },
+          { title: "Anzahl von Mappings", key: "edited.moduleFormsData.length" },
+          { title: "Vorheriger Studiengang", key: "edited.applicationData.oldCourseOfStudy" },
+          { title: "Status", key: "edited.applicationData.status" },
+          { title: "Edit", value: "actions", sortable: false }
         ]
       }
     },
-    computed: {
-      // Use Vuex getter to get forms with a specific status
-      forms() {
-        return this.$store.getters.formsByStatus('Offen');
-      }
-    },
-    methods: {
+
+  created() {
+      this.getForms();
+  },
+
+  methods: {
       openEditMenu(form) {
         this.$emit('open-edit-menu', form);
+      },
+
+      async getForms() {
+        //TODO richtigen endpoint einsetzen
+        await axios.get("/api/application/overviewOffice?status=OPEN")
+            .then(response => response.data = this.forms)
+            .catch(err => console.error("Error retrieving open forms: ", err));
       }
     }
   }
 </script>
 
 <style scoped>
-
-  .table {
-    width: 70rem;
-  }
 
   td {
     padding: 1rem;
