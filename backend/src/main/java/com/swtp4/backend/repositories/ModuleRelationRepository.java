@@ -15,4 +15,6 @@ public interface ModuleRelationRepository extends JpaRepository<ModuleRelationEn
 
     ModuleRelationEntity findByModuleRelationKeyClass_ModuleStudentEntity_NumberAndModuleRelationKeyClass_ModuleUniEntity_NameAndModuleBlockEntity_ApplicationEntity_ApplicationKeyClass_Creator(String moduleStudentNumber, String moduleUniName, String creator);
     List<ModuleRelationEntity> findAllByModuleRelationKeyClass_ModuleStudentEntity(ModuleStudentEntity moduleStudent);
+
+    List<ModuleRelationEntity> findByModuleBlockEntity(ModuleBlockEntity moduleBlockEntity);
 }

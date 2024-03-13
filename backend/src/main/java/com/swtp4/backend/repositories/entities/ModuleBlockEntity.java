@@ -20,8 +20,8 @@ public class ModuleBlockEntity {
 
     @ManyToOne
     @JoinColumns({
-            @JoinColumn(name = "application_id"),
-            @JoinColumn(name = "application_creator")
+            @JoinColumn(name = "application_id", referencedColumnName = "id"),
+            @JoinColumn(name = "application_creator", referencedColumnName = "creator")
     })
     private ApplicationEntity applicationEntity;
     private Long frontendKey;

@@ -12,10 +12,15 @@ import com.swtp4.backend.repositories.model.ApplicationPage;
 import com.swtp4.backend.repositories.model.ApplicationSearchCriteria;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Block;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.*;
 
 @Slf4j
@@ -227,6 +232,23 @@ public class ApplicationService {
         return applicationRepository.save(applicationEmployee);
     }
 
+
+    public void resetStatus(String applicationID) {
+        ApplicationEntity application = applicationRepository.findById(ApplicationKeyClass.builder()
+                        .id(applicationID)
+                        .creator("Employee")
+                        .build())
+                .orElseThrow(() -> new ResourceNotFoundException("Application with ID "+applicationID+" not found. Status can't be changed."));
+        String oldStatus = application.getStatus();
+        if(oldStatus.equals("editing in progress")){
+            application.setStatus("edited");
+        }
+        else if(oldStatus.equals("approval in progress")){
+            application.setStatus("edited approval");
+        }
+        applicationRepository.save(application);
+    }
+
     public void updateStatus(String applicationID, String newStatus){
         ApplicationEntity application = applicationRepository.findById(ApplicationKeyClass.builder()
                         .id(applicationID)
@@ -331,10 +353,6 @@ public class ApplicationService {
     }
     //get unique application by applicationkeyclass (id, creator)
 
-    public ApplicationEntity getApplicationById(String id) {
-        return applicationRepository.findByApplicationKeyClass_IdAndApplicationKeyClass_Creator(id, "Employee");
-    }
-
     public List<ApplicationEntity> getApplicationsByStatus(String status) {
         return applicationRepository.findByStatusAndApplicationKeyClass_Creator(status, "Employee");
     }
@@ -346,18 +364,119 @@ public class ApplicationService {
         return applicationRepository.findByUniversityNameAndApplicationKeyClass_Creator(universityName, "Employee");
     }
 
+    private Date parseDate(String dateString) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        try {
+            return dateFormat.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace(); // Handle parsing exception appropriately
+            return null;
+        }
+    }
+
     public ApplicationEntity getApplicationsByDateOfSubmission(String dateOfSubmission) {
-        return applicationRepository.findByDateOfSubmissionAndApplicationKeyClass_Creator(dateOfSubmission, "Employee");
+        return applicationRepository.findByDateOfSubmissionAndApplicationKeyClass_Creator(
+                parseDate(dateOfSubmission), "Employee");
     }
     // not complete
 
     public List<ApplicationEntity> getApplicationsByDateOfSubmissionBefore(String dateOfSubmission) {
-        return applicationRepository.findByDateOfSubmissionBeforeAndApplicationKeyClass_Creator(dateOfSubmission, "Employee");
+        return applicationRepository.findByDateOfSubmissionBeforeAndApplicationKeyClass_Creator(parseDate(dateOfSubmission), "Employee");
     }
     // not complete
 
     public List<ApplicationEntity> getApplicationsByDateOfSubmissionAfter(String dateOfSubmission) {
-        return applicationRepository.findByDateOfSubmissionAfterAndApplicationKeyClass_Creator(dateOfSubmission, "Employee");
+        return applicationRepository.findByDateOfSubmissionAfterAndApplicationKeyClass_Creator(parseDate(dateOfSubmission), "Employee");
+    }
+
+    // get review of application by ID(for student)
+    public ReviewApplicationDto getReviewApplication(String applicationID) {
+        ApplicationKeyClass applicationIDAndCreator = ApplicationKeyClass.builder()
+                .id(applicationID)
+                .creator("Employee")
+                .build();
+        ApplicationEntity applicationEntity = applicationRepository.findById(applicationIDAndCreator)
+                .orElseThrow(() -> new ResourceNotFoundException("Application Id not found" + applicationID));
+        // what to return
+        ReviewApplicationDto reviewApplicationDto;
+
+
+        //format Date to correct String: "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        String dateOfSubmission = dateFormat.format(applicationEntity.getDateOfSubmission());
+        String dateLastEdited = dateFormat.format(applicationEntity.getDateLastEdited());
+        // 1. applicationData (ReviewApplicationDetails)
+        ReviewApplicationDetails reviewApplicationDetails = new ReviewApplicationDetails(
+                applicationID,
+                applicationEntity.getStatus(),
+                applicationEntity.getFormalRejectionReason(),
+                dateOfSubmission,
+                dateLastEdited,
+                applicationEntity.getUniversityName(),
+                applicationEntity.getStudentMajor(),
+                applicationEntity.getUniMajor()
+        );
+        // 2. moduleFormsData (List<ReviewBlock>)
+        List<ModuleBlockEntity> moduleBlockEntityList = moduleBlockRepository.findAllByApplicationEntity(
+                applicationEntity);
+        List<ReviewBlock> reviewBlockList = new ArrayList<>();
+        for (ModuleBlockEntity moduleBlockEntity: moduleBlockEntityList) {
+            List<ModuleRelationEntity> moduleRelationEntityList = moduleRelationRepository.findByModuleBlockEntity(moduleBlockEntity);
+            List<ModuleStudentEntity> moduleStudentEntityList = new ArrayList<>();
+            List<ModuleUniEntity> moduleUniEntityList = new ArrayList<>();
+
+            for (ModuleRelationEntity moduleRelationEntity : moduleRelationEntityList) {
+                ModuleStudentEntity moduleStudentEntity = moduleRelationEntity.getModuleRelationKeyClass().getModuleStudentEntity();
+                boolean isNewStudentModule = !moduleStudentEntityList.stream()
+                        .map(ModuleStudentEntity::getId)
+                        .toList()
+                        .contains(moduleStudentEntity.getId());
+                if (isNewStudentModule) {
+                    moduleStudentEntityList.add(moduleStudentEntity);
+                }
+                ModuleUniEntity moduleUniEntity = moduleRelationEntity.getModuleRelationKeyClass().getModuleUniEntity();
+                boolean isNewUniModule = !moduleUniEntityList.stream()
+                        .map(ModuleUniEntity::getId)
+                        .toList()
+                        .contains(moduleUniEntity.getId());
+                if (isNewUniModule) {
+                    moduleUniEntityList.add(moduleUniEntity);
+                }
+            }
+
+            List<ReviewStudentModule> reviewStudentModuleList = new ArrayList<>();
+            for (ModuleStudentEntity moduleStudentEntity : moduleStudentEntityList) {
+                reviewStudentModuleList.add(new ReviewStudentModule(
+                        moduleStudentEntity.getFrontendKey(),
+                        moduleStudentEntity.getApproval(),
+                        moduleStudentEntity.getApprovalReason(),
+                        moduleStudentEntity.getNumber(),
+                        moduleStudentEntity.getTitle(),
+                        moduleStudentEntity.getCredits(),
+                        moduleStudentEntity.getUniversity(),
+                        moduleStudentEntity.getMajor(),
+                        moduleStudentEntity.getCommentStudent()
+                ));
+            }
+
+            List<ReviewUniModule> reviewUniModuleList = new ArrayList<>();
+            for(ModuleUniEntity moduleUniEntity : moduleUniEntityList) {
+                reviewUniModuleList.add(new ReviewUniModule(
+                        moduleUniEntity.getName(),
+                        moduleUniEntity.getNumber()
+                ));
+            }
+
+            reviewBlockList.add(new ReviewBlock(
+                    moduleBlockEntity.getFrontendKey(),
+                    reviewStudentModuleList,
+                    reviewUniModuleList
+            ));
+        }
+        // instanilize reviewApplicationDto
+        reviewApplicationDto = new ReviewApplicationDto(reviewApplicationDetails, reviewBlockList);
+        return reviewApplicationDto;
+
     }
 
     // from here is pagination and sorting
@@ -379,4 +498,106 @@ public class ApplicationService {
             ApplicationSearchCriteria applicationSearchCriteria) {
         return applicationCriteriaRepository.findAllWithFilters(applicationPage, applicationSearchCriteria);
     }
+
+    // get edited application by ID (for employee)
+    public EntireOriginalAndEditedApplicationDto getApplicationByID(String applicationID) {
+
+        HashMap<String, EntireApplication> entireOriginalAndEditedApplication = new HashMap<>();
+
+        for (String creator : List.of("Student", "Employee")) {
+            ApplicationKeyClass applicationIDAndCreator = ApplicationKeyClass.builder()
+                    .id(applicationID)
+                    .creator(creator)
+                    .build();
+            ApplicationEntity applicationEntity = applicationRepository.findById(applicationIDAndCreator)
+                    .orElseThrow(() -> new ResourceNotFoundException("Application Id not found" + applicationID));
+
+
+            //format Date to correct String: "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            String dateOfSubmission = dateFormat.format(applicationEntity.getDateOfSubmission());
+            String dateLastEdited = dateFormat.format(applicationEntity.getDateLastEdited());
+            // 1. applicationData (ReviewApplicationDetails)
+            EntireApplicationDetails applicationData = new EntireApplicationDetails(
+                    applicationID,
+                    applicationEntity.getStatus(),
+                    applicationEntity.getFormalRejectionReason(),
+                    dateOfSubmission,
+                    dateLastEdited,
+                    applicationEntity.getUniversityName(),
+                    applicationEntity.getStudentMajor(),
+                    applicationEntity.getUniMajor()
+            );
+            // 2. moduleFormsData (List<ReviewBlock>)
+            List<ModuleBlockEntity> moduleBlockEntityList = moduleBlockRepository.findAllByApplicationEntity(
+                    applicationEntity);
+            List<EntireBlock> entireBlockList = new ArrayList<>();
+            for (ModuleBlockEntity moduleBlockEntity : moduleBlockEntityList) {
+                List<ModuleRelationEntity> moduleRelationEntityList = moduleRelationRepository.findByModuleBlockEntity(moduleBlockEntity);
+                List<ModuleStudentEntity> moduleStudentEntityList = new ArrayList<>();
+                List<ModuleUniEntity> moduleUniEntityList = new ArrayList<>();
+
+                for (ModuleRelationEntity moduleRelationEntity : moduleRelationEntityList) {
+                    ModuleStudentEntity moduleStudentEntity = moduleRelationEntity.getModuleRelationKeyClass().getModuleStudentEntity();
+                    boolean isNewStudentModule = !moduleStudentEntityList.stream()
+                            .map(ModuleStudentEntity::getId)
+                            .toList()
+                            .contains(moduleStudentEntity.getId());
+                    if (isNewStudentModule) {
+                        moduleStudentEntityList.add(moduleStudentEntity);
+                    }
+                    ModuleUniEntity moduleUniEntity = moduleRelationEntity.getModuleRelationKeyClass().getModuleUniEntity();
+                    boolean isNewUniModule = !moduleUniEntityList.stream()
+                            .map(ModuleUniEntity::getId)
+                            .toList()
+                            .contains(moduleUniEntity.getId());
+                    if (isNewUniModule) {
+                        moduleUniEntityList.add(moduleUniEntity);
+                    }
+                }
+
+                List<EntireStudentModule> entireStudentModuleList = new ArrayList<>();
+                for (ModuleStudentEntity moduleStudentEntity : moduleStudentEntityList) {
+                    entireStudentModuleList.add(new EntireStudentModule(
+                            moduleStudentEntity.getFrontendKey(),
+                            moduleStudentEntity.getId(),
+                            moduleStudentEntity.getApproval(),
+                            moduleStudentEntity.getApprovalReason(),
+                            moduleStudentEntity.getNumber(),
+                            moduleStudentEntity.getTitle(),
+                            moduleStudentEntity.getDescription_pdf(),
+                            moduleStudentEntity.getCredits(),
+                            moduleStudentEntity.getUniversity(),
+                            moduleStudentEntity.getMajor(),
+                            moduleStudentEntity.getCommentStudent(),
+                            moduleStudentEntity.getCommentEmployee()
+                    ));
+                }
+
+                List<Long> uniModuleList = new ArrayList<>();
+                for (ModuleUniEntity moduleUniEntity : moduleUniEntityList) {
+                    uniModuleList.add(moduleUniEntity.getId());
+                }
+
+                entireBlockList.add(new EntireBlock(
+                        moduleBlockEntity.getFrontendKey(),
+                        moduleBlockEntity.getId(),
+                        entireStudentModuleList,
+                        uniModuleList
+                ));
+            }
+
+            EntireApplication entireApplication = new EntireApplication(applicationData,entireBlockList);
+
+            entireOriginalAndEditedApplication.put(creator,entireApplication);
+        }
+
+
+        //instanilize entireOriginalAndEditedApplicationDto
+        return new EntireOriginalAndEditedApplicationDto(
+                entireOriginalAndEditedApplication.get("Student"),
+                entireOriginalAndEditedApplication.get("Employee"));
+    }
+
+
 }

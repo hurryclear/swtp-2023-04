@@ -67,12 +67,43 @@
     "review": "신청 검토",
     "studentAffairsOffice": "학생 사무소"
   },
-  "reviewComponent": {
-    "checkStatus": "상태 확인",
-    "downloadApplication": "신청서 다운로드",
+  "reviewComponent": 
+  {
+    "checkStatus": "신청 상태 확인",
+    "downloadApplication": "요약 다운로드",
     "formID": "참조 번호",
-    "reviewApplication": "신청서 검토"
+    "reviewApplication": "신청 검토",
+    "currentUniversity": "현재 대학",
+    "oldCourseOfStudy": "이전 학습 프로그램",
+    "newCourseOfStudy": "새 학습 프로그램",
+    "dateOfSubmission": "제출 날짜",
+    "dateLastEdited": "마지막 편집 날짜",
+    "application": "신청",
+    "overview": "신청 개요",
+    "modulName": "모듈 이름",
+    "moduleNumber": "모듈 번호",
+    "moduleCredits": "학점 (ECTS)",
+    "moduleApproval": "승인",
+    "moduleApprovalReason": "결정 사유",
+    "accepted": "승인됨",
+    "rejected": "거부됨",
+    "formallyRejected": "학생 사무소에 의해 공식적으로 거부됨",
+    "modules2bCredited": "인정될 모듈",
+    "moduleApprovalOpen": "열림",
+    "partiallyAccepted": "부분적으로 승인됨",
+    "open": "열림",
+    "editingInProgress": "학생 사무소에서 편집 중",
+    "edited": "학생 사무소에서 편집됨",
+    "readyForApproval": "시험 위원회 승인 준비 완료",
+    "approvalInProgress": "시험 위원회 승인 진행 중",
+    "editedApproval": "시험 위원회에 의해 편집됨",
+    "approvalFinished": "시험 위원회 승인 완료",
+    "errorFetchingForm": "양식 가져오기 오류",
+    "formNotFound": "양식을 찾을 수 없음",
+    "pending": "대기 중",
+    "moduleBlock": "모듈 블록"
   },
+  
   "routes": {
     "/": "홈페이지",
     "/application-form": "모듈 인정",

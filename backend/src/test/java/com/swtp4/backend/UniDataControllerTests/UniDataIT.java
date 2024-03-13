@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.event.annotation.BeforeTestClass;
 import org.springframework.test.context.jdbc.Sql;
@@ -22,6 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Slf4j
 @SpringBootTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @Transactional
 @AutoConfigureMockMvc
 @ActiveProfiles("integration")
@@ -75,7 +77,8 @@ public class UniDataIT {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.name", is(majorName)))
                 .andExpect(jsonPath("$.modules", hasSize(1)))
-                .andExpect(jsonPath("$.modules[0].name", is("Programmierparadigmen")));
+                .andExpect(jsonPath("$.modules[0].name", is("Programmierparadigmen")))
+                .andExpect(jsonPath("$.modules[0].id", is(2)));
     }
 
     @Test
@@ -84,12 +87,14 @@ public class UniDataIT {
     public void getAllModulesByMajor_ShouldReturnAllModulesAndVisibility() throws Exception {
         String majorName = "B.Sc. Informatik";
         mockMvc.perform(get("/unidata/getAllModules").param("majorName", majorName))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.name", is(majorName)))
                 .andExpect(jsonPath("$.modules", hasSize(2)))
                 .andExpect(jsonPath("$.modules[*].name", containsInAnyOrder("Einführung Programmierung", "Programmierparadigmen")))
-                .andExpect(jsonPath("$.modules[*].visibleForStudents", containsInAnyOrder(false, true)));
+                .andExpect(jsonPath("$.modules[*].visibleForStudents", containsInAnyOrder(false, true)))
+                .andExpect(jsonPath("$.modules[*].id", containsInAnyOrder(1, 2)));
     }
 
     @Test

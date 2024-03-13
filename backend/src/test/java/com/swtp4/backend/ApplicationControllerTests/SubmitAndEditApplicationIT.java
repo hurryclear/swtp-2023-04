@@ -23,6 +23,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -82,11 +85,13 @@ public class SubmitAndEditApplicationIT {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.applicationID", not(is(emptyString()))));
 
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         //ApplicationEntity Check
         Example<ApplicationEntity> application = Example.of(ApplicationEntity.builder()
                 .status("open")
-                .dateOfSubmission("2023-12-31T22:30:42.103Z")
-                .dateLastEdited("2024-01-14T14:12:14.675Z")
+                .dateOfSubmission(dateFormat.parse("2023-12-31T22:30:42.103Z"))
+                .dateLastEdited(dateFormat.parse("2024-01-14T14:12:14.675Z"))
                 .universityName("University of Regenbogenland")
                 .studentMajor("B. Sc. Informatik")
                 .uniMajor("B.Sc. Informatik")
@@ -202,13 +207,14 @@ public class SubmitAndEditApplicationIT {
                 .andExpect(status().isCreated());
 
         //ApplicationEntity Check
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         Example<ApplicationEntity> application = Example.of(ApplicationEntity.builder()
                 .applicationKeyClass(ApplicationKeyClass.builder()
                         .id(savedApplicationID)
                         .creator("Employee")
                         .build())
-                .dateOfSubmission("2023-12-31T22:30:42.103Z")
-                .dateLastEdited("2040-03-05T13:56:51.560Z")
+                .dateOfSubmission(dateFormat.parse("2023-12-31T22:30:42.103Z"))
+                .dateLastEdited(dateFormat.parse("2040-03-05T13:56:51.560Z"))
                 .universityName("edited")
                 .studentMajor("edited")
                 .uniMajor("B.Sc. Informatik")

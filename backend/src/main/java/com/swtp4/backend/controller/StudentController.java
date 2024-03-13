@@ -3,10 +3,14 @@ package com.swtp4.backend.controller;
 import com.swtp4.backend.repositories.ApplicationRepository;
 import com.swtp4.backend.repositories.applicationDtos.EditedApplicationDto;
 import com.swtp4.backend.repositories.applicationDtos.EntireOriginalAndEditedApplicationDto;
+import com.swtp4.backend.repositories.applicationDtos.ReviewApplicationDto;
 import com.swtp4.backend.repositories.applicationDtos.SubmittedApplicationDto;
 import com.swtp4.backend.repositories.dto.ApplicationIDWithFilePaths;
 import com.swtp4.backend.repositories.dto.ApplicationIdDto;
 import com.swtp4.backend.repositories.dto.UniModuleDto;
+import com.swtp4.backend.repositories.entities.ApplicationEntity;
+import com.swtp4.backend.repositories.entities.ModuleBlockEntity;
+import com.swtp4.backend.repositories.entities.ModuleStudentEntity;
 import com.swtp4.backend.services.ApplicationService;
 import com.swtp4.backend.services.PDFService;
 import lombok.extern.slf4j.Slf4j;
@@ -72,5 +76,11 @@ public class StudentController {
         // TODO: here you can implement pdf saving by using multipart field names and provided paths in file_paths
         pdfService.saveModulePDFs(fileMap, file_paths);
         return new ResponseEntity<>(applicationID, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/reviewApplication")
+    public ResponseEntity<?> reviewApplication(@RequestParam String applicationID) {
+        ReviewApplicationDto applicationDto = applicationService.getReviewApplication(applicationID);
+        return new ResponseEntity<>(applicationDto, HttpStatus.OK);
     }
 }

@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.swtp4.backend.Deserializer.SubmittedApplicationDeserializer;
 import com.swtp4.backend.repositories.applicationDtos.SubmittedApplicationDto;
 import com.swtp4.backend.repositories.dto.ApplicationDto;
+import com.swtp4.backend.repositories.dto.ApplicationIDWithFilePaths;
+import com.swtp4.backend.repositories.dto.ApplicationIdDto;
 import com.swtp4.backend.repositories.dto.UniDataDto;
 import com.swtp4.backend.services.ApplicationService;
 import com.swtp4.backend.services.UniDataService;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLOutput;
 
 @Component
 @Order(3)
@@ -41,7 +44,10 @@ public class ApplicationInitializer implements CommandLineRunner {
         InputStream inputStream = TypeReference.class.getResourceAsStream("/json/initialApplicationData.json");
         try {
             SubmittedApplicationDto applicationDto = mapper.readValue(inputStream,typeReference);
-            applicationService.saveSubmitted(applicationDto);
+
+            ApplicationIDWithFilePaths applicationIDWithFilePaths = applicationService.saveSubmitted(applicationDto);
+            String applicationID = applicationIDWithFilePaths.getApplicationID();
+            System.out.println("ApplicationID: "+applicationID);
             System.out.println("Application initialized!");
         } catch (IOException e){
             System.out.println("Unable to initialize Application: " + e.getMessage());

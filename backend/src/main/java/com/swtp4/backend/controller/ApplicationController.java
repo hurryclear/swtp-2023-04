@@ -4,6 +4,7 @@ import com.swtp4.backend.repositories.ApplicationRepository;
 import com.swtp4.backend.repositories.applicationDtos.EntireOriginalAndEditedApplicationDto;
 import com.swtp4.backend.repositories.applicationDtos.OverviewApplicationDto;
 import com.swtp4.backend.repositories.applicationDtos.ReviewApplicationDto;
+import com.swtp4.backend.repositories.applicationDtos.EntireOriginalAndEditedApplicationDto;
 import com.swtp4.backend.repositories.dto.ApplicationDto;
 import com.swtp4.backend.repositories.applicationDtos.EditedApplicationDto;
 import com.swtp4.backend.repositories.dto.UniModuleDto;
@@ -15,14 +16,19 @@ import com.swtp4.backend.services.PDFService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.internal.bytebuddy.build.Plugin;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Map;
 
@@ -39,6 +45,13 @@ public class ApplicationController {
         this.applicationService = applicationService;
         this.pdfService = pdfService;
     }
+
+    @PutMapping("/resetStatusInProgress")
+    public ResponseEntity<?> resetStatus(@RequestParam String applicationID) {
+        applicationService.resetStatus(applicationID);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
     @PutMapping("/editingInProgress")
     public ResponseEntity<?> continueEditing(@RequestParam String applicationID) {
@@ -102,10 +115,6 @@ public class ApplicationController {
         return applicationService.getAllApplications();
     }
 
-    @GetMapping("/get-application-by-id")
-    public ApplicationEntity getApplicationById(@RequestParam("id") String id) {
-        return applicationService.getApplicationById(id);
-    }
     @GetMapping("/get-applications-by-status")
     public List<ApplicationEntity> getApplicationsByStatus(@RequestParam("status") String status) {
         return applicationService.getApplicationsByStatus(status);
@@ -162,6 +171,13 @@ public class ApplicationController {
     }
 
 
+    // endpoint for employee to get application by id
+    @GetMapping("/getApplication")
+    public ResponseEntity<?> getApplicationByID(@RequestParam("applicationID") String applicationID) {
+        EntireOriginalAndEditedApplicationDto entireOriginalAndEditedApplicationDto = applicationService.getApplicationByID(applicationID);
+        return new ResponseEntity<>(entireOriginalAndEditedApplicationDto, HttpStatus.OK);
+    }
+
     @PostMapping("/test")
     public ResponseEntity<UniModuleDto> testOfficeEndpoint(@RequestBody UniModuleDto uniModuleDto){
         return new ResponseEntity<>(uniModuleDto, HttpStatus.OK);
@@ -172,4 +188,16 @@ public class ApplicationController {
 //        return ResponseEntity.ok(libraryService.filterBooks(query, pageable));
 //    }
 
+    @GetMapping(path = "/getModulePDF", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<Resource> getPDF(@RequestParam String filePath) {
+        try {
+            Resource pdfResource = pdfService.getModulePDF("/app/pdf-files" + filePath);
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filepath = " + filePath)
+                    .body(pdfResource);
+        } catch (FileNotFoundException | MalformedURLException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
 }
