@@ -104,10 +104,18 @@ public class ApplicationController {
     @GetMapping("/overviewOffice")
     public ResponseEntity<Page<OverviewApplicationDto>> getOverviewApplications(ApplicationPage applicationPage,
                                                                                 ApplicationSearchCriteria applicationSearchCriteria) {
-        return new ResponseEntity<>(applicationService.getApplications(
+        return new ResponseEntity<>(applicationService.getOverviewApplications(
                 applicationPage, applicationSearchCriteria),
                 HttpStatus.OK
                 );
+    }
+
+    @GetMapping("/searchApplication")
+    public ResponseEntity<Page<OverviewApplicationDto>> getSearchApplication(ApplicationPage applicationPage,
+                                                  ApplicationSearchCriteria applicationSearchCriteria) {
+        return new ResponseEntity<>(applicationService.searchApplications(applicationPage, applicationSearchCriteria),
+                HttpStatus.OK
+        );
     }
 
     // endpoint for employee to get application by id
@@ -117,10 +125,6 @@ public class ApplicationController {
         return new ResponseEntity<>(entireOriginalAndEditedApplicationDto, HttpStatus.OK);
     }
 
-    @PostMapping("/test")
-    public ResponseEntity<UniModuleDto> testOfficeEndpoint(@RequestBody UniModuleDto uniModuleDto){
-        return new ResponseEntity<>(uniModuleDto, HttpStatus.OK);
-    }
 
     @GetMapping(path = "/getModulePDF", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<Resource> getPDF(@RequestParam String filePath) {
@@ -133,6 +137,12 @@ public class ApplicationController {
         } catch (FileNotFoundException | MalformedURLException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
+    }
+
+
+    @PostMapping("/test")
+    public ResponseEntity<UniModuleDto> testOfficeEndpoint(@RequestBody UniModuleDto uniModuleDto){
+        return new ResponseEntity<>(uniModuleDto, HttpStatus.OK);
     }
 
     @GetMapping("/get-applications-with-sorting/{field}")
