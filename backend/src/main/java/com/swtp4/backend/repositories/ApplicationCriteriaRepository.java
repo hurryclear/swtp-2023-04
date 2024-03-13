@@ -10,6 +10,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Repository;
 
@@ -21,6 +22,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @Repository
+@Slf4j
 public class ApplicationCriteriaRepository {
 
     private final EntityManager entityManager;
@@ -52,7 +54,7 @@ public class ApplicationCriteriaRepository {
 
         Pageable pageable = getPageable(applicationPage);
 
-        long applicationsCount = getApplicationsCount(predicate);
+//        long applicationsCount = getApplicationsCount(predicate);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
