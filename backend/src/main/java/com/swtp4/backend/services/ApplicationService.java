@@ -39,13 +39,15 @@ public class ApplicationService {
             ModuleBlockRepository moduleBlockRepository,
             ModuleStudentRepository moduleStudentRepository,
             ModuleRelationRepository moduleRelationRepository,
-            ModuleUniRepository moduleUniRepository) {
+            ModuleUniRepository moduleUniRepository,
+            ApplicationCriteriaRepository applicationCriteriaRepository) {
         this.uniqueNumberService = uniqueNumberService;
         this.applicationRepository = applicationRepository;
         this.moduleBlockRepository = moduleBlockRepository;
         this.moduleStudentRepository = moduleStudentRepository;
         this.moduleRelationRepository = moduleRelationRepository;
         this.moduleUniRepository = moduleUniRepository;
+        this.applicationCriteriaRepository = applicationCriteriaRepository;
     }
 
 
@@ -549,9 +551,16 @@ public class ApplicationService {
     }
 
     // get overview of applications for employees with certain searching criteria
-    public Page<OverviewApplicationDto> getApplications(
+    public Page<OverviewApplicationDto> getOverviewApplications(
             ApplicationPage applicationPage,
             ApplicationSearchCriteria applicationSearchCriteria) {
+
+        return applicationCriteriaRepository.findAllWithFilters(applicationPage, applicationSearchCriteria);
+    }
+
+
+    public Page<OverviewApplicationDto> searchApplications(ApplicationPage applicationPage,
+                                                           ApplicationSearchCriteria applicationSearchCriteria) {
         return applicationCriteriaRepository.findAllWithFilters(applicationPage, applicationSearchCriteria);
     }
 
@@ -591,4 +600,5 @@ public class ApplicationService {
         }
         return applicationEntityList;
     }
+
 }
