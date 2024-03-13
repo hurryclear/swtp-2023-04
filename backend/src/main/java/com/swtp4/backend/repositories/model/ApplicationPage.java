@@ -9,5 +9,5 @@ public class ApplicationPage{
     private int pageNumber = 0; // default:0
     private int pageSize = 5; // default: 5
     private Sort.Direction sortDirection = Sort.Direction.ASC; // default: asc
-    private String sortBy = "dateOfSubmission"; // default: dateOfSubmission
+    private String sortBy = "universityName"; // default: dateOfSubmission
 }
