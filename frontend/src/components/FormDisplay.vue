@@ -16,7 +16,7 @@
     <template v-slot:[`item.actions`]="{ item }">
       <v-btn
           @click="openEditMenu(item)"
-          :disabled="item.edited.applicationData.status === 'editing in progress'"
+          :disabled="item.status === 'editing in progress'"
           icon="mdi-pencil"
       ></v-btn>
     </template>
