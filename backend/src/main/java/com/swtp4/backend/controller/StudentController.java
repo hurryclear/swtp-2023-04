@@ -1,5 +1,6 @@
 package com.swtp4.backend.controller;
 
+import com.swtp4.backend.exception.ResourceNotFoundException;
 import com.swtp4.backend.repositories.ApplicationRepository;
 import com.swtp4.backend.repositories.applicationDtos.EditedApplicationDto;
 import com.swtp4.backend.repositories.applicationDtos.EntireOriginalAndEditedApplicationDto;
@@ -16,12 +17,16 @@ import com.swtp4.backend.services.PDFService;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.query.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -82,5 +87,16 @@ public class StudentController {
     public ResponseEntity<?> reviewApplication(@RequestParam String applicationID) {
         ReviewApplicationDto applicationDto = applicationService.getReviewApplication(applicationID);
         return new ResponseEntity<>(applicationDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/getPdfSummary")
+    public ResponseEntity<?> downloadApplicationPDF(@RequestParam String applicationId) {
+        try {
+            return pdfService.generatePDFForApplication(applicationId);
+        } catch (IOException e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
     }
 }
