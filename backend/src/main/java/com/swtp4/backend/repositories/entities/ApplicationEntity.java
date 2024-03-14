@@ -35,4 +35,5 @@ public class ApplicationEntity {
     private String uniMajor;
 
     private String formalRejectionReason;
+
 }
