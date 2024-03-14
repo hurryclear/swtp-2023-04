@@ -44,7 +44,7 @@ public class PDFServiceTests {
     }
 
     @Test
-    public void whenSaveModulePDFsGetsEmptyFile_ItDoesNotSaveWithoutRuntimeException() {
+    public void whenSaveModulePDFsGetsEmptyFile_ItDoesThrowException() {
         // Mocked MultipartFiles (empty file)
         Map<String, MultipartFile> fileMap = new HashMap<>();
         MultipartFile file1 = new MockMultipartFile("file-0:0", "filename1.pdf", "application/pdf", new byte[0]);
@@ -55,11 +55,11 @@ public class PDFServiceTests {
         filePaths.put("file-0:0", "/applicationID/S-moduleStudentID1");
 
         // Test FileSave
-        assertDoesNotThrow(() -> pdfService.saveModulePDFs(fileMap, filePaths), "Empty file should not throw a RuntimeException");
+        assertThrows(Exception.class, () -> pdfService.saveModulePDFs(fileMap, filePaths), "Empty file should throw a RuntimeException");
     }
 
     @Test
-    public void whenSaveModulePDFsGetsNullFile_itDoesNotSaveWithoutRuntimeException() {
+    public void whenSaveModulePDFsGetsNullFile_itDoesThrowException() {
         // Mocked MultipartFiles (null file)
         Map<String, MultipartFile> fileMap = new HashMap<>();
         fileMap.put("file-0:0", null);
@@ -69,7 +69,7 @@ public class PDFServiceTests {
         filePaths.put("file-0:0", "/applicationID/S-moduleStudentID1");
 
         // Test FileSave
-        assertDoesNotThrow(() -> pdfService.saveModulePDFs(fileMap, filePaths), "Null file should not cause an exception");
+        assertThrows(Exception.class, () -> pdfService.saveModulePDFs(fileMap, filePaths), "Null file should cause an exception");
     }
 
     @Test

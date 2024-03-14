@@ -24,7 +24,7 @@ public class PDFService {
 
     public PDFService() {}
     
-    public void saveModulePDFs(Map<String, MultipartFile> fileMap, HashMap<String, String> file_paths) {
+    public void saveModulePDFs(Map<String, MultipartFile> fileMap, HashMap<String, String> file_paths) throws Exception {
         for (Map.Entry<String, MultipartFile> entry : fileMap.entrySet()) {
             String fileKey = entry.getKey();
             MultipartFile file = entry.getValue();
@@ -42,6 +42,7 @@ public class PDFService {
                 }
             } else {
                 System.out.println("File is empty or null for key: " + fileKey);
+                throw new Exception("File null or empty" + fileKey);
             }
         }
     }
