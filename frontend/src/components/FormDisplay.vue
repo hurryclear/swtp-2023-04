@@ -33,12 +33,11 @@ export default {
         forms: [] ,
         //TODO i18n
         headers: [
-          { title: "ID", key: "edited.applicationData.applicationID" },
-          { title: "Universität" , key: "edited.applicationData.university" },
-          { title: "Anzahl von Mappings", key: "edited.moduleFormsData.length" },
-          { title: "Vorheriger Studiengang", key: "edited.applicationData.oldCourseOfStudy" },
-          { title: "Status", key: "edited.applicationData.status" },
-          { title: "Edit", value: "actions", sortable: false }
+          { title: "ID", key: "applicationID" },
+          { title: "Antragsdatum", key: "dateOfSubmission" },
+          { title: "Universität" , key: "university" },
+          { title: "Status", key: "status" },
+          { title: "Editieren", value: "actions", sortable: false }
         ]
       }
     },
@@ -48,14 +47,17 @@ export default {
   },
 
   methods: {
-      openEditMenu(form) {
+      async openEditMenu(item) {
+        let form;
+        await axios.get("/api/application/getApplication?" + item.applicationID)
+            .then(response => response.data)
+            .catch(err => console.error("Error retrieving form: ", err));
         this.$emit('open-edit-menu', form);
       },
 
       async getForms() {
-        //TODO richtigen endpoint einsetzen
-        await axios.get("/api/application/overviewOffice?status=OPEN")
-            .then(response => response.data = this.forms)
+        await axios.get("/api/application/overviewOffice")
+            .then(response => response.data.content = this.forms)
             .catch(err => console.error("Error retrieving open forms: ", err));
       }
     }
