@@ -75,37 +75,41 @@ public class PDFService {
     }
 
 
-    public ResponseEntity <byte[]>generatePDFForApplication(String applicationId) throws IOException {
+    public ResponseEntity<byte[]> generatePDFForApplication(String applicationId) throws IOException {
         ApplicationEntity applicationEntity = applicationRepository.findById(ApplicationKeyClass.builder()
                 .creator("Employee")
-                .id(applicationId).build()).orElseThrow(()-> new ResourceNotFoundException("Application not found: " + applicationId));
+                .id(applicationId).build()).orElseThrow(() -> new ResourceNotFoundException("Application not found: " + applicationId));
 
         PDDocument document = new PDDocument();
         PDPage page = new PDPage();
         document.addPage(page);
 
-
         PDPageContentStream contentStream = new PDPageContentStream(document, page);
         contentStream.beginText();
         contentStream.setFont(PDType1Font.HELVETICA, 12);
-        contentStream.newLineAtOffset(100, 700);
+        // Starte am oberen Rand der Seite
+        float margin = 100;
+        float yStart = 700;
+        float lineSpacing = 20; // Stelle hier den gewünschten Zeilenabstand ein
+
+        contentStream.newLineAtOffset(margin, yStart);
 
         ApplicationKeyClass applicationKeyClass = applicationEntity.getApplicationKeyClass();
-        contentStream.showText("Antragsnummer: " + applicationKeyClass.toString());
-        contentStream.newLine();
-        contentStream.showText("Status: " + applicationEntity.getStatus());
-        contentStream.newLine();
-        contentStream.showText("Einreichungsdatum: " + applicationEntity.getDateOfSubmission().toString());
-        contentStream.newLine();
-        contentStream.showText("Letzte Bearbeitung: " + applicationEntity.getDateLastEdited().toString());
-        contentStream.newLine();
-        contentStream.showText("Universitätsname: " + applicationEntity.getUniversityName());
-        contentStream.newLine();
-        contentStream.showText("Studienfach: " + applicationEntity.getStudentMajor());
-        contentStream.newLine();
-        contentStream.showText("Uni-Fach: " + applicationEntity.getUniMajor());
-        contentStream.newLine();
-        contentStream.showText("Formaler Ablehnungsgrund: " + (applicationEntity.getFormalRejectionReason() != null ? applicationEntity.getFormalRejectionReason() : "Keine"));
+        String[] textLines = {
+                "Antragsnummer: " + applicationId,
+                "Status: " + applicationEntity.getStatus(),
+                "Einreichungsdatum: " + applicationEntity.getDateOfSubmission().toString(),
+                "Letzte Bearbeitung: " + applicationEntity.getDateLastEdited().toString(),
+                "Universitätsname: " + applicationEntity.getUniversityName(),
+                "Studienfach: " + applicationEntity.getStudentMajor(),
+                "Uni-Fach: " + applicationEntity.getUniMajor(),
+                "Formaler Ablehnungsgrund: " + (applicationEntity.getFormalRejectionReason() != null ? applicationEntity.getFormalRejectionReason() : "Keine")
+        };
+
+        for (String line : textLines) {
+            contentStream.showText(line);
+            contentStream.newLineAtOffset(0, -lineSpacing);
+        }
 
         contentStream.endText();
         contentStream.close();
@@ -113,10 +117,11 @@ public class PDFService {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         document.save(outputStream);
         document.close();
-        byte [] pdfBytes = outputStream.toByteArray();
+        byte[] pdfBytes = outputStream.toByteArray();
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_PDF)
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filepath = " + applicationId + ".pdf")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + applicationId + ".pdf\"")
                 .body(pdfBytes);
     }
+
 }
