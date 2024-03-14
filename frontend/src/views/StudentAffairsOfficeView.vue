@@ -5,8 +5,23 @@
       </v-row>
       <v-row>
         <v-col class="col-left">
-          <FormDisplay class="form-display" v-if="FDisDisplayed" @open-edit-menu="openEditMenu"/>
-          <ComparisonMenu class="comparison" v-if="CMisDisplayed" @close-comparison="closeComparisonMenu"/>
+          <FormDisplay
+              class="form-display"
+              v-if="FDisDisplayed"
+              @open-edit-menu="openEditMenu"
+          />
+          <ComparisonMenu
+              class="comparison"
+              v-if="CMisDisplayed"
+              @close-comparison="closeComparisonMenu"
+              @open-view-application="openViewApplication"
+          />
+          <ViewApplication
+              class="view-application"
+              v-if="VAisDisplayed"
+              :form="VAformContent"
+              @close-view-application="closeViewApplication"
+          />
         </v-col>
         <v-col>
           <EditMenu
@@ -27,15 +42,18 @@
   import FormDisplay from "@/components/FormDisplay.vue";
   import LogoutButton from "@/components/LogoutButton.vue";
   import ComparisonMenu from "@/components/ComparisonMenu.vue";
+  import ViewApplication from "@/components/ViewApplication.vue";
   import axios from "@/plugins/axios";
   export default {
-    components: {ComparisonMenu, EditMenu, FormDisplay, LogoutButton},
+    components: {ComparisonMenu, EditMenu, FormDisplay, LogoutButton, ViewApplication},
     data() {
       return {
+        VAisDisplayed: false,
         EMisDisplayed: false,
         FDisDisplayed: true,
         CMisDisplayed: false,
-        EMformContent: {}
+        EMformContent: {},
+        VAformContent: {}
       }
     },
     methods: {
@@ -68,6 +86,19 @@
       closeComparisonMenu() {
         this.CMisDisplayed = false;
         this.FDisDisplayed = true;
+      },
+
+      openViewApplication(form) {
+        this.VAisDisplayed = true;
+        this.CMisDisplayed = false;
+        this.VAformContent = form;
+      },
+
+      closeViewApplication() {
+        this.VAisDisplayed = false;
+        this.CMisDisplayed = true;
+        this.VAformContent = {};
+
       }
     }
   }
