@@ -319,11 +319,14 @@ export default {
     getBlockApprovalStatus(modules) {
       const allApproved = modules.every(module => module.approval === 'accepted');
       const someApproved = modules.some(module => module.approval === 'accepted');
+      const approvalOpen = modules.every(module => module.approval === '');
 
       if (allApproved) {
         return this.$t('reviewComponent.accepted');
       } else if (someApproved) {
         return this.$t('reviewComponent.partiallyAccepted');
+      } else if (approvalOpen) {
+        return this.$t('reviewComponent.open');
       } else {
         return this.$t('reviewComponent.rejected');
       }
@@ -337,14 +340,17 @@ export default {
     getBlockApprovalColor(modules) {
       const allApproved = modules.every(module => module.approval === 'accepted');
       const someApproved = modules.some(module => module.approval === 'accepted');
+      const approvalOpen = modules.every(module => module.approval === '');
 
       if (allApproved) {
         return 'green';
       } else if (someApproved) {
         return 'orange';
+      } else if (approvalOpen) {
+        return 'blue';
       } else {
         return 'red';
-      }
+      } 
     },
 
     /**
@@ -359,7 +365,9 @@ export default {
         return 'red';
       } else if (approval === 'formally rejected') {
         return 'red';
-      } else {
+      } else if (approval === '') {
+        return 'blue';
+      }  else {
         return 'black';
       }
     },
@@ -376,7 +384,9 @@ export default {
         return this.$t('reviewComponent.rejected');
       } else if (approval === 'formally rejected') {
         return this.$t('reviewComponent.formallyRejected');
-      } else {
+      } else if (approval === '') {
+        return this.$t('reviewComponent.open');
+      } else  {
         return 'pending';
       }
     },
