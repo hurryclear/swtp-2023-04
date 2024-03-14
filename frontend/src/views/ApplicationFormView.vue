@@ -3,7 +3,7 @@
   <UniversityForm/>
   <br/>
   <ModuleFormList
-      o='v-if="newCourseOfStudyIsSelected"'
+      v-if="newCourseOfStudyIsSelected"
   />
   <br/>
   <v-btn

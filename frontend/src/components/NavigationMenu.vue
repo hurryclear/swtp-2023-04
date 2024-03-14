@@ -20,6 +20,16 @@
           {{ $t("navBar.main") }}
         </v-btn>
         <v-btn
+            v-if="this.userRole === 'ROLE_OFFICE' || this.userRole === 'ROLE_COMMITTEE'"
+            class="button-spacing t-button"
+            variant="elevated"
+            color="#262A31"
+            @click="navigateTo('/update-module-data')"
+        >
+          swag
+        </v-btn>
+        <v-spacer/>
+        <v-btn
             v-if="userRole==='ROLE_STUDENT'"
             class="button-spacing t-button"
             variant="elevated"
@@ -95,7 +105,6 @@
         >
           {{ $t("navBar.creditModules") }}
         </v-btn>
-        <v-spacer/>
         <v-btn
             v-if="userRole==='ROLE_STUDENT'"
             class="button-spacing t-button"

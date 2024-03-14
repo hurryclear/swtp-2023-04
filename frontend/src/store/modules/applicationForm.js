@@ -15,7 +15,7 @@ export default {
                 website: "",                //String
             },
             courseOfStudy: {
-                old: null,
+                old: "",
                 new: null,
             },
             moduleMappings: [
@@ -26,21 +26,26 @@ export default {
                     previousModules: [
                         {
                             meta: {
-                                approval: "",         //Enum/Boolean
+                                approval: "",
                                 comments: {
-                                    student: "",        //String
+                                    student: "",
                                 },
+                                key: 0,
                             },
-                            number: "",       //String (Applicable?)
-                            name: "",         //String
+                            name: "",
                             description: {file: null},
-                            credits: 0,       //Integer
+                            credits: 0,
+                            university: {
+                                name: "",
+                                country: "",
+                                website: "",
+                            },
                         },
                     ],
                     modulesToBeCredited: [
                         {
-                            number: "",       //String
-                            name: null,         //String
+                            number: "",
+                            name: null,
                         }
                     ],
                 },
@@ -64,20 +69,19 @@ export default {
                         key: key,
                         approval: "",
                         comments: {
-                            student: "",
-                            office: "",
+                            student: ""
                         },
                     },
                     previousModules: [
                         {
                             meta: {
+                                approval: "",
                                 comments: {
-                                    student: "",
-                                    office: ""
-                                }
+                                    student: ""
+                                },
+                                key: 0,
                             },
                             university: "",
-                            key: 0,
                             number: "",
                             name: "",
                             description: {file: null},
@@ -86,8 +90,7 @@ export default {
                     ],
                     modulesToBeCredited: [
                         {
-                            number: "",
-                            name: null,
+                            id: null
                         }
                     ],
                 }
@@ -98,17 +101,17 @@ export default {
                 state.form.moduleMappings.splice(index, 1);
             }
         },
-        addModule(state, index, key) {
-            state.form.moduleMappings[index].moduleForm.previousModules.push(
+        addModule(state, {moduleMappingIndex, key}) {
+            state.form.moduleMappings[moduleMappingIndex].previousModules.push(
                 {
                     meta: {
+                        approval: "",
                         comments: {
                             student: "",
-                            office: ""
-                        }
+                        },
+                        key: key,
                     },
                     university: "",
-                    key: key,
                     number: "",
                     name: "",
                     description: {file: null},
@@ -168,7 +171,7 @@ export default {
         moduleMappingsFilled: state => state.form.moduleMappings.every(
             moduleMapping => {
                 // Check if modules to be credited are filled
-                return moduleMapping.modulesToBeCredited !== null &&
+                return moduleMapping.modulesToBeCredited.length !== null &&
                     // Check if every previous module is filled
                     moduleMapping.previousModules.every(
                         (module) =>
@@ -179,6 +182,7 @@ export default {
         ),
         moduleMappings: state => state.form.moduleMappings,
         disableModuleMappingRemoval: state => state.form.moduleMappings.length === 1,
-        newCourseOfStudyIsSelected: state => state.form.courseOfStudy.new !== null
+        newCourseOfStudyIsSelected: state => state.form.courseOfStudy.new !== null,
+        getModuleMappingByIndex: (state) => (id) => state.form.moduleMappings[id]
     }
 }

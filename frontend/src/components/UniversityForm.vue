@@ -6,12 +6,12 @@
         <template v-slot:default="{ expanded }">
           <v-row no-gutters>
             <v-col>
-              {{ $t("applicationFormView.universityForm.university.previous") }}
+              {{ $t("applicationFormView.universityForm.previous") }}
             </v-col>
             <v-col class="text-grey">
               <v-fade-transition leave-absolute>
                 <span v-if="expanded" key="0">
-                  {{ $t("applicationFormView.universityForm.university.description") }}
+                  {{ $t("applicationFormView.universityForm.description") }}
                 </span>
                 <span v-else key="1">
                   {{ university.name }}
@@ -27,14 +27,14 @@
             :items="universities"
             item-title="name"
             hide-details
-            :label="$t('applicationFormView.universityForm.university.nameLabel')"
+            :label="$t('applicationFormView.universityForm.nameLabel')"
             variant="outlined"
             class="userInput"
         />
         <v-text-field
             v-model="university.country"
             hide-details
-            :label="$t('applicationFormView.universityForm.university.countryLabel')"
+            :label="$t('applicationFormView.universityForm.countryLabel')"
             variant="outlined"
             class="userInput"
         />
@@ -42,7 +42,7 @@
         <v-text-field
             v-model="university.website"
             hide-details
-            :label="$t('applicationFormView.universityForm.university.websiteLabel')"
+            :label="$t('applicationFormView.universityForm.websiteLabel')"
             variant="outlined"
             class="userInput"
         />
@@ -53,42 +53,12 @@
         <template v-slot:default="{ expanded }">
           <v-row no-gutters>
             <v-col>
-              {{ $t("applicationFormView.universityForm.courseOfStudy.previous") }}
+              {{ $t("applicationFormView.courseOfStudy.courseOfStudy") }}
             </v-col>
             <v-col class="text-grey">
               <v-fade-transition leave-absolute>
                 <span v-if="expanded" key="0">
-                  {{ $t("applicationFormView.universityForm.courseOfStudy.description") }}
-                </span>
-                <span v-else key="1">
-                  {{ courseOfStudy.old }}
-                </span>
-              </v-fade-transition>
-            </v-col>
-          </v-row>
-        </template>
-      </v-expansion-panel-title>
-      <v-expansion-panel-text>
-        <v-text-field
-            v-model="courseOfStudy.old"
-            hide-details
-            :label="$t('applicationFormView.universityForm.courseOfStudy.nameLabel')"
-            variant="outlined"
-            class="userInput"
-        />
-      </v-expansion-panel-text>
-    </v-expansion-panel>
-    <v-expansion-panel>
-      <v-expansion-panel-title>
-        <template v-slot:default="{ expanded }">
-          <v-row no-gutters>
-            <v-col>
-              {{ $t("applicationFormView.universityForm.courseOfStudy.new") }}
-            </v-col>
-            <v-col class="text-grey">
-              <v-fade-transition leave-absolute>
-                <span v-if="expanded" key="0">
-                  {{ $t("applicationFormView.universityForm.courseOfStudy.description") }}
+                  {{ $t("applicationFormView.courseOfStudy.description") }}
                 </span>
                 <span v-else key="1">
                   {{ courseOfStudy.new }}
@@ -99,12 +69,19 @@
         </template>
       </v-expansion-panel-title>
       <v-expansion-panel-text>
+        <v-text-field
+            v-model="courseOfStudy.old"
+            hide-details
+            :label="$t('applicationFormView.courseOfStudy.previous')"
+            variant="outlined"
+            class="userInput"
+        />
         <v-select
             v-model="courseOfStudy.new"
             hide-details
             :items="studyPlans"
             item-title="name"
-            :label="$t('applicationFormView.universityForm.courseOfStudy.nameLabel')"
+            :label="$t('applicationFormView.courseOfStudy.new')"
             variant="outlined"
             class="userInput"
         />
@@ -124,7 +101,7 @@ export default {
       },
       courseOfStudy: {
         old: "",
-        new: "",
+        new: null,
       },
       selectedUniversity: null,
     }

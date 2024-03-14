@@ -5,52 +5,52 @@
       "moduleMapping": {
         "addModule": "添加模块",
         "commentLabel": "评论",
-        "description": "提供有关要认可的模块的信息！",
+        "description": "提供有关要认可的模块的信息。",
         "module": "模块",
         "moduleDescriptionLabel": "模块描述",
         "moduleNameLabel": "模块名称",
-        "modulesToBeCreditedLabel": "已认可的模块",
-        "removeModule": "删除模块"
+        "modulesToBeCreditedLabel": "要认可的模块",
+        "removeModule": "删除模块",
+        "creditLabel": "学分（ECTS）"
       },
       "removeMapping": "删除模块映射"
     },
     "submit": "提交表单",
+    "courseOfStudy": {
+      "description": "指定您的以前和期望的学习领域的名称。",
+      "courseOfStudy": "学习领域",
+      "new": "期望的学习领域",
+      "previous": "以前的学习领域"
+    },
     "universityForm": {
-      "courseOfStudy": {
-        "description": "指定您之前学习计划的名称！",
-        "nameLabel": "学习计划名称",
-        "previous": "之前的学习计划"
-      },
-      "university": {
-        "countryLabel": "国家",
-        "description": "指定您之前大学的名称！",
-        "nameLabel": "大学名称",
-        "previous": "之前的大学",
-        "websiteLabel": "网站"
-      }
+      "countryLabel": "国家",
+      "description": "指定您以前的大学的名称。",
+      "nameLabel": "大学名称",
+      "previous": "以前的大学",
+      "websiteLabel": "网站"
     }
   },
   "darkMode": {
-    "toggleDarkMode": "切换暗模式"
+    "toggleDarkMode": "切换深色模式"
   },
   "examiningCommitteeChairView": {
     "accept": "接受",
     "decline": "拒绝",
-    "moduleCount": "模块数量",
-    "studentAffairsOfficeComment": "学生事务办公室的评论"
+    "moduleCount": "模块数",
+    "studentAffairsOfficeComment": "学生事务办公室评论"
   },
   "formDisplay": {
     "application": "申请",
     "edit": "编辑",
     "modules": "模块",
     "reason": "原因",
-    "sendToExaminingCommitteeChair": "发送至考试委员会",
+    "sendToExaminingCommitteeChair": "发送给考试委员会主席",
     "university": "大学"
   },
   "homeView": {
-    "welcomeExaminingCommitteeChair": "欢迎，尊敬的考试委员会主席！ 在此平台上，您有机会概览并批准或拒绝所有打开的申请。 请为您的决定提供充分的理由。 您的参与使学分认可过程更加高效和有针对性。",
-    "welcomeStudent": "欢迎来到我们在莱比锡大学的新在线平台，用于学分认可！ 我们了解学分认可的过程通常很复杂且耗时。 更重要的是，现在这个过程可以在线、数字化且轻松完成。 作为学生，您现在可以通过几次点击提交申请。 点击“学分模块”开始。 提交申请后，将分配给您一个唯一的参考号，以便以后查看申请及其状态。",
-    "welcomeStudentAffairsOffice": "欢迎，学生事务办公室的工作人员！ 作为学生事务办公室的工作人员，您可以访问所有打开申请的概述。 您可以处理、补充并跟踪申请的处理状态。 使用用户友好的界面使学分认可过程更加高效。"
+    "welcomeExaminingCommitteeChair": "尊敬的考试委员会主席，欢迎您！在此平台上，您有机会审查并批准或拒绝所有开放的申请。请提供您决定的理由。您的参与将使学分认可流程更加高效和目标导向。",
+    "welcomeStudent": "欢迎来到莱比锡大学的学分认可新在线平台！单击“学分模块”开始。提交申请后，您将获得一个唯一的参考编号，稍后可以使用该编号查看申请和状态。",
+    "welcomeStudentAffairsOffice": "欢迎，学生事务办公室工作人员！作为学生事务办公室团队的一员，您可以访问所有开放申请的概览。您可以处理，补充和跟踪申请的处理状态。利用友好的界面使学分认可流程更加高效。"
   },
   "loginComponent": {
     "loginButton": "登录",
@@ -64,54 +64,58 @@
     "examiningCommitteeChair": "考试委员会主席",
     "login": "登录",
     "main": "主页",
-    "review": "查看申请",
+    "review": "审核申请",
     "studentAffairsOffice": "学生事务办公室"
   },
   "reviewComponent": {
     "checkStatus": "检查申请状态",
-    "downloadApplication": "下载摘要",
+    "downloadApplication": "下载概要",
     "formID": "参考编号",
-    "reviewApplication": "审查申请",
+    "reviewApplication": "审核申请",
     "currentUniversity": "当前大学",
-    "oldCourseOfStudy": "之前的学习计划",
-    "newCourseOfStudy": "新的学习计划",
+    "oldCourseOfStudy": "以前的课程",
+    "newCourseOfStudy": "新课程",
     "dateOfSubmission": "提交日期",
     "dateLastEdited": "最后编辑日期",
     "application": "申请",
     "overview": "申请概览",
-    "modulName": "模块名称",
+    "moduleName": "模块名称",
     "moduleNumber": "模块编号",
-    "moduleCredits": "学分 (ECTS)",
-    "moduleApproval": "批准",
-    "moduleApprovalReason": "决策原因",
+    "moduleCredits": "学分（ECTS）",
+    "moduleApproval": "模块批准",
+    "moduleApprovalReason": "决定原因",
     "accepted": "已接受",
     "rejected": "已拒绝",
     "formallyRejected": "学生事务办公室正式拒绝",
-    "modules2bCredited": "待认定模块",
+    "modulesToBeCredited": "要认可的模块",
     "moduleApprovalOpen": "开放",
-    "partiallyAccepted": "部分接受",
+    "partiallyAccepted": "部分已接受",
     "open": "开放",
-    "editingInProgress": "学生事务办公室编辑中",
-    "edited": "学生事务办公室已编辑",
-    "readyForApproval": "准备审批委员会审批",
-    "approvalInProgress": "审批委员会审批进行中",
-    "editedApproval": "审批委员会已编辑",
-    "approvalFinished": "审批委员会审批完成",
-    "errorFetchingForm": "获取表单错误",
-    "formNotFound": "未找到表单",
+    "editingInProgress": "学生事务办公室正在编辑",
+    "edited": "学生事务办公室编辑",
+    "readyForApproval": "等待考试委员会批准",
+    "approvalInProgress": "考试委员会批准中",
+    "editedApproval": "考试委员会编辑",
+    "approvalFinished": "考试委员会批准完成",
+    "errorFetchingForm": "获取表格时出错",
+    "formNotFound": "找不到表格",
     "pending": "待定",
     "moduleBlock": "模块块"
   },
-  
   "routes": {
     "/": "主页",
     "/application-form": "学分模块",
     "/examining-committee-chair": "考试委员会主席",
     "/login": "登录",
-    "/review-application": "查看申请",
-    "/student-affairs-office": "学生事务办公室"
+    "/review-application": "审核申请",
+    "/student-affairs-office": "学生事务办公室",
+    "/update-module-data": "更新模块数据"
   },
   "studentAffairsOfficeView": {
-    "openApplications": "打开的申请"
+    "openApplications": "开放申请"
+  },
+  "updateModuleDataView": {
+    "uploadJSON": "上传JSON",
+    "submit": "提交"
   }
 }

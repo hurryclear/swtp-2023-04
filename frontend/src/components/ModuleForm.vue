@@ -62,7 +62,7 @@
               :items="universities"
               item-title="name"
               hide-details
-              :label="$t('applicationFormView.universityForm.university.nameLabel')"
+              :label="$t('applicationFormView.universityForm.nameLabel')"
               variant="outlined"
               class="userInput"
           />
@@ -110,10 +110,6 @@
 <script>
 
 export default {
-  props: {
-    moduleMappingIndex: Number,
-    moduleKey: Number,
-  },
   data() {
     return {
       selectedTab: 0,
@@ -132,15 +128,23 @@ export default {
             },
             name: "",
             credits: 0,
-            university: "",
+            university: {
+              name: null,
+              country: "",
+              website: "",
+            },
             description: {
               file: null,
             },
           }
         ],
         modulesToBeCredited: [],
-      }
+      }//no module is added
     };
+  },
+  props: {
+    moduleMappingIndex: Number,
+    moduleKey: Number,
   },
   computed: {
     disableModuleMappingRemoval() {
@@ -155,8 +159,10 @@ export default {
   },
   methods: {
     addModule() {
-      const key = this.moduleMapping.previousModules[this.moduleMapping.previousModules.length - 1].key + 1
-      this.$store.commit('addModule', this.moduleMappingIndex, key)
+      const key = this.moduleMapping.previousModules[this.moduleMapping.previousModules.length - 1].meta.key + 1
+      const moduleMappingIndex = this.moduleMappingIndex
+      this.$store.commit('addModule', {moduleMappingIndex, key});
+      this.moduleMapping = this.$store.getters.getModuleMappingByIndex(moduleMappingIndex)
       this.selectedTab = this.moduleMapping.previousModules.length - 1;
     },
     removeModule(moduleIndex) {
