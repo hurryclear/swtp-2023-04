@@ -102,20 +102,24 @@ public class ApplicationController {
     // "/getApplication?filters=__&sortBy=__&sortOrder=__&page=__&size=__"
     // from here is sorting, filtering and paging
     @GetMapping("/overviewOffice")
-    public ResponseEntity<Page<OverviewApplicationDto>> getOverviewApplications(ApplicationPage applicationPage,
+    public ResponseEntity<Page<OverviewApplicationDto>> getOverviewOffice(ApplicationPage applicationPage,
                                                                                 ApplicationSearchCriteria applicationSearchCriteria) {
-        return new ResponseEntity<>(applicationService.getOverviewApplications(
-                applicationPage, applicationSearchCriteria),
-                HttpStatus.OK
-                );
+        Page<OverviewApplicationDto> resultPage = applicationService.getOverviewOffice(applicationPage, applicationSearchCriteria);
+        return new ResponseEntity<>(resultPage, HttpStatus.OK);
+    }
+
+    @GetMapping("/overviewCommittee")
+    public ResponseEntity<Page<OverviewApplicationDto>> getOverviewCommittee(ApplicationPage applicationPage,
+                                                                             ApplicationSearchCriteria applicationSearchCriteria) {
+        Page<OverviewApplicationDto> resultPage = applicationService.getOverviewCommittee(applicationPage, applicationSearchCriteria);
+        return new ResponseEntity<>(resultPage, HttpStatus.OK);
     }
 
     @GetMapping("/searchApplication")
     public ResponseEntity<Page<OverviewApplicationDto>> getSearchApplication(ApplicationPage applicationPage,
                                                   ApplicationSearchCriteria applicationSearchCriteria) {
-        return new ResponseEntity<>(applicationService.searchApplications(applicationPage, applicationSearchCriteria),
-                HttpStatus.OK
-        );
+        Page<OverviewApplicationDto> resultPage =applicationService.searchApplications(applicationPage, applicationSearchCriteria);
+        return new ResponseEntity<>(resultPage, HttpStatus.OK);
     }
 
     // endpoint for employee to get application by id
@@ -140,52 +144,52 @@ public class ApplicationController {
     }
 
 
-    @PostMapping("/test")
-    public ResponseEntity<UniModuleDto> testOfficeEndpoint(@RequestBody UniModuleDto uniModuleDto){
-        return new ResponseEntity<>(uniModuleDto, HttpStatus.OK);
-    }
-
-    @GetMapping("/get-applications-with-sorting/{field}")
-    public List<ApplicationEntity> getAllApplicationsWithSorting(@PathVariable String field) {
-        return applicationService.getAllApplicationsWithSorting(field);
-    }
-
-    // the following gets are for employee, it will only return applications with creator "Employee"
-    @GetMapping("/get-all-applications")
-    public List<ApplicationEntity> getAllApplications() {
-        return applicationService.getAllApplications();
-    }
-
-    @GetMapping("/get-applications-by-status")
-    public List<ApplicationEntity> getApplicationsByStatus(@RequestParam("status") String status) {
-        return applicationService.getApplicationsByStatus(status);
-    }
-
-    @GetMapping("/get-applications-by-major")
-    public List<ApplicationEntity> getApplicationsByMajor(@RequestParam("major") String major) {
-        return applicationService.getApplicationsByMajor(major);
-    }
-
-    @GetMapping("/get-applications-by-university")
-    public List<ApplicationEntity> getApplicationsByUniversity(@RequestParam("universityName") String universityName) {
-        return applicationService.getApplicationsByUniversityName(universityName);
-    }
-
-    @GetMapping("/get-applications-by-date-of-submission")
-    public ApplicationEntity getApplicationsByDateOfSubmission(@RequestParam("dateOfSubmission") String dateOfSubmission) {
-        return applicationService.getApplicationsByDateOfSubmission(dateOfSubmission);
-    }
-
-    // not complete
-    @GetMapping("/get-applications-before-date-of-submission")
-    public List<ApplicationEntity> getApplicationsByDateOfSubmissionBefore(@RequestParam("dateOfSubmission") String dateOfSubmission) {
-        return applicationService.getApplicationsByDateOfSubmissionBefore(dateOfSubmission);
-    }
-
-    // not complete
-    @GetMapping("/get-applications-after-date-of-submission")
-    public List<ApplicationEntity> getApplicationsByDateOfSubmissionAfter(@RequestParam("dateOfSubmission") String dateOfSubmission) {
-        return applicationService.getApplicationsByDateOfSubmissionAfter(dateOfSubmission);
-    }
+//    @PostMapping("/test")
+//    public ResponseEntity<UniModuleDto> testOfficeEndpoint(@RequestBody UniModuleDto uniModuleDto){
+//        return new ResponseEntity<>(uniModuleDto, HttpStatus.OK);
+//    }
+//
+//    @GetMapping("/get-applications-with-sorting/{field}")
+//    public List<ApplicationEntity> getAllApplicationsWithSorting(@PathVariable String field) {
+//        return applicationService.getAllApplicationsWithSorting(field);
+//    }
+//
+//    // the following gets are for employee, it will only return applications with creator "Employee"
+//    @GetMapping("/get-all-applications")
+//    public List<ApplicationEntity> getAllApplications() {
+//        return applicationService.getAllApplications();
+//    }
+//
+//    @GetMapping("/get-applications-by-status")
+//    public List<ApplicationEntity> getApplicationsByStatus(@RequestParam("status") String status) {
+//        return applicationService.getApplicationsByStatus(status);
+//    }
+//
+//    @GetMapping("/get-applications-by-major")
+//    public List<ApplicationEntity> getApplicationsByMajor(@RequestParam("major") String major) {
+//        return applicationService.getApplicationsByMajor(major);
+//    }
+//
+//    @GetMapping("/get-applications-by-university")
+//    public List<ApplicationEntity> getApplicationsByUniversity(@RequestParam("universityName") String universityName) {
+//        return applicationService.getApplicationsByUniversityName(universityName);
+//    }
+//
+//    @GetMapping("/get-applications-by-date-of-submission")
+//    public ApplicationEntity getApplicationsByDateOfSubmission(@RequestParam("dateOfSubmission") String dateOfSubmission) {
+//        return applicationService.getApplicationsByDateOfSubmission(dateOfSubmission);
+//    }
+//
+//    // not complete
+//    @GetMapping("/get-applications-before-date-of-submission")
+//    public List<ApplicationEntity> getApplicationsByDateOfSubmissionBefore(@RequestParam("dateOfSubmission") String dateOfSubmission) {
+//        return applicationService.getApplicationsByDateOfSubmissionBefore(dateOfSubmission);
+//    }
+//
+//    // not complete
+//    @GetMapping("/get-applications-after-date-of-submission")
+//    public List<ApplicationEntity> getApplicationsByDateOfSubmissionAfter(@RequestParam("dateOfSubmission") String dateOfSubmission) {
+//        return applicationService.getApplicationsByDateOfSubmissionAfter(dateOfSubmission);
+//    }
 
 }

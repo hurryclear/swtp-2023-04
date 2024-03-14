@@ -551,18 +551,28 @@ public class ApplicationService {
     }
 
     // get overview of applications for employees with certain searching criteria
-    public Page<OverviewApplicationDto> getOverviewApplications(
-            ApplicationPage applicationPage,
-            ApplicationSearchCriteria applicationSearchCriteria) {
+    public Page<OverviewApplicationDto> getOverviewOffice(ApplicationPage applicationPage,
+                                                                ApplicationSearchCriteria applicationSearchCriteria) {
+        applicationSearchCriteria.setStatusList(List.of("open", "edited", "editing in progress"));
+        return applicationCriteriaRepository.findAllWithFilters(applicationPage, applicationSearchCriteria);
+    }
 
+    // get overview of applications for employees with certain searching criteria
+    public Page<OverviewApplicationDto> getOverviewCommittee(ApplicationPage applicationPage,
+                                                             ApplicationSearchCriteria applicationSearchCriteria) {
+        applicationSearchCriteria.setStatusList(List.of(
+                "open", "edited", "editing in progress", "ready for approval", "edited approval", "approval in progress"));
         return applicationCriteriaRepository.findAllWithFilters(applicationPage, applicationSearchCriteria);
     }
 
 
     public Page<OverviewApplicationDto> searchApplications(ApplicationPage applicationPage,
                                                            ApplicationSearchCriteria applicationSearchCriteria) {
+
+        applicationSearchCriteria.setStatusList(List.of("approval finished"));
         return applicationCriteriaRepository.findAllWithFilters(applicationPage, applicationSearchCriteria);
     }
+
 
     public List<ApplicationEntity> getAllApplications() {
         return applicationRepository.findByApplicationKeyClass_Creator("Employee");

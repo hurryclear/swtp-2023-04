@@ -1,24 +1,20 @@
 package com.swtp4.backend.repositories;
 
 import com.swtp4.backend.repositories.applicationDtos.OverviewApplicationDto;
-import com.swtp4.backend.repositories.dto.ApplicationDto;
 import com.swtp4.backend.repositories.entities.ApplicationEntity;
-import com.swtp4.backend.repositories.entities.ModuleBlockEntity;
 import com.swtp4.backend.repositories.model.ApplicationPage;
 import com.swtp4.backend.repositories.model.ApplicationSearchCriteria;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Repository;
 
-import javax.swing.text.html.parser.Entity;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 @Repository
@@ -76,21 +72,16 @@ public class ApplicationCriteriaRepository {
                                    Root<ApplicationEntity> applicationEntityRoot) {
         List<Predicate> predicates = new ArrayList<>();
         predicates.add(criteriaBuilder.equal(applicationEntityRoot.get("applicationKeyClass").get("creator"), "Employee"));
-        predicates.add(criteriaBuilder.equal(applicationEntityRoot.get("status"),"approval finished"));
         if(Objects.nonNull(applicationSearchCriteria.getApplicationID())) {
             predicates.add(
                     criteriaBuilder.like(
                             applicationEntityRoot.get("applicationKeyClass").get("id"),
                             "%" + applicationSearchCriteria.getApplicationID() + "%"));
         }
-
-//        if(Objects.nonNull(applicationSearchCriteria.getStatus())) {
-//            predicates.add(
-//                    criteriaBuilder.like(
-//                            overviewApplicationDtoRoot.get("status"),
-//                            "%" + applicationSearchCriteria.getStatus() + "%"));
-//        }
-
+        if(Objects.nonNull(applicationSearchCriteria.getStatusList())) {
+            predicates.add(
+                    applicationEntityRoot.get("status").in(applicationSearchCriteria.getStatusList()));
+        }
         if(Objects.nonNull(applicationSearchCriteria.getUniversityName())) {
             predicates.add(
                     criteriaBuilder.like(
@@ -103,22 +94,23 @@ public class ApplicationCriteriaRepository {
                             applicationEntityRoot.get("uniMajor"),
                             "%" + applicationSearchCriteria.getUniMajor() + "%"));
         }
-        //todo
         if(Objects.nonNull(applicationSearchCriteria.getDateOfSubmission())) {
             predicates.add(
-                    criteriaBuilder.like(
-                            applicationEntityRoot.get("dateOfSubmission"),
-                            "%" + applicationSearchCriteria.getDateOfSubmission() + "%"));
+                    criteriaBuilder.greaterThanOrEqualTo(
+                            applicationEntityRoot.<Date>get("dateOfSubmission"),
+                            applicationSearchCriteria.getDateOfSubmission()));
         }
-        //todo
-//        if(Objects.nonNull(applicationSearchCriteria.getModule())) {
-//            Root<ModuleBlockEntity> moduleBlockEntityRoot = criteriaQuery.from(ModuleBlockEntity.class);
-//            Join<ApplicationEntity, ModuleBlockEntity> joinModulBlock = applicationEntityRoot.join();
-//            predicates.add(
-//                    criteriaBuilder.like(
-//                            applicationEntityRoot.get("dateOfSubmission"),
-//                            "%" + applicationSearchCriteria.getDateOfSubmission() + "%"));
-//        }
+        if(Objects.nonNull(applicationSearchCriteria.getModule())) {
+            predicates.add(
+                    criteriaBuilder.like(
+                            applicationEntityRoot
+                                    .join("moduleBlocks")
+                                    .join("blockRelations")
+                                    .join("moduleRelationKeyClass")
+                                    .join("moduleStudentEntity")
+                                    .get("title"),
+                            "%" + applicationSearchCriteria.getModule() + "%"));
+        }
         return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
     }
 
