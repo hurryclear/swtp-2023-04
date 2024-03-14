@@ -61,7 +61,7 @@
                   {{ $t("applicationFormView.universityForm.courseOfStudy.description") }}
                 </span>
                 <span v-else key="1">
-                  {{ university.courseOfStudy }}
+                  {{ courseOfStudy.old }}
                 </span>
               </v-fade-transition>
             </v-col>
@@ -70,7 +70,7 @@
       </v-expansion-panel-title>
       <v-expansion-panel-text>
         <v-text-field
-            v-model="university.courseOfStudy"
+            v-model="courseOfStudy.old"
             hide-details
             :label="$t('applicationFormView.universityForm.courseOfStudy.nameLabel')"
             variant="outlined"
@@ -91,7 +91,7 @@
                   {{ $t("applicationFormView.universityForm.courseOfStudy.description") }}
                 </span>
                 <span v-else key="1">
-                  {{ university.newCourseOfStudy }}
+                  {{ courseOfStudy.new }}
                 </span>
               </v-fade-transition>
             </v-col>
@@ -100,7 +100,7 @@
       </v-expansion-panel-title>
       <v-expansion-panel-text>
         <v-select
-            v-model="newCourseOfStudy"
+            v-model="courseOfStudy.new"
             hide-details
             :items="studyPlans"
             item-title="name"
@@ -115,19 +115,17 @@
 <script>
 
 export default {
-  props: {
-    universityData: Object,
-  },
   data() {
     return {
       university: {
         name: null,
         country: "",
         website: "",
-        courseOfStudy: "",
-        ...this.universityData,
       },
-      newCourseOfStudy: "",
+      courseOfStudy: {
+        old: "",
+        new: "",
+      },
       selectedUniversity: null,
     }
   },
@@ -142,7 +140,13 @@ export default {
   watch: {
     university: {
       handler(newVal) {
-        this.$emit('updateUniversityData', newVal);
+        this.$store.commit('updateUniversityData', newVal)
+      },
+      deep: true,
+    },
+    courseOfStudy: {
+      handler(newVal) {
+        this.$store.commit('updateCourseOfStudyData', newVal)
       },
       deep: true,
     },
@@ -159,7 +163,7 @@ export default {
         this.university.website = newValue.web_pages.toString()
       }
     },
-    newCourseOfStudy: function(newValue) {
+    'courseOfStudy.new': function (newValue) {
       this.$store.dispatch('fetchModules', newValue);
     }
   },

@@ -13,7 +13,7 @@
                 {{ $t("applicationFormView.moduleFormList.moduleMapping.description") }}
               </span>
               <span v-else key="1">
-                {{ moduleForm.previousModules.map((module) => module.name).join(", ") }}
+                {{ moduleMapping.previousModules.map((module) => module.name).join(", ") }}
               </span>
             </v-fade-transition>
           </v-col>
@@ -22,20 +22,21 @@
     </v-expansion-panel-title>
     <v-expansion-panel-text>
       <v-tabs v-model="selectedTab">
-        <v-tab v-for="(module, index) in moduleForm.previousModules" :key="moduleForm.previousModules[index].key"
+        <v-tab v-for="(module, index) in moduleMapping.previousModules"
+               :key="moduleMapping.previousModules[index].meta.key"
                :value="index">
           {{ module.name || $t("applicationFormView.moduleFormList.moduleMapping.module") + " " + (index + 1) }}
-          <v-btn @click.stop="removeTab(index)" dense v-if="moduleForm.previousModules.length>1">
+          <v-btn @click.stop="removeModule(index)" dense v-if="moduleMapping.previousModules.length>1">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-tab>
-        <v-tab :key="moduleForm.previousModules.length" @click="addModule" class="add-module-tab">
+        <v-tab :key="moduleMapping.previousModules.length" @click="addModule" class="add-module-tab">
           {{ $t("applicationFormView.moduleFormList.moduleMapping.addModule") }}
         </v-tab>
       </v-tabs>
-      <v-window v-model="selectedTab"> <!--TODO: correct submission and add module behaviour-->
+      <v-window v-model="selectedTab">
         <v-window-item
-            v-for="(module, index) in moduleForm.previousModules"
+            v-for="(module,index) in moduleMapping.previousModules"
             :key="index"
             :value="index"
         >
@@ -85,26 +86,20 @@
         </v-window-item>
       </v-window>
       <v-select
-          v-model="moduleForm.modulesToBeCredited"
+          v-model="moduleMapping.modulesToBeCredited"
           class="userInput"
           item-title="name"
+          item-value="id"
           :label="$t('applicationFormView.moduleFormList.moduleMapping.modulesToBeCreditedLabel')"
           variant="outlined"
+          :items="modules"
           hide-details
           multiple
-          :items="modules"
-      />
-      <v-text-field
-          v-model="moduleForm.meta.comments.student"
-          class="userInput"
-          hide-details
-          :label="$t('applicationFormView.moduleFormList.moduleMapping.commentLabel')"
-          variant="outlined"
       />
       <v-btn
-          @click="removeModule"
+          @click="removeModuleMapping"
           color="red"
-          :disabled="removeDisabled"
+          :disabled="disableModuleMappingRemoval"
       >
         {{ $t("applicationFormView.moduleFormList.removeMapping") }}
       </v-btn>
@@ -116,18 +111,40 @@
 
 export default {
   props: {
-    moduleMapping: Object, // Add a prop to receive module data
-    removeDisabled: Boolean,
+    moduleMappingIndex: Number,
   },
   data() {
     return {
-      isFilled: false,
       selectedTab: 0,
-      moduleForm: {...this.moduleMapping},
       selectedFile: null,
+      moduleMapping: {
+        meta: {
+          key: this.key
+        },
+        previousModules: [
+          {
+            meta: {
+              key: 0,
+              comments: {
+                student: "",
+              },
+            },
+            name: "",
+            credits: 0,
+            university: "",
+            description: {
+              file: null,
+            },
+          }
+        ],
+        modulesToBeCredited: [],
+      }
     };
   },
   computed: {
+    disableModuleMappingRemoval() {
+      return this.$store.getters.disableModuleMappingRemoval;
+    },
     universities() {
       return this.$store.state.university.universities;
     },
@@ -137,57 +154,38 @@ export default {
   },
   methods: {
     addModule() {
-      this.moduleForm.previousModules.push(
-          {
-            meta: {
-              comments: {
-                student: "",
-                office: ""
-              }
-            },
-            university: "",
-            key: (this.moduleForm.previousModules[this.moduleForm.previousModules.length - 1].key + 1),
-            number: "",
-            name: "",
-            description: {file: null},
-            credits: 0,
-          },
-      );
-      this.selectedTab = this.moduleForm.previousModules.length - 1;
+      const key = this.moduleMapping.previousModules[this.moduleMapping.previousModules.length - 1].key + 1
+      this.$store.commit('addModule', this.moduleMappingIndex, key)
+      this.selectedTab = this.moduleMapping.previousModules.length - 1;
     },
-    checkFormFilled() {
-      this.moduleForm.isFilled =
-          this.moduleForm.previousModules.every(
-              (module) => module.name.trim() !== '' &&
-                  module.description.file !== null
-          ) &&
-          //TODO Description
-          this.moduleForm.modulesToBeCredited !== null;
-    },
-    removeTab(index) {
-      this.moduleForm.previousModules.splice(index, 1);
-      if (this.selectedTab === this.moduleForm.previousModules.length) {
+    removeModule(moduleIndex) {
+      this.$store.commit('removeModule', {
+        moduleMappingIndex: this.moduleMappingIndex,
+        moduleIndex: moduleIndex,
+      })
+      if (this.selectedTab === this.moduleMapping.previousModules.length) {
         this.selectedTab--
       }
-      this.watchModuleData();
     },
-    removeModule() {
-      this.$emit('removeModule');
+    removeModuleMapping() {
+      this.$store.commit('removeModuleMappingForm', this.moduleMappingIndex)
     },
-    // Watch changes in module data and emit an event to the parent
-    watchModuleData() {
-      this.checkFormFilled();
-      this.$emit('updateModuleData', this.moduleForm, this.selectedFile);
-    }
   },
   watch: {
-    'moduleForm': {
-      handler: 'watchModuleData',
+    moduleMapping: {
+      handler(newVal) {
+        this.$store.commit("updateModuleMappingData", {
+          moduleMappingIndex: this.moduleMappingIndex,
+          newData: newVal,
+        })
+      },
       deep: true,
     },
-    'selectedTab': function (val) {
-      if (!val) {
-        this.selectedTab = 0
+    selectedTab: {
+      handler(newVal) {
+        if (!newVal) {
+          this.selectedTab = 0
+        }
       }
     }
   }
