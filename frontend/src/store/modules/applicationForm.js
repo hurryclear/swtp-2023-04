@@ -125,10 +125,11 @@ export default {
         async submitWholeForm({state}) {
             const formData = new FormData();
             state.form.moduleMappings.forEach(
-                (moduleForm, i) => moduleForm.previousModules.forEach(
-                    (module, j) => {
-                        module.description.id = i + ":" + j;
-                        formData.append(`file-${module.description.id}`, module.description.file);
+                (moduleForm) => moduleForm.previousModules.forEach(
+                    (module) => {
+                        const id = moduleForm.meta.key + ":" + module.meta.key;
+                        formData.append(`file-${id}`, module.description.file[0]);
+                        delete module.description;
                     }
                 )
             );

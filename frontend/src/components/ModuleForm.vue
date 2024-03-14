@@ -112,6 +112,7 @@
 export default {
   props: {
     moduleMappingIndex: Number,
+    moduleKey: Number,
   },
   data() {
     return {
@@ -119,7 +120,7 @@ export default {
       selectedFile: null,
       moduleMapping: {
         meta: {
-          key: this.key
+          key: this.moduleKey
         },
         previousModules: [
           {
