@@ -2,18 +2,18 @@
 import axios from '@/plugins/axios';
 
 export default {
-  async fetchApplicationSummary(applicationId) {
+  async fetchApplicationSummary(applicationID) {
     try {
-      const response = await axios.get(`/api/student/reviewApplication`, {params: {applicationID: applicationId}});
+      const response = await axios.get(`/api/student/reviewApplication`, {params: {applicationID}});
       return response.data;
     } catch (error) {
       console.error('Error fetching application summary:', error);
       throw error;
     }
   },
-  async fetchPdfSummary(applicationId) {
+  async fetchPdfSummary(applicationID) {
     try {
-      const response = await axios.get(`/api/student/getPdfSummary`, {params: {applicationId}}, { responseType: 'blob' });
+      const response = await axios.get(`/api/student/getPdfSummary`, {params: {applicationID}}, { responseType: 'blob' });
       return response.data;
       
     } catch (error) {
@@ -21,4 +21,23 @@ export default {
       throw error;
     }
   },
+  async fetchApplications() {
+    try {
+      const response = await axios.get('/api/application/get-all-applications');
+      console.log('Applications:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching applications:', error);
+      throw error;
+    }
+  },
+  async getApplication(applicationID) {
+    try {
+      const response = await axios.get('/api/application/getApplication', {params: {applicationID}});
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching application:', error);
+      throw error;
+    }
+  }
 };
