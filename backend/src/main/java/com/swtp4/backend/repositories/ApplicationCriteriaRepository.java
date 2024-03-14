@@ -54,7 +54,7 @@ public class ApplicationCriteriaRepository {
 
         Pageable pageable = getPageable(applicationPage);
 
-//        long applicationsCount = getApplicationsCount(predicate);
+        long applicationsCount = getApplicationsCount(applicationSearchCriteria);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
@@ -68,7 +68,7 @@ public class ApplicationCriteriaRepository {
                         )).toList();
 
         log.info("OverviewApplicationDtos: {}", overviewApplicationDtoList);
-        return new PageImpl<>(overviewApplicationDtoList, pageable, 1);
+        return new PageImpl<>(overviewApplicationDtoList, pageable, applicationsCount);
     }
 
     // filtering
@@ -146,9 +146,10 @@ public class ApplicationCriteriaRepository {
         return PageRequest.of(applicationPage.getPageNumber(), applicationPage.getPageSize(), sort);
     }
 
-    private long getApplicationsCount(Predicate predicate) {
+    private long getApplicationsCount(ApplicationSearchCriteria applicationSearchCriteria) {
         CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
         Root<ApplicationEntity> countRoot = countQuery.from(ApplicationEntity.class);
+        Predicate predicate = getPredicate(applicationSearchCriteria, countRoot);
         countQuery.select(criteriaBuilder.count(countRoot)).where(predicate);
         return entityManager.createQuery(countQuery).getSingleResult();
     }
