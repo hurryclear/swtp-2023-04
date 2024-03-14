@@ -51,7 +51,7 @@ public class StudentController {
     @PostMapping("/submitApplication")
     public ResponseEntity<?> submitApplication(
             @RequestParam Map<String, MultipartFile> fileMap,
-            @RequestPart("form") SubmittedApplicationDto submittedApplicationDto) throws Exception {
+            @RequestPart("form") SubmittedApplicationDto submittedApplicationDto) {
         log.info("SUBMITTED_APPLICATION: {}", submittedApplicationDto);
 
         // Log file field names
