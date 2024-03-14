@@ -3,7 +3,7 @@
   <UniversityForm/>
   <br/>
   <ModuleFormList
-      v-if="newCourseOfStudyIsSelected"
+      v-if="universityFormIsFilled"
   />
   <br/>
   <v-btn
@@ -25,8 +25,8 @@ export default {
     formFilled() {
       return this.$store.getters.formFilled;
     },
-    newCourseOfStudyIsSelected() {
-      return this.$store.getters.newCourseOfStudyIsSelected;
+    universityFormIsFilled() {
+      return this.$store.getters.universityFormIsFilled;
     }
   },
   methods: {

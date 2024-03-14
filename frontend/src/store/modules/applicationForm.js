@@ -40,6 +40,8 @@ export default {
                                 country: "",
                                 website: "",
                             },
+                            id: "",
+                            courseOfStudy: "",
                         },
                     ],
                     modulesToBeCredited: [
@@ -82,7 +84,8 @@ export default {
                                 key: 0,
                             },
                             university: "",
-                            number: "",
+                            id: "",
+                            courseOfStudy: "",
                             name: "",
                             description: {file: null},
                             credits: 0,
@@ -160,15 +163,12 @@ export default {
         },
     },
     getters: {
-        formFilled: (state, getters) => (
-            // Check if all module mappings are filled
+        formFilled: (getters) => (
             getters.moduleMappingsFilled &&
-            // Check if university information is filled
-            state.form.university.name.trim() !== "" &&
-            state.form.courseOfStudy.old.trim() !== "" &&
-            state.form.courseOfStudy.new.trim() !== "" &&
-            state.form.university.country.trim() !== ""),
+            getters.universityFormIsFilled
+        ),
         moduleMappingsFilled: state => state.form.moduleMappings.every(
+            // Check if all module mappings are filled
             moduleMapping => {
                 // Check if modules to be credited are filled
                 return moduleMapping.modulesToBeCredited.length !== null &&
@@ -180,9 +180,15 @@ export default {
                     )
             }
         ),
+        universityFormIsFilled: state => (
+            // Check if university information is filled
+            state.form.university.name.trim() !== "" &&
+            state.form.courseOfStudy.old.trim() !== "" &&
+            state.form.courseOfStudy.new.trim() !== "" &&
+            state.form.university.country.trim() !== ""
+        ),
         moduleMappings: state => state.form.moduleMappings,
         disableModuleMappingRemoval: state => state.form.moduleMappings.length === 1,
-        newCourseOfStudyIsSelected: state => state.form.courseOfStudy.new !== null,
         getModuleMappingByIndex: (state) => (id) => state.form.moduleMappings[id]
     }
 }

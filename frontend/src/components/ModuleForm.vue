@@ -67,6 +67,20 @@
               class="userInput"
           />
           <v-text-field
+              class="userInput"
+              v-model="module.courseOfStudy"
+              hide-details
+              :label="$t('applicationFormView.moduleFormList.moduleMapping.courseOfStudy')"
+              variant="outlined"
+          />
+          <v-text-field
+              class="userInput"
+              v-model="module.id"
+              hide-details
+              :label="$t('applicationFormView.moduleFormList.moduleMapping.moduleId')"
+              variant="outlined"
+          />
+          <v-text-field
               v-model="module.credits"
               class="userInput"
               hide-details
@@ -133,6 +147,8 @@ export default {
               country: "",
               website: "",
             },
+            id: "",
+            courseOfStudy: "",
             description: {
               file: null,
             },
