@@ -32,6 +32,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 @Slf4j
 @RestController
 @CrossOrigin
@@ -58,7 +60,8 @@ public class StudentController {
         return new ResponseEntity<>(uniModuleDto, HttpStatus.OK);
     }
 
-    @PostMapping("/submitApplication")
+    //@PostMapping("/submitApplication")
+    @RequestMapping(path = "/submitApplication", method = POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<?> submitApplication(
             @RequestParam Map<String, MultipartFile> fileMap,
             @RequestPart("form") SubmittedApplicationDto submittedApplicationDto) {

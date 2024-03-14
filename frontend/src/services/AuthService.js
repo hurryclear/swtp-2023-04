@@ -10,7 +10,7 @@ const AuthService = {
             });
 
             const {token, role} = response.data;
-
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             return {status: true, token, role};
         } catch (error) {
             console.error('Authentication failed:', error);
@@ -21,6 +21,7 @@ const AuthService = {
     async logout() {
         try {
             await axios.get('/api/auth/logout');
+            delete axios.defaults.headers.common['Authorization'];
             return {success: true};
         } catch (error) {
             console.error('Logout failed:', error);

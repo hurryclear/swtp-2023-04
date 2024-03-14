@@ -30,7 +30,7 @@ public class SubmittedApplicationDeserializer extends JsonDeserializer<Submitted
                 List<Long> modulesCreditedIDs = new ArrayList<>();
                 if(modulesToBeCredited.isArray()) {
                     for(JsonNode module : modulesToBeCredited) {
-                        modulesCreditedIDs.add(module.get("id").asLong());
+                        modulesCreditedIDs.add(module.asLong());
                     }
                 }
                 JsonNode previousModules = block.get("previousModules");
@@ -38,13 +38,13 @@ public class SubmittedApplicationDeserializer extends JsonDeserializer<Submitted
                 if (previousModules.isArray()){
                     for(JsonNode moduleNode : previousModules) {
                         SubmittedStudentModule submittedModule = new SubmittedStudentModule(
-                                moduleNode.get("number").asText(),
+                                moduleNode.get("id").asText(),
                                 moduleNode.get("name").asText(),
                                 moduleNode.get("credits").asLong(),
                                 moduleNode.get("university").get("name").asText(),
-                                moduleNode.get("major").asText(),
+                                moduleNode.get("courseOfStudy").asText(),
                                 moduleNode.get("meta").get("comments").get("student").asText(),
-                                moduleNode.get("key").asLong()
+                                moduleNode.get("meta").get("key").asLong()
                         );
                         submittedStudentModules.add(submittedModule);
                     }
@@ -62,8 +62,8 @@ public class SubmittedApplicationDeserializer extends JsonDeserializer<Submitted
                 parseDate(jsonNode.get("meta").get("dateOfSubmission").asText()), // TODO: change to extractDate to create date and not string to sort by date in database
                 parseDate(jsonNode.get("meta").get("dateLastEdited").asText()),
                 jsonNode.get("university").get("name").asText(),
-                jsonNode.get("university").get("courseOfStudy").asText(),
-                jsonNode.get("university").get("newCourseOfStudy").asText(),
+                jsonNode.get("courseOfStudy").get("old").asText(),
+                jsonNode.get("courseOfStudy").get("new").asText(),
                 submittedBlocks
         );
     }
