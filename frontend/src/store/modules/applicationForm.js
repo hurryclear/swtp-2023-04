@@ -5,14 +5,14 @@ export default {
     state: {
         form: {
             meta: {
-                status: "",                 //Enum
-                dateOfSubmission: "",       //String
-                dateLastEdited: "",         //String
+                status: "",
+                dateOfSubmission: "",
+                dateLastEdited: "",
             },
             university: {
-                name: "",                   //String
-                country: "",                //String
-                website: "",                //String
+                name: "",
+                country: "",
+                website: "",
             },
             courseOfStudy: {
                 old: "",
@@ -21,7 +21,7 @@ export default {
             moduleMappings: [
                 {
                     meta: {
-                        key: 0,               //Integer
+                        key: 0,
                     },
                     previousModules: [
                         {
@@ -139,7 +139,7 @@ export default {
             const timestamp = new Date().toISOString();
             state.form.meta.dateLastEdited = timestamp;
             state.form.meta.dateOfSubmission = timestamp;
-            formData.append('form', JSON.stringify(state.form));
+            formData.append('form', new Blob([JSON.stringify(state.form)], { type: 'application/json' }));
 
             try {
                 const {success, data} = await ApplicationFormService.submitForm(formData);
@@ -160,7 +160,7 @@ export default {
         },
     },
     getters: {
-        formFilled: (getters) => (
+        formFilled: (state,getters) => (
             getters.moduleMappingsFilled &&
             getters.universityFormIsFilled
         ),
@@ -168,26 +168,26 @@ export default {
             // Check if all module mappings are filled
             moduleMapping => {
                 // Check if modules to be credited are filled
+                console.log("\nmodules To Be Credited:",moduleMapping.modulesToBeCredited.length > 0)
                 return moduleMapping.modulesToBeCredited.length > 0 &&
                     // Check if every previous module is filled
                     moduleMapping.previousModules.every(
-                        (module) =>
-                            module.description.file !== null &&
+                        (module) =>{
+                            return module.description.file !== null &&
                             module.name.trim() !== '' &&
                             module.courseOfStudy.trim() !== '' &&
                             module.id.trim() !== ''
+                        }
+
                     )
             }
         ),
-        universityFormIsFilled: state => {
-            // Check if university information is filled
-            return (
+        universityFormIsFilled: state => (
                 state.form.courseOfStudy.old.trim() !== "" &&
                 state.form.courseOfStudy.new !== null &&
                 state.form.university.name.trim() !== "" &&
                 state.form.university.country.trim() !== ""
-            );
-        },
+            ),
         moduleMappings: state => state.form.moduleMappings,
         disableModuleMappingRemoval: state => state.form.moduleMappings.length === 1,
         getModuleMappingByIndex: (state) => (id) => state.form.moduleMappings[id]
