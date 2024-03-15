@@ -57,7 +57,7 @@ export default {
 
       async getForms() {
         await axios.get("/api/application/overviewOffice")
-            .then(response => response.data.content = this.forms)
+            .then(response => this.forms = response.data.content)
             .catch(err => console.error("Error retrieving open forms: ", err));
       }
     }
