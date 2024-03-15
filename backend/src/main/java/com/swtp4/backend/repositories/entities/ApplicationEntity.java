@@ -1,13 +1,12 @@
 package com.swtp4.backend.repositories.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.swtp4.backend.repositories.entities.keyClasses.ApplicationKeyClass;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -36,4 +35,8 @@ public class ApplicationEntity {
 
     private String formalRejectionReason;
 
+    @OneToMany(mappedBy = "applicationEntity", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<ModuleBlockEntity> moduleBlocks;
 }

@@ -1,10 +1,10 @@
 package com.swtp4.backend.repositories.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -25,4 +25,9 @@ public class ModuleBlockEntity {
     })
     private ApplicationEntity applicationEntity;
     private Long frontendKey;
+
+    @OneToMany(mappedBy = "moduleBlockEntity", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<ModuleRelationEntity> blockRelations;
 }

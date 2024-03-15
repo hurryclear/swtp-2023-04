@@ -4,30 +4,31 @@
       "addMapping": "Modulabbildung hinzufügen",
       "moduleMapping": {
         "addModule": "Modul hinzufügen",
-        "commentLabel": "Bemerkung",
-        "description": "Geben Sie Angaben über die anzurechnenden Module an!",
+        "commentLabel": "Kommentar",
+        "description": "Geben Sie Informationen zum Modul an, das anerkannt werden soll.",
         "module": "Modul",
         "moduleDescriptionLabel": "Modulbeschreibung",
         "moduleNameLabel": "Modulname",
-        "modulesToBeCreditedLabel": "Anzurechnende Module",
-        "removeModule": "Modul entfernen"
+        "modulesToBeCreditedLabel": "Anzurechnendes Modul",
+        "removeModule": "Modul entfernen",
+        "creditLabel": "Credits (ECTS)",
+        "moduleId":"Modulnummer/ Modulidentifikation"
       },
-      "removeMapping": "Modulabbildung entfernen"
+      "removeMapping": "Modulzuordnung entfernen"
     },
-    "submit": "Absenden",
+    "submit": "Formular absenden",
+    "courseOfStudy": {
+      "description": "Geben Sie den Namen Ihres bisherigen und gewünschten Studiengangs an.",
+      "courseOfStudy": "Studiengang",
+      "new": "Gewünschter Studiengang",
+      "previous": "Bisheriger Studiengang"
+    },
     "universityForm": {
-      "courseOfStudy": {
-        "description": "Geben Sie den Namen Ihres bisherigen Studiengangs an!",
-        "nameLabel": "Name des Studiengangs",
-        "previous": "Bisheriger Studiengang"
-      },
-      "university": {
-        "countryLabel": "Land",
-        "description": "Geben Sie den Namen Ihrer bisherigen Universität an!",
-        "nameLabel": "Name der Universität",
-        "previous": "Bisherige Universität",
-        "websiteLabel": "Website"
-      }
+      "countryLabel": "Land",
+      "description": "Geben Sie den Namen Ihrer bisherigen Universität an.",
+      "nameLabel": "Name der Universität",
+      "previous": "Bisherige Universität",
+      "websiteLabel": "Website"
     }
   },
   "darkMode": {
@@ -48,9 +49,9 @@
     "university": "Universität"
   },
   "homeView": {
-    "welcomeExaminingCommitteeChair": "Herzlich willkommen, verehrte vorsitzende Person des Prüfungsausschusses! Auf dieser Plattform haben Sie die Möglichkeit, alle offenen Anträge zu überblicken und zu genehmigen oder abzulehnen. Bitte geben Sie eine fundierte Begründung für Ihre Entscheidungen an. Der transparente Anrechnungsprozess wird durch Ihre Teilnahme effizienter und zielführender.",
-    "welcomeStudent": "Herzlich willkommen auf unserer neuen Online-Plattform für die Anrechnung von Studienleistungen an der Universität Leipzig! Drücken Sie auf 'Module anrechnen', um zu beginnen. Mit dem Absenden Ihres Antrags wird Ihnen eine eindeutige Vorgangsnummer zugewiesen, mit dieser können Sie auch später noch Ihren Antrag sowie dessen Status einsehen.",
-    "welcomeStudentAffairsOffice": "Herzlich willkommen, Mitarbeitende des Studienbüros! Als mitarbeitende Person des Studienbüros haben Sie Zugriff auf eine Übersicht aller offenen Anträge. Sie können Anträge bearbeiten, ergänzen und den Bearbeitungsstatus verfolgen. Nutzen Sie das benutzerfreundliche Interface, um den Anrechnungsprozess effizient zu gestalten."
+    "welcomeExaminingCommitteeChair": "Herzlich willkommen, verehrte Vorsitzende des Prüfungsausschusses! Auf dieser Plattform haben Sie die Möglichkeit, alle offenen Anträge zu überblicken und zu genehmigen oder abzulehnen. Bitte geben Sie eine fundierte Begründung für Ihre Entscheidungen an. Ihre Teilnahme macht den transparenten Anrechnungsprozess effizienter und zielführender.",
+    "welcomeStudent": "Herzlich willkommen auf unserer neuen Online-Plattform für die Anrechnung von Studienleistungen an der Universität Leipzig! Drücken Sie auf 'Module anrechnen', um zu beginnen. Mit dem Absenden Ihres Antrags wird Ihnen eine eindeutige Vorgangsnummer zugewiesen, mit der Sie Ihren Antrag und dessen Status später einsehen können.",
+    "welcomeStudentAffairsOffice": "Herzlich willkommen, Mitarbeitende des Studienbüros! Als Mitarbeitende des Studienbüros haben Sie Zugriff auf eine Übersicht aller offenen Anträge. Sie können Anträge bearbeiten, ergänzen und den Bearbeitungsstatus verfolgen. Nutzen Sie die benutzerfreundliche Oberfläche, um den Anrechnungsprozess effizienter zu gestalten."
   },
   "loginComponent": {
     "loginButton": "Einloggen",
@@ -61,49 +62,50 @@
   "logoutButton": "Ausloggen",
   "navBar": {
     "creditModules": "Module anrechnen",
-    "examiningCommitteeChair": "Vorsitzender des Prüfungsausschuss",
-    "login": "Login",
+    "examiningCommitteeChair": "Vorsitzender des Prüfungsausschusses",
+    "login": "Einloggen",
     "main": "Hauptseite",
     "review": "Antrag einsehen",
-    "studentAffairsOffice": "Studienbüro"
+    "studentAffairsOffice": "Studienbüro",
+    "updateModuleData": "Moduldaten aktualisieren"
   },
   "reviewComponent": {
-      "checkStatus": "Antragsstatus prüfen",
-      "downloadApplication": "Zusammenfassung herunterladen",
-      "formID": "Referenznummer",
-      "reviewApplication": "Antrag prüfen",
-      "currentUniversity": "Aktuelle Universität",
-      "oldCourseOfStudy": "Vorheriges Studienprogramm",
-      "newCourseOfStudy": "Neues Studienprogramm",
-      "dateOfSubmission": "Datum der Einreichung",
-      "dateLastEdited": "Zuletzt bearbeitet am",
-      "application": "Antrag",
-      "overview": "Überblick über den Antrag",
-      "modulName": "Modulname",
-      "moduleNumber": "Modulnummer",
-      "moduleCredits": "Credits (ECTS)",
-      "moduleApproval": "Genehmigung",
-      "moduleApprovalReason": "Begründung der Entscheidung",
-      "accepted": "Akzeptiert",
-      "rejected": "Abgelehnt",
-      "formallyRejected": "Formell abgelehnt vom Studierendensekretariat",
-      "modules2bCredited": "Anzurechnende Module",
-      "moduleApprovalOpen": "Offen",
-      "partiallyAccepted": "Teilweise akzeptiert",
-      "open": "Offen",
-      "editingInProgress": "Bearbeitung durch das Studierendensekretariat läuft",
-      "edited": "Vom Studierendensekretariat bearbeitet",
-      "readyForApproval": "Zur Genehmigung durch den Prüfungsausschuss bereit",
-      "approvalInProgress": "Genehmigung durch den Prüfungsausschuss in Bearbeitung",
-      "editedApproval": "Vom Prüfungsausschuss bearbeitet",
-      "approvalFinished": "Genehmigung durch den Prüfungsausschuss abgeschlossen",
-      "errorFetchingForm": "Fehler beim Abrufen des Formulars",
-      "formNotFound": "Formular nicht gefunden",
-      "pending": "Ausstehend",
-      "moduleBlock": "Modulblock"
+    "checkStatus": "Antragsstatus prüfen",
+    "downloadApplication": "Zusammenfassung herunterladen",
+    "formID": "Referenznummer",
+    "reviewApplication": "Antrag prüfen",
+    "currentUniversity": "Aktuelle Universität",
+    "oldCourseOfStudy": "Vorheriges Studienprogramm",
+    "newCourseOfStudy": "Neues Studienprogramm",
+    "dateOfSubmission": "Datum der Einreichung",
+    "dateLastEdited": "Zuletzt bearbeitet am",
+    "application": "Antrag",
+    "overview": "Überblick über den Antrag",
+    "moduleName": "Modulname",
+    "moduleNumber": "Modulnummer",
+    "moduleCredits": "Credits (ECTS)",
+    "moduleApproval": "Genehmigung",
+    "moduleApprovalReason": "Begründung der Entscheidung",
+    "accepted": "Akzeptiert",
+    "rejected": "Abgelehnt",
+    "formallyRejected": "Formell abgelehnt vom Studienbüro",
+    "modulesToBeCredited": "Anzurechnende Module",
+    "moduleApprovalOpen": "Offen",
+    "partiallyAccepted": "Teilweise akzeptiert",
+    "open": "Offen",
+    "editingInProgress": "Bearbeitung durch das Studienbüro läuft",
+    "edited": "Vom Studienbüro bearbeitet",
+    "readyForApproval": "Zur Genehmigung durch den Prüfungsausschuss bereit",
+    "approvalInProgress": "Genehmigung durch den Prüfungsausschuss in Bearbeitung",
+    "editedApproval": "Vom Prüfungsausschuss bearbeitet",
+    "approvalFinished": "Genehmigung durch den Prüfungsausschuss abgeschlossen",
+    "errorFetchingForm": "Fehler beim Abrufen des Formulars",
+    "formNotFound": "Formular nicht gefunden",
+    "pending": "Ausstehend",
+    "moduleBlock": "Modulblock"
   },
   "routes": {
-    "/": "Homepage",
+    "/": "Startseite",
     "/application-form": "Module Anrechnen",
     "/examining-committee-chair": "Prüfungsausschuss",
     "/login": "Anmeldung",
@@ -112,5 +114,9 @@
   },
   "studentAffairsOfficeView": {
     "openApplications": "Offene Anträge"
+  },
+  "updateModuleDataView": {
+    "uploadJSON": "JSON hochladen",
+    "submit": "Absenden"
   }
 }

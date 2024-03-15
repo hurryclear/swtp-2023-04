@@ -28,7 +28,7 @@ export default {
   computed: {
     formsInProgress() {
       // Get forms that are 'in progress'
-      return this.$store.getters.form.formsByStatus('in progress'); //TODO: State must be of type ENUM
+      return this.$store.getters.form.formsByStatus('in progress');
     }
   },
   methods: {

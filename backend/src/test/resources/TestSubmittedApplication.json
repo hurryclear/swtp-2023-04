@@ -7,9 +7,11 @@
   "university": {
     "name": "University of Regenbogenland",
     "country": "Regenbogencountry",
-    "website": "http://www.uni-halle.de/",
-    "courseOfStudy": "B. Sc. Informatik",
-    "newCourseOfStudy": "B.Sc. Informatik"
+    "website": "http://www.uni-halle.de/"
+  },
+  "courseOfStudy": {
+    "old": "B. Sc. Informatik",
+    "new": "B.Sc. Informatik"
   },
   "moduleMappings": [
     {
@@ -19,76 +21,47 @@
       "previousModules": [
         {
           "meta": {
-            "approval": "",
+            "key": 0,
             "comments": {
               "student": "War cool"
             }
           },
-          "major": "B. Sc. Informatik",
+          "courseOfStudy": "B. Sc. Informatik",
           "university": {
-            "alpha_two_code": "RE",
             "web_pages": [
               "http://www.regenbogen.re/"
             ],
-            "state-province": null,
             "name": "University of Regenbogenland",
-            "domains": [
-              "regenbogen.re"
-            ],
             "country": "Regenbogenland"
           },
-          "key": 0,
-          "number": "420",
+          "id": "420",
           "name": "AlgoDat 1.5",
-          "description": {
-            "filename": "Modulbeschreibung AlgoDat 1.5.pdf",
-            "id": "0:0"
-          },
           "credits": 5
         },
         {
           "meta": {
-            "approval": "",
+            "key": 1,
             "comments": {
               "student": "War nicht so cool"
             }
           },
-          "major": "B. Sc. Informatik",
+          "courseOfStudy": "B. Sc. Informatik",
           "university": {
-            "alpha_two_code": "RE",
             "web_pages": [
               "http://www.regenbogen.re/"
             ],
-            "state-province": null,
             "name": "University of Regenbogenland",
-            "domains": [
-              "regenbogen.re"
-            ],
             "country": "Regenbogenland"
           },
-          "key": 1,
-          "number": "69",
+          "id": "69",
           "name": "AlgoDat 0.5",
-          "description": {
-            "filename": "Modulbeschreibung AlgoDat 0.5.pdf",
-            "id": "0:1"
-          },
           "credits": 4
         }
       ],
       "modulesToBeCredited": [
-        {
-          "name": "Algorithmen und Datenstrukturen 1",
-          "number":"10-201-2001-1",
-          "id": 3
-        },
-        {
-          "name": "Algorithmen und Datenstrukturen 2",
-          "number":"10-201-2001-2",
-          "id": 4
-        }
-      ],
-      "isFilled": true
+        3,
+        4
+      ]
     },
     {
       "meta": {
@@ -97,48 +70,28 @@
       "previousModules": [
         {
           "meta": {
-            "approval": "",
+            "key": 0,
             "comments": {
-              "student": "Die Beschreibung ist lang, setzen Sie schon mal Kaffee auf",
-              "employee": "Beschreibung war wirklich lang, Kaffee ist alle"
+              "student": "Die Beschreibung ist lang, setzen Sie schon mal Kaffee auf"
             }
           },
-          "major": "B. Sc. Informatik",
+          "courseOfStudy": "B. Sc. Informatik",
           "university": {
-            "alpha_two_code": "RE",
             "web_pages": [
               "http://www.regenbogen.re/"
             ],
-            "state-province": null,
             "name": "University of Regenbogenland",
-            "domains": [
-              "regenbogen.re"
-            ],
             "country": "Regenbogenland"
           },
-          "key": 0,
-          "number": "81923",
+          "id": "81923",
           "name": "Das Alles-Modul",
-          "description": {
-            "filename": "Modulbeschreibung Alles-Modul.pdf",
-            "id": "1:0"
-          },
           "credits": 20
         }
       ],
       "modulesToBeCredited": [
-        {
-          "name": "Analysis",
-          "number": "10-201-1011",
-          "id": 15
-        },
-        {
-          "name": "Lineare Algebra",
-          "number": "10-201-1015",
-          "id":16
-        }
-      ],
-      "isFilled": true
+        15,
+        16
+      ]
     }
   ]
 }

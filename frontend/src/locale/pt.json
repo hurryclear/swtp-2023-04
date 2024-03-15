@@ -5,33 +5,34 @@
       "moduleMapping": {
         "addModule": "Adicionar Módulo",
         "commentLabel": "Comentário",
-        "description": "Forneça informações sobre o módulo a ser creditado!",
+        "description": "Forneça informações sobre o módulo a ser creditado.",
         "module": "Módulo",
         "moduleDescriptionLabel": "Descrição do Módulo",
         "moduleNameLabel": "Nome do Módulo",
         "modulesToBeCreditedLabel": "Módulos a serem Creditados",
-        "removeModule": "Remover Módulo"
+        "removeModule": "Remover Módulo",
+        "creditLabel": "Créditos (ECTS)",
+        "moduleId": "Número do módulo/Identificação do módulo"
       },
       "removeMapping": "Remover Mapeamento de Módulo"
     },
     "submit": "Enviar Formulário",
+    "courseOfStudy": {
+      "description": "Especifique o nome do seu curso anterior e desejado.",
+      "courseOfStudy": "Curso de Estudo",
+      "new": "Curso de Estudo Desejado",
+      "previous": "Curso de Estudo Anterior"
+    },
     "universityForm": {
-      "courseOfStudy": {
-        "description": "Especifique o nome de seu programa de estudo anterior!",
-        "nameLabel": "Nome do Programa de Estudo",
-        "previous": "Programa de Estudo Anterior"
-      },
-      "university": {
-        "countryLabel": "País",
-        "description": "Especifique o nome de sua universidade anterior!",
-        "nameLabel": "Nome da Universidade",
-        "previous": "Universidade Anterior",
-        "websiteLabel": "Site"
-      }
+      "countryLabel": "País",
+      "description": "Especifique o nome de sua universidade anterior.",
+      "nameLabel": "Nome da Universidade",
+      "previous": "Universidade Anterior",
+      "websiteLabel": "Website"
     }
   },
   "darkMode": {
-    "toggleDarkMode": "Ativar/Desativar Modo Escuro"
+    "toggleDarkMode": "Alternar Modo Escuro"
   },
   "examiningCommitteeChairView": {
     "accept": "Aceitar",
@@ -40,17 +41,17 @@
     "studentAffairsOfficeComment": "Comentário do Escritório de Assuntos Estudantis"
   },
   "formDisplay": {
-    "application": "Solicitação",
+    "application": "Aplicação",
     "edit": "Editar",
     "modules": "Módulos",
-    "reason": "Motivo",
-    "sendToExaminingCommitteeChair": "Enviar para Comitê de Exames",
+    "reason": "Razão",
+    "sendToExaminingCommitteeChair": "Enviar para Comitê de Exame",
     "university": "Universidade"
   },
   "homeView": {
-    "welcomeExaminingCommitteeChair": "Bem-vindo, estimado presidente do Comitê de Exames! Nesta plataforma, você tem a oportunidade de revisar e aprovar ou rejeitar todas as solicitações em aberto. Forneça uma justificativa fundamentada para suas decisões. Sua participação torna o processo de reconhecimento de créditos mais eficiente e direcionado.",
-    "welcomeStudent": "Bem-vindo à nossa nova plataforma online para reconhecimento de créditos na Universidade de Leipzig! Entendemos que o processo de reconhecimento de créditos muitas vezes é complexo e demorado. É ainda mais importante que esse processo agora possa ser feito online, de forma digital e fácil. Como estudante, você pode agora enviar sua solicitação com apenas alguns cliques. Clique em 'Crédito de Módulos' para começar. Ao enviar sua solicitação, será atribuído um número de referência exclusivo, que você pode usar posteriormente para visualizar sua solicitação e seu status.",
-    "welcomeStudentAffairsOffice": "Bem-vindo, equipe do Escritório de Assuntos Estudantis! Como membro da equipe do Escritório de Assuntos Estudantis, você tem acesso a uma visão geral de todas as solicitações em aberto. Você pode processar, complementar e acompanhar o status de processamento das solicitações. Use a interface amigável para tornar o processo de reconhecimento de créditos mais eficiente."
+    "welcomeExaminingCommitteeChair": "Bem-vindo, estimado presidente do Comitê de Exame! Nesta plataforma, você tem a oportunidade de revisar e aprovar ou rejeitar todas as inscrições em aberto. Por favor, forneça uma razão fundamentada para suas decisões. Sua participação torna o processo de reconhecimento de crédito mais eficiente e objetivo.",
+    "welcomeStudent": "Bem-vindo à nossa nova plataforma online para reconhecimento de crédito na Universidade de Leipzig! Clique em 'Módulos de Crédito' para começar. Ao enviar sua inscrição, você receberá um número de referência exclusivo, que poderá usar posteriormente para visualizar sua inscrição e seu status.",
+    "welcomeStudentAffairsOffice": "Bem-vindo, equipe do Escritório de Assuntos Estudantis! Como membro da equipe do Escritório de Assuntos Estudantis, você tem acesso a uma visão geral de todas as inscrições em aberto. Você pode processar, complementar e acompanhar o status de processamento das inscrições. Use a interface amigável para tornar o processo de reconhecimento de crédito mais eficiente."
   },
   "loginComponent": {
     "loginButton": "Entrar",
@@ -60,58 +61,63 @@
   },
   "logoutButton": "Sair",
   "navBar": {
-    "creditModules": "Crédito de Módulos",
-    "examiningCommitteeChair": "Presidente do Comitê de Exames",
-    "login": "Login",
+    "creditModules": "Módulos de Crédito",
+    "examiningCommitteeChair": "Presidente do Comitê de Exame",
+    "login": "Entrar",
     "main": "Página Principal",
-    "review": "Revisar Solicitação",
-    "studentAffairsOffice": "Escritório de Assuntos Estudantis"
+    "review": "Revisão da Inscrição",
+    "studentAffairsOffice": "Escritório de Assuntos Estudantis",
+    "updateModuleData": "Atualizar dados do módulo"
   },
   "reviewComponent": {
-    "checkStatus": "Verificar o Estado do Pedido",
+    "checkStatus": "Verificar Status da Inscrição",
     "downloadApplication": "Baixar Resumo",
     "formID": "Número de Referência",
-    "reviewApplication": "Revisar Pedido",
+    "reviewApplication": "Revisar Inscrição",
     "currentUniversity": "Universidade Atual",
-    "oldCourseOfStudy": "Programa de Estudos Anterior",
-    "newCourseOfStudy": "Novo Programa de Estudos",
-    "dateOfSubmission": "Data de Submissão",
+    "oldCourseOfStudy": "Curso Anterior",
+    "newCourseOfStudy": "Novo Curso",
+    "dateOfSubmission": "Data de Envio",
     "dateLastEdited": "Data da Última Edição",
-    "application": "Pedido",
-    "overview": "Visão Geral do Pedido",
-    "modulName": "Nome do Módulo",
+    "application": "Inscrição",
+    "overview": "Visão Geral da Inscrição",
+    "moduleName": "Nome do Módulo",
     "moduleNumber": "Número do Módulo",
     "moduleCredits": "Créditos (ECTS)",
-    "moduleApproval": "Aprovação",
+    "moduleApproval": "Aprovação do Módulo",
     "moduleApprovalReason": "Motivo da Decisão",
     "accepted": "Aceito",
     "rejected": "Rejeitado",
     "formallyRejected": "Rejeitado Formalmente pelo Escritório de Assuntos Estudantis",
-    "modules2bCredited": "Módulos a serem Creditados",
+    "modulesToBeCredited": "Módulos a Serem Creditados",
     "moduleApprovalOpen": "Aberto",
     "partiallyAccepted": "Parcialmente Aceito",
     "open": "Aberto",
-    "editingInProgress": "Edição pelo Escritório de Assuntos Estudantis em Andamento",
+    "editingInProgress": "Edição em Andamento pelo Escritório de Assuntos Estudantis",
     "edited": "Editado pelo Escritório de Assuntos Estudantis",
-    "readyForApproval": "Pronto para Aprovação pelo Comitê de Exames",
-    "approvalInProgress": "Aprovação pelo Comitê de Exames em Andamento",
-    "editedApproval": "Editado pelo Comitê de Exames",
-    "approvalFinished": "Aprovação pelo Comitê de Exames Concluída",
-    "errorFetchingForm": "Erro ao Buscar Formulário",
-    "formNotFound": "Formulário Não Encontrado",
+    "readyForApproval": "Pronto para Aprovação pelo Comitê de Exame",
+    "approvalInProgress": "Aprovação em Andamento pelo Comitê de Exame",
+    "editedApproval": "Editado pelo Comitê de Exame",
+    "approvalFinished": "Aprovação pelo Comitê de Exame Concluída",
+    "errorFetchingForm": "Erro ao Recuperar Formulário",
+    "formNotFound": "Formulário não Encontrado",
     "pending": "Pendente",
     "moduleBlock": "Bloco de Módulos"
   },
-  
   "routes": {
     "/": "Página Inicial",
-    "/application-form": "Crédito de Módulos",
-    "/examining-committee-chair": "Comitê de Exames",
-    "/login": "Login",
-    "/review-application": "Revisar Solicitação",
-    "/student-affairs-office": "Escritório de Assuntos Estudantis"
+    "/application-form": "Módulos de Crédito",
+    "/examining-committee-chair": "Presidente do Comitê de Exame",
+    "/login": "Entrar",
+    "/review-application": "Revisão da Inscrição",
+    "/student-affairs-office": "Escritório de Assuntos Estudantis",
+    "/update-module-data": "Atualizar Dados do Módulo"
   },
   "studentAffairsOfficeView": {
-    "openApplications": "Solicitações em Aberto"
+    "openApplications": "Inscrições em Aberto"
+  },
+  "updateModuleDataView": {
+    "uploadJSON": "Carregar JSON",
+    "submit": "Enviar"
   }
 }

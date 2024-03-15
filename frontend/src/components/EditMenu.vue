@@ -29,7 +29,7 @@
     <v-card-title>
       Module:
     </v-card-title>
-    <div v-for="(moduleData, index) in applicationVersion.moduleFormsData" v-bind:key="moduleData.frontend_key">
+    <div v-for="(moduleData, index) in applicationVersion.moduleFormData" v-bind:key="moduleData.frontend_key">
       <v-card-subtitle>
         <br>
         Mapping {{ index + 1 }}
@@ -40,29 +40,29 @@
         <v-text-field
             :disabled="!isEdited"
             :label="studentModule.title"
-            v-model="editedForm.edited.moduleFormsData[index].modulesStudent[index2].title"
+            v-model="editedForm.edited.moduleFormData[index].modulesStudent[index2].title"
         ></v-text-field>
         <v-card-text>Modulnummer:</v-card-text>
         <v-text-field
             :disabled="!isEdited"
             :label="studentModule.number"
-            v-model="editedForm.edited.moduleFormsData[index].modulesStudent[index2].number"
+            v-model="editedForm.edited.moduleFormData[index].modulesStudent[index2].number"
         ></v-text-field>
         <v-card-text>Leistungspunkte:</v-card-text>
         <v-text-field
             :disabled="!isEdited"
             :label="studentModule.credits"
-            v-model="editedForm.edited.moduleFormsData[index].modulesStudent[index2].credits"
+            v-model="editedForm.edited.moduleFormData[index].modulesStudent[index2].credits"
         ></v-text-field>
         <v-card-text>Studentenkommentar: {{ studentModule.commentStudent }}</v-card-text>
         <v-card-text>Studienbürokommentar: </v-card-text>
         <v-text-field
             :disabled="!isEdited"
             :label="studentModule.commentEmployee"
-            v-model="editedForm.edited.moduleFormsData[index].modulesStudent[index2].commentEmployee"
+            v-model="editedForm.edited.moduleFormData[index].modulesStudent[index2].commentEmployee"
         ></v-text-field>
         <v-btn style="margin: 1%" @click="downloadPdf(studentModule.path)">Beschreibung herunterladen</v-btn>
-        <v-text-field label="Formale Ablehnung" v-model="editedForm.edited.moduleFormsData[index].modulesStudent[index2].reason"></v-text-field>
+        <v-text-field label="Formale Ablehnung" v-model="editedForm.edited.moduleFormData[index].modulesStudent[index2].reason"></v-text-field>
         <v-btn
             @click="setFormalReject(index, index2)"
             :disabled="!isEdited"
@@ -78,9 +78,9 @@
           <v-autocomplete
               class="text-field"
               :items="getMajorModulesName()"
-              :label="findModule(applicationVersion.moduleFormsData[index].modules2bCredited[index3])"
+              :label="findModule(applicationVersion.moduleFormData[index].modules2bCredited[index3])"
               :disabled="!isEdited"
-              v-model="editedForm.edited.moduleFormsData[index].modules2bCredited[index3]"
+              v-model="editedForm.edited.moduleFormData[index].modules2bCredited[index3]"
           ></v-autocomplete>
         </div>
       </v-card-text>
@@ -179,7 +179,7 @@ export default {
     },
 
     setFormalReject(index, index2) {
-      this.editedForm.edited.moduleFormsData[index].modulesStudent[index2].approval = "formally rejected";
+      this.editedForm.edited.moduleFormData[index].modulesStudent[index2].approval = "formally rejected";
     },
 
     async getModules() {
@@ -201,21 +201,21 @@ export default {
     },
 
     replaceIdWithName() {
-      for(let i = 0; i < this.editedForm.original.moduleFormsData.length; i++) {
-        for(let j = 0; j < this.editedForm.original.moduleFormsData[i].modules2bCredited.length; j++) {
-          //Replace module ID in moduleFormsData[i], modules2bCredited[j] with their names
-          this.editedForm.original.moduleFormsData[i].modules2bCredited[j] = this.findModule(this.editedForm.original.moduleFormsData[i].modules2bCredited[j]);
-          this.editedForm.edited.moduleFormsData[i].modules2bCredited[j] = this.findModule(this.editedForm.edited.moduleFormsData[i].modules2bCredited[j]);
+      for(let i = 0; i < this.editedForm.original.moduleFormData.length; i++) {
+        for(let j = 0; j < this.editedForm.original.moduleFormData[i].modules2bCredited.length; j++) {
+          //Replace module ID in moduleFormData[i], modules2bCredited[j] with their names
+          this.editedForm.original.moduleFormData[i].modules2bCredited[j] = this.findModule(this.editedForm.original.moduleFormData[i].modules2bCredited[j]);
+          this.editedForm.edited.moduleFormData[i].modules2bCredited[j] = this.findModule(this.editedForm.edited.moduleFormData[i].modules2bCredited[j]);
         }
       }
     },
 
     replaceNameWithId() {
-      for(let i = 0; i < this.editedForm.original.moduleFormsData.length; i++) {
-        for(let j = 0; j < this.editedForm.original.moduleFormsData[i].modules2bCredited.length; j++) {
-          //Replace module name in moduleFormsData[i], modules2bCredited[j] with their IDs (IMPORTANT FOR SAVING)
-          this.editedForm.original.moduleFormsData[i].modules2bCredited[j] = this.findModuleInverse(this.editedForm.original.moduleFormsData[i].modules2bCredited[j]);
-          this.editedForm.edited.moduleFormsData[i].modules2bCredited[j] = this.findModuleInverse(this.editedForm.edited.moduleFormsData[i].modules2bCredited[j])
+      for(let i = 0; i < this.editedForm.original.moduleFormData.length; i++) {
+        for(let j = 0; j < this.editedForm.original.moduleFormData[i].modules2bCredited.length; j++) {
+          //Replace module name in moduleFormData[i], modules2bCredited[j] with their IDs (IMPORTANT FOR SAVING)
+          this.editedForm.original.moduleFormData[i].modules2bCredited[j] = this.findModuleInverse(this.editedForm.original.moduleFormData[i].modules2bCredited[j]);
+          this.editedForm.edited.moduleFormData[i].modules2bCredited[j] = this.findModuleInverse(this.editedForm.edited.moduleFormData[i].modules2bCredited[j])
         }
       }
     },
@@ -240,12 +240,12 @@ export default {
       }
     },
 
-    async downloadPdf(pdfPath) {
+    async downloadPdf(filePath) {
       try {
         //TODO Change if it throws error
         const response = await axios.get("/api/application/getModulePDF", {
           params: {
-            pdfPath
+            filePath
           },
           responseType: 'blob' // Ensure response is treated as a blob
         });

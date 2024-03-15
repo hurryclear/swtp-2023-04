@@ -1,5 +1,9 @@
 package com.swtp4.backend.controller;
 
+import com.swtp4.backend.exception.ResourceNotFoundException;
+import com.swtp4.backend.repositories.ApplicationRepository;
+import com.swtp4.backend.repositories.applicationDtos.EditedApplicationDto;
+import com.swtp4.backend.repositories.applicationDtos.EntireOriginalAndEditedApplicationDto;
 import com.swtp4.backend.repositories.applicationDtos.ReviewApplicationDto;
 import com.swtp4.backend.repositories.applicationDtos.SubmittedApplicationDto;
 import com.swtp4.backend.repositories.dto.ApplicationIDWithFilePaths;
@@ -11,16 +15,24 @@ import com.swtp4.backend.repositories.entities.ModuleStudentEntity;
 import com.swtp4.backend.services.ApplicationService;
 import com.swtp4.backend.services.PDFService;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.query.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Slf4j
 @RestController
@@ -48,7 +60,8 @@ public class StudentController {
         return new ResponseEntity<>(uniModuleDto, HttpStatus.OK);
     }
 
-    @PostMapping("/submitApplication")
+    //@PostMapping("/submitApplication")
+    @RequestMapping(path = "/submitApplication", method = POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<?> submitApplication(
             @RequestParam Map<String, MultipartFile> fileMap,
             @RequestPart("form") SubmittedApplicationDto submittedApplicationDto) {
@@ -77,5 +90,16 @@ public class StudentController {
     public ResponseEntity<?> reviewApplication(@RequestParam String applicationID) {
         ReviewApplicationDto applicationDto = applicationService.getReviewApplication(applicationID);
         return new ResponseEntity<>(applicationDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/getPdfSummary")
+    public ResponseEntity<?> downloadApplicationPDF(@RequestParam String applicationId) {
+        try {
+            return pdfService.generatePDFForApplication(applicationId);
+        } catch (IOException e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
     }
 }

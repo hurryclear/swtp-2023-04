@@ -62,9 +62,23 @@
               :items="universities"
               item-title="name"
               hide-details
-              :label="$t('applicationFormView.universityForm.university.nameLabel')"
+              :label="$t('applicationFormView.universityForm.nameLabel')"
               variant="outlined"
               class="userInput"
+          />
+          <v-text-field
+              class="userInput"
+              v-model="module.courseOfStudy"
+              hide-details
+              :label="$t('applicationFormView.courseOfStudy.courseOfStudy')"
+              variant="outlined"
+          />
+          <v-text-field
+              class="userInput"
+              v-model="module.id"
+              hide-details
+              :label="$t('applicationFormView.moduleFormList.moduleMapping.moduleId')"
+              variant="outlined"
           />
           <v-text-field
               v-model="module.credits"
@@ -110,16 +124,13 @@
 <script>
 
 export default {
-  props: {
-    moduleMappingIndex: Number,
-  },
   data() {
     return {
       selectedTab: 0,
       selectedFile: null,
       moduleMapping: {
         meta: {
-          key: this.key
+          key: this.moduleKey
         },
         previousModules: [
           {
@@ -131,15 +142,25 @@ export default {
             },
             name: "",
             credits: 0,
-            university: "",
+            university: {
+              name: null,
+              country: "",
+              website: "",
+            },
+            id: "",
+            courseOfStudy: "",
             description: {
               file: null,
             },
           }
         ],
         modulesToBeCredited: [],
-      }
+      }//no module is added
     };
+  },
+  props: {
+    moduleMappingIndex: Number,
+    moduleKey: Number,
   },
   computed: {
     disableModuleMappingRemoval() {
@@ -154,8 +175,10 @@ export default {
   },
   methods: {
     addModule() {
-      const key = this.moduleMapping.previousModules[this.moduleMapping.previousModules.length - 1].key + 1
-      this.$store.commit('addModule', this.moduleMappingIndex, key)
+      const key = this.moduleMapping.previousModules[this.moduleMapping.previousModules.length - 1].meta.key + 1
+      const moduleMappingIndex = this.moduleMappingIndex
+      this.$store.commit('addModule', {moduleMappingIndex, key});
+      this.moduleMapping = this.$store.getters.getModuleMappingByIndex(moduleMappingIndex)
       this.selectedTab = this.moduleMapping.previousModules.length - 1;
     },
     removeModule(moduleIndex) {

@@ -6,6 +6,7 @@
           v-for="(moduleMapping, index) in moduleMappings"
           :moduleMappingIndex="index"
           :key="moduleMapping.meta.key"
+          :moduleKey="moduleMapping.meta.key"
       />
       <v-btn
           class="userInput"

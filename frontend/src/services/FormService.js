@@ -13,7 +13,8 @@ export default {
   },
   async fetchPdfSummary(applicationId) {
     try {
-      const response = await axios.get(`/api/student/getPdfSummary`, {params: {applicationId}}, { responseType: 'blob' });
+      const response = await axios.get(`/api/student/getPdfSummary`, {params: {applicationId}}, { responseType: 'arraybuffer' });
+      console.log(response.data);
       return response.data;
       
     } catch (error) {

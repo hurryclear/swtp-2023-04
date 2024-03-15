@@ -20,6 +20,16 @@
           {{ $t("navBar.main") }}
         </v-btn>
         <v-btn
+            v-if="this.userRole === 'ROLE_OFFICE' || this.userRole === 'ROLE_COMMITTEE'"
+            class="button-spacing t-button"
+            variant="elevated"
+            color="#262A31"
+            @click="navigateTo('/update-module-data')"
+        >
+          {{ $t("navBar.updateModuleData") }}
+        </v-btn>
+        <v-spacer/>
+        <v-btn
             v-if="userRole==='ROLE_STUDENT'"
             class="button-spacing t-button"
             variant="elevated"
@@ -63,9 +73,7 @@
                @click="navigateTo('/login')"
         />
       </div>
-
     </v-app-bar>
-
     <v-navigation-drawer fluid temporary v-model="drawer" app>
       <v-list>
         <v-btn
@@ -75,7 +83,6 @@
             @click="drawer = !drawer"
         />
         <v-spacer/>
-        <!-- TODO: width:calc(100% - 1rem) ist erstmal ne Übergangslösung -->
         <v-btn
             class="button-spacing t-button"
             variant="elevated"
@@ -95,7 +102,6 @@
         >
           {{ $t("navBar.creditModules") }}
         </v-btn>
-        <v-spacer/>
         <v-btn
             v-if="userRole==='ROLE_STUDENT'"
             class="button-spacing t-button"
@@ -182,7 +188,6 @@ export default {
   },
   computed: {
     userRole() {
-      console.log(JSON.stringify(this.$store.state.authentication.userRole))
       return this.$store.state.authentication.userRole; //TODO: fix error
     },
   },

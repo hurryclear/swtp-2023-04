@@ -16,7 +16,7 @@
     <template v-slot:[`item.actions`]="{ item }">
       <v-btn
           @click="openEditMenu(item)"
-          :disabled="item.edited.applicationData.status === 'editing in progress'"
+          :disabled="item.status === 'editing in progress'"
           icon="mdi-pencil"
       ></v-btn>
     </template>
@@ -33,12 +33,11 @@ export default {
         forms: [] ,
         //TODO i18n
         headers: [
-          { title: "ID", key: "edited.applicationData.applicationID" },
-          { title: "Universität" , key: "edited.applicationData.university" },
-          { title: "Anzahl von Mappings", key: "edited.moduleFormsData.length" },
-          { title: "Vorheriger Studiengang", key: "edited.applicationData.oldCourseOfStudy" },
-          { title: "Status", key: "edited.applicationData.status" },
-          { title: "Edit", value: "actions", sortable: false }
+          { title: "ID", key: "applicationID" },
+          { title: "Universität" , key: "university" },
+          { title: "Antragsdatum", key: "dateOfSubmission" },
+          { title: "Status", key: "status" },
+          { title: "Editieren", value: "actions", sortable: false }
         ]
       }
     },
@@ -48,14 +47,17 @@ export default {
   },
 
   methods: {
-      openEditMenu(form) {
+      async openEditMenu(item) {
+        let form = {};
+        await axios.get("/api/application/getApplication?applicationID=" + item.applicationID)
+            .then(response => form = response.data)
+            .catch(err => console.error("Error retrieving form: ", err));
         this.$emit('open-edit-menu', form);
       },
 
       async getForms() {
-        //TODO richtigen endpoint einsetzen
-        await axios.get("/api/application/overviewOffice?status=OPEN")
-            .then(response => response.data = this.forms)
+        await axios.get("/api/application/overviewOffice")
+            .then(response => this.forms = response.data.content)
             .catch(err => console.error("Error retrieving open forms: ", err));
       }
     }
