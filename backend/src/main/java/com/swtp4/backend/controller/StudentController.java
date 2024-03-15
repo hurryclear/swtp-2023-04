@@ -93,9 +93,9 @@ public class StudentController {
     }
 
     @GetMapping("/getPdfSummary")
-    public ResponseEntity<?> downloadApplicationPDF(@RequestParam String formId) {
+    public ResponseEntity<?> downloadApplicationPDF(@RequestParam String applicatioID) {
         try {
-            return pdfService.generatePDFForApplication(formId);
+            return pdfService.generatePDFForApplication(applicatioID);
         } catch (IOException e) {
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
