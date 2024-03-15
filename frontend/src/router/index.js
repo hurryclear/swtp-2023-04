@@ -39,7 +39,7 @@ const routes = [
     {
         path: '/examining-committee-chair',
         name: 'Examining Committee Chair',
-        component: () => import('@/views/ExaminingCommitteeChairView.vue'),
+        component: () => import('@/views/CommitteeView.vue'),
         meta: { requiresAuth: true, roles: ['ROLE_COMMITTEE'] }
     }
 ];
