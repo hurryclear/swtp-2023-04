@@ -5,7 +5,6 @@ export default {
     state: {
         forms: [],
         currentForm: null,
-        currentFormPdf: null,
     },
     getters: {
         formsByStatus: (state) => (status) => {
@@ -39,9 +38,6 @@ export default {
             state.currentForm = {...form};
             console.log('Current form:', state.currentForm);
         },
-        setCurrentFormPdf(state, pdf) {
-            state.currentFormPdf = pdf;
-        }
     },
     actions: {
         loadForms({commit}, forms) {
@@ -57,10 +53,6 @@ export default {
             const form = await FormService.fetchApplicationSummary(applicationId);
             commit('setCurrentForm', form);
             
-        },
-        async fetchPdfSummary({ commit }, applicationId) {
-            const pdfData = await FormService.fetchPdfSummary(applicationId);
-            commit('setCurrentFormPdf', pdfData);
-        },
+        }
     },
 };
