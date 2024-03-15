@@ -11,7 +11,8 @@
         "moduleNameLabel": "Nome do Módulo",
         "modulesToBeCreditedLabel": "Módulos a serem Creditados",
         "removeModule": "Remover Módulo",
-        "creditLabel": "Créditos (ECTS)"
+        "creditLabel": "Créditos (ECTS)",
+        "moduleId": "Número do módulo/Identificação do módulo"
       },
       "removeMapping": "Remover Mapeamento de Módulo"
     },
@@ -65,7 +66,8 @@
     "login": "Entrar",
     "main": "Página Principal",
     "review": "Revisão da Inscrição",
-    "studentAffairsOffice": "Escritório de Assuntos Estudantis"
+    "studentAffairsOffice": "Escritório de Assuntos Estudantis",
+    "updateModuleData": "Atualizar dados do módulo"
   },
   "reviewComponent": {
     "checkStatus": "Verificar Status da Inscrição",

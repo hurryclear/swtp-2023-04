@@ -47,7 +47,6 @@ export default {
           axios.put('/api/unidata/update', jsonData, {
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + "YOUR_ACCESS_TOKEN_HERE"
             }
           }).then(response => {
             // Handle response

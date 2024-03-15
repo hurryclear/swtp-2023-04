@@ -11,7 +11,8 @@
         "moduleNameLabel": "Nom du Module",
         "modulesToBeCreditedLabel": "Module à Créditer",
         "removeModule": "Supprimer le Module",
-        "creditLabel": "Crédits (ECTS)"
+        "creditLabel": "Crédits (ECTS)",
+        "moduleId": "Numéro du module/Identification du module"
       },
       "removeMapping": "Supprimer le Mappage du Module"
     },
@@ -65,7 +66,8 @@
     "login": "Connexion",
     "main": "Page Principale",
     "review": "Examiner la Demande",
-    "studentAffairsOffice": "Bureau des Affaires Étudiantes"
+    "studentAffairsOffice": "Bureau des Affaires Étudiantes",
+    "updateModuleData": "Mettre à jour les données du module"
   },
   "reviewComponent": {
     "checkStatus": "Vérifier l'État de la Demande",

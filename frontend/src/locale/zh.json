@@ -11,7 +11,8 @@
         "moduleNameLabel": "模块名称",
         "modulesToBeCreditedLabel": "要认可的模块",
         "removeModule": "删除模块",
-        "creditLabel": "学分（ECTS）"
+        "creditLabel": "学分（ECTS）",
+        "moduleId": "模块号/模块识别"
       },
       "removeMapping": "删除模块映射"
     },
@@ -65,7 +66,8 @@
     "login": "登录",
     "main": "主页",
     "review": "审核申请",
-    "studentAffairsOffice": "学生事务办公室"
+    "studentAffairsOffice": "学生事务办公室",
+    "updateModuleData": "更新模块数据"
   },
   "reviewComponent": {
     "checkStatus": "检查申请状态",

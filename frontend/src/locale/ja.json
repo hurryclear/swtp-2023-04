@@ -11,7 +11,8 @@
         "moduleNameLabel": "モジュール名",
         "modulesToBeCreditedLabel": "クレジットされるモジュール",
         "removeModule": "モジュールの削除",
-        "creditLabel": "単位（ECTS）"
+        "creditLabel": "単位（ECTS）",
+        "moduleId": "モジュール番号/モジュール識別"
       },
       "removeMapping": "モジュールマッピングの削除"
     },
@@ -65,7 +66,8 @@
     "login": "ログイン",
     "main": "メインページ",
     "review": "アプリケーションの確認",
-    "studentAffairsOffice": "学生支援オフィス"
+    "studentAffairsOffice": "学生支援オフィス",
+    "updateModuleData": "モジュールデータを更新する"
   },
   "reviewComponent": {
     "checkStatus": "アプリケーションステータスの確認",

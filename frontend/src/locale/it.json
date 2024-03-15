@@ -11,7 +11,8 @@
         "moduleNameLabel": "Nome Modulo",
         "modulesToBeCreditedLabel": "Moduli Accreditati",
         "removeModule": "Rimuovi Modulo",
-        "creditLabel": "Crediti (ECTS)"
+        "creditLabel": "Crediti (ECTS)",
+        "moduleId": "Numero del modulo/Identificazione del modulo"
       },
       "removeMapping": "Rimuovi Mappatura Modulo"
     },
@@ -65,7 +66,8 @@
     "login": "Accedi",
     "main": "Pagina Principale",
     "review": "Revisione Domanda",
-    "studentAffairsOffice": "Ufficio Affari Studenti"
+    "studentAffairsOffice": "Ufficio Affari Studenti",
+    "updateModuleData": "Aggiorna dati del modulo"
   },
   "reviewComponent": {
     "checkStatus": "Verifica Stato Domanda",

@@ -26,7 +26,7 @@
             color="#262A31"
             @click="navigateTo('/update-module-data')"
         >
-          swag
+          {{ $t("navBar.updateModuleData") }}
         </v-btn>
         <v-spacer/>
         <v-btn
@@ -73,9 +73,7 @@
                @click="navigateTo('/login')"
         />
       </div>
-
     </v-app-bar>
-
     <v-navigation-drawer fluid temporary v-model="drawer" app>
       <v-list>
         <v-btn
@@ -85,7 +83,6 @@
             @click="drawer = !drawer"
         />
         <v-spacer/>
-        <!-- TODO: width:calc(100% - 1rem) ist erstmal ne Übergangslösung -->
         <v-btn
             class="button-spacing t-button"
             variant="elevated"
@@ -191,7 +188,6 @@ export default {
   },
   computed: {
     userRole() {
-      console.log(JSON.stringify(this.$store.state.authentication.userRole))
       return this.$store.state.authentication.userRole; //TODO: fix error
     },
   },

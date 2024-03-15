@@ -4,20 +4,23 @@
       "addMapping": "Modulabbildung hinzufügen",
       "moduleMapping": {
         "addModule": "Modul hinzufügen",
-        "commentLabel": "Bemerkung",
-        "description": "Geben Sie Angaben über die anzurechnenden Module an.",
+        "commentLabel": "Kommentar",
+        "description": "Geben Sie Informationen zum Modul an, das anerkannt werden soll.",
         "module": "Modul",
         "moduleDescriptionLabel": "Modulbeschreibung",
         "moduleNameLabel": "Modulname",
-        "modulesToBeCreditedLabel": "Anzurechnende Module",
-        "removeModule": "Modul entfernen"
+        "modulesToBeCreditedLabel": "Anzurechnendes Modul",
+        "removeModule": "Modul entfernen",
+        "creditLabel": "Credits (ECTS)",
+        "moduleId":"Modulnummer/ Modulidentifikation"
       },
-      "removeMapping": "Modulabbildung entfernen"
+      "removeMapping": "Modulzuordnung entfernen"
     },
-    "submit": "Absenden",
+    "submit": "Formular absenden",
     "courseOfStudy": {
-      "description": "Geben Sie die Namen Ihres bisherigen und Ihres gewünschten Studiengangs an.",
-      "nameLabel": "Name des Studiengangs",
+      "description": "Geben Sie den Namen Ihres bisherigen und gewünschten Studiengangs an.",
+      "courseOfStudy": "Studiengang",
+      "new": "Gewünschter Studiengang",
       "previous": "Bisheriger Studiengang"
     },
     "universityForm": {
@@ -63,7 +66,8 @@
     "login": "Einloggen",
     "main": "Hauptseite",
     "review": "Antrag einsehen",
-    "studentAffairsOffice": "Studienbüro"
+    "studentAffairsOffice": "Studienbüro",
+    "updateModuleData": "Moduldaten aktualisieren"
   },
   "reviewComponent": {
     "checkStatus": "Antragsstatus prüfen",

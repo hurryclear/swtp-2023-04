@@ -11,7 +11,8 @@
         "moduleNameLabel": "Module Name",
         "modulesToBeCreditedLabel": "Credited Module",
         "removeModule": "Remove Module",
-        "creditLabel": "Credits (ECTS)"
+        "creditLabel": "Credits (ECTS)",
+        "moduleId": "Module Number/Module Identification"
       },
       "removeMapping": "Remove Module Mapping"
     },
@@ -65,7 +66,8 @@
     "login": "Login",
     "main": "Main Page",
     "review": "Review Application",
-    "studentAffairsOffice": "Student Affairs Office"
+    "studentAffairsOffice": "Student Affairs Office",
+    "updateModuleData": "Update Module Data"
   },
   "reviewComponent": {
     "checkStatus": "Check Application Status",

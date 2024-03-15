@@ -70,7 +70,7 @@
               class="userInput"
               v-model="module.courseOfStudy"
               hide-details
-              :label="$t('applicationFormView.moduleFormList.moduleMapping.courseOfStudy')"
+              :label="$t('applicationFormView.courseOfStudy.courseOfStudy')"
               variant="outlined"
           />
           <v-text-field

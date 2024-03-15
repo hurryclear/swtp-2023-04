@@ -168,7 +168,6 @@ export default {
             // Check if all module mappings are filled
             moduleMapping => {
                 // Check if modules to be credited are filled
-                console.log("\nmodules To Be Credited:",moduleMapping.modulesToBeCredited.length > 0)
                 return moduleMapping.modulesToBeCredited.length > 0 &&
                     // Check if every previous module is filled
                     moduleMapping.previousModules.every(
