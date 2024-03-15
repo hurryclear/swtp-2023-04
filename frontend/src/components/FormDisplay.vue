@@ -34,8 +34,8 @@ export default {
         //TODO i18n
         headers: [
           { title: "ID", key: "applicationID" },
-          { title: "Antragsdatum", key: "dateOfSubmission" },
           { title: "Universität" , key: "university" },
+          { title: "Antragsdatum", key: "dateOfSubmission" },
           { title: "Status", key: "status" },
           { title: "Editieren", value: "actions", sortable: false }
         ]

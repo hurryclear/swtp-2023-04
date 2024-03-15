@@ -37,8 +37,8 @@ export default {
     return {
       headers: [
         { title: "Antragsnummer", key: "applicationID" },
-        { title: "Antragsdatum", key: "dateOfSubmission" },
         { title: "Vorherige Universität", key: "university" },
+        { title: "Antragsdatum", key: "dateOfSubmission" },
         { title: "Status", key: "status" },
         { title: "Anschauen", value: "actions", sortable: false }
       ],
