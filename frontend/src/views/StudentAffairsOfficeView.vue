@@ -58,6 +58,7 @@
     },
     methods: {
       openEditMenu(form) {
+        this.FDisDisplayed = false;
         this.EMisDisplayed = true;
         axios.put(`/api/application/editingInProgress?applicationID=${form.edited.applicationData.applicationID}`)
             .then(response => console.log(response))
@@ -67,6 +68,7 @@
 
       closeEditMenu(form) {
         this.EMisDisplayed = false;
+        this.FDisDisplayed = true;
         axios.put(`/api/application/resetStatusInProgress?applicationID=${form.edited.applicationData.applicationID}`)
             .then(response => console.log(response))
             .catch(err => console.error("Error putting status to edited: ", err));
