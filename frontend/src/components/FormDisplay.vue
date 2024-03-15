@@ -48,9 +48,9 @@ export default {
 
   methods: {
       async openEditMenu(item) {
-        let form;
+        let form = {};
         await axios.get("/api/application/getApplication?" + item.applicationID)
-            .then(response => response.data)
+            .then(response => form = response.data)
             .catch(err => console.error("Error retrieving form: ", err));
         this.$emit('open-edit-menu', form);
       },
