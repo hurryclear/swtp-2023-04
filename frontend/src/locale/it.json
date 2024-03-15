@@ -5,33 +5,33 @@
       "moduleMapping": {
         "addModule": "Aggiungi Modulo",
         "commentLabel": "Commento",
-        "description": "Fornisci informazioni sul modulo da accredita!",
+        "description": "Fornisci informazioni sul modulo da accreditare.",
         "module": "Modulo",
-        "moduleDescriptionLabel": "Descrizione del Modulo",
-        "moduleNameLabel": "Nome del Modulo",
-        "modulesToBeCreditedLabel": "Modulo Accreditato",
-        "removeModule": "Rimuovi Modulo"
+        "moduleDescriptionLabel": "Descrizione Modulo",
+        "moduleNameLabel": "Nome Modulo",
+        "modulesToBeCreditedLabel": "Moduli Accreditati",
+        "removeModule": "Rimuovi Modulo",
+        "creditLabel": "Crediti (ECTS)"
       },
       "removeMapping": "Rimuovi Mappatura Modulo"
     },
     "submit": "Invia Modulo",
+    "courseOfStudy": {
+      "description": "Specifica il nome del tuo corso di studio precedente e desiderato.",
+      "courseOfStudy": "Corso di Studio",
+      "new": "Corso di Studio Desiderato",
+      "previous": "Corso di Studio Precedente"
+    },
     "universityForm": {
-      "courseOfStudy": {
-        "description": "Specifica il nome del tuo programma di studio precedente!",
-        "nameLabel": "Nome del Programma di Studio",
-        "previous": "Programma di Studio Precedente"
-      },
-      "university": {
-        "countryLabel": "Paese",
-        "description": "Specifica il nome della tua università precedente!",
-        "nameLabel": "Nome dell'Università",
-        "previous": "Università Precedente",
-        "websiteLabel": "Sito Web"
-      }
+      "countryLabel": "Paese",
+      "description": "Specifica il nome della tua università precedente.",
+      "nameLabel": "Nome Università",
+      "previous": "Università Precedente",
+      "websiteLabel": "Sito Web"
     }
   },
   "darkMode": {
-    "toggleDarkMode": "Attiva/Disattiva Modalità Scura"
+    "toggleDarkMode": "Attiva Modalità Scura"
   },
   "examiningCommitteeChairView": {
     "accept": "Accetta",
@@ -40,17 +40,17 @@
     "studentAffairsOfficeComment": "Commento dell'Ufficio Affari Studenti"
   },
   "formDisplay": {
-    "application": "Richiesta",
+    "application": "Domanda",
     "edit": "Modifica",
     "modules": "Moduli",
     "reason": "Motivo",
-    "sendToExaminingCommitteeChair": "Invia al Comitato Esami",
+    "sendToExaminingCommitteeChair": "Invia al Comitato di Esame",
     "university": "Università"
   },
   "homeView": {
-    "welcomeExaminingCommitteeChair": "Benvenuto, stimato presidente del Comitato Esami! Su questa piattaforma, hai l'opportunità di esaminare e approvare o respingere tutte le richieste aperte. Fornisci una motivazione ben fondata per le tue decisioni. La tua partecipazione rende il processo di riconoscimento dei crediti più efficiente e mirato.",
-    "welcomeStudent": "Benvenuto nella nostra nuova piattaforma online per il riconoscimento dei crediti presso l'Università di Lipsia! Comprediamo che il processo di riconoscimento dei crediti sia spesso complesso e lungo. È ancor più importante che questo processo possa ora essere effettuato online, in modo digitale e facile. Come studente, puoi ora inviare la tua richiesta con pochi clic. Clicca su 'Accredita Moduli' per iniziare. Con l'invio della tua richiesta, ti sarà assegnato un numero di riferimento unico, che potrai utilizzare in seguito per visualizzare la tua richiesta e il suo stato.",
-    "welcomeStudentAffairsOffice": "Benvenuto, personale dell'Ufficio Affari Studenti! Come membro dello staff dell'Ufficio Affari Studenti, hai accesso a una panoramica di tutte le richieste aperte. Puoi elaborare, integrare e monitorare lo stato di elaborazione delle richieste. Utilizza l'interfaccia utente amichevole per rendere più efficiente il processo di riconoscimento dei crediti."
+    "welcomeExaminingCommitteeChair": "Benvenuto, stimato presidente del Comitato di Esame! In questa piattaforma, hai l'opportunità di esaminare e approvare o respingere tutte le domande aperte. Fornisci una motivazione ben fondata per le tue decisioni. La tua partecipazione rende il processo di riconoscimento dei crediti più efficiente e mirato.",
+    "welcomeStudent": "Benvenuto nella nostra nuova piattaforma online per il riconoscimento dei crediti presso l'Università di Lipsia! Clicca su 'Credit Modules' per iniziare. Inviano la tua domanda, ti verrà assegnato un numero di riferimento unico, che potrai utilizzare in seguito per visualizzare la tua domanda e il suo stato.",
+    "welcomeStudentAffairsOffice": "Benvenuto, personale dell'Ufficio Affari Studenti! Come membro dello staff dell'Ufficio Affari Studenti, hai accesso a una panoramica di tutte le domande aperte. Puoi elaborare, integrare e monitorare lo stato di elaborazione delle domande. Utilizza l'interfaccia utente intuitiva per rendere il processo di riconoscimento dei crediti più efficiente."
   },
   "loginComponent": {
     "loginButton": "Accedi",
@@ -60,57 +60,62 @@
   },
   "logoutButton": "Esci",
   "navBar": {
-    "creditModules": "Accredita Moduli",
-    "examiningCommitteeChair": "Presidente del Comitato Esami",
+    "creditModules": "Moduli di Credito",
+    "examiningCommitteeChair": "Presidente del Comitato di Esame",
     "login": "Accedi",
     "main": "Pagina Principale",
-    "review": "Esamina Richiesta",
+    "review": "Revisione Domanda",
     "studentAffairsOffice": "Ufficio Affari Studenti"
   },
   "reviewComponent": {
-    "checkStatus": "Verifica Stato della Domanda",
+    "checkStatus": "Verifica Stato Domanda",
     "downloadApplication": "Scarica Riepilogo",
     "formID": "Numero di Riferimento",
-    "reviewApplication": "Revisiona Domanda",
+    "reviewApplication": "Revisione Domanda",
     "currentUniversity": "Università Attuale",
     "oldCourseOfStudy": "Programma di Studio Precedente",
     "newCourseOfStudy": "Nuovo Programma di Studio",
     "dateOfSubmission": "Data di Presentazione",
     "dateLastEdited": "Data Ultima Modifica",
     "application": "Domanda",
-    "overview": "Panoramica della Domanda",
-    "modulName": "Nome del Modulo",
-    "moduleNumber": "Numero del Modulo",
+    "overview": "Panoramica Domanda",
+    "moduleName": "Nome Modulo",
+    "moduleNumber": "Numero Modulo",
     "moduleCredits": "Crediti (ECTS)",
-    "moduleApproval": "Approvazione",
+    "moduleApproval": "Approvazione Modulo",
     "moduleApprovalReason": "Motivo della Decisione",
     "accepted": "Accettato",
-    "rejected": "Rifiutato",
-    "formallyRejected": "Formalmente Rifiutato dall'Ufficio Affari Studenteschi",
-    "modules2bCredited": "Moduli da Accreditare",
+    "rejected": "Respinto",
+    "formallyRejected": "Respinto Formalmente dall'Ufficio Affari Studenti",
+    "modulesToBeCredited": "Moduli da Accreditare",
     "moduleApprovalOpen": "Aperto",
     "partiallyAccepted": "Parzialmente Accettato",
     "open": "Aperto",
-    "editingInProgress": "Modifica in Corso da parte dell'Ufficio Affari Studenteschi",
-    "edited": "Modificato dall'Ufficio Affari Studenteschi",
-    "readyForApproval": "Pronto per l'Approvazione da parte del Comitato di Esame",
-    "approvalInProgress": "Approvazione in Corso da parte del Comitato di Esame",
+    "editingInProgress": "Modifica in Corso da Parte dell'Ufficio Affari Studenti",
+    "edited": "Modificato dall'Ufficio Affari Studenti",
+    "readyForApproval": "Pronto per l'Approvazione da Parte del Comitato di Esame",
+    "approvalInProgress": "Approvazione da Parte del Comitato di Esame in Corso",
     "editedApproval": "Modificato dal Comitato di Esame",
     "approvalFinished": "Approvazione del Comitato di Esame Completata",
-    "errorFetchingForm": "Errore nel Recupero del Modulo",
-    "formNotFound": "Modulo Non Trovato",
+    "errorFetchingForm": "Errore Recupero Domanda",
+    "formNotFound": "Domanda non Trovata",
     "pending": "In Attesa",
-    "moduleBlock": "Blocco Modulo"
+    "moduleBlock": "Blocco di Moduli"
   },
   "routes": {
-    "/": "Pagina Principale",
-    "/application-form": "Accredita Moduli",
-    "/examining-committee-chair": "Presidente del Comitato Esami",
+    "/": "Homepage",
+    "/application-form": "Moduli di Credito",
+    "/examining-committee-chair": "Presidente del Comitato di Esame",
     "/login": "Accedi",
-    "/review-application": "Esamina Richiesta",
-    "/student-affairs-office": "Ufficio Affari Studenti"
+    "/review-application": "Revisione Domanda",
+    "/student-affairs-office": "Ufficio Affari Studenti",
+    "/update-module-data": "Aggiorna Dati Modulo"
   },
   "studentAffairsOfficeView": {
-    "openApplications": "Richieste Aperte"
+    "openApplications": "Domande Aperte"
+  },
+  "updateModuleDataView": {
+    "uploadJSON": "Carica JSON",
+    "submit": "Invia"
   }
 }

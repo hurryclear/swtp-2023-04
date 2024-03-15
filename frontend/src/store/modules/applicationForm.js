@@ -5,43 +5,46 @@ export default {
     state: {
         form: {
             meta: {
-                status: "",                 //Enum
-                dateOfSubmission: "",       //String
-                dateLastEdited: "",         //String
+                status: "",
+                dateOfSubmission: "",
+                dateLastEdited: "",
             },
             university: {
-                name: "",                   //String
-                country: "",                //String
-                website: "",                //String
+                name: "",
+                country: "",
+                website: "",
             },
             courseOfStudy: {
-                old: null,
+                old: "",
                 new: null,
             },
             moduleMappings: [
                 {
                     meta: {
-                        key: 0,               //Integer
+                        key: 0,
                     },
                     previousModules: [
                         {
                             meta: {
-                                approval: "",         //Enum/Boolean
+                                approval: "",
                                 comments: {
-                                    student: "",        //String
+                                    student: "",
                                 },
+                                key: 0,
                             },
-                            number: "",       //String (Applicable?)
-                            name: "",         //String
+                            name: "",
                             description: {file: null},
-                            credits: 0,       //Integer
+                            credits: 0,
+                            university: {
+                                name: "",
+                                country: "",
+                                website: "",
+                            },
+                            id: "",
+                            courseOfStudy: "",
                         },
                     ],
                     modulesToBeCredited: [
-                        {
-                            number: "",       //String
-                            name: null,         //String
-                        }
                     ],
                 },
             ],
@@ -64,21 +67,21 @@ export default {
                         key: key,
                         approval: "",
                         comments: {
-                            student: "",
-                            office: "",
+                            student: ""
                         },
                     },
                     previousModules: [
                         {
                             meta: {
+                                approval: "",
                                 comments: {
-                                    student: "",
-                                    office: ""
-                                }
+                                    student: ""
+                                },
+                                key: 0,
                             },
                             university: "",
-                            key: 0,
-                            number: "",
+                            id: "",
+                            courseOfStudy: "",
                             name: "",
                             description: {file: null},
                             credits: 0,
@@ -86,8 +89,7 @@ export default {
                     ],
                     modulesToBeCredited: [
                         {
-                            number: "",
-                            name: null,
+                            id: null
                         }
                     ],
                 }
@@ -98,18 +100,19 @@ export default {
                 state.form.moduleMappings.splice(index, 1);
             }
         },
-        addModule(state, index, key) {
-            state.form.moduleMappings[index].moduleForm.previousModules.push(
+        addModule(state, {moduleMappingIndex, key}) {
+            state.form.moduleMappings[moduleMappingIndex].previousModules.push(
                 {
                     meta: {
+                        approval: "",
                         comments: {
                             student: "",
-                            office: ""
-                        }
+                        },
+                        key: key,
                     },
                     university: "",
-                    key: key,
-                    number: "",
+                    id: "",
+                    courseOfStudy: "",
                     name: "",
                     description: {file: null},
                     credits: 0,
@@ -136,7 +139,7 @@ export default {
             const timestamp = new Date().toISOString();
             state.form.meta.dateLastEdited = timestamp;
             state.form.meta.dateOfSubmission = timestamp;
-            formData.append('form', JSON.stringify(state.form));
+            formData.append('form', new Blob([JSON.stringify(state.form)], { type: 'application/json' }));
 
             try {
                 const {success, data} = await ApplicationFormService.submitForm(formData);
@@ -157,28 +160,36 @@ export default {
         },
     },
     getters: {
-        formFilled: (state, getters) => (
-            // Check if all module mappings are filled
+        formFilled: (state,getters) => (
             getters.moduleMappingsFilled &&
-            // Check if university information is filled
-            state.form.university.name.trim() !== "" &&
-            state.form.courseOfStudy.old.trim() !== "" &&
-            state.form.courseOfStudy.new.trim() !== "" &&
-            state.form.university.country.trim() !== ""),
+            getters.universityFormIsFilled
+        ),
         moduleMappingsFilled: state => state.form.moduleMappings.every(
+            // Check if all module mappings are filled
             moduleMapping => {
                 // Check if modules to be credited are filled
-                return moduleMapping.modulesToBeCredited !== null &&
+                console.log("\nmodules To Be Credited:",moduleMapping.modulesToBeCredited.length > 0)
+                return moduleMapping.modulesToBeCredited.length > 0 &&
                     // Check if every previous module is filled
                     moduleMapping.previousModules.every(
-                        (module) =>
+                        (module) =>{
+                            return module.description.file !== null &&
                             module.name.trim() !== '' &&
-                            module.description.file !== null
+                            module.courseOfStudy.trim() !== '' &&
+                            module.id.trim() !== ''
+                        }
+
                     )
             }
         ),
+        universityFormIsFilled: state => (
+                state.form.courseOfStudy.old.trim() !== "" &&
+                state.form.courseOfStudy.new !== null &&
+                state.form.university.name.trim() !== "" &&
+                state.form.university.country.trim() !== ""
+            ),
         moduleMappings: state => state.form.moduleMappings,
         disableModuleMappingRemoval: state => state.form.moduleMappings.length === 1,
-        newCourseOfStudyIsSelected: state => state.form.courseOfStudy.new !== null
+        getModuleMappingByIndex: (state) => (id) => state.form.moduleMappings[id]
     }
 }
