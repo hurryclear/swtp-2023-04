@@ -233,11 +233,11 @@ export default {
     async downloadForm() {
         try {
             // Retrieve the form ID from the component's state.
-            const formId = this.form.applicationData.applicationID;
+            const applicationID = this.form.applicationData.applicationID;
 
             // Fetch the PDF as a blob from the API.
             const response = await axios.get("/api/student/getPdfSummary", {
-                params: { formId },
+                params: { applicationID },
                 responseType: 'blob'
             });
 
