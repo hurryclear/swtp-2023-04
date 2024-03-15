@@ -42,7 +42,7 @@ public class PDFControllerTests {
 
     @Test
     @WithMockUser(username = "testuser", roles = {"OFFICE"})
-    public void whenGetPdfGetsCorrectFilePath_ItSuccessfullyReturnsHttpStatus200OkAndAPDF() throws Exception {
+    public void whenGetPdfGetsCorrectFilePath_ItSuccessfullyReturnsHttpStatus200Ok() throws Exception {
         byte[] bytes = "I bims eine PDF".getBytes();
         Path path = Paths.get("/app/pdf-files/1/1");
         Files.createDirectories(path.getParent());
@@ -52,13 +52,14 @@ public class PDFControllerTests {
             mockMvc.perform(
                     MockMvcRequestBuilders.get("/application/getModulePDF")
                             .param("filePath", "/1/1")
+                            .param("moduleName", "modul")
             )
                     .andExpect(
                             MockMvcResultMatchers.status().isOk())
                     .andExpect(
                             MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_PDF))
                     .andExpect(
-                            MockMvcResultMatchers.header().string("Content-Disposition", "attachment; filepath = /1/1")
+                            MockMvcResultMatchers.header().string("Content-Disposition", "attachment; filename=\"modul.pdf\"")
                     );
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -74,6 +75,7 @@ public class PDFControllerTests {
             mockMvc.perform(
                             MockMvcRequestBuilders.get("/application/getModulePDF")
                                     .param("filePath", "/biba/buba")
+                                    .param("moduleName", "modul")
                     )
                     .andExpect(
                             MockMvcResultMatchers.status().isNotFound()
