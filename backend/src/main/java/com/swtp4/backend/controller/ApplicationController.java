@@ -131,12 +131,13 @@ public class ApplicationController {
 
 
     @GetMapping(path = "/getModulePDF", produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<Resource> getPDF(@RequestParam String filePath) {
+    public ResponseEntity<Resource> getPDF(@RequestParam String filePath,
+                                           @RequestParam String moduleName) {
         try {
             Resource pdfResource = pdfService.getModulePDF("/app/pdf-files" + filePath);
             return ResponseEntity.ok()
                     .contentType(MediaType.APPLICATION_PDF)
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filepath = " + filePath)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + moduleName + ".pdf\"")
                     .body(pdfResource);
         } catch (FileNotFoundException | MalformedURLException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);

@@ -3,12 +3,17 @@ package com.swtp4.backend.services;
 
 import com.swtp4.backend.exception.ResourceNotFoundException;
 import com.swtp4.backend.repositories.ApplicationRepository;
-import com.swtp4.backend.repositories.entities.ApplicationEntity;
+import com.swtp4.backend.repositories.ModuleBlockRepository;
+import com.swtp4.backend.repositories.ModuleRelationRepository;
+import com.swtp4.backend.repositories.applicationDtos.EntireBlock;
+import com.swtp4.backend.repositories.applicationDtos.EntireStudentModule;
+import com.swtp4.backend.repositories.entities.*;
 import com.swtp4.backend.repositories.entities.keyClasses.ApplicationKeyClass;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -20,11 +25,14 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -33,9 +41,15 @@ public class PDFService {
 
 
     private ApplicationRepository applicationRepository;
+    private ModuleBlockRepository moduleBlockRepository;
+    private ModuleRelationRepository moduleRelationRepository;
 
-    public PDFService(ApplicationRepository applicationRepository) {
+    public PDFService(ApplicationRepository applicationRepository,
+                      ModuleBlockRepository moduleBlockRepository,
+                      ModuleRelationRepository moduleRelationRepository) {
         this.applicationRepository = applicationRepository;
+        this.moduleBlockRepository = moduleBlockRepository;
+        this.moduleRelationRepository = moduleRelationRepository;
     }
 
     public void saveModulePDFs(Map<String, MultipartFile> fileMap, HashMap<String, String> file_paths) {
@@ -75,53 +89,140 @@ public class PDFService {
     }
 
 
-    public ResponseEntity<byte[]> generatePDFForApplication(String applicationId) throws IOException {
+    public Resource generatePDFForApplication(String applicationId) throws IOException {
+        //Initialize PDF Document
+        PDDocument document = new PDDocument();
+        PDPage page = new PDPage();
+        document.addPage(page);
+        PDPageContentStream contentStream = new PDPageContentStream(document, page);
+
+        //Headline: Summary
+        contentStream.beginText();
+        contentStream.setFont(PDType1Font.HELVETICA_BOLD, 20);
+        contentStream.newLineAtOffset(100, 750); // Adjust coordinates for positioning
+        contentStream.showText("Zusammenfassung Antrag");
+        contentStream.endText();
+
+        //Application ID
+        contentStream.beginText();
+        contentStream.setFont(PDType1Font.HELVETICA, 12);
+        contentStream.newLineAtOffset(100, 720); // Adjust coordinates for positioning
+        contentStream.showText("Antragsnummer: " + applicationId);
+        contentStream.endText();
+
+        //Get Application Entity
         ApplicationEntity applicationEntity = applicationRepository.findById(ApplicationKeyClass.builder()
                 .creator("Employee")
                 .id(applicationId).build()).orElseThrow(() -> new ResourceNotFoundException("Application not found: " + applicationId));
 
-        PDDocument document = new PDDocument();
-        PDPage page = new PDPage();
-        document.addPage(page);
-
-        PDPageContentStream contentStream = new PDPageContentStream(document, page);
+        //Application Information Styling and Data
         contentStream.beginText();
         contentStream.setFont(PDType1Font.HELVETICA, 12);
-        // Starte am oberen Rand der Seite
-        float margin = 100;
-        float yStart = 700;
-        float lineSpacing = 20; // Stelle hier den gewünschten Zeilenabstand ein
-
-        contentStream.newLineAtOffset(margin, yStart);
-
-        ApplicationKeyClass applicationKeyClass = applicationEntity.getApplicationKeyClass();
-        String[] textLines = {
-                "Antragsnummer: " + applicationId,
-                "Status: " + applicationEntity.getStatus(),
-                "Einreichungsdatum: " + applicationEntity.getDateOfSubmission().toString(),
-                "Letzte Bearbeitung: " + applicationEntity.getDateLastEdited().toString(),
-                "Universitätsname: " + applicationEntity.getUniversityName(),
-                "Studienfach: " + applicationEntity.getStudentMajor(),
-                "Uni-Fach: " + applicationEntity.getUniMajor(),
-                "Formaler Ablehnungsgrund: " + (applicationEntity.getFormalRejectionReason() != null ? applicationEntity.getFormalRejectionReason() : "Keine")
-        };
-
-        for (String line : textLines) {
-            contentStream.showText(line);
-            contentStream.newLineAtOffset(0, -lineSpacing);
-        }
-
+        float startY = 680; // Starting y-coordinate for general information section
+        float lineHeight = 15;
+        contentStream.newLineAtOffset(100, startY);
+        contentStream.showText("Status: " + applicationEntity.getStatus());
+        contentStream.newLineAtOffset(0, -lineHeight);
+        contentStream.showText("Einreichungsdatum: " + applicationEntity.getDateOfSubmission().toString());
+        contentStream.newLineAtOffset(0, -lineHeight);
+        contentStream.showText("Letzte Bearbeitung: " + applicationEntity.getDateLastEdited().toString());
+        contentStream.newLineAtOffset(0, -lineHeight);
+        contentStream.showText("Universitätsname: " + applicationEntity.getUniversityName());
+        contentStream.newLineAtOffset(0, -lineHeight);
+        contentStream.showText("Studienfach: " + applicationEntity.getStudentMajor());
+        contentStream.newLineAtOffset(0, -lineHeight);
+        contentStream.showText("Uni-Fach: " + applicationEntity.getUniMajor());
+        contentStream.newLineAtOffset(0, -lineHeight);
+        contentStream.showText("Formaler Ablehnungsgrund: " + (applicationEntity.getFormalRejectionReason() != null ? applicationEntity.getFormalRejectionReason() : "Keine"));
         contentStream.endText();
+
+        //Module Blocks and Modules Spacing
+        float blockSpacing = 20;
+        float moduleSpacing = 15;
+
+        startY -= (lineHeight * 8 + blockSpacing);
+
+        //Get ModuleBlocks
+        List<ModuleBlockEntity> moduleBlockEntityList = moduleBlockRepository.findAllByApplicationEntity(applicationEntity);
+        for (ModuleBlockEntity moduleBlockEntity : moduleBlockEntityList) {
+            //Module Block Headline
+            contentStream.beginText();
+            contentStream.setFont(PDType1Font.HELVETICA_BOLD, 14);
+            contentStream.newLineAtOffset(100, startY);
+            contentStream.showText("Mapping " + (moduleBlockEntity.getFrontendKey() + 1) + ":");
+            contentStream.setFont(PDType1Font.HELVETICA, 12);
+            contentStream.endText();
+
+            startY -= (lineHeight + moduleSpacing);
+
+            //Get ModuleRelations from ModuleBlock and all associated ModuleStudentEntities and ModuleUniEntities
+            List<ModuleRelationEntity> moduleRelationEntityList = moduleRelationRepository.findByModuleBlockEntity(moduleBlockEntity);
+            List<ModuleStudentEntity> moduleStudentEntityList = new ArrayList<>();
+            List<ModuleUniEntity> moduleUniEntityList = new ArrayList<>();
+            for (ModuleRelationEntity moduleRelationEntity : moduleRelationEntityList) {
+                ModuleStudentEntity moduleStudentEntity = moduleRelationEntity.getModuleRelationKeyClass().getModuleStudentEntity();
+                boolean isNewStudentModule = !moduleStudentEntityList.stream()
+                        .map(ModuleStudentEntity::getId)
+                        .toList()
+                        .contains(moduleStudentEntity.getId());
+                if (isNewStudentModule) {
+                    moduleStudentEntityList.add(moduleStudentEntity);
+                }
+                ModuleUniEntity moduleUniEntity = moduleRelationEntity.getModuleRelationKeyClass().getModuleUniEntity();
+                boolean isNewUniModule = !moduleUniEntityList.stream()
+                        .map(ModuleUniEntity::getId)
+                        .toList()
+                        .contains(moduleUniEntity.getId());
+                if (isNewUniModule) {
+                    moduleUniEntityList.add(moduleUniEntity);
+                }
+            }
+
+            //Write Data in the PDF
+            for (ModuleStudentEntity moduleStudentEntity : moduleStudentEntityList) {
+                //ModuleStudent Data
+                contentStream.beginText();
+                contentStream.setFont(PDType1Font.HELVETICA, 12);
+                contentStream.newLineAtOffset(100, startY);
+                contentStream.showText("Modul " + (moduleStudentEntity.getFrontendKey() + 1) + ": " + moduleStudentEntity.getTitle());
+                contentStream.newLineAtOffset(0, -moduleSpacing);
+                contentStream.showText("Modulnummer: " + moduleStudentEntity.getNumber());
+                contentStream.newLineAtOffset(0, -moduleSpacing);
+                contentStream.showText("Universität: " + moduleStudentEntity.getUniversity());
+                contentStream.newLineAtOffset(0, -moduleSpacing);
+                contentStream.showText("Studiengang: " + moduleStudentEntity.getMajor());
+                contentStream.newLineAtOffset(0, -moduleSpacing);
+                contentStream.showText("Leistungspunkte: " + moduleStudentEntity.getCredits().toString());
+                contentStream.newLineAtOffset(0, -moduleSpacing);
+                contentStream.showText("Studentenkommentar: " + moduleStudentEntity.getCommentStudent());
+                contentStream.endText();
+                startY -= (lineHeight * 6 + moduleSpacing);
+            }
+
+            contentStream.beginText();
+            contentStream.setFont(PDType1Font.HELVETICA, 12);
+            contentStream.newLineAtOffset(100, startY); // Adjust this offset based on your layout
+            contentStream.showText("Anzurechnende Module:");
+            contentStream.endText();
+            startY -= (lineHeight);
+
+            for (ModuleUniEntity moduleUniEntity : moduleUniEntityList) {
+                //Module Uni Data
+                contentStream.beginText();
+                contentStream.setFont(PDType1Font.HELVETICA, 12);
+                contentStream.newLineAtOffset(100, startY); // Adjust this offset based on your layout
+                contentStream.showText(moduleUniEntity.getName());
+                contentStream.endText();
+                startY -= (lineHeight);
+            }
+            startY -= (blockSpacing);
+        }
         contentStream.close();
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         document.save(outputStream);
         document.close();
         byte[] pdfBytes = outputStream.toByteArray();
-        return ResponseEntity.ok()
-                .contentType(MediaType.APPLICATION_PDF)
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + applicationId + ".pdf\"")
-                .body(pdfBytes);
+        return new ByteArrayResource(pdfBytes);
     }
-
 }
