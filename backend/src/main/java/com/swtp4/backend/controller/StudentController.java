@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.query.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -93,12 +94,20 @@ public class StudentController {
     }
 
     @GetMapping("/getPdfSummary")
-    public ResponseEntity<?> downloadApplicationPDF(@RequestParam String applicationId) {
+    public ResponseEntity<Resource> downloadApplicationPDF(@RequestParam String applicationId) {
         try {
-            return pdfService.generatePDFForApplication(applicationId);
+            Resource pdfResource = pdfService.generatePDFForApplication(applicationId);
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + applicationId + ".pdf\"")
+                    .body(pdfResource);
         } catch (IOException e) {
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
                     .body(null);
         }
     }
