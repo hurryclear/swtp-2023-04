@@ -240,12 +240,12 @@ export default {
       }
     },
 
-    async downloadPdf(pdfPath) {
+    async downloadPdf(filePath) {
       try {
         //TODO Change if it throws error
         const response = await axios.get("/api/application/getModulePDF", {
           params: {
-            pdfPath
+            filePath
           },
           responseType: 'blob' // Ensure response is treated as a blob
         });
