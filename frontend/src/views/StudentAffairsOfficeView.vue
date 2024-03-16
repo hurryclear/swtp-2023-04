@@ -57,14 +57,12 @@
     },
     methods: {
       openEditMenu(form) {
-        this.FDisDisplayed = false;
         this.EMisDisplayed = true;
         this.EMformContent = form;
       },
 
       closeEditMenu() {
         this.EMisDisplayed = false;
-        this.FDisDisplayed = true;
         this.EMformContent = {};
       },
 
@@ -101,15 +99,9 @@
 </script>
 
 <style scoped>
-  .comparison {
-
-  }
 
   .col-left {
     margin-left: 5%;
   }
 
-  .edit-menu {
-
-  }
 </style>

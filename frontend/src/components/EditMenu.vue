@@ -122,9 +122,9 @@ export default {
     form: JSON
   },
 
-  created() {
-    this.getModules();
+  async created() {
     this.editedForm = structuredClone(this.form);
+    await this.getModules();
     this.replaceIdWithName();
   },
 
@@ -158,6 +158,7 @@ export default {
     async sendToPruefungsausschuss(readyForApproval) {
       this.loadingSendButton = true;
       await this.saveEditedForm(readyForApproval)
+      this.loadingSendButton = false;
 
       if(this.reason === "") {
         this.showCommentWarning = true;
@@ -183,8 +184,10 @@ export default {
     },
 
     async getModules() {
-      await axios.get(`/api/unidata/getModules?majorName=${this.form.original.applicationData.newCourseOfStudy}`).then(
-          res => this.majorModules = res.data.modules
+      await axios.get(`/api/unidata/getAllModules?majorName=${this.form.original.applicationData.newCourseOfStudy}`).then(
+          res => {
+            this.majorModules = res.data.modules;
+          }
       ).catch(err => {
         console.log(err);
       });
@@ -204,7 +207,7 @@ export default {
       for(let i = 0; i < this.editedForm.original.moduleFormsData.length; i++) {
         for(let j = 0; j < this.editedForm.original.moduleFormsData[i].modules2bCredited.length; j++) {
           //Replace module ID in moduleFormsData[i], modules2bCredited[j] with their names
-          this.editedForm.original.moduleFormsData[i].modules2bCredited[j] = this.findModule(this.editedForm.original.moduleFormsData[i].modules2bCredited[j]);
+          console.log(this.findModule(this.editedForm.edited.moduleFormsData[i].modules2bCredited[j]));
           this.editedForm.edited.moduleFormsData[i].modules2bCredited[j] = this.findModule(this.editedForm.edited.moduleFormsData[i].modules2bCredited[j]);
         }
       }
@@ -214,7 +217,6 @@ export default {
       for(let i = 0; i < this.editedForm.original.moduleFormsData.length; i++) {
         for(let j = 0; j < this.editedForm.original.moduleFormsData[i].modules2bCredited.length; j++) {
           //Replace module name in moduleFormsData[i], modules2bCredited[j] with their IDs (IMPORTANT FOR SAVING)
-          this.editedForm.original.moduleFormsData[i].modules2bCredited[j] = this.findModuleInverse(this.editedForm.original.moduleFormsData[i].modules2bCredited[j]);
           this.editedForm.edited.moduleFormsData[i].modules2bCredited[j] = this.findModuleInverse(this.editedForm.edited.moduleFormsData[i].modules2bCredited[j])
         }
       }
