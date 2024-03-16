@@ -17,6 +17,18 @@
       <v-btn class="button-top" variant="tonal" @click="openComparisonMenu">Mit anderen Anträgen vergleichen</v-btn>
       <v-btn class="button-top" variant="tonal" icon="mdi-close" @click="closeEditMenu"></v-btn>
     </div>
+
+    <v-divider></v-divider>
+    <v-text-field class="text-field" label="Begründung" v-model="formalReject"/>
+    <p v-if="showCommentWarning" style="color:red; margin: 1%">Bitte geben sie eine Begründung an!</p>
+    <v-btn
+        @click="formallyReject"
+        class="button-top"
+        color="red"
+        prepend-icon="mdi-hand-back-left"
+    >Ganzen Antrag formal ablehnen</v-btn>
+    <v-divider></v-divider>
+
     <v-card-text>
       Vorherige Universität: {{ applicationVersion.applicationData.university }}
     </v-card-text>
@@ -63,13 +75,24 @@
         ></v-text-field>
         <v-btn style="margin: 1%" @click="downloadPdf(studentModule.path, studentModule.title)">Beschreibung herunterladen</v-btn>
         <v-text-field label="Formale Ablehnung" v-model="editedForm.edited.moduleFormsData[index].modulesStudent[index2].reason"></v-text-field>
-        <v-btn
-            @click="setFormalReject(index, index2)"
-            :disabled="!isEdited"
-            class="button-top"
-            prepend-icon="mdi-hand-back-left"
-            variant="flat"
-            color="red">Formal Ablehnen</v-btn>
+        <v-row style="margin: 1%">
+          <v-btn
+              @click="setFormalReject(index, index2)"
+              :disabled="!isEdited"
+              class="button-top"
+              prepend-icon="mdi-hand-back-left"
+              variant="flat"
+              color="red"
+          >Formal Ablehnen</v-btn>
+          <v-btn
+              @click="resetFormalReject(index, index2)"
+              v-if="this.editedForm.edited.moduleFormsData[index].modulesStudent[index2].approval === 'formally rejected'"
+              class="button-top"
+              prepend-icon="mdi-keyboard-backspace"
+              variant="flat"
+              color="yellow"
+          >Ablehnung rückgängig machen</v-btn>
+        </v-row>
       </div>
       <v-card-text>
         <u>Anrechnen für:</u>
@@ -87,7 +110,6 @@
       <v-divider/>
     </div>
     <v-divider/>
-    <v-text-field class="text-field" label="Begründung" v-model="reason"/>
     <v-card-actions>
       <v-btn
           color="blue"
@@ -109,7 +131,6 @@
       >
         Speichern
       </v-btn>
-      <p v-if="showCommentWarning" style="color:red">Bitte geben sie eine Begründung an!</p>
     </v-card-actions>
   </v-card>
 </template>
@@ -130,7 +151,7 @@ export default {
 
   data() {
     return {
-      reason: '',
+      formalReject: '',
       showCommentWarning: false,
       loadingSaveButton: false,
       loadingSendButton: false,
@@ -160,14 +181,6 @@ export default {
       await this.saveEditedForm(readyForApproval)
       this.loadingSendButton = false;
 
-      if(this.reason === "") {
-        this.showCommentWarning = true;
-        return;
-      }
-
-      this.showCommentWarning = false;
-      this.editedForm.formalReject = this.reason;
-
       await axios.put("/api/application/readyForApproval", this.editedForm)
           .then(response => console.log(response))
           .catch(err => console.error("Error setting the form status to ready for approval: ", err));
@@ -181,6 +194,25 @@ export default {
 
     setFormalReject(index, index2) {
       this.editedForm.edited.moduleFormsData[index].modulesStudent[index2].approval = "formally rejected";
+    },
+
+    resetFormalReject(index, index2) {
+      this.editedForm.edited.moduleFormsData[index].modulesStudent[index2].approval = "edited";
+    },
+
+    async formallyReject() {
+      if(this.formalReject === "") {
+        this.showCommentWarning = true;
+        return;
+      }
+
+      this.showCommentWarning = false;
+      this.editedForm.edited.applicationData.formalReject = this.formalReject;
+      this.replaceNameWithId();
+      await axios.put("/api/application/formalRejection", this.editedForm)
+          .then(res => console.log(res))
+          .catch(err => console.error("Error formally rejecting form: ", err));
+      this.$emit("close-edit-menu");
     },
 
     async getModules() {
@@ -217,7 +249,8 @@ export default {
       for(let i = 0; i < this.editedForm.original.moduleFormsData.length; i++) {
         for(let j = 0; j < this.editedForm.original.moduleFormsData[i].modules2bCredited.length; j++) {
           //Replace module name in moduleFormsData[i], modules2bCredited[j] with their IDs (IMPORTANT FOR SAVING)
-          this.editedForm.edited.moduleFormsData[i].modules2bCredited[j] = this.findModuleInverse(this.editedForm.edited.moduleFormsData[i].modules2bCredited[j])
+          this.editedForm.edited.moduleFormsData[i].modules2bCredited[j] = this.findModuleInverse(this.editedForm.edited.moduleFormsData[i].modules2bCredited[j]);
+          console.log(this.editedForm.edited.moduleFormsData[i].modules2bCredited[j]);
         }
       }
     },
