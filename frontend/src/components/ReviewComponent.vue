@@ -101,7 +101,7 @@
                 <div class="my-content" v-for="module in moduleForm.modulesStudent" :key="module.frontend_key">
                   <div>
                     <!-- Module details -->
-                    <span style="font-weight: bold;">{{$t('reviewComponent.modulName')}}:</span> {{ module.title }} |     
+                    <span style="font-weight: bold;">{{$t('reviewComponent.moduleName')}}:</span> {{ module.title }} |     
                     <span style="font-weight: bold;">{{$t('reviewComponent.moduleNumber')}}:</span> {{ module.number }} |  
                     <span style="font-weight: bold;">{{$t('reviewComponent.moduleCredits')}}:</span> {{ module.credits }} 
                   </div>
@@ -126,7 +126,7 @@
                 <!-- Displaying modules to be credited -->
                 <div class="my-content" v-if="moduleForm.modules2bCredited && moduleForm.modules2bCredited.length">
                   <div>
-                    <span style="font-weight: bold;">{{$t('reviewComponent.modules2bCredited')}}:</span>
+                    <span style="font-weight: bold;">{{$t('reviewComponent.modulesToBeCredited')}}:</span>
                   </div>
 
                   <!-- List of modules to be credited -->
@@ -154,6 +154,7 @@
 
 <script>
 import { mapActions } from 'vuex';
+import axios from '@/plugins/axios';
 
 
 export default {
@@ -218,26 +219,51 @@ export default {
 
     /**
      * Downloads the form as a PDF.
-     * Asynchronous method to fetch PDF data and trigger a download.
+     * 
+     * This method asynchronously fetches PDF data from a specified API endpoint
+     * using the form ID from the component's state. It then creates a temporary 
+     * link in the DOM to trigger the download of the PDF file. After the download
+     * initiates, it cleans up by removing the temporary link and revoking the 
+     * created URL object.
+     *
+     * @async
+     * @function downloadForm
+     * @throws Will log an error to the console if the PDF download fails.
      */
     async downloadForm() {
-      if (!this.form) return; // Exit if no form is available
+        try {
+            // Retrieve the form ID from the component's state.
+            const applicationID = this.form.applicationData.applicationID;
 
-      try {
-        const pdfData = await this.fetchPdfSummary(this.formId); // Fetch the PDF summary
-        const blob = new Blob([pdfData], { type: 'application/pdf' });
+            // Fetch the PDF as a blob from the API.
+            const response = await axios.get("/api/student/getPdfSummary", {
+                params: { applicationID },
+                responseType: 'blob'
+            });
 
-        // Create a temporary link to download the file
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = `application-${this.formId}.pdf`;
-        link.click();
+            // Logging the response for debugging purposes.
+            console.log('PDF response:', response);
 
-        URL.revokeObjectURL(link.href); // Clean up by revoking the object URL
-      } catch (error) {
-        console.error('Error downloading PDF:', error);
-      }
-    },  
+            // Create an object URL for the blob and set up a temporary download link.
+            const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'file.pdf'); // Consider using a dynamic filename.
+
+            // Append the link to the DOM and trigger the download.
+            document.body.appendChild(link);
+            link.click();
+
+            // Clean up: revoke the object URL and remove the temporary link.
+            window.URL.revokeObjectURL(url);
+            link.parentNode.removeChild(link);
+        } catch (error) {
+            // Log any errors encountered during the download process.
+            console.error('Error downloading PDF:', error);
+        }
+    },
+
+
 
     /**
      * Determines the color associated with a given status.
@@ -319,11 +345,14 @@ export default {
     getBlockApprovalStatus(modules) {
       const allApproved = modules.every(module => module.approval === 'accepted');
       const someApproved = modules.some(module => module.approval === 'accepted');
+      const allOpen = modules.every(module => module.approval === '');
 
       if (allApproved) {
         return this.$t('reviewComponent.accepted');
       } else if (someApproved) {
         return this.$t('reviewComponent.partiallyAccepted');
+      } else if (allOpen) {
+        return this.$t('reviewComponent.open');
       } else {
         return this.$t('reviewComponent.rejected');
       }
@@ -337,11 +366,14 @@ export default {
     getBlockApprovalColor(modules) {
       const allApproved = modules.every(module => module.approval === 'accepted');
       const someApproved = modules.some(module => module.approval === 'accepted');
+      const allOpen = modules.every(module => module.approval === '');
 
       if (allApproved) {
         return 'green';
       } else if (someApproved) {
         return 'orange';
+      } else if (allOpen) {
+        return 'blue';
       } else {
         return 'red';
       }
