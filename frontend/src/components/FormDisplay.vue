@@ -42,8 +42,8 @@ export default {
       }
     },
 
-  created() {
-    this.getForms();
+  async created() {
+    await this.getForms();
     for(let i = 0; i < this.forms.length; i++) {
       this.forms[i].dateOfSubmission = this.formatDate(this.forms[i].dateOfSubmission);
       this.forms[i].dateLastEdited = this.formatDate(this.forms[i].dateLastEdited);
