@@ -39,7 +39,6 @@
   import FormDisplay from "@/components/FormDisplay.vue";
   import ComparisonMenu from "@/components/ComparisonMenu.vue";
   import ViewApplication from "@/components/ViewApplication.vue";
-  import axios from "@/plugins/axios";
   export default {
     components: {ComparisonMenu, EditMenu, FormDisplay, ViewApplication},
     data() {
@@ -54,25 +53,18 @@
     },
     methods: {
       openEditMenu(form) {
-        this.FDisDisplayed = false;
         this.EMisDisplayed = true;
-        axios.put(`/api/application/editingInProgress?applicationID=${form.edited.applicationData.applicationID}`)
-            .then(response => console.log(response))
-            .catch(err => console.error("Error putting status to editing in progress: ", err));
         this.EMformContent = form;
       },
 
-      closeEditMenu(form) {
+      closeEditMenu() {
         this.EMisDisplayed = false;
-        this.FDisDisplayed = true;
-        axios.put(`/api/application/resetStatusInProgress?applicationID=${form.edited.applicationData.applicationID}`)
-            .then(response => console.log(response))
-            .catch(err => console.error("Error putting status to edited: ", err));
         this.EMformContent = {};
       },
 
       closeEditMenuBySaving() {
         this.EMisDisplayed = false;
+        this.FDisDisplayed = true;
         this.EMformContent = {};
       },
 
@@ -103,15 +95,9 @@
 </script>
 
 <style scoped>
-  .comparison {
-
-  }
 
   .col-left {
     margin-left: 5%;
   }
 
-  .edit-menu {
-
-  }
 </style>
