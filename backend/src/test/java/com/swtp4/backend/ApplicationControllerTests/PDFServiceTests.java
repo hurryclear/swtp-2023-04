@@ -7,12 +7,10 @@ import com.swtp4.backend.repositories.ModuleRelationRepository;
 import com.swtp4.backend.repositories.entities.ApplicationEntity;
 import com.swtp4.backend.repositories.entities.keyClasses.ApplicationKeyClass;
 import com.swtp4.backend.services.PDFService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.core.io.Resource;
 import org.springframework.mock.web.MockMultipartFile;
@@ -131,6 +129,33 @@ class PDFServiceTests {
         // Check if ResourceNotFoundException is thrown
         assertThrows(ResourceNotFoundException.class, () -> pdfService.generatePDFForApplication("123"));
     }
+
+
+
+    @Test
+    public void whenSaveModulePDFsEncountersError_ThrowsRuntimeException() {
+        // Preparation: Simulating a file whose saving encounters an error
+        MultipartFile file = mock(MultipartFile.class);
+        when(file.isEmpty()).thenReturn(false);
+        try {
+            when(file.getBytes()).thenThrow(IOException.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Map<String, MultipartFile> fileMap = new HashMap<>();
+        fileMap.put("file-2:2", file);
+
+        HashMap<String, String> filePaths = new HashMap<>();
+        filePaths.put("file-2:2", "/invalid/path/file.pdf");
+
+        // Action and Assertion: Ensure a RuntimeException is thrown
+        assertThrows(RuntimeException.class, () -> pdfService.saveModulePDFs(fileMap, filePaths), "Expected to throw RuntimeException due to save error");
+    }
+
+
+
+
 
 
 }
