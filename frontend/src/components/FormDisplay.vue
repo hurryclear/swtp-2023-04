@@ -16,7 +16,6 @@
     <template v-slot:[`item.actions`]="{ item }">
       <v-btn
           @click="openEditMenu(item)"
-          :disabled="item.status === 'editing in progress'"
           icon="mdi-pencil"
       ></v-btn>
     </template>
@@ -30,12 +29,13 @@ export default {
     data() {
       return {
         search: "",
-        forms: [] ,
+        forms: [],
         //TODO i18n
         headers: [
           { title: "ID", key: "applicationID" },
           { title: "Universität" , key: "university" },
           { title: "Antragsdatum", key: "dateOfSubmission" },
+          { title: "Letzte Bearbeitung", key: "dateLastEdited"},
           { title: "Status", key: "status" },
           { title: "Editieren", value: "actions", sortable: false }
         ]
@@ -43,25 +43,41 @@ export default {
     },
 
   created() {
-      this.getForms();
+    this.getForms();
+    for(let i = 0; i < this.forms.length; i++) {
+      this.forms[i].dateOfSubmission = this.formatDate(this.forms[i].dateOfSubmission);
+      this.forms[i].dateLastEdited = this.formatDate(this.forms[i].dateLastEdited);
+    }
   },
 
   methods: {
-      async openEditMenu(item) {
-        let form = {};
-        await axios.get("/api/application/getApplication?applicationID=" + item.applicationID)
-            .then(response => form = response.data)
-            .catch(err => console.error("Error retrieving form: ", err));
-        this.$emit('open-edit-menu', form);
-      },
+    async openEditMenu(item) {
+      let form = {};
+      await axios.get("/api/application/getApplication?applicationID=" + item.applicationID)
+          .then(response => form = response.data)
+          .catch(err => console.error("Error retrieving form: ", err));
+      this.$emit('open-edit-menu', form);
+    },
 
-      async getForms() {
-        await axios.get("/api/application/overviewOffice")
-            .then(response => this.forms = response.data.content)
-            .catch(err => console.error("Error retrieving open forms: ", err));
-      }
+    async getForms() {
+      await axios.get("/api/application/overviewOffice")
+          .then(response => this.forms = response.data.content)
+          .catch(err => console.error("Error retrieving open forms: ", err));
+    },
+
+    formatDate(inputDate) {
+      // Parse the input date string
+      const date = new Date(inputDate);
+
+      // Extract day, month, and year
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0'); // January is 0
+      const year = date.getFullYear();
+
+      return `${day}-${month}-${year}`;
     }
   }
+}
 </script>
 
 <style scoped>
