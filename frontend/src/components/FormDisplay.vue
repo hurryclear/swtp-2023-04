@@ -10,21 +10,21 @@
           variant="outlined"
           hide-details
           single-line
-      ></v-text-field>
+      />
     </template>
   <v-data-table :headers="headers" :items="forms" :search="search" item-key="id">
     <template v-slot:[`item.actions`]="{ item }">
       <v-btn
           @click="openEditMenu(item)"
           icon="mdi-pencil"
-      ></v-btn>
+      />
     </template>
   </v-data-table>
   </v-card>
 </template>
 
 <script>
-import axios from "@/plugins/axios";
+import StudentAffairsOfficeService from "@/services/StudentAffairsOfficeService";
 export default {
     data() {
       return {
@@ -44,37 +44,41 @@ export default {
 
   async created() {
     await this.getForms();
-    for(let i = 0; i < this.forms.length; i++) {
-      this.forms[i].dateOfSubmission = this.formatDate(this.forms[i].dateOfSubmission);
-      this.forms[i].dateLastEdited = this.formatDate(this.forms[i].dateLastEdited);
-    }
+    this.forms = this.forms.map(form => ({
+      ...form,
+      dateOfSubmission: this.formatDate(form.dateOfSubmission),
+      dateLastEdited: this.formatDate(form.dateLastEdited)
+    }));
   },
 
   methods: {
     async openEditMenu(item) {
-      let form = {};
-      await axios.get("/api/application/getApplication?applicationID=" + item.applicationID)
-          .then(response => form = response.data)
-          .catch(err => console.error("Error retrieving form: ", err));
-      this.$emit('open-edit-menu', form);
+      try {
+        const form = await StudentAffairsOfficeService.getApplication(item.applicationID);
+        this.$emit('open', { component: 'EditMenu', form });
+      } catch (error) {
+        console.error("Error retrieving form: ", error);
+      }
     },
 
     async getForms() {
-      await axios.get("/api/application/overviewOffice")
-          .then(response => this.forms = response.data.content)
-          .catch(err => console.error("Error retrieving open forms: ", err));
+      try {
+        this.forms = await StudentAffairsOfficeService.getOfficeOverview();
+      } catch (error) {
+        console.error("Error retrieving open forms: ", error);
+      }
     },
 
     formatDate(inputDate) {
-      // Parse the input date string
       const date = new Date(inputDate);
-
-      // Extract day, month, and year
-      const day = String(date.getDate()).padStart(2, '0');
-      const month = String(date.getMonth() + 1).padStart(2, '0'); // January is 0
-      const year = date.getFullYear();
-
-      return `${day}-${month}-${year}`;
+      const options = {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      };
+      return date.toLocaleDateString(this.$i18n.locale, options);
     }
   }
 }

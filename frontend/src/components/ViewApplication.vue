@@ -6,7 +6,7 @@
           <u>Antrag</u>
         </v-card-title>
         <v-spacer/>
-        <v-btn class="button-top" variant="tonal" icon="mdi-close" @click="closeViewApplication"></v-btn>
+        <v-btn class="button-top" variant="tonal" icon="mdi-close" @click="this.$emit('close');"/>
       </div>
       <v-card-text>
         Vorherige Universität: {{ copy.edited.applicationData.university }}
@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import axios from "@/plugins/axios";
+import StudentAffairsOfficeService from "@/services/StudentAffairsOfficeService";
 
 export default {
   props: {
@@ -66,9 +66,6 @@ export default {
   },
 
   methods: {
-    closeViewApplication() {
-      this.$emit("close-view-application");
-    },
 
     findModule(module) {
       const foundModule = this.majors.find(item => item.id === module);
@@ -89,24 +86,18 @@ export default {
     },
 
     async getModules() {
-      await axios.get(`/api/unidata/getModules?majorName=${this.copy.edited.applicationData.newCourseOfStudy}`).then(
-          res => this.major = res.data.modules
-      ).catch(err => {
-        console.log(err);
-      });
+      try {
+        //TODO: WTF is this.major???
+        this.major = await StudentAffairsOfficeService.getModules(this.copy.edited.applicationData.newCourseOfStudy);
+      } catch (error) {
+        console.error('Error fetching modules:', error);
+      }
     },
 
     async downloadPdf(pdfPath) {
       try {
-        //TODO Change if it throws error
-        const response = await axios.get("/api/application/getModulePDF", {
-          params: {
-            pdfPath
-          },
-          responseType: 'blob' // Ensure response is treated as a blob
-        });
-
-        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const pdfBlob = await StudentAffairsOfficeService.getModulePDF(pdfPath);
+        const url = window.URL.createObjectURL(new Blob([pdfBlob]));
         const link = document.createElement('a');
         link.href = url;
         link.setAttribute('download', 'file.pdf');
@@ -116,9 +107,7 @@ export default {
         console.error('Error downloading PDF:', error);
       }
     }
-
   },
-
   created() {
     this.createCopy();
     this.getModules();

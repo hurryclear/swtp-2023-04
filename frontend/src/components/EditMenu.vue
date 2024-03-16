@@ -6,7 +6,12 @@
         <u>Antrag</u>
       </v-card-title>
       <v-spacer/>
-      <v-btn-toggle class="button-top" v-model="isEdited" mandatory shaped variant="outlined">
+      <v-btn-toggle
+          class="button-top"
+          v-model="isEdited"
+          mandatory
+          shaped
+          variant="outlined">
         <v-btn :value="false">
           Original
         </v-btn>
@@ -14,11 +19,21 @@
           Bearbeitet
         </v-btn>
       </v-btn-toggle>
-      <v-btn class="button-top" variant="tonal" @click="openComparisonMenu">Mit anderen Anträgen vergleichen</v-btn>
-      <v-btn class="button-top" variant="tonal" icon="mdi-close" @click="closeEditMenu"></v-btn>
+      <v-btn
+          class="button-top"
+          variant="tonal"
+          @click="this.$emit('open',{component:'ComparisonMenu',form:{}});"
+      >Mit anderen Anträgen vergleichen
+      </v-btn>
+      <v-btn
+          class="button-top"
+          variant="tonal"
+          icon="mdi-close"
+          @click="this.$emit('close')"
+      />
     </div>
 
-    <v-divider></v-divider>
+    <v-divider/>
     <v-text-field class="text-field" label="Begründung" v-model="formalReject"/>
     <p v-if="showCommentWarning" style="color:red; margin: 1%">Bitte geben sie eine Begründung an!</p>
     <v-btn
@@ -27,7 +42,7 @@
         color="red"
         prepend-icon="mdi-hand-back-left"
     >Ganzen Antrag formal ablehnen</v-btn>
-    <v-divider></v-divider>
+    <v-divider/>
 
     <v-card-text>
       Vorherige Universität: {{ applicationVersion.applicationData.university }}
@@ -41,43 +56,50 @@
     <v-card-title>
       Module:
     </v-card-title>
-    <div v-for="(moduleData, index) in applicationVersion.moduleFormsData" v-bind:key="moduleData.frontend_key">
+    <div v-for="(moduleData, i) in applicationVersion.moduleFormsData" v-bind:key="moduleData.frontend_key">
       <v-card-subtitle>
         <br>
-        Mapping {{ index + 1 }}
+        Mapping {{ i + 1 }}
       </v-card-subtitle>
-      <div v-for="(studentModule, index2) in moduleData.modulesStudent" v-bind:key="studentModule.frontend_key">
-        <v-card-text><u>Modul {{ index2 + 1 }}</u></v-card-text>
+      <div v-for="(studentModule, j) in moduleData.modulesStudent" v-bind:key="studentModule.frontend_key">
+        <v-card-text><u>Modul {{ j + 1 }}</u></v-card-text>
         <v-card-text>Name:</v-card-text>
         <v-text-field
+            v-if="editedForm"
             :disabled="!isEdited"
             :label="studentModule.title"
-            v-model="editedForm.edited.moduleFormsData[index].modulesStudent[index2].title"
-        ></v-text-field>
+            v-model="editedForm.edited.moduleFormsData[i].modulesStudent[j].title"
+        />
         <v-card-text>Modulnummer:</v-card-text>
         <v-text-field
+            v-if="editedForm"
             :disabled="!isEdited"
             :label="studentModule.number"
-            v-model="editedForm.edited.moduleFormsData[index].modulesStudent[index2].number"
-        ></v-text-field>
+            v-model="editedForm.edited.moduleFormsData[i].modulesStudent[j].number"
+        />
         <v-card-text>Leistungspunkte:</v-card-text>
         <v-text-field
+            v-if="editedForm"
             :disabled="!isEdited"
             :label="studentModule.credits"
-            v-model="editedForm.edited.moduleFormsData[index].modulesStudent[index2].credits"
-        ></v-text-field>
+            v-model="editedForm.edited.moduleFormsData[i].modulesStudent[j].credits"
+        />
         <v-card-text>Studentenkommentar: {{ studentModule.commentStudent }}</v-card-text>
         <v-card-text>Studienbürokommentar: </v-card-text>
         <v-text-field
+            v-if="editedForm"
             :disabled="!isEdited"
             :label="studentModule.commentEmployee"
-            v-model="editedForm.edited.moduleFormsData[index].modulesStudent[index2].commentEmployee"
-        ></v-text-field>
+            v-model="editedForm.edited.moduleFormsData[i].modulesStudent[j].commentEmployee"
+        />
         <v-btn style="margin: 1%" @click="downloadPdf(studentModule.path, studentModule.title)">Beschreibung herunterladen</v-btn>
-        <v-text-field label="Formale Ablehnung" v-model="editedForm.edited.moduleFormsData[index].modulesStudent[index2].reason"></v-text-field>
+        <v-text-field
+            v-if="editedForm"
+            label="Formale Ablehnung"
+            v-model="editedForm.edited.moduleFormsData[i].modulesStudent[j].reason"/>
         <v-row style="margin: 1%">
           <v-btn
-              @click="setFormalReject(index, index2)"
+              @click="this.editedForm.edited.moduleFormsData[i].modulesStudent[j].approval = 'formally rejected'"
               :disabled="!isEdited"
               class="button-top"
               prepend-icon="mdi-hand-back-left"
@@ -85,8 +107,8 @@
               color="red"
           >Formal Ablehnen</v-btn>
           <v-btn
-              @click="resetFormalReject(index, index2)"
-              v-if="this.editedForm.edited.moduleFormsData[index].modulesStudent[index2].approval === 'formally rejected'"
+              @click="this.editedForm.edited.moduleFormsData[i].modulesStudent[j].approval = 'edited'"
+              v-if="editedForm && editedForm.edited.moduleFormsData[i].modulesStudent[j].approval === 'formally rejected'"
               class="button-top"
               prepend-icon="mdi-keyboard-backspace"
               variant="flat"
@@ -97,14 +119,15 @@
       <v-card-text>
         <u>Anrechnen für:</u>
         <br>
-        <div v-for="(module, index3) in moduleData.modules2bCredited" v-bind:key="module">
+        <div v-for="(module, k) in moduleData.modules2bCredited" v-bind:key="module">
           <v-autocomplete
+              v-if="editedForm"
               class="text-field"
-              :items="getMajorModulesName()"
-              :label="findModule(applicationVersion.moduleFormsData[index].modules2bCredited[index3])"
+              :items="this.majorModules.map(module => module.name)"
+              :label="findModule(applicationVersion.moduleFormsData[i].modules2bCredited[k])"
               :disabled="!isEdited"
-              v-model="editedForm.edited.moduleFormsData[index].modules2bCredited[index3]"
-          ></v-autocomplete>
+              v-model="editedForm.edited.moduleFormsData[i].modules2bCredited[k]"
+          />
         </div>
       </v-card-text>
       <v-divider/>
@@ -117,7 +140,7 @@
           class="button-bottom"
           prepend-icon="mdi-arrow-u-left-top"
           :loading="loadingSendButton"
-          @click="sendToPruefungsausschuss(true)"
+          @click="sendToExaminingCommitteeChair(true)"
       >
         An Prüfungsausschuss senden
       </v-btn>
@@ -137,15 +160,16 @@
 
 
 <script>
-import axios from "@/plugins/axios";
+import StudentAffairsOfficeService from "@/services/StudentAffairsOfficeService";
+
 export default {
   props: {
     form: JSON
   },
 
   async created() {
+    await this.getModules()
     this.editedForm = structuredClone(this.form);
-    await this.getModules();
     this.replaceIdWithName();
   },
 
@@ -168,61 +192,84 @@ export default {
   },
 
   methods: {
-    closeEditMenu() {
-      this.$emit("close-edit-menu");
+    async getModules() {
+      try {
+        this.majorModules = await StudentAffairsOfficeService.getAllModules(this.form.original.applicationData.newCourseOfStudy);
+      } catch (error) {
+        console.error(error.message);
+      }
     },
 
-    closeEditMenuBySaving() {
-      this.$emit("close-edit-menu-by-saving");
-    },
-
-    async sendToPruefungsausschuss(readyForApproval) {
-      this.loadingSendButton = true;
-      await this.saveEditedForm(readyForApproval)
-      this.loadingSendButton = false;
-
-      await axios.put("/api/application/readyForApproval", this.editedForm)
-          .then(response => console.log(response))
-          .catch(err => console.error("Error setting the form status to ready for approval: ", err));
-      this.loadingSendButton = false;
-      this.closeEditMenuBySaving();
-    },
-
-    openComparisonMenu() {
-      this.$emit("open-comparison");
-    },
-
-    setFormalReject(index, index2) {
-      this.editedForm.edited.moduleFormsData[index].modulesStudent[index2].approval = "formally rejected";
-    },
-
-    resetFormalReject(index, index2) {
-      this.editedForm.edited.moduleFormsData[index].modulesStudent[index2].approval = "edited";
+    async sendToExaminingCommitteeChair(readyForApproval) {
+      try {
+        await this.saveEditedForm(readyForApproval);
+        await StudentAffairsOfficeService.sendFormToApproval(this.editedForm);
+        this.$emit("save");
+      } catch (error) {
+        console.error(error.message);
+      }
     },
 
     async formallyReject() {
-      if(this.formalReject === "") {
-        this.showCommentWarning = true;
-        return;
+      try {
+        if (this.formalReject === "") {
+          this.showCommentWarning = true;
+          return;
+        }
+        this.showCommentWarning = false;
+        this.editedForm.edited.applicationData.formalReject = this.formalReject;
+        this.replaceNameWithId();
+        await StudentAffairsOfficeService.formallyRejectForm(this.editedForm);
+        this.$emit("close");
+      } catch (error) {
+        console.error(error.message);
       }
-
-      this.showCommentWarning = false;
-      this.editedForm.edited.applicationData.formalReject = this.formalReject;
-      this.replaceNameWithId();
-      await axios.put("/api/application/formalRejection", this.editedForm)
-          .then(res => console.log(res))
-          .catch(err => console.error("Error formally rejecting form: ", err));
-      this.$emit("close-edit-menu");
     },
 
-    async getModules() {
-      await axios.get(`/api/unidata/getAllModules?majorName=${this.form.original.applicationData.newCourseOfStudy}`).then(
-          res => {
-            this.majorModules = res.data.modules;
+    async saveEditedForm(readyForApproval) {
+      try {
+        this.replaceNameWithId();
+        this.editedForm.edited.applicationData.dateLastEdited = new Date().toISOString();
+        await StudentAffairsOfficeService.saveEditedForm(this.editedForm);
+        if (!readyForApproval) {
+          this.$emit("save");
+        }
+      } catch (error) {
+        console.error(error.message);
+      }
+    },
+
+    async downloadPdf(filePath, fileName) {
+      try {
+        const pdfData = await StudentAffairsOfficeService.getModulePDF(filePath);
+        const url = window.URL.createObjectURL(new Blob([pdfData]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', fileName + ".pdf");
+        document.body.appendChild(link);
+        link.click();
+      } catch (error) {
+        console.error('Error downloading PDF:', error.message);
+      }
+    },
+
+    replaceData(dataArray, findMethod, replaceMethod) {
+      dataArray.forEach((data) => {
+        data.modules2bCredited.forEach((value, index) => {
+          const replacement = findMethod(value);
+          if (replacement !== undefined) {
+            data.modules2bCredited[index] = replaceMethod(replacement);
           }
-      ).catch(err => {
-        console.log(err);
+        });
       });
+    },
+
+    replaceIdWithName() {
+      this.replaceData(
+          this.editedForm.original.moduleFormsData,
+          this.findModule,
+          (moduleName) => moduleName
+      );
     },
 
     findModule(module) {
@@ -230,71 +277,19 @@ export default {
       return foundModule ? foundModule.name : "Module not found";
     },
 
+    replaceNameWithId() {
+      this.replaceData(
+          this.editedForm.edited.moduleFormsData,
+          this.findModuleInverse,
+          (moduleId) => moduleId
+      );
+    },
+
     findModuleInverse(module) {
       const foundModule = this.majorModules.find(item => item.name === module)
       return foundModule ? foundModule.id : undefined;
     },
 
-    replaceIdWithName() {
-      for(let i = 0; i < this.editedForm.original.moduleFormsData.length; i++) {
-        for(let j = 0; j < this.editedForm.original.moduleFormsData[i].modules2bCredited.length; j++) {
-          //Replace module ID in moduleFormsData[i], modules2bCredited[j] with their names
-          console.log(this.findModule(this.editedForm.edited.moduleFormsData[i].modules2bCredited[j]));
-          this.editedForm.edited.moduleFormsData[i].modules2bCredited[j] = this.findModule(this.editedForm.edited.moduleFormsData[i].modules2bCredited[j]);
-        }
-      }
-    },
-
-    replaceNameWithId() {
-      for(let i = 0; i < this.editedForm.original.moduleFormsData.length; i++) {
-        for(let j = 0; j < this.editedForm.original.moduleFormsData[i].modules2bCredited.length; j++) {
-          //Replace module name in moduleFormsData[i], modules2bCredited[j] with their IDs (IMPORTANT FOR SAVING)
-          this.editedForm.edited.moduleFormsData[i].modules2bCredited[j] = this.findModuleInverse(this.editedForm.edited.moduleFormsData[i].modules2bCredited[j]);
-          console.log(this.editedForm.edited.moduleFormsData[i].modules2bCredited[j]);
-        }
-      }
-    },
-
-    getMajorModulesName() {
-      return this.majorModules.map(module => module.name)
-    },
-
-    async saveEditedForm(readyForApproval) {
-      this.replaceNameWithId();
-
-      this.loadingSaveButton = true;
-      this.editedForm.edited.applicationData.dateLastEdited = new Date().toISOString();
-      await axios.put("/api/application/saveEdited", this.editedForm)
-          .then(
-              response => console.log(response)
-          )
-          .catch(err => console.error("Error saving edited form to database: ", err));
-
-      this.loadingSaveButton = false;
-      if(!readyForApproval) {
-        this.closeEditMenuBySaving();
-      }
-    },
-
-    async downloadPdf(filePath, fileName) {
-      try {
-        const response = await axios.get("/api/application/getModulePDF", {
-          params: {
-            filePath
-          },
-          responseType: 'blob' // Ensure response is treated as a blob
-        });
-
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', fileName + ".pdf");
-        document.body.appendChild(link);
-        link.click();
-      } catch (error) {
-        console.error('Error downloading PDF:', error);
-      }
-    }
   }
 }
 </script>
