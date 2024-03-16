@@ -43,7 +43,6 @@
   import LogoutButton from "@/components/LogoutButton.vue";
   import ComparisonMenu from "@/components/ComparisonMenu.vue";
   import ViewApplication from "@/components/ViewApplication.vue";
-  import axios from "@/plugins/axios";
   export default {
     components: {ComparisonMenu, EditMenu, FormDisplay, LogoutButton, ViewApplication},
     data() {
@@ -60,23 +59,18 @@
       openEditMenu(form) {
         this.FDisDisplayed = false;
         this.EMisDisplayed = true;
-        axios.put(`/api/application/editingInProgress?applicationID=${form.edited.applicationData.applicationID}`)
-            .then(response => console.log(response))
-            .catch(err => console.error("Error putting status to editing in progress: ", err));
         this.EMformContent = form;
       },
 
-      closeEditMenu(form) {
+      closeEditMenu() {
         this.EMisDisplayed = false;
         this.FDisDisplayed = true;
-        axios.put(`/api/application/resetStatusInProgress?applicationID=${form.edited.applicationData.applicationID}`)
-            .then(response => console.log(response))
-            .catch(err => console.error("Error putting status to edited: ", err));
         this.EMformContent = {};
       },
 
       closeEditMenuBySaving() {
         this.EMisDisplayed = false;
+        this.FDisDisplayed = true;
         this.EMformContent = {};
       },
 

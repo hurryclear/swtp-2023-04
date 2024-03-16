@@ -61,7 +61,7 @@
             :label="studentModule.commentEmployee"
             v-model="editedForm.edited.moduleFormsData[index].modulesStudent[index2].commentEmployee"
         ></v-text-field>
-        <v-btn style="margin: 1%" @click="downloadPdf(studentModule.path)">Beschreibung herunterladen</v-btn>
+        <v-btn style="margin: 1%" @click="downloadPdf(studentModule.path, studentModule.title)">Beschreibung herunterladen</v-btn>
         <v-text-field label="Formale Ablehnung" v-model="editedForm.edited.moduleFormsData[index].modulesStudent[index2].reason"></v-text-field>
         <v-btn
             @click="setFormalReject(index, index2)"
@@ -148,7 +148,7 @@ export default {
 
   methods: {
     closeEditMenu() {
-      this.$emit("close-edit-menu", this.form);
+      this.$emit("close-edit-menu");
     },
 
     closeEditMenuBySaving() {
@@ -240,9 +240,8 @@ export default {
       }
     },
 
-    async downloadPdf(filePath) {
+    async downloadPdf(filePath, fileName) {
       try {
-        //TODO Change if it throws error
         const response = await axios.get("/api/application/getModulePDF", {
           params: {
             filePath
@@ -253,7 +252,7 @@ export default {
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', 'file.pdf');
+        link.setAttribute('download', fileName + ".pdf");
         document.body.appendChild(link);
         link.click();
       } catch (error) {
