@@ -263,6 +263,7 @@ export default {
       this.replaceNameWithId();
 
       this.loadingSaveButton = true;
+      this.editedForm.edited.applicationData.dateLastEdited = new Date().toISOString();
       await axios.put("/api/application/saveEdited", this.editedForm)
           .then(
               response => console.log(response)
