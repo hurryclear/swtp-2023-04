@@ -6,7 +6,7 @@
           <u>Antrag</u>
         </v-card-title>
         <v-spacer/>
-        <v-btn class="button-top" variant="tonal" icon="mdi-close" @click="this.$emit('close');"/>
+        <v-btn class="button-top" variant="tonal" icon="mdi-close" @click="closeViewApplication"></v-btn>
       </div>
       <v-card-text>
         Vorherige Universität: {{ copy.edited.applicationData.university }}
@@ -61,14 +61,14 @@ export default {
   data() {
     return {
       copy: {},
-      majors: []
+      majorModules: []
     }
   },
 
   methods: {
 
     findModule(module) {
-      const foundModule = this.majors.find(item => item.id === module);
+      const foundModule = this.majorModules.find(item => item.id === module);
       return foundModule ? foundModule.name : "Module not found";
     },
 
@@ -106,10 +106,12 @@ export default {
         console.error('Error downloading PDF:', error);
       }
     }
+
   },
-  created() {
+
+  async created() {
     this.createCopy();
-    this.getModules();
+    await this.getModules();
     this.replaceIdWithName();
   }
 }
