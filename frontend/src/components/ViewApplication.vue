@@ -87,8 +87,7 @@ export default {
 
     async getModules() {
       try {
-        //TODO: WTF is this.major???
-        this.major = await StudentAffairsOfficeService.getModules(this.copy.edited.applicationData.newCourseOfStudy);
+        this.majorModules = await StudentAffairsOfficeService.getModules(this.copy.edited.applicationData.newCourseOfStudy);
       } catch (error) {
         console.error('Error fetching modules:', error);
       }
