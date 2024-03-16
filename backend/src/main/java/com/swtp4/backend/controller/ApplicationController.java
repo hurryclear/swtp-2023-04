@@ -39,19 +39,6 @@ public class ApplicationController {
         this.pdfService = pdfService;
     }
 
-    @PutMapping("/resetStatusInProgress")
-    public ResponseEntity<?> resetStatus(@RequestParam String applicationID) {
-        applicationService.resetStatus(applicationID);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-
-    @PutMapping("/editingInProgress")
-    public ResponseEntity<?> continueEditing(@RequestParam String applicationID) {
-        applicationService.updateStatus(applicationID, "editing in progress");
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
     @PutMapping("/saveEdited")
     @Transactional
     public ResponseEntity<?> saveApplication(@RequestBody EditedApplicationDto applicationDto){
@@ -78,14 +65,6 @@ public class ApplicationController {
         applicationService.updateStatus(applicationDto.applicationID(), "ready for approval");
         applicationService.updateApproval(applicationDto, List.of("formally rejected"));
         applicationService.updateApplication(applicationDto);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @PreAuthorize("hasRole('COMMITTEE')")
-    @PutMapping("/approvalInProgress")
-    @Transactional
-    public ResponseEntity<?> approvalInProgress(@RequestParam String applicationID){
-        applicationService.updateStatus(applicationID, "approval in progress");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

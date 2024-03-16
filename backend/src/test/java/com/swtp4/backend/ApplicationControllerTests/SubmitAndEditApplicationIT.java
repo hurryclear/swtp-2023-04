@@ -224,9 +224,6 @@ public class SubmitAndEditApplicationIT {
 
         String editedApplicationJson = ApplicationTestData.createEditedApplicationJson(savedApplicationID);
 
-        mockMvc.perform(put("/application/editingInProgress?applicationID="+savedApplicationID))
-                .andExpect(status().isOk());
-
         mockMvc.perform(put("/application/saveEdited")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(editedApplicationJson))

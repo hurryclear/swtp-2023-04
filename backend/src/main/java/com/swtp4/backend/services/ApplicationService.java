@@ -231,23 +231,6 @@ public class ApplicationService {
         return applicationRepository.save(applicationEmployee);
     }
 
-
-    public void resetStatus(String applicationID) {
-        ApplicationEntity application = applicationRepository.findById(ApplicationKeyClass.builder()
-                        .id(applicationID)
-                        .creator("Employee")
-                        .build())
-                .orElseThrow(() -> new ResourceNotFoundException("Application with ID "+applicationID+" not found. Status can't be changed."));
-        String oldStatus = application.getStatus();
-        if(oldStatus.equals("editing in progress")){
-            application.setStatus("edited");
-        }
-        else if(oldStatus.equals("approval in progress")){
-            application.setStatus("edited approval");
-        }
-        applicationRepository.save(application);
-    }
-
     public void updateStatus(String applicationID, String newStatus){
         ApplicationEntity application = applicationRepository.findById(ApplicationKeyClass.builder()
                         .id(applicationID)
@@ -255,19 +238,13 @@ public class ApplicationService {
                         .build())
                 .orElseThrow(() -> new ResourceNotFoundException("Application with ID "+applicationID+" not found. Status can't be changed."));
         String oldStatus = application.getStatus();
-        if(oldStatus.equals("editing in progress") && newStatus.equals("edited")){
+        if((oldStatus.equals("open") || oldStatus.equals("edited")) && newStatus.equals("edited")){
             application.setStatus(newStatus);
         }
-        else if((oldStatus.equals("open") || oldStatus.equals("edited")) && newStatus.equals("editing in progress")){
+        else if((oldStatus.equals("open") || oldStatus.equals("edited")) && newStatus.equals("ready for approval")){
             application.setStatus(newStatus);
         }
-        else if(oldStatus.equals("editing in progress") && newStatus.equals("ready for approval")){
-            application.setStatus(newStatus);
-        }
-        else if((oldStatus.equals("ready for approval") || oldStatus.equals("edited approval")) && newStatus.equals("approval in progress")){
-            application.setStatus(newStatus);
-        }
-        else if(oldStatus.equals("approval in progress") && newStatus.equals("edited approval")){
+        else if((oldStatus.equals("ready for approval") || oldStatus.equals("edited approval")) && newStatus.equals("edited approval")){
             application.setStatus(newStatus);
         }
         else{
@@ -282,7 +259,7 @@ public class ApplicationService {
                         .creator("Employee")
                         .build())
                 .orElseThrow(() -> new ResourceNotFoundException("Application with ID "+applicationDto.applicationID()+" not found. Status can't be changed."));
-        if(application.getStatus().equals("editing in progress")){
+        if(application.getStatus().equals("edited") || application.getStatus().equals("open")){
             if (applicationDto.formalRejection().isEmpty()){
                 throw new InvalidApplicationStateException("Formal Rejection Reason is empty, but required to change Application Status to formally rejected.");
             }
@@ -290,32 +267,7 @@ public class ApplicationService {
             applicationRepository.save(application);
         }
         else{
-            throw new InvalidApplicationStateException("Setting status to formally rejected requires previous status editing in progress");
-        }
-    }
-
-    //gerade nicht benutzt
-    public void partialFormalRejection(EditedApplicationDto applicationDTO) {
-        boolean allAreRejected = true;
-        for (EditedBlock block : applicationDTO.editedBlocks()){
-            for (EditedStudentModule module : block.editedModules()){
-                ModuleStudentEntity moduleStudent = moduleStudentRepository.findById(module.moduleID())
-                        .orElseThrow(() -> new ResourceNotFoundException("Student Module with ID " +module.moduleID() + "not found"));
-                if (!module.reason().isEmpty() && module.approval().equals("formally rejected")) {
-                    moduleStudent.setApproval("formally rejected");
-                }
-                else {
-                    allAreRejected = false;
-                }
-                moduleStudent.setApprovalReason(module.reason());
-                moduleStudentRepository.save(moduleStudent);
-            }
-        }
-        if(allAreRejected) {
-            ApplicationEntity application = applicationRepository.findById(new ApplicationKeyClass(applicationDTO.applicationID(), "Employee"))
-                    .orElseThrow(() -> new ResourceNotFoundException("Application" + applicationDTO.applicationID()+ "not found"));
-            application.setStatus("approval finished");
-            applicationRepository.save(application);
+            throw new InvalidApplicationStateException("Setting status to formally rejected requires previous status open or edited");
         }
     }
 
