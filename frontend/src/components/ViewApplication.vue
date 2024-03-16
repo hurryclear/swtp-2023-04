@@ -61,7 +61,7 @@ export default {
   data() {
     return {
       copy: {},
-      majors: []
+      majorModules: []
     }
   },
 
@@ -71,7 +71,7 @@ export default {
     },
 
     findModule(module) {
-      const foundModule = this.majors.find(item => item.id === module);
+      const foundModule = this.majorModules.find(item => item.id === module);
       return foundModule ? foundModule.name : "Module not found";
     },
 
@@ -89,8 +89,8 @@ export default {
     },
 
     async getModules() {
-      await axios.get(`/api/unidata/getModules?majorName=${this.copy.edited.applicationData.newCourseOfStudy}`).then(
-          res => this.major = res.data.modules
+      await axios.get(`/api/unidata/getAllModules?majorName=${this.copy.edited.applicationData.newCourseOfStudy}`).then(
+          res => this.majorModules = res.data.modules
       ).catch(err => {
         console.log(err);
       });
@@ -119,9 +119,9 @@ export default {
 
   },
 
-  created() {
+  async created() {
     this.createCopy();
-    this.getModules();
+    await this.getModules();
     this.replaceIdWithName();
   }
 }
