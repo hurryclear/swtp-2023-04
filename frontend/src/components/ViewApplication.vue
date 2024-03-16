@@ -6,7 +6,7 @@
           <u>Antrag</u>
         </v-card-title>
         <v-spacer/>
-        <v-btn class="button-top" variant="tonal" icon="mdi-close" @click="closeViewApplication"></v-btn>
+        <v-btn class="button-top" variant="tonal" icon="mdi-close" @click="this.$emit('close');"/>
       </div>
       <v-card-text>
         Vorherige Universität: {{ copy.edited.applicationData.university }}
