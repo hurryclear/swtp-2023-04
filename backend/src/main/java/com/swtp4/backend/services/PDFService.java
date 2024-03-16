@@ -97,8 +97,7 @@ public class PDFService {
         PDPageContentStream contentStream = new PDPageContentStream(document, page);
 
         //Page height
-        float maxHeight = 750;
-        float currentHeight = maxHeight;
+        float currentHeight = 750;
 
         //Headline: Summary
         contentStream.beginText();
@@ -150,6 +149,14 @@ public class PDFService {
         //Get ModuleBlocks
         List<ModuleBlockEntity> moduleBlockEntityList = moduleBlockRepository.findAllByApplicationEntity(applicationEntity);
         for (ModuleBlockEntity moduleBlockEntity : moduleBlockEntityList) {
+            //Check if Page is full
+            if (currentHeight < 20) {
+                contentStream.close();
+                PDPage newPage = new PDPage();
+                document.addPage(newPage);
+                contentStream = new PDPageContentStream(document, newPage);
+                currentHeight = 750;
+            }
             //Module Block Headline
             contentStream.beginText();
             contentStream.setFont(PDType1Font.HELVETICA_BOLD, 14);
@@ -186,11 +193,12 @@ public class PDFService {
             //Write Data in the PDF
             for (ModuleStudentEntity moduleStudentEntity : moduleStudentEntityList) {
                 //Check if Page is full
-                if (currentHeight < 0) {
-                    PDPage newPage = new PDPage();
-                    document.addPage(page);
+                if (currentHeight < 20) {
                     contentStream.close();
+                    PDPage newPage = new PDPage();
+                    document.addPage(newPage);
                     contentStream = new PDPageContentStream(document, newPage);
+                    currentHeight = 750;
                 }
                 //ModuleStudent Data
                 contentStream.beginText();
@@ -211,11 +219,12 @@ public class PDFService {
                 currentHeight -= (lineHeight * 6 + moduleSpacing);
             }
             //Check if Page is full
-            if (currentHeight < 0) {
-                PDPage newPage = new PDPage();
-                document.addPage(page);
+            if (currentHeight < 20) {
                 contentStream.close();
+                PDPage newPage = new PDPage();
+                document.addPage(newPage);
                 contentStream = new PDPageContentStream(document, newPage);
+                currentHeight = 750;
             }
             contentStream.beginText();
             contentStream.setFont(PDType1Font.HELVETICA, 12);
@@ -226,11 +235,12 @@ public class PDFService {
 
             for (ModuleUniEntity moduleUniEntity : moduleUniEntityList) {
                 //Check if Page is full
-                if (currentHeight < 0) {
-                    PDPage newPage = new PDPage();
-                    document.addPage(page);
+                if (currentHeight < 20) {
                     contentStream.close();
+                    PDPage newPage = new PDPage();
+                    document.addPage(newPage);
                     contentStream = new PDPageContentStream(document, newPage);
+                    currentHeight = 750;
                 }
                 //Module Uni Data
                 contentStream.beginText();
