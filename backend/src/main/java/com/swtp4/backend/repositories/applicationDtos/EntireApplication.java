@@ -4,6 +4,6 @@ import java.util.List;
 
 public record EntireApplication(
     EntireApplicationDetails applicationData,
-    List<EntireBlock> moduleFormData
+    List<EntireBlock> moduleFormsData
 ){
 }
