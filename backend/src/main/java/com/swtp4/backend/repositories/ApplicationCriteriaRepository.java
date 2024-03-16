@@ -60,6 +60,7 @@ public class ApplicationCriteriaRepository {
                 .map(entity -> new OverviewApplicationDto(entity.getApplicationKeyClass().getId(),
                         entity.getUniversityName(),
                         dateFormat.format(entity.getDateOfSubmission()),
+                        dateFormat.format(entity.getDateLastEdited()),
                         entity.getStatus()
                         )).toList();
 

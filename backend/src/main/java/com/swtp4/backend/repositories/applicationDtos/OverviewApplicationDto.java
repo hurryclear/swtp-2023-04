@@ -4,5 +4,6 @@ public record OverviewApplicationDto (
         String applicationID,
         String university,
         String dateOfSubmission,
+        String dateLastEdited,
         String status
 ){ }
