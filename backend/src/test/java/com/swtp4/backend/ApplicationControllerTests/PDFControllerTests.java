@@ -59,7 +59,7 @@ public class PDFControllerTests {
                     .andExpect(
                             MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_PDF))
                     .andExpect(
-                            MockMvcResultMatchers.header().string("Content-Disposition", "attachment; filename=\"modul.pdf\"")
+                            MockMvcResultMatchers.header().string("Content-Disposition", "attachment; filepath=/1/1")
                     );
         } catch (Exception e) {
             throw new RuntimeException(e);
