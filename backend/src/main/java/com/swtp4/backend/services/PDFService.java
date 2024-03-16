@@ -96,17 +96,21 @@ public class PDFService {
         document.addPage(page);
         PDPageContentStream contentStream = new PDPageContentStream(document, page);
 
+        //Page height
+        float maxHeight = 750;
+        float currentHeight = maxHeight;
+
         //Headline: Summary
         contentStream.beginText();
         contentStream.setFont(PDType1Font.HELVETICA_BOLD, 20);
-        contentStream.newLineAtOffset(100, 750); // Adjust coordinates for positioning
+        contentStream.newLineAtOffset(100, currentHeight); // Adjust coordinates for positioning
         contentStream.showText("Zusammenfassung Antrag");
         contentStream.endText();
 
         //Application ID
         contentStream.beginText();
         contentStream.setFont(PDType1Font.HELVETICA, 12);
-        contentStream.newLineAtOffset(100, 720); // Adjust coordinates for positioning
+        contentStream.newLineAtOffset(100, currentHeight - 30); // Adjust coordinates for positioning
         contentStream.showText("Antragsnummer: " + applicationId);
         contentStream.endText();
 
@@ -118,9 +122,11 @@ public class PDFService {
         //Application Information Styling and Data
         contentStream.beginText();
         contentStream.setFont(PDType1Font.HELVETICA, 12);
-        float startY = 680; // Starting y-coordinate for general information section
+        currentHeight = 680; // Starting y-coordinate for general information section
         float lineHeight = 15;
-        contentStream.newLineAtOffset(100, startY);
+
+        //Application Data
+        contentStream.newLineAtOffset(100, currentHeight);
         contentStream.showText("Status: " + applicationEntity.getStatus());
         contentStream.newLineAtOffset(0, -lineHeight);
         contentStream.showText("Einreichungsdatum: " + applicationEntity.getDateOfSubmission().toString());
@@ -136,11 +142,10 @@ public class PDFService {
         contentStream.showText("Formaler Ablehnungsgrund: " + (applicationEntity.getFormalRejectionReason() != null ? applicationEntity.getFormalRejectionReason() : "Keine"));
         contentStream.endText();
 
-        //Module Blocks and Modules Spacing
+        //Module Blocks and Modules Height Spacing
         float blockSpacing = 20;
         float moduleSpacing = 15;
-
-        startY -= (lineHeight * 8 + blockSpacing);
+        currentHeight -= (lineHeight * 8 + blockSpacing);
 
         //Get ModuleBlocks
         List<ModuleBlockEntity> moduleBlockEntityList = moduleBlockRepository.findAllByApplicationEntity(applicationEntity);
@@ -148,12 +153,12 @@ public class PDFService {
             //Module Block Headline
             contentStream.beginText();
             contentStream.setFont(PDType1Font.HELVETICA_BOLD, 14);
-            contentStream.newLineAtOffset(100, startY);
+            contentStream.newLineAtOffset(100, currentHeight);
             contentStream.showText("Mapping " + (moduleBlockEntity.getFrontendKey() + 1) + ":");
             contentStream.setFont(PDType1Font.HELVETICA, 12);
             contentStream.endText();
 
-            startY -= (lineHeight + moduleSpacing);
+            currentHeight -= (lineHeight + moduleSpacing);
 
             //Get ModuleRelations from ModuleBlock and all associated ModuleStudentEntities and ModuleUniEntities
             List<ModuleRelationEntity> moduleRelationEntityList = moduleRelationRepository.findByModuleBlockEntity(moduleBlockEntity);
@@ -180,10 +185,17 @@ public class PDFService {
 
             //Write Data in the PDF
             for (ModuleStudentEntity moduleStudentEntity : moduleStudentEntityList) {
+                //Check if Page is full
+                if (currentHeight < 0) {
+                    PDPage newPage = new PDPage();
+                    document.addPage(page);
+                    contentStream.close();
+                    contentStream = new PDPageContentStream(document, newPage);
+                }
                 //ModuleStudent Data
                 contentStream.beginText();
                 contentStream.setFont(PDType1Font.HELVETICA, 12);
-                contentStream.newLineAtOffset(100, startY);
+                contentStream.newLineAtOffset(100, currentHeight);
                 contentStream.showText("Modul " + (moduleStudentEntity.getFrontendKey() + 1) + ": " + moduleStudentEntity.getTitle());
                 contentStream.newLineAtOffset(0, -moduleSpacing);
                 contentStream.showText("Modulnummer: " + moduleStudentEntity.getNumber());
@@ -196,26 +208,39 @@ public class PDFService {
                 contentStream.newLineAtOffset(0, -moduleSpacing);
                 contentStream.showText("Studentenkommentar: " + moduleStudentEntity.getCommentStudent());
                 contentStream.endText();
-                startY -= (lineHeight * 6 + moduleSpacing);
+                currentHeight -= (lineHeight * 6 + moduleSpacing);
             }
-
+            //Check if Page is full
+            if (currentHeight < 0) {
+                PDPage newPage = new PDPage();
+                document.addPage(page);
+                contentStream.close();
+                contentStream = new PDPageContentStream(document, newPage);
+            }
             contentStream.beginText();
             contentStream.setFont(PDType1Font.HELVETICA, 12);
-            contentStream.newLineAtOffset(100, startY); // Adjust this offset based on your layout
+            contentStream.newLineAtOffset(100, currentHeight); // Adjust this offset based on your layout
             contentStream.showText("Anzurechnende Module:");
             contentStream.endText();
-            startY -= (lineHeight);
+            currentHeight -= (lineHeight);
 
             for (ModuleUniEntity moduleUniEntity : moduleUniEntityList) {
+                //Check if Page is full
+                if (currentHeight < 0) {
+                    PDPage newPage = new PDPage();
+                    document.addPage(page);
+                    contentStream.close();
+                    contentStream = new PDPageContentStream(document, newPage);
+                }
                 //Module Uni Data
                 contentStream.beginText();
                 contentStream.setFont(PDType1Font.HELVETICA, 12);
-                contentStream.newLineAtOffset(100, startY); // Adjust this offset based on your layout
+                contentStream.newLineAtOffset(100, currentHeight); // Adjust this offset based on your layout
                 contentStream.showText(moduleUniEntity.getName());
                 contentStream.endText();
-                startY -= (lineHeight);
+                currentHeight -= (lineHeight);
             }
-            startY -= (blockSpacing);
+            currentHeight -= (blockSpacing);
         }
         contentStream.close();
 
