@@ -1,9 +1,6 @@
 <template>
     <v-container fluid class="wrapper">
       <v-row>
-        <LogoutButton style="margin-left: 80%"/>
-      </v-row>
-      <v-row>
         <v-col class="col-left">
           <FormDisplay
               class="form-display"
@@ -40,11 +37,10 @@
 <script>
   import EditMenu from "@/components/EditMenu.vue";
   import FormDisplay from "@/components/FormDisplay.vue";
-  import LogoutButton from "@/components/LogoutButton.vue";
   import ComparisonMenu from "@/components/ComparisonMenu.vue";
   import ViewApplication from "@/components/ViewApplication.vue";
   export default {
-    components: {ComparisonMenu, EditMenu, FormDisplay, LogoutButton, ViewApplication},
+    components: {ComparisonMenu, EditMenu, FormDisplay, ViewApplication},
     data() {
       return {
         VAisDisplayed: false,

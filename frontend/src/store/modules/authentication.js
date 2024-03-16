@@ -34,6 +34,7 @@ export default {
                 await AuthService.logout();
                 commit('setAuthentication', {status: false, token: null});
                 commit('setUserRole', 'ROLE_STUDENT');
+                localStorage.removeItem('token');
                 return {success: true};
             } catch (error) {
                 console.error('Logout failed:', error);
