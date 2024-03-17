@@ -8,6 +8,7 @@ import com.swtp4.backend.repositories.entities.*;
 import com.swtp4.backend.repositories.entities.keyClasses.ApplicationKeyClass;
 import com.swtp4.backend.services.ApplicationService;
 import com.swtp4.backend.services.PDFService;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -44,6 +45,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@Slf4j
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD) //IMPORTANT, this resets Application Context, ID Sequences start at 1 again
@@ -151,6 +153,7 @@ public class SubmitAndEditApplicationIT {
                 .commentStudent("War cool")
                 .commentEmployee("")
                 .build());
+        log.info("ALL MODULES: {}", moduleStudentRepository.findAll());
         assertThat(moduleStudentRepository.findAll(module1))
                 .hasSize(2)
                 .extracting(ModuleStudentEntity::getCreator)

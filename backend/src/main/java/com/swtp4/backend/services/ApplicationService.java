@@ -265,6 +265,17 @@ public class ApplicationService {
             }
             application.setStatus("formally rejected");
             applicationRepository.save(application);
+
+            //All modules got formally rejected if whole application is formally rejected
+            for (EditedBlock block: applicationDto.editedBlocks()) {
+                for(EditedStudentModule editedModule : block.editedModules()){
+                    ModuleStudentEntity module = moduleStudentRepository.findById(editedModule.moduleID())
+                            .orElseThrow(() -> new ResourceNotFoundException("Module with ID "+ editedModule.moduleID()+ " not found, cant set Application to formally rejected"));
+                    module.setApproval("formally rejected");
+                    module.setApprovalReason("Der gesamte Antrag wurde mit oben genannter Begründung formal abgelehnt.");
+                    moduleStudentRepository.save(module);
+                }
+            }
         }
         else{
             throw new InvalidApplicationStateException("Setting status to formally rejected requires previous status open or edited");
@@ -274,18 +285,18 @@ public class ApplicationService {
     public void updateApproval(EditedApplicationDto applicationDto, List<String> validApprovals) {
         boolean allAreApproved = true;
         for (EditedBlock block : applicationDto.editedBlocks()){
-            for(EditedStudentModule module : block.editedModules()){
-                ModuleStudentEntity moduleStudent = moduleStudentRepository.findById(module.moduleID())
-                        .orElseThrow(() -> new ResourceNotFoundException("Student Module with ID " +module.moduleID() + "not found"));
-                if (!module.reason().isEmpty() && validApprovals.contains(module.approval())){
-                    moduleStudent.setApproval(module.approval());
+            for(EditedStudentModule editedModule : block.editedModules()){
+                ModuleStudentEntity moduleStudent = moduleStudentRepository.findById(editedModule.moduleID())
+                        .orElseThrow(() -> new ResourceNotFoundException("Student Module with ID " +editedModule.moduleID() + "not found, cant updateApproval"));
+                if (moduleStudent.getApproval().isEmpty() && !editedModule.reason().isEmpty() && validApprovals.contains(editedModule.approval())){
+                    moduleStudent.setApproval(editedModule.approval());
                 }
                 else{
                     // if there is still a module without reason or valid approval-state then approval has not finished yet
-                    if(module.reason().isEmpty() || !module.approval().equals("formally rejected"))
+                    if(editedModule.reason().isEmpty() || !editedModule.approval().equals("formally rejected"))
                         allAreApproved = false;
                 }
-                moduleStudent.setApprovalReason(module.reason());
+                moduleStudent.setApprovalReason(editedModule.reason());
                 moduleStudentRepository.save(moduleStudent);
             }
         }
@@ -293,6 +304,9 @@ public class ApplicationService {
             ApplicationEntity application = applicationRepository.findById(new ApplicationKeyClass(applicationDto.applicationID(), "Employee"))
                     .orElseThrow(() -> new ResourceNotFoundException("Application" + applicationDto.applicationID()+ "not found"));
             application.setStatus("approval finished");
+            if(validApprovals.contains("formally rejected"))
+                application.setStatus("formally rejected");
+                application.setFormalRejectionReason("Info: Alle Module wurden einzeln formal abgelehnt, die Begründungen finden Sie jeweils bei den Modulen.");
             applicationRepository.save(application);
         }
     }
