@@ -172,6 +172,12 @@ export default {
       statusColor: '',               // Color representing the current status
     };
   },
+  props: {
+    applicationId: String
+  },
+  created() {
+    this.formId = this.applicationId
+  },
 
   // Watchers for Vue component
   watch: {

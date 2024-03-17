@@ -1,8 +1,10 @@
 // applicationForm.js
 import ApplicationFormService from "@/services/ApplicationFormService";
+import router from '@/router';
 
 export default {
     state: {
+        applicationId: null,
         form: {
             meta: {
                 status: "",
@@ -51,6 +53,9 @@ export default {
         }
     },
     mutations: {
+        setApplicationId(state, applicationId) {
+            state.applicationId = applicationId;
+        },
         updateUniversityData(state, newData) {
             state.form.university = newData;
         },
@@ -125,7 +130,7 @@ export default {
         }
     },
     actions: {
-        async submitWholeForm({state}) {
+        async submitWholeForm({state,commit}) {
             const formData = new FormData();
             state.form.moduleMappings.forEach(
                 (moduleForm) => moduleForm.previousModules.forEach(
@@ -145,8 +150,10 @@ export default {
                 const {success, data} = await ApplicationFormService.submitForm(formData);
 
                 if (success) {
-                    // Handle success response (Form-ID)
-                    console.log('Whole Form submitted:', data);
+                    commit('setApplicationId', data.applicationId);
+
+                    // Navigate to another route and pass application ID
+                    router.push({ name: 'Review Application', query: { applicationId: data.applicationId } });
                 } else {
                     // Handle error response
                     console.error('Error submitting form:', data);
