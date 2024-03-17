@@ -110,10 +110,15 @@ class PDFServiceTests {
         mockEntity.setDateOfSubmission(new Date()); // Set a non-null submission date
         mockEntity.setDateLastEdited(new Date()); // Set a non-null last edited date
 
+        // Provide a valid UUID string instead of "123"
+        String validUUID = "a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6";
+        mockEntity.setApplicationKeyClass(new ApplicationKeyClass(validUUID, "Employee"));
+
         // Mock application repository behavior
         when(applicationRepository.findById(any())).thenReturn(Optional.of(mockEntity));
 
-        Resource pdfResource = pdfService.generatePDFForApplication("123");
+        // Generate PDF with the valid UUID
+        Resource pdfResource = pdfService.generatePDFForApplication(validUUID);
 
         // Check if PDF bytes are generated
         assertNotNull(pdfResource, "PDF-Resource should not be null");

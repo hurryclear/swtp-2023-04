@@ -81,6 +81,12 @@ public class PDFService {
 
 
     public Resource generatePDFForApplication(String applicationId) throws IOException {
+        ApplicationEntity applicationEntity = applicationRepository.findById(ApplicationKeyClass.builder()
+                        .creator("Employee")
+                        .id(applicationId).build())
+                .orElseThrow(() -> new ResourceNotFoundException("Application not found: " + applicationId));
+
+
         // Initialize PDF Document
         PDDocument document = new PDDocument();
         PDPage page = new PDPage();
@@ -99,10 +105,7 @@ public class PDFService {
         float lineHeight = 15;
 
         //Get Application Entity
-        ApplicationEntity applicationEntity = applicationRepository.findById(ApplicationKeyClass.builder()
-                .creator("Employee")
-                .id(applicationId).build()).orElseThrow(() -> new ResourceNotFoundException("Application not found: " + applicationId));
-        //Application Data
+         //Application Data
         ArrayList<String> textLinesApplication = new ArrayList<>(Arrays.asList(
                 "Status: " + applicationEntity.getStatus(),
                 "Einreichungsdatum: " + applicationEntity.getDateOfSubmission().toString(),
