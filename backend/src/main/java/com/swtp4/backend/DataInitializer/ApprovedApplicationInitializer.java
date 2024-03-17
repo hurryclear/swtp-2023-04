@@ -1,9 +1,14 @@
 package com.swtp4.backend.DataInitializer;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.swtp4.backend.Deserializer.EditedApplicationDeserializer;
 import com.swtp4.backend.Deserializer.SubmittedApplicationDeserializer;
+import com.swtp4.backend.repositories.applicationDtos.EditedApplicationDto;
 import com.swtp4.backend.repositories.applicationDtos.SubmittedApplicationDto;
 import com.swtp4.backend.repositories.dto.ApplicationDto;
 import com.swtp4.backend.repositories.dto.ApplicationIDWithFilePaths;
@@ -26,18 +31,19 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLOutput;
+import java.util.List;
 import java.util.Map;
 
 @Component
-@Order(3)
+@Order(4)
 @Profile({"dev"})
 @Slf4j
-public class ApplicationInitializer implements CommandLineRunner {
+public class ApprovedApplicationInitializer implements CommandLineRunner {
 
     private final ApplicationService applicationService;
 
     @Autowired
-    public ApplicationInitializer(ApplicationService applicationService){
+    public ApprovedApplicationInitializer(ApplicationService applicationService){
         this.applicationService = applicationService;
     }
 
@@ -47,15 +53,18 @@ public class ApplicationInitializer implements CommandLineRunner {
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
         module.addDeserializer(SubmittedApplicationDto.class, new SubmittedApplicationDeserializer());
+        module.addDeserializer(EditedApplicationDto.class, new EditedApplicationDeserializer());
         mapper.registerModule(module);
-        TypeReference<SubmittedApplicationDto> typeReference = new TypeReference<SubmittedApplicationDto>(){};
-        InputStream inputStream = TypeReference.class.getResourceAsStream("/json/initialApplicationData.json");
+        TypeReference<SubmittedApplicationDto> typeReferenceSubmitted = new TypeReference<SubmittedApplicationDto>(){};
+        InputStream inputStreamSubmitted = TypeReference.class.getResourceAsStream("/json/initialApplicationData.json");
         try {
-            SubmittedApplicationDto applicationDto = mapper.readValue(inputStream,typeReference);
+            log.info("before submit");
+            //submit
+            SubmittedApplicationDto applicationDto = mapper.readValue(inputStreamSubmitted,typeReferenceSubmitted);
 
             ApplicationIDWithFilePaths applicationIDWithFilePaths = applicationService.saveSubmitted(applicationDto);
             String applicationID = applicationIDWithFilePaths.getApplicationID();
-            Map<String, String> filePaths =applicationIDWithFilePaths.getFilesAndPaths();
+            Map<String, String> filePaths = applicationIDWithFilePaths.getFilesAndPaths();
 
             //save mock pdfs
             byte[] bytes = new ClassPathResource("/json/Mock Modulebeschreibung Modul 1.pdf").getContentAsByteArray();
@@ -70,9 +79,32 @@ public class ApplicationInitializer implements CommandLineRunner {
             path = Paths.get("/app/pdf-files" + filePaths.get("file-1:0"));
             Files.createDirectories(path.getParent());
             Files.write(path, bytes);
+            log.info("before edited and approved");
+            //edited and approved
+            InputStream inputStream = getClass().getResourceAsStream("/json/initialEditedApplicationData.json");
+            String editedJsonString = new String(inputStream.readAllBytes());
+            log.info("read all bytes");
+            JsonNode editedJsonNode = mapper.readTree(editedJsonString);
+            ((ObjectNode) editedJsonNode.path("edited").path("applicationData")).put("applicationID", applicationID);
+            log.info("put applicationID");
+            String modifiedJsonString = mapper.writeValueAsString(editedJsonNode);
+
+            log.info("before simulate");
+            //simulate Application being edited and approved
+            EditedApplicationDto editedApplicationDto = mapper.readValue(modifiedJsonString, EditedApplicationDto.class);
+            log.info("updateStatus1");
+            applicationService.updateStatus(editedApplicationDto.applicationID(), "ready for approval");
+            log.info("updateApproval1");
+            applicationService.updateApproval(editedApplicationDto, List.of("formally rejected"));
+            log.info("updateStatus2");
+            applicationService.updateStatus(editedApplicationDto.applicationID(), "edited approval");
+            log.info("updateApproval2");
+            applicationService.updateApproval(editedApplicationDto, List.of("accepted", "rejected"));
+            log.info("updateApplication");
+            applicationService.updateApplication(editedApplicationDto);
 
             System.out.println("ApplicationID: "+applicationID);
-            System.out.println("Submitted Application with Pdfs initialized!");
+            System.out.println("Approved Application with Pdfs initialized!");
         } catch (IOException e){
             System.out.println("Unable to initialize Application: " + e.getMessage());
         }
