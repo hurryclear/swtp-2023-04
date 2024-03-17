@@ -5,86 +5,93 @@
     <template v-slot:text>
       <v-text-field
           v-model="search"
-          label="Search"
+          :label="$t('studentAffairsOfficeView.search')"
           prepend-inner-icon="mdi-magnify"
           variant="outlined"
           hide-details
           single-line
-      ></v-text-field>
+      />
     </template>
-  <v-data-table :headers="headers" :items="forms" :search="search" item-key="id">
-    <template v-slot:[`item.actions`]="{ item }">
-      <v-btn
-          @click="openEditMenu(item)"
-          icon="mdi-pencil"
-      ></v-btn>
-    </template>
-  </v-data-table>
+    <v-data-table :headers="translatedHeaders" :items="formattedForms" :search="search" item-key="id">
+      <template v-slot:[`item.actions`]="{ item }">
+        <v-btn
+            @click="openEditMenu(item)"
+            icon="mdi-pencil"
+        />
+      </template>
+    </v-data-table>
   </v-card>
 </template>
 
 <script>
-import axios from "@/plugins/axios";
+import StudentAffairsOfficeService from "@/services/StudentAffairsOfficeService";
 export default {
-    data() {
-      return {
-        search: "",
-        forms: [],
-        //TODO i18n
-        headers: [
-          { title: "ID", key: "applicationID" },
-          { title: "Universität" , key: "university" },
-          { title: "Antragsdatum", key: "dateOfSubmission" },
-          { title: "Letzte Bearbeitung", key: "dateLastEdited"},
-          { title: "Status", key: "status" },
-          { title: "Editieren", value: "actions", sortable: false }
-        ]
-      }
-    },
+  data() {
+    return {
+      search: "",
+      forms: []
+    }
+  },
 
   async created() {
     await this.getForms();
-    for(let i = 0; i < this.forms.length; i++) {
-      this.forms[i].dateOfSubmission = this.formatDate(this.forms[i].dateOfSubmission);
-      this.forms[i].dateLastEdited = this.formatDate(this.forms[i].dateLastEdited);
-    }
   },
 
   methods: {
     async openEditMenu(item) {
-      let form = {};
-      await axios.get("/api/application/getApplication?applicationID=" + item.applicationID)
-          .then(response => form = response.data)
-          .catch(err => console.error("Error retrieving form: ", err));
-      this.$emit('open-edit-menu', form);
+      try {
+        const form = await StudentAffairsOfficeService.getApplication(item.applicationID);
+        this.$emit('open', {component: 'EditMenu', form});
+      } catch (error) {
+        console.error("Error retrieving form: ", error);
+      }
     },
 
     async getForms() {
-      await axios.get("/api/application/overviewOffice")
-          .then(response => this.forms = response.data.content)
-          .catch(err => console.error("Error retrieving open forms: ", err));
+      try {
+        this.forms = await StudentAffairsOfficeService.getOfficeOverview();
+      } catch (error) {
+        console.error("Error retrieving open forms: ", error);
+      }
     },
-
     formatDate(inputDate) {
-      // Parse the input date string
       const date = new Date(inputDate);
+      const options = {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      };
+      return date.toLocaleDateString(this.$i18n.locale, options);
+    },
+  },
 
-      // Extract day, month, and year
-      const day = String(date.getDate()).padStart(2, '0');
-      const month = String(date.getMonth() + 1).padStart(2, '0'); // January is 0
-      const year = date.getFullYear();
-
-      return `${day}-${month}-${year}`;
+    computed: {
+    translatedHeaders() {
+      return [
+        {title: this.$t("studentAffairsOfficeView.ID"), key: "applicationID"},
+        {title: this.$t("studentAffairsOfficeView.university"), key: "university"},
+        {title: this.$t("studentAffairsOfficeView.dateOfSubmission"), key: "dateOfSubmission"},
+        {title: this.$t("studentAffairsOfficeView.dateLastEdited"), key: "dateLastEdited"},
+        {title: this.$t("studentAffairsOfficeView.status"), key: "status"},
+        {title: this.$t("studentAffairsOfficeView.edit"), value: "actions", sortable: false}
+      ];
+    },
+    formattedForms() {
+      return this.forms.map(form => ({
+        ...form,
+        dateOfSubmission: this.formatDate(form.dateOfSubmission),
+        dateLastEdited: this.formatDate(form.dateLastEdited)
+      }));
     }
-  }
+  },
 }
 </script>
 
 <style scoped>
-
-  td {
-    padding: 1rem;
-    width: 20%;
-  }
-
+td {
+  padding: 1rem;
+  width: 20%;
+}
 </style>

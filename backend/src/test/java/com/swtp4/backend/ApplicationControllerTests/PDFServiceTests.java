@@ -110,10 +110,15 @@ class PDFServiceTests {
         mockEntity.setDateOfSubmission(new Date()); // Set a non-null submission date
         mockEntity.setDateLastEdited(new Date()); // Set a non-null last edited date
 
+        // Provide a valid UUID string instead of "123"
+        String validUUID = "a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6";
+        mockEntity.setApplicationKeyClass(new ApplicationKeyClass(validUUID, "Employee"));
+
         // Mock application repository behavior
         when(applicationRepository.findById(any())).thenReturn(Optional.of(mockEntity));
 
-        Resource pdfResource = pdfService.generatePDFForApplication("123");
+        // Generate PDF with the valid UUID
+        Resource pdfResource = pdfService.generatePDFForApplication(validUUID);
 
         // Check if PDF bytes are generated
         assertNotNull(pdfResource, "PDF-Resource should not be null");
@@ -153,9 +158,37 @@ class PDFServiceTests {
         assertThrows(RuntimeException.class, () -> pdfService.saveModulePDFs(fileMap, filePaths), "Expected to throw RuntimeException due to save error");
     }
 
-
-
-
-
-
+//    @Test
+//    void formatId_ValidUUID_ReturnsFormattedUUID() {
+//        // Arrange
+//        String inputUUID = "71dbb8b7-7085-4416-a2c0-4f1c65c8b166";
+//        String expected = "71db-b8b7-7085-4416-a2c0-4f1c-65c8-b166";
+//
+//        // Act
+//        String result = PDFService.formatUUID(inputUUID);
+//
+//        // Assert
+//        assertEquals(expected, result, "Die formatierte UUID entspricht nicht dem erwarteten Format.");
+//    }
+//
+//    @Test
+//    void formatId_InvalidUUID_ThrowsIllegalArgumentException() {
+//        // Arrange
+//        String invalidUUID = "123"; // Ungültige UUID-Länge
+//
+//        // Assert
+//        assertThrows(IllegalArgumentException.class, () -> {
+//            // Act
+//            PDFService.formatUUID(invalidUUID);
+//        }, "Eine ungültige UUID sollte eine IllegalArgumentException auslösen.");
+//    }
+//
+//    @Test
+//    void formatId_NullUUID_ThrowsIllegalArgumentException() {
+//        // Assert
+//        assertThrows(IllegalArgumentException.class, () -> {
+//            // Act
+//            PDFService.formatUUID(null);
+//        }, "Eine null UUID sollte eine IllegalArgumentException auslösen.");
+//    }
 }
