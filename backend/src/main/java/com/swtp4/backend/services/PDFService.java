@@ -81,25 +81,31 @@ public class PDFService {
 
 
     public Resource generatePDFForApplication(String applicationId) throws IOException {
-        //Initialize PDF Document
+        ApplicationEntity applicationEntity = applicationRepository.findById(ApplicationKeyClass.builder()
+                        .creator("Employee")
+                        .id(applicationId).build())
+                .orElseThrow(() -> new ResourceNotFoundException("Application not found: " + applicationId));
+
+
+        // Initialize PDF Document
         PDDocument document = new PDDocument();
         PDPage page = new PDPage();
         document.addPage(page);
         PDPageContentStream contentStream = new PDPageContentStream(document, page);
         float currentHeight = 750;
 
-        //Headline: Summary
+        // Headline: Zusammenfassung Antrag
         writeContentOneLine(contentStream, PDType1Font.HELVETICA_BOLD, 20, 100, currentHeight, "Zusammenfassung Antrag");
-        //Application ID
-        writeContentOneLine(contentStream, PDType1Font.HELVETICA, 12, 100, currentHeight-30, "Antragsnummer: " + applicationId);
+
+        // Application ID, now using the formatted UUID
+        String formattedApplicationId = formatUUID(applicationId); // Verwendung der neuen Methode hier
+        writeContentOneLine(contentStream, PDType1Font.HELVETICA, 12, 100, currentHeight-30, "Antragsnummer: " + formattedApplicationId);
+
         currentHeight = 700;
         float lineHeight = 15;
 
         //Get Application Entity
-        ApplicationEntity applicationEntity = applicationRepository.findById(ApplicationKeyClass.builder()
-                .creator("Employee")
-                .id(applicationId).build()).orElseThrow(() -> new ResourceNotFoundException("Application not found: " + applicationId));
-        //Application Data
+         //Application Data
         ArrayList<String> textLinesApplication = new ArrayList<>(Arrays.asList(
                 "Status: " + applicationEntity.getStatus(),
                 "Einreichungsdatum: " + applicationEntity.getDateOfSubmission().toString(),
@@ -219,7 +225,7 @@ public class PDFService {
         contentStream.showText(text);
         contentStream.endText();
     }
-     private void writeContentMultipleLines (PDPageContentStream contentStream, PDType1Font font, float fontSize, float tx1, float tx2, float ty1, float ty2, ArrayList<String> textLines) throws IOException {
+    private void writeContentMultipleLines (PDPageContentStream contentStream, PDType1Font font, float fontSize, float tx1, float tx2, float ty1, float ty2, ArrayList<String> textLines) throws IOException {
         contentStream.beginText();
         contentStream.setFont(font, fontSize);
         for (int i=0; i < textLines.size(); i++) {
@@ -231,5 +237,22 @@ public class PDFService {
             contentStream.showText(textLines.get(i));
         }
         contentStream.endText();
-     }
+    }
+
+    public static String formatUUID(String uuid) {
+        if (uuid == null || uuid.length() != 36) {
+            throw new IllegalArgumentException("Invalid UUID");
+        }
+
+        String cleanedUUID = uuid.replace("-", "");
+
+        return cleanedUUID.substring(0, 4) + "-" +
+                cleanedUUID.substring(4, 8) + "-" +
+                cleanedUUID.substring(8, 12) + "-" +
+                cleanedUUID.substring(12, 16) + "-" +
+                cleanedUUID.substring(16, 20) + "-" +
+                cleanedUUID.substring(20, 24) + "-" +
+                cleanedUUID.substring(24, 28) + "-" +
+                cleanedUUID.substring(28);
+    }
 }
