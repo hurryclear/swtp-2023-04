@@ -1,18 +1,18 @@
 <template>
   <div>
-    <v-btn @click="loadItems">Suchen</v-btn>
+    <v-btn @click="loadItems">{{$t("studentAffairsOfficeView.search")}}</v-btn>
     <v-row>
-      <v-text-field label="Studiengang" v-model="courseOfStudy"/>
-      <v-text-field label="Antragsnummer" v-model="id"/>
-      <v-text-field label="Vorherige Universität" v-model="previousUniversity"/>
-      <v-text-field label="Vorheriges Modul" v-model="previousModule"/>
-      <v-text-field label="Antragsdatum" v-model="dateOfSubmission" type="date"/>
+      <v-text-field :label="$t('studentAffairsOfficeView.courseOfStudy')" v-model="courseOfStudy"/>
+      <v-text-field :label="$t('studentAffairsOfficeView.applicationID')" v-model="id"/>
+      <v-text-field :label="$t('studentAffairsOfficeView.previousUniversity')" v-model="previousUniversity"/>
+      <v-text-field :label="$t('studentAffairsOfficeView.previousModule')" v-model="previousModule"/>
+      <v-text-field :label="$t('studentAffairsOfficeView.dateOfSubmission')" v-model="dateOfSubmission" type="date"/>
     </v-row>
 
     <v-data-table-server
         v-model:items-per-page="itemsPerPage"
         v-model:sort-by="sortBy"
-        :headers="headers"
+        :headers="translatedHeaders"
         :items="items"
         :loading="loading"
         :items-length="totalItems"
@@ -35,14 +35,6 @@ import StudentAffairsOfficeService from "@/services/StudentAffairsOfficeService"
 export default {
   data() {
     return {
-      headers: [
-        { title: "Antragsnummer", key: "applicationID" },
-        { title: "Vorherige Universität", key: "universityName" },
-        { title: "Antragsdatum", key: "dateOfSubmission" },
-        { title: "Status", key: "status" },
-        { title: "Anschauen", value: "actions", sortable: false }
-      ],
-
       items: [],
       loading: false,
       itemsPerPage: 5,
@@ -59,25 +51,27 @@ export default {
   },
 
   methods: {
+
     buildQueryString() {
-      let queryString = ""
-      const appendQueryParam = (param, value) => {
-        queryString += (queryString === "" ? "" : "&") + param + "=" + value;
+      const queryParams = {
+        uniMajor: this.courseOfStudy,
+        applicationID: this.id,
+        universityName: this.previousUniversity,
+        module: this.previousModule,
+        dateOfSubmission: this.formatDate(this.dateOfSubmission.toString()),
+        pageNumber: this.page - 1,
       };
 
-      if (this.courseOfStudy) appendQueryParam("uniMajor", this.courseOfStudy);
-      if (this.id) appendQueryParam("applicationID", this.id);
-      if (this.previousUniversity) appendQueryParam("universityName", this.previousUniversity);
-      if (this.previousModule) appendQueryParam("module", this.previousModule);
-      if (this.dateOfSubmission) appendQueryParam("dateOfSubmission", this.formatDate(this.dateOfSubmission.toString()));
-
-      appendQueryParam("pageNumber", this.page - 1);
-
+      // Check if sortBy exists and append to queryParams
       if (this.sortBy.length) {
-        appendQueryParam("sortBy", this.sortBy[0].key);
-        appendQueryParam("sortDirection", this.sortBy[0].order? "DESC" : "ASC");
+        queryParams.sortBy = this.sortBy[0].key;
+        queryParams.sortDirection = this.sortBy[0].order ? "DESC" : "ASC";
       }
-      return queryString
+
+      // Construct query string
+      return Object.entries(queryParams)
+          .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+          .join("&");
     },
 
     formatDate(dateString) {
@@ -106,7 +100,21 @@ export default {
         console.error("Error retrieving form: ", error);
       }
     }
-  }
+  },
+
+  computed: {
+    // Computed property for translated headers
+    translatedHeaders() {
+      return [
+        { title: this.$t("studentAffairsOfficeView.ID"), key: "applicationID" },
+        { title: this.$t("studentAffairsOfficeView.university"), key: "university" },
+        { title: this.$t("studentAffairsOfficeView.dateOfSubmission"), key: "dateOfSubmission" },
+        { title: this.$t("studentAffairsOfficeView.dateLastEdited"), key: "dateLastEdited" },
+        { title: this.$t("studentAffairsOfficeView.status"), key: "status" },
+        { title: this.$t("studentAffairsOfficeView.view"), value: "actions", sortable: false }
+      ];
+    }
+  },
 }
 </script>
 
