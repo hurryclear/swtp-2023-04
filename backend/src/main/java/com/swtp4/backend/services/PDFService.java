@@ -86,7 +86,6 @@ public class PDFService {
                         .id(applicationId).build())
                 .orElseThrow(() -> new ResourceNotFoundException("Application not found: " + applicationId));
 
-
         //Initialize PDF Document
         PDDocument document = new PDDocument();
         PDPage page = new PDPage();
@@ -95,11 +94,11 @@ public class PDFService {
         float currentHeight = 750;
 
         //Headline: Zusammenfassung Antrag
-        writeContentOneLine(contentStream, PDType1Font.HELVETICA_BOLD, 20, 100, currentHeight, "Zusammenfassung Antrag");
+        currentHeight = writeContentOneLine(contentStream, PDType1Font.HELVETICA_BOLD, 20, 100, currentHeight, 25, "Zusammenfassung Antrag");
         //Application ID, now using the formatted UUID
-        writeContentOneLine(contentStream, PDType1Font.HELVETICA, 12, 100, currentHeight-20, "Antragsnummer: " + applicationId);
+        currentHeight = writeContentOneLine(contentStream, PDType1Font.HELVETICA, 12, 100, currentHeight, 15,"Antragsnummer: " + applicationId);
 
-        currentHeight = 700;
+        currentHeight -= 30;
         float lineHeight = 15;
 
         //Get Application Entity
@@ -113,12 +112,12 @@ public class PDFService {
         if (applicationEntity.getStatus().equals("formally rejected")) {
             textLinesApplication.add("Formaler Ablehnungsgrund: " + applicationEntity.getFormalRejectionReason());
         }
-        writeContentMultipleLines(contentStream, PDType1Font.HELVETICA, 12, 100, 0, currentHeight, -lineHeight, textLinesApplication);
+        currentHeight = writeContentMultipleLines(contentStream, PDType1Font.HELVETICA, 12, 100, currentHeight, lineHeight, textLinesApplication);
 
         //Module Blocks and Modules Height Spacing
         float blockSpacing = 20;
         float moduleSpacing = 15;
-        currentHeight -= (lineHeight*textLinesApplication.size() + 2*blockSpacing);
+        currentHeight -= 2*blockSpacing;
 
         //Get ModuleBlocks
         List<ModuleBlockEntity> moduleBlockEntityList = moduleBlockRepository.findAllByApplicationEntity(applicationEntity);
@@ -132,8 +131,8 @@ public class PDFService {
                 currentHeight = 750;
             }
             //Module Block Headline
-            writeContentOneLine(contentStream, PDType1Font.HELVETICA_BOLD, 14, 100, currentHeight, "Mapping " + (moduleBlockEntity.getFrontendKey() + 1) + ":");
-            currentHeight -= (lineHeight + moduleSpacing);
+            currentHeight = writeContentOneLine(contentStream, PDType1Font.HELVETICA_BOLD, 14, 100, currentHeight, lineHeight, "Zuordnung " + (moduleBlockEntity.getFrontendKey() + 1) + ":");
+            currentHeight -= moduleSpacing;
 
             //Get ModuleRelations from ModuleBlock and all associated ModuleStudentEntities and ModuleUniEntities
             List<ModuleRelationEntity> moduleRelationEntityList = moduleRelationRepository.findByModuleBlockEntity(moduleBlockEntity);
@@ -178,8 +177,8 @@ public class PDFService {
                 if (moduleStudentEntity.getApproval().equals("accepted") || moduleStudentEntity.getApproval().equals("rejected") || moduleStudentEntity.getApproval().equals("formally rejected")) {
                     textLinesModuleStudent.add("Modul " + moduleStudentEntity.getApproval() + ": " + moduleStudentEntity.getApprovalReason());
                 }
-                writeContentMultipleLines(contentStream ,PDType1Font.HELVETICA, 12, 100, 0, currentHeight, -moduleSpacing, textLinesModuleStudent);
-                currentHeight -= (lineHeight*textLinesModuleStudent.size() + moduleSpacing);
+                currentHeight = writeContentMultipleLines(contentStream ,PDType1Font.HELVETICA, 12, 100, currentHeight, moduleSpacing, textLinesModuleStudent);
+                currentHeight -= moduleSpacing;
             }
 
             //Check if Page is full
@@ -190,8 +189,7 @@ public class PDFService {
                 contentStream = new PDPageContentStream(document, newPage);
                 currentHeight = 750;
             }
-            writeContentOneLine(contentStream,PDType1Font.HELVETICA, 12, 100, currentHeight, "Anzurechnende Module:");
-            currentHeight -= (lineHeight);
+            currentHeight = writeContentOneLine(contentStream,PDType1Font.HELVETICA, 12, 100, currentHeight, lineHeight, "Anzurechnende Module:");
             for (ModuleUniEntity moduleUniEntity : moduleUniEntityList) {
                 //Check if Page is full
                 if (currentHeight < 20) {
@@ -202,8 +200,7 @@ public class PDFService {
                     currentHeight = 750;
                 }
                 //Module Uni Data
-                writeContentOneLine(contentStream, PDType1Font.HELVETICA, 12, 100, currentHeight, moduleUniEntity.getName());
-                currentHeight -= (lineHeight);
+                currentHeight = writeContentOneLine(contentStream, PDType1Font.HELVETICA, 12, 100, currentHeight, lineHeight, moduleUniEntity.getName());
             }
             currentHeight -= (2*blockSpacing);
         }
@@ -216,25 +213,46 @@ public class PDFService {
         return new ByteArrayResource(pdfBytes);
     }
 
-    private void writeContentOneLine (PDPageContentStream contentStream, PDType1Font font, float fontSize, float tx, float ty, String text) throws IOException {
+    private float writeContentOneLine (PDPageContentStream contentStream, PDType1Font font, float fontSize, float tx, float currentHeight, float lineHeight, String text) throws IOException {
         contentStream.beginText();
         contentStream.setFont(font, fontSize);
-        contentStream.newLineAtOffset(tx, ty); // Adjust this offset based on your layout
-        contentStream.showText(text);
+        String[] words = text.split(" ");
+        StringBuilder line = new StringBuilder();
+        float ty = currentHeight;
+        for (String word : words) {
+            float lineWidth = font.getStringWidth(line.toString() + " " + word) /  1000 * fontSize;
+            if (lineWidth < (600 - tx)) {
+                if (!line.toString().isEmpty()) {
+                    line.append(" ");
+                }
+                line.append(word);
+            } else {
+                contentStream.newLineAtOffset(tx, ty);
+                contentStream.showText(line.toString());
+                ty -= lineHeight;
+                contentStream.endText();
+                contentStream.beginText();
+                contentStream.setFont(font, fontSize);
+                line = new StringBuilder();
+                line.append(word);
+            }
+        }
+        contentStream.newLineAtOffset(tx, ty);
+        contentStream.showText(line.toString());
+        ty -= lineHeight;
         contentStream.endText();
+        return ty;
     }
-    private void writeContentMultipleLines (PDPageContentStream contentStream, PDType1Font font, float fontSize, float tx1, float tx2, float ty1, float ty2, ArrayList<String> textLines) throws IOException {
-        contentStream.beginText();
-        contentStream.setFont(font, fontSize);
+    private float writeContentMultipleLines (PDPageContentStream contentStream, PDType1Font font, float fontSize, float tx1, float currentHeight, float lineHeight, ArrayList<String> textLines) throws IOException {
+        float ty = currentHeight;
         for (int i=0; i < textLines.size(); i++) {
             if (i == 0) {
-                contentStream.newLineAtOffset(tx1, ty1); // Adjust this offset based on your layout
+                ty = writeContentOneLine(contentStream, font, fontSize, tx1, ty, lineHeight, textLines.get(i));
             } else {
-                contentStream.newLineAtOffset(tx2, ty2); // Adjust this offset based on your layout
+                ty = writeContentOneLine(contentStream, font, fontSize, tx1, ty, lineHeight, textLines.get(i));
             }
-            contentStream.showText(textLines.get(i));
         }
-        contentStream.endText();
+        return ty;
     }
 //
 //    public static String formatUUID(String uuid) {
