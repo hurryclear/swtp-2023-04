@@ -53,10 +53,21 @@ export default {
       } catch (error) {
         console.error("Error retrieving open forms: ", error);
       }
-    }
+    },
+    formatDate(inputDate) {
+      const date = new Date(inputDate);
+      const options = {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      };
+      return date.toLocaleDateString(this.$i18n.locale, options);
+    },
   },
 
-  computed: {
+    computed: {
     translatedHeaders() {
       return [
         {title: this.$t("studentAffairsOfficeView.ID"), key: "applicationID"},
