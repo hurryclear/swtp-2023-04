@@ -153,7 +153,39 @@ class PDFServiceTests {
         assertThrows(RuntimeException.class, () -> pdfService.saveModulePDFs(fileMap, filePaths), "Expected to throw RuntimeException due to save error");
     }
 
+    @Test
+    void formatId_ValidUUID_ReturnsFormattedUUID() {
+        // Arrange
+        String inputUUID = "71dbb8b7-7085-4416-a2c0-4f1c65c8b166";
+        String expected = "71db-b8b7-7085-4416-a2c0-4f1c-65c8-b166";
 
+        // Act
+        String result = PDFService.formatUUID(inputUUID);
+
+        // Assert
+        assertEquals(expected, result, "Die formatierte UUID entspricht nicht dem erwarteten Format.");
+    }
+
+    @Test
+    void formatId_InvalidUUID_ThrowsIllegalArgumentException() {
+        // Arrange
+        String invalidUUID = "123"; // Ungültige UUID-Länge
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, () -> {
+            // Act
+            PDFService.formatUUID(invalidUUID);
+        }, "Eine ungültige UUID sollte eine IllegalArgumentException auslösen.");
+    }
+
+    @Test
+    void formatId_NullUUID_ThrowsIllegalArgumentException() {
+        // Assert
+        assertThrows(IllegalArgumentException.class, () -> {
+            // Act
+            PDFService.formatUUID(null);
+        }, "Eine null UUID sollte eine IllegalArgumentException auslösen.");
+    }
 
 
 
