@@ -3,40 +3,40 @@
     <v-card>
       <div class="card-header">
         <v-card-title>
-          <u>Antrag</u>
+          <u>{{ $t('studentAffairsOfficeView.application') }}</u>
         </v-card-title>
         <v-spacer/>
         <v-btn class="button-top" variant="tonal" icon="mdi-close" @click="this.$emit('close');"/>
       </div>
       <v-card-text>
-        Vorherige Universität: {{ copy.edited.applicationData.university }}
+        {{ $t('studentAffairsOfficeView.previousUniversity') }}: {{ copy.edited.applicationData.university }}
       </v-card-text>
       <v-card-text>
-        Vorheriger Studiengang: {{ copy.edited.applicationData.oldCourseOfStudy }}
+        {{ $t('studentAffairsOfficeView.previousCourse') }}: {{ copy.edited.applicationData.oldCourseOfStudy }}
       </v-card-text>
       <v-card-text>
-        Jetziger Studiengang: {{ copy.edited.applicationData.newCourseOfStudy }}
+        {{ $t('studentAffairsOfficeView.currentCourse') }}: {{ copy.edited.applicationData.newCourseOfStudy }}
       </v-card-text>
       <v-card-title>
-        Module:
+        {{ $t('studentAffairsOfficeView.modules') }}:
       </v-card-title>
       <div v-for="(moduleData, index) in copy.edited.moduleFormsData" v-bind:key="moduleData.frontend_key">
         <v-card-subtitle>
           <br>
-          Mapping {{ index + 1 }}
+          {{ $t('studentAffairsOfficeView.mapping') }} {{ index + 1 }}
         </v-card-subtitle>
         <div v-for="(studentModule, index2) in moduleData.modulesStudent" v-bind:key="studentModule.frontend_key">
-          <v-card-text><u>Modul {{ index2 + 1 }}</u></v-card-text>
-          <v-card-text>Name: {{ studentModule.title }}</v-card-text>
-          <v-card-text>Modulnummer: {{ studentModule.number }}</v-card-text>
-          <v-card-text>Leistungspunkte: {{ studentModule.credits }}</v-card-text>
-          <v-card-text>Studentenkommentar: {{ studentModule.commentStudent }}</v-card-text>
-          <v-card-text>Studienbürokommentar: {{ studentModule.commentEmployee }}</v-card-text>
-          <v-btn style="margin: 1%" @click="downloadPdf(studentModule.path)">Beschreibung herunterladen</v-btn>
-          <v-card-text>Entscheidung: {{ studentModule.reason }}</v-card-text>
+          <v-card-text><u>{{ $t('studentAffairsOfficeView.module') }} {{ index2 + 1 }}</u></v-card-text>
+          <v-card-text>{{ $t('studentAffairsOfficeView.name') }}: {{ studentModule.title }}</v-card-text>
+          <v-card-text>{{ $t('studentAffairsOfficeView.moduleNumber') }}: {{ studentModule.number }}</v-card-text>
+          <v-card-text>{{ $t('studentAffairsOfficeView.credits') }}: {{ studentModule.credits }}</v-card-text>
+          <v-card-text>{{ $t('studentAffairsOfficeView.studentComment') }}: {{ studentModule.commentStudent }}</v-card-text>
+          <v-card-text>{{ $t('studentAffairsOfficeView.officeComment') }}: {{ studentModule.commentEmployee }}</v-card-text>
+          <v-btn style="margin: 1%" @click="downloadPdf(studentModule.path)">{{ $t('studentAffairsOfficeView.downloadDescription') }}</v-btn>
+          <v-card-text>{{ $t('studentAffairsOfficeView.decision') }}: {{ studentModule.reason }}</v-card-text>
         </div>
         <v-card-text>
-          <u>Anrechnen für:</u>
+          <u>{{ $t('studentAffairsOfficeView.creditFor') }}:</u>
           <br>
           <div v-for="module in moduleData.modules2bCredited" v-bind:key="module">
             <v-card-text>{{ module }}</v-card-text>
@@ -45,7 +45,7 @@
         <v-divider/>
       </div>
       <v-divider/>
-      <v-card-text>Entscheidung: {{ copy.edited.formalReject}}</v-card-text>
+      <v-card-text>{{ $t('studentAffairsOfficeView.decision') }}: {{ copy.edited.formalReject}}</v-card-text>
     </v-card>
   </div>
 </template>
@@ -69,7 +69,7 @@ export default {
 
     findModule(module) {
       const foundModule = this.majorModules.find(item => item.id === module);
-      return foundModule ? foundModule.name : "Module not found";
+      return foundModule ? foundModule.name : this.$t('studentAffairsOfficeView.moduleNotFound');
     },
 
     replaceIdWithName() {

@@ -1,9 +1,8 @@
 <template>
-  <!--TODO: i18n-->
   <v-card>
     <div class="card-header">
       <v-card-title>
-        <u>Antrag</u>
+        <u>{{ $t('studentAffairsOfficeView.application') }}</u>
       </v-card-title>
       <v-spacer/>
       <v-btn-toggle
@@ -13,17 +12,17 @@
           shaped
           variant="outlined">
         <v-btn :value="false">
-          Original
+          {{ $t('studentAffairsOfficeView.original') }}
         </v-btn>
         <v-btn :value="true">
-          Bearbeitet
+          {{ $t('studentAffairsOfficeView.edited') }}
         </v-btn>
       </v-btn-toggle>
       <v-btn
           class="button-top"
           variant="tonal"
           @click="this.$emit('open',{component:'ComparisonMenu',form:{}});"
-      >Mit anderen Anträgen vergleichen
+      >{{ $t('studentAffairsOfficeView.compareWithOtherApplications') }}
       </v-btn>
       <v-btn
           class="button-top"
@@ -34,68 +33,68 @@
     </div>
 
     <v-divider/>
-    <v-text-field class="text-field" label="Begründung" v-model="formalReject"/>
-    <p v-if="showCommentWarning" style="color:red; margin: 1%">Bitte geben sie eine Begründung an!</p>
+    <v-text-field class="text-field" :label="$t('studentAffairsOfficeView.reason')" v-model="formalReject"/>
+    <p v-if="showCommentWarning" style="color:red; margin: 1%">{{ $t('studentAffairsOfficeView.enterReason') }}</p>
     <v-btn
         @click="formallyReject"
         class="button-top"
         color="red"
         prepend-icon="mdi-hand-back-left"
-    >Ganzen Antrag formal ablehnen</v-btn>
+    >{{ $t('studentAffairsOfficeView.formallyRejectApplication') }}</v-btn>
     <v-divider/>
 
     <v-card-text>
-      Vorherige Universität: {{ applicationVersion.applicationData.university }}
+      {{ $t('studentAffairsOfficeView.previousUniversity') }}: {{ applicationVersion.applicationData.university }}
     </v-card-text>
     <v-card-text>
-      Vorheriger Studiengang: {{ applicationVersion.applicationData.oldCourseOfStudy }}
+      {{ $t('studentAffairsOfficeView.previousCourse') }}: {{ applicationVersion.applicationData.oldCourseOfStudy }}
     </v-card-text>
     <v-card-text>
-      Jetziger Studiengang: {{ applicationVersion.applicationData.newCourseOfStudy }}
+      {{ $t('studentAffairsOfficeView.currentCourse') }}: {{ applicationVersion.applicationData.newCourseOfStudy }}
     </v-card-text>
     <v-card-title>
-      Module:
+      {{ $t('studentAffairsOfficeView.modules') }}:
     </v-card-title>
     <div v-for="(moduleData, i) in applicationVersion.moduleFormsData" v-bind:key="moduleData.frontend_key">
       <v-card-subtitle>
         <br>
-        Mapping {{ i + 1 }}
+        {{ $t('studentAffairsOfficeView.mapping') }} {{ i + 1 }}
       </v-card-subtitle>
       <div v-for="(studentModule, j) in moduleData.modulesStudent" v-bind:key="studentModule.frontend_key">
-        <v-card-text><u>Modul {{ j + 1 }}</u></v-card-text>
-        <v-card-text>Name:</v-card-text>
+        <v-card-text><u>{{ $t('studentAffairsOfficeView.module') }} {{ j + 1 }}</u></v-card-text>
+        <v-card-text>{{ $t('studentAffairsOfficeView.name') }}:</v-card-text>
         <v-text-field
             v-if="editedForm"
             :disabled="!isEdited"
             :label="studentModule.title"
             v-model="editedForm.edited.moduleFormsData[i].modulesStudent[j].title"
         />
-        <v-card-text>Modulnummer:</v-card-text>
+        <v-card-text>{{ $t('studentAffairsOfficeView.moduleNumber') }}:</v-card-text>
         <v-text-field
             v-if="editedForm"
             :disabled="!isEdited"
             :label="studentModule.number"
             v-model="editedForm.edited.moduleFormsData[i].modulesStudent[j].number"
         />
-        <v-card-text>Leistungspunkte:</v-card-text>
+        <v-card-text>{{ $t('studentAffairsOfficeView.credits') }}:</v-card-text>
         <v-text-field
             v-if="editedForm"
             :disabled="!isEdited"
             :label="studentModule.credits"
             v-model="editedForm.edited.moduleFormsData[i].modulesStudent[j].credits"
         />
-        <v-card-text>Studentenkommentar: {{ studentModule.commentStudent }}</v-card-text>
-        <v-card-text>Studienbürokommentar: </v-card-text>
+        <v-card-text>{{ $t('studentAffairsOfficeView.studentComment') }}: {{ studentModule.commentStudent }}</v-card-text>
+        <v-card-text>{{ $t('studentAffairsOfficeView.officeComment') }}: </v-card-text>
         <v-text-field
             v-if="editedForm"
             :disabled="!isEdited"
             :label="studentModule.commentEmployee"
             v-model="editedForm.edited.moduleFormsData[i].modulesStudent[j].commentEmployee"
         />
-        <v-btn style="margin: 1%" @click="downloadPdf(studentModule.path, studentModule.title)">Beschreibung herunterladen</v-btn>
+        <v-btn style="margin: 1%" @click="downloadPdf(studentModule.path, studentModule.title)">{{ $t('studentAffairsOfficeView.downloadDescription') }}</v-btn>
         <v-text-field
             v-if="editedForm"
-            label="Formale Ablehnung"
+            :label="$t('studentAffairsOfficeView.formalReject')"
             v-model="editedForm.edited.moduleFormsData[i].modulesStudent[j].reason"/>
         <v-row style="margin: 1%">
           <v-btn
@@ -105,7 +104,7 @@
               prepend-icon="mdi-hand-back-left"
               variant="flat"
               color="red"
-          >Formal Ablehnen</v-btn>
+          >{{ $t('studentAffairsOfficeView.formallyReject') }}</v-btn>
           <v-btn
               @click="this.editedForm.edited.moduleFormsData[i].modulesStudent[j].approval = 'edited'"
               v-if="editedForm && editedForm.edited.moduleFormsData[i].modulesStudent[j].approval === 'formally rejected'"
@@ -113,18 +112,20 @@
               prepend-icon="mdi-keyboard-backspace"
               variant="flat"
               color="yellow"
-          >Ablehnung rückgängig machen</v-btn>
+          >{{ $t('studentAffairsOfficeView.undoRejection') }}</v-btn>
         </v-row>
       </div>
       <v-card-text>
-        <u>Anrechnen für:</u>
+        <u>{{ $t('studentAffairsOfficeView.creditFor') }}:</u>
         <br>
         <div v-for="(module, k) in moduleData.modules2bCredited" v-bind:key="module">
           <v-autocomplete
               v-if="editedForm"
               class="text-field"
-              :items="this.majorModules.map(module => module.name)"
-              :label="findModule(applicationVersion.moduleFormsData[i].modules2bCredited[k])"
+              :items="this.majorModules"
+              item-title="name"
+              item-value="id"
+              :label="$t('studentAffairsOfficeView.findModule')(applicationVersion.moduleFormsData[i].modules2bCredited[k])"
               :disabled="!isEdited"
               v-model="editedForm.edited.moduleFormsData[i].modules2bCredited[k]"
           />
@@ -142,7 +143,7 @@
           :loading="loadingSendButton"
           @click="sendToExaminingCommitteeChair(true)"
       >
-        An Prüfungsausschuss senden
+        {{ $t('studentAffairsOfficeView.sendToExaminationCommittee') }}
       </v-btn>
       <v-btn
           color="green"
@@ -152,7 +153,7 @@
           :loading="loadingSaveButton"
           @click="saveEditedForm(false)"
       >
-        Speichern
+        {{ $t('studentAffairsOfficeView.save') }}
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -170,7 +171,6 @@ export default {
   async created() {
     await this.getModules()
     this.editedForm = structuredClone(this.form);
-    this.replaceIdWithName();
   },
 
   data() {
@@ -218,7 +218,6 @@ export default {
         }
         this.showCommentWarning = false;
         this.editedForm.edited.applicationData.formalReject = this.formalReject;
-        this.replaceNameWithId();
         await StudentAffairsOfficeService.formallyRejectForm(this.editedForm);
         this.$emit("close");
       } catch (error) {
@@ -228,7 +227,6 @@ export default {
 
     async saveEditedForm(readyForApproval) {
       try {
-        this.replaceNameWithId();
         this.editedForm.edited.applicationData.dateLastEdited = new Date().toISOString();
         await StudentAffairsOfficeService.saveEditedForm(this.editedForm);
         if (!readyForApproval) {
@@ -252,44 +250,6 @@ export default {
         console.error('Error downloading PDF:', error.message);
       }
     },
-
-    replaceData(dataArray, findMethod, replaceMethod) {
-      dataArray.forEach((data) => {
-        data.modules2bCredited.forEach((value, index) => {
-          const replacement = findMethod(value);
-          if (replacement !== undefined) {
-            data.modules2bCredited[index] = replaceMethod(replacement);
-          }
-        });
-      });
-    },
-
-    replaceIdWithName() {
-      this.replaceData(
-          this.editedForm.original.moduleFormsData,
-          this.findModule,
-          (moduleName) => moduleName
-      );
-    },
-
-    findModule(module) {
-      const foundModule = this.majorModules.find(item => item.id === module);
-      return foundModule ? foundModule.name : "Module not found";
-    },
-
-    replaceNameWithId() {
-      this.replaceData(
-          this.editedForm.edited.moduleFormsData,
-          this.findModuleInverse,
-          (moduleId) => moduleId
-      );
-    },
-
-    findModuleInverse(module) {
-      const foundModule = this.majorModules.find(item => item.name === module)
-      return foundModule ? foundModule.id : undefined;
-    },
-
   }
 }
 </script>
