@@ -1,0 +1,78 @@
+{
+  "edited": {
+    "applicationData": {
+      "applicationID": "",
+      "status": "",
+      "formalReject": "",
+      "dateOfSubmission": "2023-12-31T22:30:42.103Z",
+      "dateLastEdited": "2024-01-14T14:12:14.675Z",
+      "university": "University of Regenbogenland",
+      "oldCourseOfStudy": "B. Sc. Informatik",
+      "newCourseOfStudy": "B.Sc. Informatik"
+    },
+    "moduleFormsData": [
+      {
+        "frontend_key": 0,
+        "backend_block_id": "",
+        "modulesStudent": [
+          {
+            "frontend_key": 0,
+            "backend_module_id": "420",
+            "approval": "",
+            "reason": "",
+            "number": "",
+            "title": "AlgoDat 1.5",
+            "path": "",
+            "credits": "5",
+            "university": "University of Regenbogenland",
+            "major": "",
+            "commentStudent": "War cool",
+            "commentEmployee": ""
+          },
+          {
+            "frontend_key": 1,
+            "backend_module_id": "69",
+            "approval": "",
+            "reason": "",
+            "number": "",
+            "title": "AlgoDat 0.5",
+            "path": "",
+            "credits": "4",
+            "university": "University of Regenbogenland",
+            "major": "",
+            "commentStudent": "War nicht so cool",
+            "commentEmployee": ""
+          }
+        ],
+        "modules2bCredited": [
+          3,
+          4
+        ]
+      },
+      {
+        "frontend_key": 1,
+        "backend_block_id": "",
+        "modulesStudent": [
+          {
+            "frontend_key": 0,
+            "backend_module_id": "81923",
+            "approval": "",
+            "reason": "",
+            "number": "",
+            "title": "Das Alles-Modul",
+            "path": "",
+            "credits": "20",
+            "university": "University of Regenbogenland",
+            "major": "",
+            "commentStudent": "Die Beschreibung ist lang, setzen Sie schon mal Kaffee auf",
+            "commentEmployee": ""
+          }
+        ],
+        "modules2bCredited": [
+          15,
+          16
+        ]
+      }
+    ]
+  }
+}

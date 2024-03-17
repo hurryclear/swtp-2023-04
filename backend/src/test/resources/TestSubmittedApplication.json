@@ -27,7 +27,13 @@
             }
           },
           "courseOfStudy": "B. Sc. Informatik",
-          "university": "University of Regenbogenland",
+          "university": {
+            "web_pages": [
+              "http://www.regenbogen.re/"
+            ],
+            "name": "University of Regenbogenland",
+            "country": "Regenbogenland"
+          },
           "id": "420",
           "name": "AlgoDat 1.5",
           "credits": 5
@@ -40,7 +46,13 @@
             }
           },
           "courseOfStudy": "B. Sc. Informatik",
-          "university": "University of Regenbogenland",
+          "university": {
+            "web_pages": [
+              "http://www.regenbogen.re/"
+            ],
+            "name": "University of Regenbogenland",
+            "country": "Regenbogenland"
+          },
           "id": "69",
           "name": "AlgoDat 0.5",
           "credits": 4
@@ -64,7 +76,13 @@
             }
           },
           "courseOfStudy": "B. Sc. Informatik",
-          "university": "University of Regenbogenland",
+          "university": {
+            "web_pages": [
+              "http://www.regenbogen.re/"
+            ],
+            "name": "University of Regenbogenland",
+            "country": "Regenbogenland"
+          },
           "id": "81923",
           "name": "Das Alles-Modul",
           "credits": 20
