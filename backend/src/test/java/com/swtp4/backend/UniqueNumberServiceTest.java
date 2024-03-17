@@ -18,7 +18,7 @@ class UniqueNumberServiceTest {
     @Test
     void whenGenerateUniqueNumber_thenUUIDIsValidFormat() {
         String uniqueNumber = service.generateUniqueNumber();
-        assertTrue(uniqueNumber.matches("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"),
+        assertTrue(uniqueNumber.matches("^[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}$"),
                 "Die generierte UUID entspricht nicht dem erwarteten Format");
     }
 }
