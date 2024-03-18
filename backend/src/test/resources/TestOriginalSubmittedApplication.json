@@ -30,53 +30,11 @@
           "id": "original",
           "name": "original",
           "credits": 1
-        },
-        {
-          "meta": {
-            "key": 1,
-            "comments": {
-              "student": "original"
-            }
-          },
-          "courseOfStudy": "original",
-          "university": {
-            "name": "original"
-          },
-          "id": "original",
-          "name": "original",
-          "credits": 1
         }
       ],
       "modulesToBeCredited": [
         3,
         4
-      ]
-    },
-    {
-      "meta": {
-        "key": 1
-      },
-      "previousModules": [
-        {
-          "meta": {
-            "key": 0,
-            "comments": {
-              "student": "original"
-            }
-          },
-          "courseOfStudy": "original",
-          "university": {
-            "name": "original",
-            "country": "original"
-          },
-          "id": "original",
-          "name": "original",
-          "credits": 1
-        }
-      ],
-      "modulesToBeCredited": [
-        15,
-        16
       ]
     }
   ]

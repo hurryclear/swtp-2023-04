@@ -74,6 +74,7 @@ public class ApplicationTestData {
         return JsonToStringConverter.convertJsonToString("TestOriginalSubmittedApplication.json");
     }
 
+
 //    public static ApplicationEntity createTestApplicationEntityA() {
 //        return ApplicationEntity.builder()
 //                .applicationKeyClass(createTestApplicationKeyClassA())
