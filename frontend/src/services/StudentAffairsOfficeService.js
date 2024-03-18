@@ -60,7 +60,7 @@ const StudentAffairsOfficeService = {
     async saveEditedForm(form) {
         try {
             const response = await axios.put("/api/application/saveEdited", form);
-            return response.data;
+            return response.data; // Adjust this as per your API response structure
         } catch (error) {
             throw new Error(`Error saving edited form: ${error.message}`);
         }
@@ -75,7 +75,7 @@ const StudentAffairsOfficeService = {
     async formallyRejectForm(form) {
         try {
             const response = await axios.put("/api/application/formalRejection", form);
-            return response.data;
+            return response.data; // Adjust this as per your API response structure
         } catch (error) {
             throw new Error(`Error formally rejecting form: ${error.message}`);
         }
@@ -104,9 +104,9 @@ const StudentAffairsOfficeService = {
      * @returns {Promise<string>} A promise that resolves with the office overview content.
      * @throws {Error} If an error occurs while fetching the office overview.
      */
-    async getOfficeOverview() {
+    async getOfficeOverview(queryString) {
         try {
-            const response = await axios.get("/api/application/overviewOffice");
+            const response = await axios.get("/api/application/overviewOffice?" + queryString);
             return response.data.content;
         } catch (error) {
             throw new Error(`Error fetching office overview: ${error.message}`);
@@ -148,9 +148,9 @@ const StudentAffairsOfficeService = {
      * @returns {Promise<string>} A promise that resolves with the committee overview content.
      * @throws {Error} If an error occurs while fetching the committee overview.
      */
-    async getCommitteeOverview() {
+    async getCommitteeOverview(queryString) {
         try {
-            const response = await axios.get("/api/application/overviewCommittee");
+            const response = await axios.get("/api/application/overviewCommittee?" + queryString);
             return response.data.content;
         } catch (error) {
             throw new Error(`Error fetching committee overview: ${error.message}`);

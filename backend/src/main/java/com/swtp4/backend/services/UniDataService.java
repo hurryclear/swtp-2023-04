@@ -61,6 +61,7 @@ public class UniDataService {
         MajorUniEntity major = majorUniRepository.findByNameAndVisibleChoiceTrue(majorName)
                 .orElseThrow(() -> new ResourceNotFoundException("Major not found"));
 
+        // get only modules students should see as choice
         List<UniModuleDto> visibleModules = major.getModules().stream()
                 .filter(ModuleUniEntity::getVisibleChoice)
                 .map(module -> UniModuleDto.builder()
@@ -81,6 +82,7 @@ public class UniDataService {
         MajorUniEntity major = majorUniRepository.findByName(majorName)
                 .orElseThrow(() -> new ResourceNotFoundException("Major not found"));
 
+        // get visible and invisible modules for employees
         List<UniModuleWithVisibility> allModules = major.getModules().stream()
                 .map(module -> UniModuleWithVisibility.builder()
                         .number(module.getNumber())
@@ -110,7 +112,7 @@ public class UniDataService {
             moduleUniRepository.save(module);
         });
 
-        // Iterate over the majors and modules in the JSON
+        // Iterate over the majors and modules in the JSON, find them or create new ones
         for (UniMajorDto majorDto : uniDataDto.getCourses()) {
             MajorUniEntity major = majorUniRepository.findById(majorDto.getName())
                     .orElse(MajorUniEntity.builder()

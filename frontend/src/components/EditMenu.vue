@@ -35,7 +35,7 @@
         class="text-field"
         :label="$t('studentAffairsOfficeView.reason')"
         v-model="formalRejectionReason"
-        :disabled="!formalRejectionReason"
+        :disabled="!showEdited"
     />
     <v-btn
         @click="formallyReject"

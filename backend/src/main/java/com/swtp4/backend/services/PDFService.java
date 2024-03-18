@@ -43,14 +43,17 @@ public class PDFService {
         this.moduleRelationRepository = moduleRelationRepository;
     }
 
+    //saved Module description pdf files in Docker volume for persistence, used by submitApplication Endpoint
     public void saveModulePDFs(Map<String, MultipartFile> fileMap, HashMap<String, String> file_paths) {
+        //fileMapEntry = filename, pdf-file
+        //filePathEntry = filename, filePath where the pdf should be saved
         for (Map.Entry<String, MultipartFile> entry : fileMap.entrySet()) {
             String fileKey = entry.getKey();
             MultipartFile file = entry.getValue();
             String filePath = file_paths.get(fileKey);
-
             if (file != null && !file.isEmpty()) {
                 try {
+                    //write PDF file in volume (created parent directories, if they did not exist - every application has an own directory
                     byte[] bytes = file.getBytes();
                     Path path = Paths.get("/app/pdf-files" + filePath);
                     Files.createDirectories(path.getParent());
@@ -65,6 +68,7 @@ public class PDFService {
         }
     }
 
+    //method for getPDF Endpoint, retrieves PDF file from Docker volume
     public Resource getModulePDF(String filePathString) throws MalformedURLException, FileNotFoundException {
         Path filePath = Paths.get(filePathString);
         Resource resource = new UrlResource(filePath.toUri());
@@ -79,8 +83,9 @@ public class PDFService {
         }
     }
 
-
+    //PDF Generator for Application summary for the student, used by getPDFSummary Endpoint
     public Resource generatePDFForApplication(String applicationId) throws IOException {
+        //Get application entity
         ApplicationEntity applicationEntity = applicationRepository.findById(ApplicationKeyClass.builder()
                         .creator("Employee")
                         .id(applicationId).build())
@@ -91,18 +96,16 @@ public class PDFService {
         PDPage page = new PDPage();
         document.addPage(page);
         PDPageContentStream contentStream = new PDPageContentStream(document, page);
-        float currentHeight = 750;
+        float currentHeight = 750; //used to control line-placement
 
-        //Headline: Zusammenfassung Antrag
+        //Headline summary
         currentHeight = writeContentOneLine(contentStream, PDType1Font.HELVETICA_BOLD, 20, 100, currentHeight, 25, "Zusammenfassung Antrag");
-        //Application ID, now using the formatted UUID
+        //Application ID
         currentHeight = writeContentOneLine(contentStream, PDType1Font.HELVETICA, 12, 100, currentHeight, 15,"Antragsnummer: " + applicationId);
-
         currentHeight -= 30;
-        float lineHeight = 15;
+        float lineHeight = 15; //used to control line-spacing
 
-        //Get Application Entity
-        //Application Data
+        //Application Data is written
         ArrayList<String> textLinesApplication = new ArrayList<>(Arrays.asList(
                 "Status: " + applicationEntity.getStatus(),
                 "Einreichungsdatum: " + applicationEntity.getDateOfSubmission().toString(),
@@ -115,11 +118,11 @@ public class PDFService {
         currentHeight = writeContentMultipleLines(contentStream, PDType1Font.HELVETICA, 12, 100, currentHeight, lineHeight, textLinesApplication);
 
         //Module Blocks and Modules Height Spacing
-        float blockSpacing = 20;
-        float moduleSpacing = 15;
+        float blockSpacing = 20; //spacing between different sections
+        float moduleSpacing = 15; //line-spacing
         currentHeight -= 2*blockSpacing;
 
-        //Get ModuleBlocks
+        //Get all ModuleBlocks of the application
         List<ModuleBlockEntity> moduleBlockEntityList = moduleBlockRepository.findAllByApplicationEntity(applicationEntity);
         for (ModuleBlockEntity moduleBlockEntity : moduleBlockEntityList) {
             //Check if Page is full
@@ -166,7 +169,7 @@ public class PDFService {
                     contentStream = new PDPageContentStream(document, newPage);
                     currentHeight = 750;
                 }
-                //ModuleStudent Data
+                //ModuleStudent Data is written
                 ArrayList<String> textLinesModuleStudent = new ArrayList<>(Arrays.asList(
                         "Modul " + (moduleStudentEntity.getFrontendKey() + 1) + ": " + moduleStudentEntity.getTitle(),
                         "Modulnummer: " + moduleStudentEntity.getNumber(),
@@ -199,13 +202,13 @@ public class PDFService {
                     contentStream = new PDPageContentStream(document, newPage);
                     currentHeight = 750;
                 }
-                //Module Uni Data
+                //Module Uni Data is written
                 currentHeight = writeContentOneLine(contentStream, PDType1Font.HELVETICA, 12, 100, currentHeight, lineHeight, moduleUniEntity.getName());
             }
             currentHeight -= (2*blockSpacing);
         }
         contentStream.close();
-
+        //Return PDF file as Resource
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         document.save(outputStream);
         document.close();
@@ -213,20 +216,25 @@ public class PDFService {
         return new ByteArrayResource(pdfBytes);
     }
 
+    //Method do write one Line in content-stream
     private float writeContentOneLine (PDPageContentStream contentStream, PDType1Font font, float fontSize, float tx, float currentHeight, float lineHeight, String text) throws IOException {
         contentStream.beginText();
         contentStream.setFont(font, fontSize);
+        //Split textLine into words
         String[] words = text.split(" ");
         StringBuilder line = new StringBuilder();
         float ty = currentHeight;
+        //Check if line is full
         for (String word : words) {
             float lineWidth = font.getStringWidth(line.toString() + " " + word) /  1000 * fontSize;
             if (lineWidth < (600 - tx)) {
+                //no - append word to line
                 if (!line.toString().isEmpty()) {
                     line.append(" ");
                 }
                 line.append(word);
             } else {
+                //yes - write line in content-stream and start next line
                 contentStream.newLineAtOffset(tx, ty);
                 contentStream.showText(line.toString());
                 ty -= lineHeight;
@@ -243,8 +251,11 @@ public class PDFService {
         contentStream.endText();
         return ty;
     }
+
+    //method do write multiple lines in content-stream
     private float writeContentMultipleLines (PDPageContentStream contentStream, PDType1Font font, float fontSize, float tx1, float currentHeight, float lineHeight, ArrayList<String> textLines) throws IOException {
         float ty = currentHeight;
+        //iterate over textLines and uses single method do write lines
         for (int i=0; i < textLines.size(); i++) {
             if (i == 0) {
                 ty = writeContentOneLine(contentStream, font, fontSize, tx1, ty, lineHeight, textLines.get(i));
@@ -254,21 +265,4 @@ public class PDFService {
         }
         return ty;
     }
-//
-//    public static String formatUUID(String uuid) {
-//        if (uuid == null || uuid.length() != 36) {
-//            throw new IllegalArgumentException("Invalid UUID");
-//        }
-//
-//        String cleanedUUID = uuid.replace("-", "");
-//
-//        return cleanedUUID.substring(0, 4) + "-" +
-//                cleanedUUID.substring(4, 8) + "-" +
-//                cleanedUUID.substring(8, 12) + "-" +
-//                cleanedUUID.substring(12, 16) + "-" +
-//                cleanedUUID.substring(16, 20) + "-" +
-//                cleanedUUID.substring(20, 24) + "-" +
-//                cleanedUUID.substring(24, 28) + "-" +
-//                cleanedUUID.substring(28);
-//    }
 }

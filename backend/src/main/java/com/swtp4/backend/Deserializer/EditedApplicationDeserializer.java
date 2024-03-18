@@ -24,6 +24,7 @@ public class EditedApplicationDeserializer extends JsonDeserializer<EditedApplic
         JsonNode jsonNode = parser.getCodec().readTree(parser);
         JsonNode editedApplicationData = jsonNode.get("edited").get("applicationData");
 
+        //first get all Blocks with Data
         JsonNode moduleFormsData = jsonNode.get("edited").get("moduleFormsData");
         List<EditedBlock> editedBlocks = new ArrayList<>();
         if (moduleFormsData.isArray()) {
@@ -35,6 +36,7 @@ public class EditedApplicationDeserializer extends JsonDeserializer<EditedApplic
                         modulesCreditedIDs.add((module.asLong()));
                     }
                 }
+                // get all Modules in each Block
                 JsonNode modulesStudent = block.get("modulesStudent");
                 List<EditedStudentModule> editedModules = new ArrayList<>();
                 if(modulesStudent.isArray()) {
@@ -55,6 +57,7 @@ public class EditedApplicationDeserializer extends JsonDeserializer<EditedApplic
                         editedModules.add(editedModule);
                     }
                 }
+                // get Modules of Uni Leipzig
                 EditedBlock editedBlock = new EditedBlock(
                         block.get("frontend_key").asLong(),
                         block.get("backend_block_id").asLong(),
@@ -65,6 +68,7 @@ public class EditedApplicationDeserializer extends JsonDeserializer<EditedApplic
             }
         }
 
+        // create ApplicationDto
         return new EditedApplicationDto(
                 editedApplicationData.get("applicationID").asText(),
                 parseDate(editedApplicationData.get("dateLastEdited").asText()),
@@ -75,6 +79,7 @@ public class EditedApplicationDeserializer extends JsonDeserializer<EditedApplic
         );
     }
 
+    // parse String to timestamp, important for sorting
     private Date parseDate(String dateString) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         try {

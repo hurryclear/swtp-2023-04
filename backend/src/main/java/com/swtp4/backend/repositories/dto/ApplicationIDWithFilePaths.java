@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.HashMap;
 
+// used for getting ID AND paths form service method
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

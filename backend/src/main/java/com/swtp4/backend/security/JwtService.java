@@ -31,6 +31,7 @@ public class JwtService {
     @Value("${jwt.prefix}")
     private String jwtPrefix;
 
+    // JWT is generated using HMAC512 algorithm and jwtSecret key
     public String generateToken(Authentication authentication) {
         String username = authentication.getName();
         return JWT.create()
@@ -40,6 +41,7 @@ public class JwtService {
                 .sign(Algorithm.HMAC512(jwtSecret));
     }
 
+    // verify if token is valid
     public boolean validateToken(String token) {
         try {
             JWTVerifier verifier = JWT.require(Algorithm.HMAC512(jwtSecret)).build();
@@ -51,11 +53,13 @@ public class JwtService {
         }
     }
 
+    // resolve username from token
     public String getUsernameFromToken(String token) {
         DecodedJWT decodedJWT = JWT.decode(token);
         return decodedJWT.getSubject();
     }
 
+    // get Token from frontend request
     public String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader(jwtHeader);
         if (bearerToken != null && bearerToken.startsWith(jwtPrefix)) {

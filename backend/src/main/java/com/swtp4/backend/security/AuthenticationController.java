@@ -17,7 +17,7 @@ public class AuthenticationController {
         this.authenticationService = authenticationService;
     }
 
-
+    // office and committee can log in using this endpoint
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(
             @RequestBody AuthenticationRequest authenticationRequest) {
@@ -25,6 +25,7 @@ public class AuthenticationController {
         return ResponseEntity.ok(response);
     }
 
+    // office and committee can log out using this endpoint
     @GetMapping("/logout")
     public ResponseEntity<?> logoutUser() {
         authenticationService.logout();
