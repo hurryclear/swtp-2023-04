@@ -356,6 +356,10 @@ export default {
   margin: 1%;
 }
 
+.v-row {
+  margin: 1%;
+}
+
 .card-header {
   display: flex;
   align-items: center;
