@@ -72,7 +72,7 @@
   "reviewComponent": {
     "checkStatus": "Проверить статус заявки",
     "downloadApplication": "Загрузить обзор",
-    "formID": "Номер ссылки",
+    "formID": "ID формы",
     "reviewApplication": "Просмотр заявки",
     "currentUniversity": "Текущий университет",
     "oldCourseOfStudy": "Прошлый курс",
@@ -102,7 +102,8 @@
     "errorFetchingForm": "Ошибка получения формы",
     "formNotFound": "Форма не найдена",
     "pending": "Ожидает",
-    "moduleBlock": "Блок модулей"
+    "moduleBlock": "Блок модулей",
+    "partiallyRejected": "Частично отклонено"
   },
   "routes": {
     "/": "Главная страница",
@@ -150,7 +151,8 @@
     "studentComment": "Комментарий студента",
     "undoRejection": "Отменить отклонение",
     "university": "Университет",
-    "view": "Просмотр"
+    "view": "Просмотр",
+    "reason": "Причина"
   },
   "updateModuleDataView": {
     "uploadJSON": "Загрузить JSON",

@@ -72,7 +72,7 @@
   "reviewComponent": {
     "checkStatus": "アプリケーションステータスの確認",
     "downloadApplication": "概要のダウンロード",
-    "formID": "参照番号",
+    "formID": "フォームID",
     "reviewApplication": "アプリケーションの確認",
     "currentUniversity": "現在の大学",
     "oldCourseOfStudy": "以前の学習プログラム",
@@ -102,7 +102,8 @@
     "errorFetchingForm": "フォームの取得エラー",
     "formNotFound": "フォームが見つかりません",
     "pending": "保留中",
-    "moduleBlock": "モジュールブロック"
+    "moduleBlock": "モジュールブロック",
+    "partiallyRejected": "一部拒否"
   },
   "routes": {
     "/": "ホームページ",
@@ -150,7 +151,8 @@
     "studentComment": "学生コメント",
     "undoRejection": "拒否を取り消す",
     "university": "大学",
-    "view": "ビュー"
+    "view": "ビュー",
+    "reason": "理由"
   },
   "updateModuleDataView": {
     "uploadJSON": "JSONをアップロード",

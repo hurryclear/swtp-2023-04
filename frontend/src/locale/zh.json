@@ -72,7 +72,7 @@
   "reviewComponent": {
     "checkStatus": "检查申请状态",
     "downloadApplication": "下载概要",
-    "formID": "参考编号",
+    "formID": "表单 ID",
     "reviewApplication": "审核申请",
     "currentUniversity": "当前大学",
     "oldCourseOfStudy": "以前的课程",
@@ -102,7 +102,8 @@
     "errorFetchingForm": "获取表格时出错",
     "formNotFound": "找不到表格",
     "pending": "待定",
-    "moduleBlock": "模块块"
+    "moduleBlock": "模块块",
+    "partiallyRejected": "部分已拒绝"
   },
   "routes": {
     "/": "主页",
@@ -150,7 +151,8 @@
     "studentComment": "学生评论",
     "undoRejection": "撤销拒绝",
     "university": "大学",
-    "view": "视图"
+    "view": "视图",
+    "reason": "原因"
   },
   "updateModuleDataView": {
     "uploadJSON": "上传JSON",

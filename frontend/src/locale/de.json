@@ -72,7 +72,7 @@
   "reviewComponent": {
     "checkStatus": "Antragsstatus prüfen",
     "downloadApplication": "Zusammenfassung herunterladen",
-    "formID": "Referenznummer",
+    "formID": "Antrag-ID",
     "reviewApplication": "Antrag prüfen",
     "currentUniversity": "Aktuelle Universität",
     "oldCourseOfStudy": "Vorheriges Studienprogramm",
@@ -102,7 +102,8 @@
     "errorFetchingForm": "Fehler beim Abrufen des Formulars",
     "formNotFound": "Formular nicht gefunden",
     "pending": "Ausstehend",
-    "moduleBlock": "Modulblock"
+    "moduleBlock": "Modulblock",
+    "partiallyRejected": "Teilweise abgelehnt"
   },
   "routes": {
     "/": "Startseite",
@@ -149,7 +150,10 @@
     "studentComment": "Studentenkommentar",
     "undoRejection": "Ablehnung rückgängig machen",
     "university": "Universität",
-    "view": "Anzeigen"
+    "view": "Anzeigen",
+    "reason": "Grund"
+
+
   },
   "updateModuleDataView": {
     "uploadJSON": "JSON hochladen",

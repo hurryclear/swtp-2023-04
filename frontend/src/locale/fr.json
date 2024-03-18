@@ -72,7 +72,7 @@
   "reviewComponent": {
     "checkStatus": "Vérifier l'État de la Demande",
     "downloadApplication": "Télécharger le Résumé",
-    "formID": "Numéro de Référence",
+    "formID": "ID du Formulaire",
     "reviewApplication": "Examiner la Demande",
     "currentUniversity": "Université Actuelle",
     "oldCourseOfStudy": "Programme d'Études Antérieur",
@@ -102,7 +102,8 @@
     "errorFetchingForm": "Erreur lors de la Récupération du Formulaire",
     "formNotFound": "Formulaire Non Trouvé",
     "pending": "En Attente",
-    "moduleBlock": "Bloc de Modules"
+    "moduleBlock": "Bloc de Modules",
+    "partiallyRejected": "Partiellement Rejeté"
   },
   "routes": {
     "/": "Page d'Accueil",
@@ -150,7 +151,8 @@
     "studentComment": "Commentaire de l'étudiant",
     "undoRejection": "Annuler le rejet",
     "university": "Université",
-    "view": "Voir"
+    "view": "Voir",
+    "reason": "Raison"
   },
   "updateModuleDataView": {
     "uploadJSON": "Téléverser JSON",

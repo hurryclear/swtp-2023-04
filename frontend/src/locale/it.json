@@ -72,7 +72,7 @@
   "reviewComponent": {
     "checkStatus": "Verifica Stato Domanda",
     "downloadApplication": "Scarica Riepilogo",
-    "formID": "Numero di Riferimento",
+    "formID": "ID Domanda",
     "reviewApplication": "Revisione Domanda",
     "currentUniversity": "Università Attuale",
     "oldCourseOfStudy": "Programma di Studio Precedente",
@@ -102,7 +102,8 @@
     "errorFetchingForm": "Errore Recupero Domanda",
     "formNotFound": "Domanda non Trovata",
     "pending": "In Attesa",
-    "moduleBlock": "Blocco di Moduli"
+    "moduleBlock": "Blocco di Moduli",
+    "partiallyRejected": "Parzialmente Respinto"
   },
   "routes": {
     "/": "Homepage",
@@ -150,7 +151,8 @@
     "studentComment": "Commento dello studente",
     "undoRejection": "Annulla il rifiuto",
     "university": "Università",
-    "view": "Visualizza"
+    "view": "Visualizza",
+    "reason": "Motivo"
   },
   "updateModuleDataView": {
     "uploadJSON": "Carica JSON",

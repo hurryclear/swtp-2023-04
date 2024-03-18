@@ -72,7 +72,7 @@
   "reviewComponent": {
     "checkStatus": "Check Application Status",
     "downloadApplication": "Download Summary",
-    "formID": "Reference Number",
+    "formID": "Application ID",
     "reviewApplication": "Review Application",
     "currentUniversity": "Current University",
     "oldCourseOfStudy": "Previous Study Program",
@@ -102,7 +102,8 @@
     "errorFetchingForm": "Error Fetching Form",
     "formNotFound": "Form Not Found",
     "pending": "Pending",
-    "moduleBlock": "Module Block"
+    "moduleBlock": "Module Block",
+    "partiallyRejected": "Partially Rejected"
   },
   "routes": {
     "/": "Homepage",
@@ -150,7 +151,13 @@
     "studentComment": "Student Comment",
     "undoRejection": "Undo Rejection",
     "university": "University",
-    "view": "View"
+    "view": "View",
+    "reason": "Reason",
+    "accept": "Accept",
+    "undoAcceptance": "Undo Acceptance",
+    "reject": "Reject"
+
+
   },
   "updateModuleDataView": {
     "uploadJSON": "Upload JSON",

@@ -72,7 +72,7 @@
   "reviewComponent": {
     "checkStatus": "신청서 상태 확인",
     "downloadApplication": "요약 다운로드",
-    "formID": "참조 번호",
+    "formID": "양식 ID",
     "reviewApplication": "신청서 검토",
     "currentUniversity": "현재 대학",
     "oldCourseOfStudy": "이전 과정",
@@ -102,7 +102,8 @@
     "errorFetchingForm": "양식 가져오기 오류",
     "formNotFound": "양식을 찾을 수 없음",
     "pending": "보류 중",
-    "moduleBlock": "모듈 블록"
+    "moduleBlock": "모듈 블록",
+    "partiallyRejected": "일부 거부됨"
   },
   "routes": {
     "/": "홈페이지",
@@ -150,8 +151,9 @@
     "studentComment": "학생 코멘트",
     "undoRejection": "거부 취소",
     "university": "대학교",
-    "view": "보기"
-  },
+    "view": "보기",
+    "reason": "이유"
+   },
   "updateModuleDataView": {
     "uploadJSON": "JSON 업로드",
     "submit": "제출"
