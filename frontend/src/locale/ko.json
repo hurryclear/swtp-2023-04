@@ -36,9 +36,11 @@
   },
   "examiningCommitteeChairView": {
     "accept": "수락",
-    "decline": "거부",
+    "undoAccept": "수락 취소",
+    "decline": "거절",
+    "undoDecline": "거절 취소",
     "moduleCount": "모듈 수",
-    "studentAffairsOfficeComment": "학생 지원 사무실 코멘트"
+    "studentAffairsOfficeComment": "학생 사무실 코멘트"
   },
   "formDisplay": {
     "application": "신청서",

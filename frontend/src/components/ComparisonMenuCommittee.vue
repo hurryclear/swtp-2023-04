@@ -65,7 +65,7 @@ export default {
       // Check if sortBy exists and append to queryParams
       if (this.sortBy.length) {
         queryParams.sortBy = this.sortBy[0].key;
-        queryParams.sortDirection = this.sortBy[0].order ? "DESC" : "ASC";
+        queryParams.sortDirection = this.sortBy[0].order.toUpperCase();
       }
 
       // Construct query string

@@ -114,7 +114,7 @@
                   prepend-icon="mdi-hand-back-left"
                   variant="elevated"
                   color="red"
-              >{{ $t('studentAffairsOfficeView.reject') }}
+              >{{ $t('examiningCommitteeChairView.decline') }}
               </v-btn>
               <v-btn
                   @click="module.approval = 'edited'"
@@ -123,16 +123,16 @@
                   prepend-icon="mdi-keyboard-backspace"
                   variant="elevated"
                   color="yellow"
-              >{{ $t('studentAffairsOfficeView.undoRejection') }}
+              >{{ $t('examiningCommitteeChairView.undoDecline') }}
               </v-btn>
               <v-btn
                   @click="module.approval = 'accepted'"
                   :disabled="!showEdited"
                   class="ma-2"
-                  prepend-icon="mdi-hand-back-left"
+                  prepend-icon="mdi-check-bold"
                   variant="elevated"
-                  color="red"
-              >{{ $t('studentAffairsOfficeView.accept') }}
+                  color="green"
+              >{{ $t('examiningCommitteeChairView.accept') }}
               </v-btn>
               <v-btn
                   @click="module.approval = 'edited'"
@@ -141,7 +141,7 @@
                   prepend-icon="mdi-keyboard-backspace"
                   variant="elevated"
                   color="yellow"
-              >{{ $t('studentAffairsOfficeView.undoAcceptance') }}
+              >{{ $t('examiningCommitteeChairView.undoAccept') }}
               </v-btn>
             </v-row>
             <v-divider/>
