@@ -28,7 +28,7 @@
               <v-row justify="space-between" no-gutters>
                 <v-col cols="auto" class="text-left">
                   <!-- Overview title -->
-                  <span style="font-weight: bold; font-size: large;">{{ $t('reviewComponent.overview') }}:</span>
+                  <div><span style="font-weight: bold; font-size: large;">{{ $t('reviewComponent.overview') }}:</span></div>
                 </v-col>
               </v-row>
             </v-card-title>
@@ -53,14 +53,17 @@
                   <div><span style="font-weight: bold;">{{$t('reviewComponent.newCourseOfStudy')}}:</span> {{ form.applicationData.newCourseOfStudy }}</div>
                   <div><span style="font-weight: bold;">{{$t('reviewComponent.dateOfSubmission')}}:</span> {{ new Date(form.applicationData.dateOfSubmission).toLocaleString() }}</div>
                   <div><span style="font-weight: bold;">{{$t('reviewComponent.dateLastEdited')}}:</span> {{ new Date(form.applicationData.dateLastEdited).toLocaleString() }}</div>
+                  <div class="d-flex align-center"><span style="font-weight: bold;">{{$t('reviewComponent.formID')}}:</span> {{ form.applicationData.applicationID }} <v-btn size="x-small" color="primary" icon="mdi-content-copy" variant="plain" @click="copyToClipboard"></v-btn></div>
                 </v-card-text>
               </v-col>
 
               <!-- Button for downloading the application form -->
               <v-col cols="12" sm="6" class="d-flex align-center justify-center">
-                <v-btn class="mb-4" color="primary" @click="downloadForm" append-icon="mdi-download">
-                  <span style="font-weight: bold;">{{ $t('reviewComponent.downloadApplication') }}</span>
-                </v-btn>
+                <div>
+                  <v-btn class="mb-4" color="primary" variant="elevated" @click="downloadForm" append-icon="mdi-download">
+                    <span style="font-weight: bold;">{{ $t('reviewComponent.downloadApplication') }}</span>
+                  </v-btn>
+                </div>
               </v-col>
             </v-row>
           </v-card>
@@ -109,7 +112,7 @@
                   <!-- Module approval information -->
                   <div v-if="module.approval !== ''">
                     <span style="font-weight: bold;">{{$t('reviewComponent.moduleApproval')}}: </span> 
-                    <span :style="{ color: detrermineTextColor(module.approval) }">{{ statusTranslation(module.approval) }}</span>
+                    <span :style="{ color: determineTextColor(module.approval) }">{{ statusTranslation(module.approval) }}</span>
                   </div>
                   <div v-else>
                     <span style="font-weight: bold;">{{$t('reviewComponent.moduleApproval')}}: </span> 
@@ -175,9 +178,7 @@ export default {
   props: {
     applicationId: String
   },
-  created() {
-    this.formId = this.applicationId
-  },
+  
 
   // Watchers for Vue component
   watch: {
@@ -188,6 +189,14 @@ export default {
       immediate: true,
       handler(newVal) {
         this.form = newVal; // Update the local form data when the store's form data changes
+      }
+    },
+
+    applicationId(newVal) {
+      this.formId = newVal;
+      console.log('Updated Form ID:', this.formId);
+      if (this.formId) {
+        this.checkStatus();
       }
     }
   },
@@ -252,9 +261,10 @@ export default {
 
             // Create an object URL for the blob and set up a temporary download link.
             const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
+            const filename = `Application-${applicationId}.pdf`;
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', 'file.pdf'); // Consider using a dynamic filename.
+            link.setAttribute('download', filename); // Consider using a dynamic filename.
 
             // Append the link to the DOM and trigger the download.
             document.body.appendChild(link);
@@ -351,6 +361,9 @@ export default {
     getBlockApprovalStatus(modules) {
       const allApproved = modules.every(module => module.approval === 'accepted');
       const someApproved = modules.some(module => module.approval === 'accepted');
+      const someRejected = modules.some(module => module.approval === 'rejected' || module.approval === 'formally rejected');
+      const allRejected = modules.every(module => module.approval === 'rejected');
+      const allFromallyRejected = modules.every(module => module.approval === 'formally rejected');
       const allOpen = modules.every(module => module.approval === '');
 
       if (allApproved) {
@@ -359,6 +372,12 @@ export default {
         return this.$t('reviewComponent.partiallyAccepted');
       } else if (allOpen) {
         return this.$t('reviewComponent.open');
+      } else if (allRejected) {
+        return this.$t('reviewComponent.rejected');
+      } else if (allFromallyRejected) {
+        return this.$t('reviewComponent.formallyRejected');
+      } else if (someRejected) {
+        return this.$t('reviewComponent.partiallyRejected');
       } else {
         return this.$t('reviewComponent.rejected');
       }
@@ -372,6 +391,9 @@ export default {
     getBlockApprovalColor(modules) {
       const allApproved = modules.every(module => module.approval === 'accepted');
       const someApproved = modules.some(module => module.approval === 'accepted');
+      const someRejected = modules.some(module => module.approval === 'rejected' || module.approval === 'formally rejected');
+      const allRejected = modules.every(module => module.approval === 'rejected');
+      const allFromallyRejected = modules.every(module => module.approval === 'formally rejected');
       const allOpen = modules.every(module => module.approval === '');
 
       if (allApproved) {
@@ -380,6 +402,12 @@ export default {
         return 'orange';
       } else if (allOpen) {
         return 'blue';
+      } else if (allRejected) {
+        return 'red';
+      } else if (allFromallyRejected) {
+        return 'red';
+      } else if (someRejected) {
+        return 'orange';
       } else {
         return 'red';
       }
@@ -391,6 +419,7 @@ export default {
      * @returns {string} The color representing the text based on approval status.
      */
     determineTextColor(approval) {
+      console.log('Approval:', approval);
       if (approval === 'accepted') {
         return 'green';
       } else if (approval === 'rejected') {
@@ -418,6 +447,22 @@ export default {
         return 'pending';
       }
     },
+
+    copyToClipboard() {
+      // Create a temporary textarea element
+      const textarea = document.createElement('textarea');
+      textarea.value = this.form.applicationData.applicationID;
+      document.body.appendChild(textarea);
+      
+      // Select the text and copy it to the clipboard
+      textarea.select();
+      document.execCommand('copy');
+
+      // Remove the temporary textarea
+      document.body.removeChild(textarea);
+
+      // Optional: Show a message or do something to indicate successful copying
+    }
   }
 };
 
