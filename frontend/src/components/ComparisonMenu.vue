@@ -107,7 +107,7 @@ export default {
     translatedHeaders() {
       return [
         { title: this.$t("studentAffairsOfficeView.ID"), key: "applicationID" },
-        { title: this.$t("studentAffairsOfficeView.university"), key: "university" },
+        { title: this.$t("studentAffairsOfficeView.university"), key: "universityName" },
         { title: this.$t("studentAffairsOfficeView.dateOfSubmission"), key: "dateOfSubmission" },
         { title: this.$t("studentAffairsOfficeView.dateLastEdited"), key: "dateLastEdited" },
         { title: this.$t("studentAffairsOfficeView.status"), key: "status" },
