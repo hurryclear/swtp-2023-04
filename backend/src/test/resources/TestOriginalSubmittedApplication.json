@@ -1,7 +1,7 @@
 {
   "meta": {
     "dateOfSubmission": "2023-12-31T22:30:42.103Z",
-    "dateLastEdited": "2024-01-14T14:12:14.675Z"
+    "dateLastEdited": "2023-12-31T22:30:42.103Z"
   },
   "university": {
     "name": "original"
@@ -29,7 +29,7 @@
           },
           "id": "original",
           "name": "original",
-          "credits": 5
+          "credits": 1
         },
         {
           "meta": {
@@ -44,7 +44,7 @@
           },
           "id": "original",
           "name": "original",
-          "credits": 4
+          "credits": 1
         }
       ],
       "modulesToBeCredited": [
