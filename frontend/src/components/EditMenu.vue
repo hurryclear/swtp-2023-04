@@ -128,16 +128,16 @@
                   :disabled="!showEdited"
                   class="ma-2"
                   prepend-icon="mdi-hand-back-left"
-                  variant="flat"
+                  variant="elevated"
                   color="red"
-              >{{ $t('studentAffairsOfficeView.formallyReject') }}
+              >{{ $t('studentAffairsOfficeView.formalReject') }}
               </v-btn>
               <v-btn
                   @click="module.approval = 'edited'"
                   v-if="formCopy && module.approval === 'formally rejected'"
                   class="ma-2"
                   prepend-icon="mdi-keyboard-backspace"
-                  variant="flat"
+                  variant="elevated"
                   color="yellow"
               >{{ $t('studentAffairsOfficeView.undoRejection') }}
               </v-btn>
