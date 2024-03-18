@@ -84,6 +84,27 @@ const StudentAffairsOfficeService = {
             throw new Error(`Error retrieving filtered/sorted applications: ${error.message}`);
         }
     },
+
+
+    //committee
+
+    async getCommitteeOverview() {
+        try {
+            const response = await axios.get("/api/application/overviewCommittee");
+            return response.data.content;
+        } catch (error) {
+            throw new Error(`Error fetching office overview: ${error.message}`);
+        }
+    },
+
+    async saveApprovedForm(form) {
+        try {
+            const response = await axios.put("/api/application/saveApproval", form);
+            return response.data; // Adjust this as per your API response structure
+        } catch (error) {
+            throw new Error(`Error saving edited form: ${error.message}`);
+        }
+    },
 };
 
 export default StudentAffairsOfficeService;
