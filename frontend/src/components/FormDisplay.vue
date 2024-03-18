@@ -1,25 +1,24 @@
 <template>
   <h1>{{$t("studentAffairsOfficeView.openApplications")}}</h1>
-
   <v-card>
-    <template v-slot:text>
-      <v-text-field
-          v-model="search"
-          :label="$t('studentAffairsOfficeView.search')"
-          prepend-inner-icon="mdi-magnify"
-          variant="outlined"
-          hide-details
-          single-line
-      />
-    </template>
-    <v-data-table :headers="translatedHeaders" :items="formattedForms" :search="search" item-key="id">
+    <v-data-table-server
+        v-model:items-per-page="itemsPerPage"
+        v-model:sort-by="sortBy"
+        :headers="translatedHeaders"
+        :items="formattedForms"
+        :items-length="totalItems"
+        :loading="loading"
+        :page="page"
+        item-key="id"
+        @update:options="getForms"
+    >
       <template v-slot:[`item.actions`]="{ item }">
         <v-btn
             @click="openEditMenu(item)"
             icon="mdi-pencil"
         />
       </template>
-    </v-data-table>
+    </v-data-table-server>
   </v-card>
 </template>
 
@@ -28,7 +27,11 @@ import StudentAffairsOfficeService from "@/services/StudentAffairsOfficeService"
 export default {
   data() {
     return {
-      search: "",
+      itemsPerPage: 5,
+      page: 1,
+      totalItems: 0,
+      sortBy: [],
+      loading: false,
       forms: []
     }
   },
@@ -49,11 +52,31 @@ export default {
 
     async getForms() {
       try {
-        this.forms = await StudentAffairsOfficeService.getOfficeOverview();
+        this.loading = true;
+        const queryString = this.buildQueryString()
+        this.forms = await StudentAffairsOfficeService.getOfficeOverview(queryString);
+        this.loading = false;
       } catch (error) {
         console.error("Error retrieving open forms: ", error);
       }
     },
+
+    buildQueryString() {
+      const queryParams = {
+        perPage: this.itemsPerPage,
+        page: this.page - 1,
+      }
+
+      if (this.sortBy.length) {
+        queryParams.sortBy = this.sortBy[0].key;
+        queryParams.sortDirection = this.sortBy[0].order.toUpperCase();
+      }
+
+      return Object.entries(queryParams)
+          .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+          .join("&");
+    },
+
     formatDate(inputDate) {
       const date = new Date(inputDate);
       const options = {
@@ -71,7 +94,7 @@ export default {
     translatedHeaders() {
       return [
         {title: this.$t("studentAffairsOfficeView.ID"), key: "applicationID"},
-        {title: this.$t("studentAffairsOfficeView.university"), key: "university"},
+        {title: this.$t("studentAffairsOfficeView.university"), key: "universityName"},
         {title: this.$t("studentAffairsOfficeView.dateOfSubmission"), key: "dateOfSubmission"},
         {title: this.$t("studentAffairsOfficeView.dateLastEdited"), key: "dateLastEdited"},
         {title: this.$t("studentAffairsOfficeView.status"), key: "status"},
