@@ -1,7 +1,19 @@
-// services/AuthService.js
 import axios from '@/plugins/axios';
 
+/**
+ * Service for handling user authentication.
+ * @namespace AuthService
+ */
 const AuthService = {
+    /**
+     * Authenticates the user.
+     * @async
+     * @memberof AuthService
+     * @param {string} username - The username.
+     * @param {string} password - The password.
+     * @returns {Promise<Object>} - Object containing authentication status, token, and role.
+     * @throws {Error} - If authentication fails.
+     */
     async authenticate(username, password) {
         try {
             const response = await axios.post('/api/auth/login', {
@@ -18,6 +30,13 @@ const AuthService = {
         }
     },
 
+    /**
+     * Logs out the user.
+     * @async
+     * @memberof AuthService
+     * @returns {Promise<Object>} - Object indicating success or failure of logout.
+     * @throws {Error} - If logout fails.
+     */
     async logout() {
         try {
             await axios.get('/api/auth/logout');

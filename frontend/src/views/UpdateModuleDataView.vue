@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- File input for uploading JSON file -->
     <v-file-input
         v-model="file"
         class="userInput"
@@ -10,17 +11,14 @@
         hide-details
         prepend-icon=""
     />
-    <v-expansion-panels
-        v-if="isValidJson"
-    >
-      <v-expansion-panel
-          v-for="(course, index) in jsonData.courses"
-          :key="index"
-      >
+    <!-- Expansion panels to display JSON data -->
+    <v-expansion-panels v-if="isValidJson">
+      <v-expansion-panel v-for="(course, index) in jsonData.courses" :key="index">
         <v-expansion-panel-title>
           {{ course.name }}
         </v-expansion-panel-title>
         <v-expansion-panel-text>
+          <!-- Data table to display course modules -->
           <v-data-table :items="course.modules" :headers="headers">
             <template v-slot:items="props">
               <td>{{ props.item.number }}</td>
@@ -31,6 +29,7 @@
       </v-expansion-panel>
     </v-expansion-panels>
     <br/>
+    <!-- Button to submit JSON data -->
     <v-btn @click="submit()" :disabled="!isValidJson || !file">
       {{ $t("updateModuleDataView.submit") }}
     </v-btn>
@@ -38,23 +37,26 @@
 </template>
 
 <script>
-import axios from '@/plugins/axios'
+import axios from '@/plugins/axios';
+
 export default {
   data() {
     return {
       file: null,
       jsonData: null, // Store parsed JSON data
       headers: [
-        { title: 'Module Number', key: 'number' },
-        { title: 'Module Name', key: 'name' }
+        {title: 'Module Number', key: 'number'},
+        {title: 'Module Name', key: 'name'}
       ]
-    }
+    };
   },
   computed: {
+    /**
+     * Checks if the parsed JSON data is valid.
+     * @returns {boolean} True if JSON is valid, otherwise false.
+     */
     isValidJson() {
       if (!this.jsonData) return false; // JSON not parsed yet
-      // Implement your JSON structure validation logic here
-      // For example:
       if (!Array.isArray(this.jsonData.courses)) return false;
       for (const course of this.jsonData.courses) {
         if (typeof course.name !== 'string' || !Array.isArray(course.modules)) return false;
@@ -75,6 +77,9 @@ export default {
     }
   },
   methods: {
+    /**
+     * Submits the parsed JSON data to the server.
+     */
     submit() {
       if (!this.file) {
         // No file selected, handle this case as needed
@@ -95,6 +100,9 @@ export default {
         console.error(error);
       });
     },
+    /**
+     * Parses the uploaded JSON file.
+     */
     parseJson() {
       var reader = new FileReader();
       reader.onload = (event) => {
@@ -109,7 +117,7 @@ export default {
       reader.readAsText(this.file[0]);
     }
   }
-}
+};
 </script>
 
 <style scoped>

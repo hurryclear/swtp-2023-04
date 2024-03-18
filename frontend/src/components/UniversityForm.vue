@@ -1,6 +1,7 @@
 <!-- UniversityForm.vue -->
 <template>
   <v-expansion-panels>
+    <!-- University Panel -->
     <v-expansion-panel>
       <v-expansion-panel-title>
         <template v-slot:default="{ expanded }">
@@ -22,6 +23,7 @@
         </template>
       </v-expansion-panel-title>
       <v-expansion-panel-text>
+        <!-- University Form Inputs -->
         <v-combobox
             v-model="selectedUniversity"
             :items="universities"
@@ -38,7 +40,6 @@
             variant="outlined"
             class="userInput"
         />
-        <!--TODO: i18n  -->
         <v-text-field
             v-model="university.website"
             hide-details
@@ -48,6 +49,7 @@
         />
       </v-expansion-panel-text>
     </v-expansion-panel>
+    <!-- Course of Study Panel -->
     <v-expansion-panel>
       <v-expansion-panel-title>
         <template v-slot:default="{ expanded }">
@@ -69,6 +71,7 @@
         </template>
       </v-expansion-panel-title>
       <v-expansion-panel-text>
+        <!-- Course of Study Form Inputs -->
         <v-text-field
             v-model="courseOfStudy.old"
             hide-details
@@ -89,9 +92,16 @@
     </v-expansion-panel>
   </v-expansion-panels>
 </template>
+
 <script>
 
+/**
+ * Vue component representing the university form.
+ * This component allows users to input details about their university.
+ * @component UniversityForm
+ */
 export default {
+  // Data
   data() {
     return {
       university: {
@@ -106,27 +116,32 @@ export default {
       selectedUniversity: null,
     }
   },
+
+  // Computed properties
   computed: {
+    /**
+     * Retrieves the list of available universities from the store.
+     * @returns {Array} List of available universities.
+     */
     universities() {
       return this.$store.state.university.universities;
     },
+
+    /**
+     * Retrieves the list of available study plans from the store.
+     * @returns {Array} List of available study plans.
+     */
     studyPlans() {
       return this.$store.state.module.studyPlans
     }
   },
+
+  // Watchers
   watch: {
-    university: {
-      handler(newVal) {
-        this.$store.commit('updateUniversityData', newVal)
-      },
-      deep: true,
-    },
-    courseOfStudy: {
-      handler(newVal) {
-        this.$store.commit('updateCourseOfStudyData', newVal)
-      },
-      deep: true,
-    },
+    /**
+     * Watches for changes in selectedUniversity and updates university data accordingly.
+     * @param {any} newValue The new value of selectedUniversity.
+     */
     selectedUniversity: function (newValue) {
       if (typeof newValue === 'string') {
         this.university.name = newValue
@@ -140,10 +155,39 @@ export default {
         this.university.website = newValue.web_pages.toString()
       }
     },
+
+    /**
+     * Watches for changes in university data and commits updates to the store.
+     * @param {object} newVal The new value of university data.
+     */
+    university: {
+      handler(newVal) {
+        this.$store.commit('updateUniversityData', newVal)
+      },
+      deep: true,
+    },
+
+    /**
+     * Watches for changes in courseOfStudy data and commits updates to the store.
+     * @param {object} newVal The new value of courseOfStudy data.
+     */
+    courseOfStudy: {
+      handler(newVal) {
+        this.$store.commit('updateCourseOfStudyData', newVal)
+      },
+      deep: true,
+    },
+
+    /**
+     * Watches for changes in courseOfStudy.new and fetches modules accordingly.
+     * @param {any} newValue The new value of courseOfStudy.new.
+     */
     'courseOfStudy.new': function (newValue) {
       this.$store.dispatch('fetchModules', newValue);
     }
   },
+
+  // Lifecycle hooks
   beforeCreate() {
     if (!this.$store.state.module.universities || !this.$store.state.module.universities.length) {
       // If universities data is not in the store, fetch it
@@ -155,4 +199,5 @@ export default {
     }
   },
 }
+
 </script>

@@ -2,6 +2,7 @@
   <v-container fluid class="wrapper">
     <v-row>
       <v-col>
+        <!-- Dynamic component rendering based on currentComponent -->
         <component
             :is="currentComponent"
             :form="comparisonForm"
@@ -10,6 +11,7 @@
         />
       </v-col>
       <v-col>
+        <!-- EditMenu component -->
         <EditMenu
             class="edit-menu"
             v-if="Object.keys(currentForm).length !== 0"
@@ -30,15 +32,21 @@ import ComparisonMenu from "@/components/ComparisonMenu.vue";
 import ViewApplication from "@/components/ViewApplication.vue";
 
 export default {
-  components: {ComparisonMenu, EditMenu, FormDisplay, ViewApplication},
+  components: { ComparisonMenu, EditMenu, FormDisplay, ViewApplication },
   data() {
     return {
-      currentComponent: 'FormDisplay',
-      comparisonForm: {},
-      currentForm: {},
+      currentComponent: 'FormDisplay', // Default component to display
+      comparisonForm: {}, // Form data for comparison
+      currentForm: {}, // Current form data for editing
     }
   },
   methods: {
+    /**
+     * Opens a specific component with associated form data.
+     * @param {object} options - Object containing component and form data.
+     * @param {string} options.component - Name of the component to open.
+     * @param {object} options.form - Form data to pass to the component.
+     */
     openComponent({component, form}) {
       if (component !== 'EditMenu') {
         this.currentComponent = component;
@@ -47,6 +55,9 @@ export default {
         this.currentForm = form;
       }
     },
+    /**
+     * Closes the currently open component and resets form data.
+     */
     closeComponent() {
       this.currentComponent = 'FormDisplay';
       this.comparisonForm = {};

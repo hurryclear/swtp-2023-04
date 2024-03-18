@@ -219,7 +219,7 @@ export default {
   },
   computed: {
     userRole() {
-      return this.$store.state.authentication.userRole; //TODO: fix error
+      return this.$store.state.authentication.userRole;
     },
   },
   methods: {

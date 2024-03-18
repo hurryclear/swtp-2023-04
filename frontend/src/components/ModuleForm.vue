@@ -122,12 +122,16 @@
 </template>
 
 <script>
-
+/**
+ * Vue component representing a single module form within a module mapping.
+ * This component manages the input and display of module details.
+ * @component ModuleForm
+ */
 export default {
+  // Data
   data() {
     return {
       selectedTab: 0,
-      selectedFile: null,
       moduleMapping: {
         meta: {
           key: this.moduleKey
@@ -159,29 +163,57 @@ export default {
       },
     };
   },
+
+  // Props
   props: {
     moduleMappingIndex: Number,
     moduleKey: Number,
   },
+
+  // Computed properties
   computed: {
+    /**
+     * Checks if module mapping removal is disabled.
+     * @returns {boolean} Whether module mapping removal is disabled or not.
+     */
     disableModuleMappingRemoval() {
       return this.$store.getters.disableModuleMappingRemoval;
     },
+
+    /**
+     * Retrieves the list of available universities from the store.
+     * @returns {Array} List of available universities.
+     */
     universities() {
       return this.$store.state.university.universities;
     },
+
+    /**
+     * Retrieves the list of available modules from the store.
+     * @returns {Array} List of available modules.
+     */
     modules() {
       return this.$store.state.module.modules;
     }
   },
+
+  // Methods
   methods: {
+    /**
+     * Adds a new module to the module mapping.
+     */
     addModule() {
       const key = this.moduleMapping.previousModules[this.moduleMapping.previousModules.length - 1].meta.key + 1
       const moduleMappingIndex = this.moduleMappingIndex
-      this.$store.commit('addModule', {moduleMappingIndex, key});
+      this.$store.commit('addModule', { moduleMappingIndex, key });
       this.moduleMapping = this.$store.getters.getModuleMappingByIndex(moduleMappingIndex)
       this.selectedTab = this.moduleMapping.previousModules.length - 1;
     },
+
+    /**
+     * Removes a module from the module mapping.
+     * @param {number} moduleIndex The index of the module to remove.
+     */
     removeModule(moduleIndex) {
       this.$store.commit('removeModule', {
         moduleMappingIndex: this.moduleMappingIndex,
@@ -191,11 +223,22 @@ export default {
         this.selectedTab--
       }
     },
+
+    /**
+     * Removes the module mapping.
+     */
     removeModuleMapping() {
       this.$store.commit('removeModuleMappingForm', this.moduleMappingIndex)
     },
   },
+
+  // Watchers
   watch: {
+    /**
+     * Watches for changes in moduleMapping.previousModules and updates university data accordingly.
+     * @param {Array} newValue The new value of moduleMapping.previousModules.
+     * @param {Array} oldValue The old value of moduleMapping.previousModules.
+     */
     'moduleMapping.previousModules': {
       deep: true,
       handler(newValue, oldValue) {
@@ -218,6 +261,11 @@ export default {
         });
       }
     },
+
+    /**
+     * Watches for changes in moduleMapping and updates store data accordingly.
+     * @param {any} newVal The new value of moduleMapping.
+     */
     moduleMapping: {
       handler(newVal) {
         this.$store.commit("updateModuleMappingData", {
@@ -227,6 +275,11 @@ export default {
       },
       deep: true,
     },
+
+    /**
+     * Watches for changes in selectedTab and ensures it stays within bounds.
+     * @param {number} newVal The new value of selectedTab.
+     */
     selectedTab: {
       handler(newVal) {
         if (!newVal) {
@@ -236,4 +289,5 @@ export default {
     }
   }
 }
+
 </script>
