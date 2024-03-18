@@ -141,7 +141,7 @@
                   prepend-icon="mdi-keyboard-backspace"
                   variant="elevated"
                   color="yellow"
-              >{{ $t('examiningCommitteeChairView.undoAcceptance') }}
+              >{{ $t('examiningCommitteeChairView.undoAccept') }}
               </v-btn>
             </v-row>
             <v-divider/>
