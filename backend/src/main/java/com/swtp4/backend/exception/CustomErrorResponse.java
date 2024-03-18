@@ -1,5 +1,6 @@
 package com.swtp4.backend.exception;
 
+// Error Response for Frontend with just a message
 public class CustomErrorResponse {
     private String errorMessage;
 

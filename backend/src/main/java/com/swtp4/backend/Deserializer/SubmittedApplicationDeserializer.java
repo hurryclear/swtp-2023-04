@@ -24,6 +24,8 @@ public class SubmittedApplicationDeserializer extends JsonDeserializer<Submitted
         JsonNode jsonNode = parser.getCodec().readTree(parser);
         JsonNode moduleMappings = jsonNode.get("moduleMappings");
         List<SubmittedBlock> submittedBlocks = new ArrayList<>();
+
+        //get all Module Blocks
         if(moduleMappings.isArray()) {
             for(JsonNode block : moduleMappings){
                 JsonNode modulesToBeCredited = block.get("modulesToBeCredited");
@@ -33,6 +35,7 @@ public class SubmittedApplicationDeserializer extends JsonDeserializer<Submitted
                         modulesCreditedIDs.add(module.asLong());
                     }
                 }
+                // get all Student Modules
                 JsonNode previousModules = block.get("previousModules");
                 List<SubmittedStudentModule> submittedStudentModules = new ArrayList<>();
                 if (previousModules.isArray()){
@@ -49,6 +52,8 @@ public class SubmittedApplicationDeserializer extends JsonDeserializer<Submitted
                         submittedStudentModules.add(submittedModule);
                     }
                 }
+
+                //get all Uni Leipzig Modules
                 SubmittedBlock submittedBlock = new SubmittedBlock(
                         block.get("meta").get("key").asLong(),
                         submittedStudentModules,
@@ -58,6 +63,7 @@ public class SubmittedApplicationDeserializer extends JsonDeserializer<Submitted
             }
         }
 
+        // create Submitted Application with all Data inside
         return new SubmittedApplicationDto(
                 parseDate(jsonNode.get("meta").get("dateOfSubmission").asText()), // TODO: change to extractDate to create date and not string to sort by date in database
                 parseDate(jsonNode.get("meta").get("dateLastEdited").asText()),
@@ -68,6 +74,7 @@ public class SubmittedApplicationDeserializer extends JsonDeserializer<Submitted
         );
     }
 
+    // parse String to Timestamp
     private Date parseDate(String dateString) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         try {

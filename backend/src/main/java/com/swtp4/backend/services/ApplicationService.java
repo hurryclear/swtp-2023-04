@@ -58,14 +58,16 @@ public class ApplicationService {
         ApplicationEntity applicationStudent = saveApplicationEntity(applicationID, "Student", applicationDto);
         ApplicationEntity applicationEmployee = saveApplicationEntity(applicationID, "Employee", applicationDto);
 
+        // save all blocks for original (Student) and edited (Employee) application
         for(SubmittedBlock blockDto : applicationDto.blocks()) {
             ModuleBlockEntity blockStudent = saveModuleBlockEntity(applicationStudent, blockDto);
             ModuleBlockEntity blockEmployee = saveModuleBlockEntity(applicationEmployee, blockDto);
 
+            // save all module of that block
             for (SubmittedStudentModule moduleDto : blockDto.studentModules()) {
                 ModuleStudentEntity moduleStudent = saveModuleStudentEntity("Student", moduleDto, "");
 
-                // paths "/applicationID/S-moduleStudentID"
+                // create paths "/applicationID/S-moduleStudentID"
                 String pdf_path = "/" + applicationID + "/S-" + moduleStudent.getId().toString();
                 moduleStudent.setDescription_pdf(pdf_path);
                 moduleStudentRepository.save(moduleStudent);
@@ -74,6 +76,7 @@ public class ApplicationService {
 
                 ModuleStudentEntity moduleEmployee = saveModuleStudentEntity("Employee", moduleDto, pdf_path);
 
+                // save all Uni modules that should be credited for that module
                 for(Long uniModuleID : blockDto.uniModulesIDs()) {
                     saveModuleRelationEntity(blockStudent, moduleStudent, uniModuleID);
                     saveModuleRelationEntity(blockEmployee, moduleEmployee, uniModuleID);
@@ -85,6 +88,7 @@ public class ApplicationService {
         return new ApplicationIDWithFilePaths(applicationID, file_paths);
     }
 
+    // save application details
     private ApplicationEntity saveApplicationEntity(String applicationID, String creator, SubmittedApplicationDto applicationDto) {
         return applicationRepository.save(ApplicationEntity.builder()
                 .applicationKeyClass(ApplicationKeyClass.builder()
@@ -100,6 +104,7 @@ public class ApplicationService {
                 .build());
     }
 
+    // save module blocks of the application
     private ModuleBlockEntity saveModuleBlockEntity(ApplicationEntity applicationStudent, SubmittedBlock blockDto) {
         return moduleBlockRepository.save(ModuleBlockEntity.builder()
                 .applicationEntity(applicationStudent)
@@ -107,6 +112,7 @@ public class ApplicationService {
                 .build());
     }
 
+    // save module of student of one block with its path if provided
     private ModuleStudentEntity saveModuleStudentEntity(String creator, SubmittedStudentModule moduleDto, String path) {
         return moduleStudentRepository.save(ModuleStudentEntity.builder()
                 .frontendKey(moduleDto.frontend_module_key())
@@ -125,12 +131,14 @@ public class ApplicationService {
     }
 
     private void saveModuleRelationEntity(ModuleBlockEntity block, ModuleStudentEntity studentModule, Long uniModuleID) {
+        // first validate uni module
         ModuleUniEntity uniModule = moduleUniRepository.findById(uniModuleID)
                 .orElseThrow(() -> new ResourceNotFoundException("Module not found. The University Module with ID " + uniModuleID + " does not exist and therefore can't be credited."));
         if(!uniModule.getVisibleChoice()){
             throw new ResourceNotFoundException("Module outdated and can't be chosen.");
         }
 
+        // if valid uni module then save the student - uni relation
         moduleRelationRepository.save(ModuleRelationEntity.builder()
                 .moduleBlockEntity(block)
                 .moduleRelationKeyClass(ModuleRelationKeyClass.builder()
@@ -140,6 +148,7 @@ public class ApplicationService {
                 .build());
     }
 
+    // update only edited appliction (with creator Employee
     public void updateApplication(EditedApplicationDto applicationDto) {
         ApplicationEntity applicationEmployee = updateApplicationEntity(applicationDto);
 
@@ -169,10 +178,11 @@ public class ApplicationService {
         }
     }
 
+    // add new relation if uni modules changed or blocks changed
     private void updateModuleRelationEntity(ModuleBlockEntity blockEmployee, ModuleStudentEntity moduleEmployee, Long newUniModuleID) {
         ModuleUniEntity moduleUni = moduleUniRepository.findById(newUniModuleID)
                 .orElseThrow(() -> new ResourceNotFoundException("UniModule with ID " + newUniModuleID + "not found, cannot updateModuleRelationEntity"));
-        // TODO: vllt muss man erst suchen ob es das schon gibt und dann anpassen
+
         moduleRelationRepository.save(ModuleRelationEntity.builder()
                 .moduleBlockEntity(blockEmployee)
                 .moduleRelationKeyClass(ModuleRelationKeyClass.builder()
@@ -182,6 +192,7 @@ public class ApplicationService {
                 .build());
     }
 
+    // update modules of student with creator Employee
     private ModuleStudentEntity updateModuleStudentEntity(EditedStudentModule moduleDto) {
         ModuleStudentEntity moduleEmployee = moduleStudentRepository.findByIdAndCreator(moduleDto.moduleID(), "Employee")
                 .orElseThrow(() -> new ResourceNotFoundException("StundentModule with Id "
@@ -198,6 +209,7 @@ public class ApplicationService {
         return moduleStudentRepository.save(moduleEmployee);
     }
 
+    // create new or update exiting Block
     private ModuleBlockEntity updateModuleBlockEntity(EditedBlock blockDto, ApplicationEntity applicationEmployee) {
         ModuleBlockEntity blockEmployee;
         if (blockDto.blockID() == null) {
@@ -221,6 +233,7 @@ public class ApplicationService {
                 .orElseThrow(() -> new ResourceNotFoundException("Application with applicationID "
                         + applicationDto.applicationID() + " not found, and therefore can't be updated."));
 
+        // only can be set Formal rejection Reason when application is edited but not proven yet
         if(applicationEmployee.getStatus().equals("edited")||applicationEmployee.getStatus().equals("formally rejected"))
             applicationEmployee.setFormalRejectionReason(applicationDto.formalRejection());
         else
@@ -237,6 +250,7 @@ public class ApplicationService {
                         .creator("Employee")
                         .build())
                 .orElseThrow(() -> new ResourceNotFoundException("Application with ID "+applicationID+" not found. Status can't be changed."));
+        // ensure that application state form open to edited /ready for approval to approval edited, else throw exception
         String oldStatus = application.getStatus();
         if((oldStatus.equals("open") || oldStatus.equals("edited")) && newStatus.equals("edited")){
             application.setStatus(newStatus);
@@ -259,6 +273,7 @@ public class ApplicationService {
                         .creator("Employee")
                         .build())
                 .orElseThrow(() -> new ResourceNotFoundException("Application with ID "+applicationDto.applicationID()+" not found. Status can't be changed."));
+        // formally rejected is only when editing but not when proving application
         if(application.getStatus().equals("edited") || application.getStatus().equals("open")){
             if (applicationDto.formalRejection().isEmpty()){
                 throw new InvalidApplicationStateException("Formal Rejection Reason is empty, but required to change Application Status to formally rejected.");
@@ -282,6 +297,7 @@ public class ApplicationService {
         }
     }
 
+    //updates Approval and if all Modules are accepted, rejected or formally rejected, the application status changes to approval finished
     public void updateApproval(EditedApplicationDto applicationDto, List<String> validApprovals) {
         boolean allAreApproved = true;
         for (EditedBlock block : applicationDto.editedBlocks()){
@@ -304,9 +320,11 @@ public class ApplicationService {
             ApplicationEntity application = applicationRepository.findById(new ApplicationKeyClass(applicationDto.applicationID(), "Employee"))
                     .orElseThrow(() -> new ResourceNotFoundException("Application" + applicationDto.applicationID()+ "not found"));
             application.setStatus("approval finished");
-            if(validApprovals.contains("formally rejected"))
+            // if all are formally rejected then the whole application is formally rejected
+            if(validApprovals.contains("formally rejected")) {
                 application.setStatus("formally rejected");
                 application.setFormalRejectionReason("Info: Alle Module wurden einzeln formal abgelehnt, die Begründungen finden Sie jeweils bei den Modulen.");
+            }
             applicationRepository.save(application);
         }
     }
@@ -347,6 +365,7 @@ public class ApplicationService {
             List<ModuleStudentEntity> moduleStudentEntityList = new ArrayList<>();
             List<ModuleUniEntity> moduleUniEntityList = new ArrayList<>();
 
+            // adds each module only once to its list
             for (ModuleRelationEntity moduleRelationEntity : moduleRelationEntityList) {
                 ModuleStudentEntity moduleStudentEntity = moduleRelationEntity.getModuleRelationKeyClass().getModuleStudentEntity();
                 boolean isNewStudentModule = !moduleStudentEntityList.stream()
@@ -400,8 +419,9 @@ public class ApplicationService {
         return reviewApplicationDto;
 
     }
-    // get edited application by ID (for employee)
 
+
+    // get edited application by ID (for employee)
     public EntireOriginalAndEditedApplicationDto getApplicationByID(String applicationID) {
 
         HashMap<String, EntireApplication> entireOriginalAndEditedApplication = new HashMap<>();
@@ -439,6 +459,7 @@ public class ApplicationService {
                 List<ModuleStudentEntity> moduleStudentEntityList = new ArrayList<>();
                 List<ModuleUniEntity> moduleUniEntityList = new ArrayList<>();
 
+                // adds each module only once to its list
                 for (ModuleRelationEntity moduleRelationEntity : moduleRelationEntityList) {
                     ModuleStudentEntity moduleStudentEntity = moduleRelationEntity.getModuleRelationKeyClass().getModuleStudentEntity();
                     boolean isNewStudentModule = !moduleStudentEntityList.stream()
@@ -500,15 +521,15 @@ public class ApplicationService {
                 entireOriginalAndEditedApplication.get("Student"),
                 entireOriginalAndEditedApplication.get("Employee"));
     }
-    // get overview of applications for employees with certain searching criteria
 
+    // get overview of applications for employees with certain searching criteria
     public Page<OverviewApplicationDto> getOverviewOffice(ApplicationPage applicationPage,
                                                                 ApplicationSearchCriteria applicationSearchCriteria) {
         applicationSearchCriteria.setStatusList(List.of("open", "edited"));
         return applicationCriteriaRepository.findAllWithFilters(applicationPage, applicationSearchCriteria);
     }
-    // get overview of applications for employees with certain searching criteria
 
+    // get overview of applications for employees with certain searching criteria
     public Page<OverviewApplicationDto> getOverviewCommittee(ApplicationPage applicationPage,
                                                              ApplicationSearchCriteria applicationSearchCriteria) {
         applicationSearchCriteria.setStatusList(List.of(
@@ -516,64 +537,12 @@ public class ApplicationService {
         return applicationCriteriaRepository.findAllWithFilters(applicationPage, applicationSearchCriteria);
     }
 
+    // search for old applications to compare them
     public Page<OverviewApplicationDto> searchApplications(ApplicationPage applicationPage,
                                                            ApplicationSearchCriteria applicationSearchCriteria) {
 
         applicationSearchCriteria.setStatusList(List.of("approval finished"));
         return applicationCriteriaRepository.findAllWithFilters(applicationPage, applicationSearchCriteria);
     }
-
-//    private Date parseDate(String dateString) {
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-//        try {
-//            return dateFormat.parse(dateString);
-//        } catch (ParseException e) {
-//            e.printStackTrace(); // Handle parsing exception appropriately
-//            return null;
-//        }
-//    }
-
-//    public ApplicationEntity getApplicationsByDateOfSubmission(String dateOfSubmission) {
-//        return applicationRepository.findByDateOfSubmissionAndApplicationKeyClass_Creator(
-//                parseDate(dateOfSubmission), "Employee");
-//    }
-
-//
-//    public List<ApplicationEntity> getAllApplications() {
-//        return applicationRepository.findByApplicationKeyClass_Creator("Employee");
-//    }
-//    //get unique application by applicationkeyclass (id, creator)
-//
-//    public List<ApplicationEntity> getApplicationsByStatus(String status) {
-//        return applicationRepository.findByStatusAndApplicationKeyClass_Creator(status, "Employee");
-//    }
-//    public List<ApplicationEntity> getApplicationsByMajor(String major) {
-//        return applicationRepository.findByUniMajorAndApplicationKeyClass_Creator(major, "Employee");
-//    }
-//
-//    public List<ApplicationEntity> getApplicationsByUniversityName(String universityName) {
-//        return applicationRepository.findByUniversityNameAndApplicationKeyClass_Creator(universityName, "Employee");
-//    }
-//    public List<ApplicationEntity> getApplicationsByDateOfSubmissionBefore(String dateOfSubmission) {
-//        return applicationRepository.findByDateOfSubmissionBeforeAndApplicationKeyClass_Creator(parseDate(dateOfSubmission), "Employee");
-//    }
-//    // not complete
-//
-//    public List<ApplicationEntity> getApplicationsByDateOfSubmissionAfter(String dateOfSubmission) {
-//        return applicationRepository.findByDateOfSubmissionAfterAndApplicationKeyClass_Creator(parseDate(dateOfSubmission), "Employee");
-//    }
-//
-//    // from here is pagination and sorting
-//    // 1. get all applications with different sorting parameter
-//    public List<ApplicationEntity> getAllApplicationsWithSorting(String field) {
-//        List<ApplicationEntity> applicationEntityList = new ArrayList<>();
-//        List<ApplicationEntity> applicationEntityList1= applicationRepository.findAll(Sort.by(Sort.Direction.ASC, field));
-//        for (ApplicationEntity applicationEntity : applicationEntityList1) {
-//            if (Objects.equals(applicationEntity.getApplicationKeyClass().getCreator(), "Employee")){
-//                applicationEntityList.add(applicationEntity);
-//            }
-//        }
-//        return applicationEntityList;
-//    }
 
 }
