@@ -36,9 +36,11 @@
   },
   "examiningCommitteeChairView": {
     "accept": "Aceitar",
+    "undoAccept": "Desfazer aceitação",
     "decline": "Recusar",
-    "moduleCount": "Número de Módulos",
-    "studentAffairsOfficeComment": "Comentário do Escritório de Assuntos Estudantis"
+    "undoDecline": "Desfazer recusa",
+    "moduleCount": "Número de módulos",
+    "studentAffairsOfficeComment": "Comentário do escritório de assuntos estudantis"
   },
   "formDisplay": {
     "application": "Aplicação",

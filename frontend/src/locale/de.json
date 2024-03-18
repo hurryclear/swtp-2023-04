@@ -36,7 +36,9 @@
   },
   "examiningCommitteeChairView": {
     "accept": "Annehmen",
+    "undoAccept": "Akzeptanz rückgängig machen",
     "decline": "Ablehnen",
+    "undoDecline": "Ablehnung rückgängig machen",
     "moduleCount": "Anzahl der Module",
     "studentAffairsOfficeComment": "Kommentar vom Studienbüro"
   },

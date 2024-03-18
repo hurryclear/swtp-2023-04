@@ -36,9 +36,11 @@
   },
   "examiningCommitteeChairView": {
     "accept": "Accetta",
+    "undoAccept": "Annulla accettazione",
     "decline": "Rifiuta",
-    "moduleCount": "Numero di Moduli",
-    "studentAffairsOfficeComment": "Commento dell'Ufficio Affari Studenti"
+    "undoDecline": "Annulla rifiuto",
+    "moduleCount": "Numero di moduli",
+    "studentAffairsOfficeComment": "Commento dell'ufficio affari studenti"
   },
   "formDisplay": {
     "application": "Domanda",

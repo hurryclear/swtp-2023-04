@@ -36,9 +36,11 @@
   },
   "examiningCommitteeChairView": {
     "accept": "Accept",
+    "undoAccept": "Undo Acceptance",
     "decline": "Decline",
-    "moduleCount": "Number of Modules",
-    "studentAffairsOfficeComment": "Comment from Student Affairs Office"
+    "undoDecline": "Undo Decline",
+    "moduleCount": "Module Count",
+    "studentAffairsOfficeComment": "Student Affairs Office Comment"
   },
   "formDisplay": {
     "application": "Application",

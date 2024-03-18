@@ -35,10 +35,12 @@
     "toggleDarkMode": "ダークモードの切り替え"
   },
   "examiningCommitteeChairView": {
-    "accept": "承認",
-    "decline": "拒否",
+    "accept": "受け入れる",
+    "undoAccept": "受け入れを取り消す",
+    "decline": "拒否する",
+    "undoDecline": "拒否を取り消す",
     "moduleCount": "モジュール数",
-    "studentAffairsOfficeComment": "学生支援オフィスのコメント"
+    "studentAffairsOfficeComment": "学生課コメント"
   },
   "formDisplay": {
     "application": "アプリケーション",
