@@ -91,7 +91,54 @@ Allows a student to submit their application for the first time. The response in
 
 #### Request Body
 ```json
-    Request placeholder
+    {
+  "meta": {
+    "dateOfSubmission": "2023-12-31T22:30:42.103Z",
+    "dateLastEdited": "2024-01-14T14:12:14.675Z",
+    "status": ""
+  },
+  "university": {
+    "name": "University of Regenbogenland",
+    "country": "Regenbogencountry",
+    "website": "http://www.uni-halle.de/"
+  },
+  "courseOfStudy": {
+    "old": "B. Sc. Informatik",
+    "new": "B.Sc. Informatik"
+  },
+  "moduleMappings": [
+    {
+      "meta": {
+        "key": 0
+      },
+      "previousModules": [
+        {
+          "meta": {
+            "key": 1,
+            "comments": {
+              "student": "War nicht so cool"
+            }
+          },
+          "courseOfStudy": "B. Sc. Informatik",
+          "university": {
+            "web_pages": [
+              "http://www.regenbogen.re/"
+            ],
+            "name": "University of Regenbogenland",
+            "country": "Regenbogenland"
+          },
+          "id": "69",
+          "name": "AlgoDat 0.5",
+          "credits": 4
+        }
+      ],
+      "modulesToBeCredited": [
+        3,
+        4
+      ]
+    }
+  ]
+}
 ```
 
 #### Response Body
@@ -115,7 +162,7 @@ Allows a student to submit their application for the first time. The response in
 Student get his application for reviewing.
 
 #### Request Body
-```json
+```http request
   /reviewApplication?applicationID=123-123-123-123
 ```
 
@@ -203,53 +250,6 @@ Student get his application for reviewing.
 
 </details>
 
-
-### Student Resubmit Application
-
-<details>
-<summary>Click to expand Student Resubmit Application endpoint details</summary>
-
-#### Endpoint
-`PUT /api/student/resubmitApplication`
-
-#### Description
-Enables students to resubmit their application, for example, if their initial submission was formally rejected.
-
-#### Request Body
-```json
-    Request placeholder
-```
-
-#### Response Body
-```json
-    Response placeholder
-```
-
-</details>
-
-### Get Application Summary with Status
-
-<details>
-<summary>Click to expand Get Application Summary with Status endpoint details</summary>
-
-#### Endpoint
-`GET /api/student/getApplicationSummary`
-
-#### Description
-The frontend sends the application ID, and the backend provides the application details as JSON, including the current status.
-
-#### Request Body
-```json
-    Request placeholder
-```
-
-#### Response Body
-```json
-    Response placeholder
-```
-
-</details>
-
 ### Get PDF Summary
 
 <details>
@@ -262,13 +262,13 @@ The frontend sends the application ID, and the backend provides the application 
 The frontend sends the application ID, and the backend responds with the corresponding PDF summary of the application.
 
 #### Request Body
-```json
-    Request placeholder
+```http request
+    /getPdfSummary?applicationId=1234-1234
 ```
 
 #### Response Body
-```json
-    Response placeholder
+```text
+   byte[]
 ```
 
 </details>
@@ -323,7 +323,7 @@ The frontend receives a JSON with study programs that can be selected.
 
 #### Request Body
 ```json
--
+
 ```
 
 #### Response Body
@@ -436,7 +436,7 @@ Allows office employees to save their changes to an application.
   },
   "edited": {
     "applicationData": {
-      "applicationID": "23-23-23-23-23-23-23-23-23-23-23"
+      "applicationID": "23-23-23-23-23-23-23-23-23-23-23",
       "status": "",
       "formalReject": "JO du hast das völlig falsch gemacht mach den antrag nochmal",
       "dateOfSubmission": "2024-03-05T13:56:51.560Z",
@@ -515,35 +515,12 @@ Allows office employees to save their changes to an application.
 ```
 
 #### Response Body
-```json
+```text
     201 Http.Created
 ```
 
 </details>
 
-
-### Application is Edited right now
-
-<details>
-<summary>Click to expand Application Ready for Approval endpoint details</summary>
-
-#### Endpoint
-`PUT /api/application/editingInProgress`
-
-#### Description
-Someone edits the application right now. Should not be edited simultaneously
-
-#### Request Body
-```json
- /editingInProgress?applicationID=lasfjlksf
-```
-
-#### Response Body
-```json
-    200 Ok
-```
-
-</details>
 
 ### Application Ready for Approval
 
@@ -557,12 +534,12 @@ Someone edits the application right now. Should not be edited simultaneously
 Marks an application as ready to be reviewed by the committee. This may involve saving the edited application again and setting the status to "ReadyForApproval."
 
 #### Request Body
-```json
+```text
     same Json as in saveEdited
 ```
 
 #### Response Body
-```json
+```text
     200 Ok
 ```
 
@@ -580,59 +557,13 @@ Marks an application as ready to be reviewed by the committee. This may involve 
 Provides a dedicated endpoint for the committee to save an edited application, allowing backend access for rejecting and accepting modules/applications only to committee members.
 
 #### Request Body
-```json
-    Request placeholder
+```text
+   same Json as in saveEdited
 ```
 
 #### Response Body
-```json
-    Response placeholder
-```
-
-</details>
-
-### Finish Approval
-
-<details>
-<summary>Click to expand Finish Approval endpoint details</summary>
-
-#### Endpoint
-`POST /api/application/finishApproval`
-
-#### Description
-May not be necessary if finishing an approval is equivalent to all modules being either accepted or rejected with justifications provided.
-
-#### Request Body
-```json
-    Request placeholder
-```
-
-#### Response Body
-```json
-    Response placeholder
-```
-
-</details>
-
-### Status Editing Needed by OFFICE
-
-<details>
-<summary>Click to expand Status Editing Needed by OFFICE endpoint details</summary>
-
-#### Endpoint
-`PUT /api/application/statusEditingNeeded`
-
-#### Description
-The committee sends the edited application back to the office because it must be re-edited and cannot be approved yet. The frontend sends the application number, and the backend changes the status to "further editing needed."
-
-#### Request Body
-```json
-    Request placeholder
-```
-
-#### Response Body
-```json
-    Response placeholder
+```text
+   200 ok
 ```
 
 </details>
@@ -648,16 +579,6 @@ The committee sends the edited application back to the office because it must be
 #### Description
 The frontend specifies sorting and whether ascending or descending, and the backend provides a list of applications with overview details (not the entire applications). The endpoint depends on the backend implementation of pagination, filtering, and sorting.
 
-#### Request Body
-```json
-    Request placeholder
-```
-
-#### Response Body
-```json
-    Response placeholder
-```
-
 </details>
 
 ### Find Application to Compare
@@ -666,19 +587,54 @@ The frontend specifies sorting and whether ascending or descending, and the back
 <summary>Click to expand Find Application to Compare endpoint details</summary>
 
 #### Endpoint
-`GET /api/application/findApplication`
+`GET /api/application/searchApplication`
 
 #### Description
 Searches the entire database to find applications that can be compared to current ones based on specified criteria.
 
 #### Request Body
-```json
-    Request placeholder
+```http request
+    /searchApplication?sortBy=dateOfSubmission&moduleName=Algo
 ```
 
 #### Response Body
 ```json
-    Response placeholder
+    {
+  "content": [
+    {
+      "applicationID": "563d7657-d457-49ad-a8e2-2fe25b7f0656",
+      "university": "University of Regenbogenland",
+      "dateOfSubmission": "2023-12-31T22:30:42.103Z",
+      "dateLastEdited": "2023-12-31T22:30:42.103Z",
+      "status": "approval finished"
+    }
+  ],
+  "pageable": {
+    "pageNumber": 0,
+    "pageSize": 5,
+    "sort": {
+      "sorted": true,
+      "empty": false,
+      "unsorted": false
+    },
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": true,
+  "totalPages": 1,
+  "totalElements": 1,
+  "size": 5,
+  "number": 0,
+  "sort": {
+    "sorted": true,
+    "empty": false,
+    "unsorted": false
+  },
+  "first": true,
+  "numberOfElements": 1,
+  "empty": false
+}
 ```
 
 </details>
@@ -695,13 +651,13 @@ Searches the entire database to find applications that can be compared to curren
 The frontend sends the application ID, and the backend provides the application JSON with all details for the committee and office to compare, edit, or approve.
 
 #### Request Body
-```json
-    Request placeholder
+```http request
+   /getApplication?applicationID=1234-1234
 ```
 
 #### Response Body
-```json
-    Response placeholder
+```text
+    same as saveEdited
 ```
 
 </details>
@@ -712,19 +668,19 @@ The frontend sends the application ID, and the backend provides the application 
 <summary>Click to expand Get PDF of Module endpoint details</summary>
 
 #### Endpoint
-`GET /api/application/getModule`
+`GET /api/application/getModulePDF`
 
 #### Description
 The frontend sends the application ID and module ID, and the backend sends module details and the PDF module description.
 
 #### Request Body
-```json
-    Request placeholder
+```http request
+    /getModulePDF?filePath=/1234-1234/S-3
 ```
 
 #### Response Body
-```json
-    Response placeholder
+```text
+    byte[]
 ```
 
 </details>
@@ -771,7 +727,7 @@ The frontend provides a JSON with all study programs and their modules. The back
 ```
 
 #### Response Body
-```json
+```text
     200 HTTP ok response
 ```
 
@@ -829,7 +785,7 @@ http://localhost:3000/api/unidata/getAllModules?majorName=B.Sc. Informatik
 The frontend receives a JSON with ALL study programs and their Visibilly.
 
 #### Request Body
-```json
+```text
 -
 ```
 
