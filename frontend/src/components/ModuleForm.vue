@@ -49,12 +49,13 @@
           />
           <v-file-input
               v-model="module.description.file"
+              :rules="fileRules"
               class="userInput"
               accept=".pdf"
               show-size
               :label="$t('applicationFormView.moduleFormList.moduleMapping.moduleDescriptionLabel')"
               variant="outlined"
-              hide-details
+              hide-details="auto"
               prepend-icon=""
           />
           <v-combobox
@@ -161,7 +162,13 @@ export default {
         ],
         modulesToBeCredited: [],
       },
-    };
+
+      fileRules: [
+        file => {
+          return !file || !file.length || file[0].size <= 10 * 1024 * 1024 || this.$t('applicationFormView.moduleFormList.FileToBig');
+        }
+      ]
+  };
   },
 
   // Props
