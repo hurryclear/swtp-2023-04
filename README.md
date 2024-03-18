@@ -1,6 +1,8 @@
 # swtp-04
 
-## Entwicklungsumgebung einrichten
+## 1.Projektbeschreibung
+
+## 2.Verwendete Technologien und Tools
 
 ### Frontend
 Hier vllt kurz beschreiben was installiert und welche Plugings und so weiter benötigt werden
@@ -25,5 +27,17 @@ Das Backend basiert auf Java 17 unter Verwendung des Springboot (3.2.0) Framewor
 - Failsafe Plugin für Integration Tests
 
 ### Datenbank
-Wir verwenden PostgreSql für unsere Datenbank. 
+Wir verwenden PostgreSql für unsere Datenbank.
+
+## 3.Einrichtung der Entwicklungsumgebung
+
+## 4.Lokale Entwicklung
+
+## 5.Testen
+
+## 6.Dokumentation
+
+## 7.Deployment und Produktionsumgebung
+
+## 8.Lizenz
 
