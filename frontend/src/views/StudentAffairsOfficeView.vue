@@ -6,8 +6,8 @@
         <component
             :is="currentComponent"
             :form="comparisonForm"
-            @open="openComponent(false)"
-            @close="closeComponent"
+            @open="openComponent"
+            @close="closeComponent(false)"
         />
       </v-col>
       <v-col>
