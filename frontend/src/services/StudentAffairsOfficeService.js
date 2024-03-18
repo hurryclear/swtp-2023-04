@@ -58,9 +58,9 @@ const StudentAffairsOfficeService = {
         }
     },
 
-    async getOfficeOverview() {
+    async getOfficeOverview(queryString) {
         try {
-            const response = await axios.get("/api/application/overviewOffice");
+            const response = await axios.get("/api/application/overviewOffice?" + queryString);
             return response.data.content;
         } catch (error) {
             throw new Error(`Error fetching office overview: ${error.message}`);
@@ -88,12 +88,12 @@ const StudentAffairsOfficeService = {
 
     //committee
 
-    async getCommitteeOverview() {
+    async getCommitteeOverview(queryString) {
         try {
-            const response = await axios.get("/api/application/overviewCommittee");
+            const response = await axios.get("/api/application/overviewCommittee?" + queryString);
             return response.data.content;
         } catch (error) {
-            throw new Error(`Error fetching office overview: ${error.message}`);
+            throw new Error(`Error fetching committee overview: ${error.message}`);
         }
     },
 
