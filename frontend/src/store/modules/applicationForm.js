@@ -150,10 +150,10 @@ export default {
                 const {success, data} = await ApplicationFormService.submitForm(formData);
 
                 if (success) {
-                    commit('setApplicationId', data.applicationId);
+                    commit('setApplicationId', data.applicationID);
 
                     // Navigate to another route and pass application ID
-                    router.push({ name: 'Review Application', query: { applicationId: data.applicationId } });
+                    router.push({ name: 'Review Application', query: { applicationId: data.applicationID } });
                 } else {
                     // Handle error response
                     console.error('Error submitting form:', data);
