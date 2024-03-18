@@ -68,7 +68,8 @@
         </v-btn>
         <LanguageSwitcher/>
         <DarkThemeToggle/>
-        <v-btn class="button-spacing"
+        <v-btn v-if="this.userRole === 'ROLE_STUDENT'"
+               class="button-spacing"
                variant="elevated"
                color="#262A31"
                icon="mdi-login"
