@@ -420,7 +420,9 @@ export default {
                             return module.description.file !== null &&
                                 module.name.trim() !== '' &&
                                 module.courseOfStudy.trim() !== '' &&
-                                module.id.trim() !== ''
+                                module.id.trim() !== '' &&
+                                module.description.file[0] !== undefined &&
+                                module.description.file[0].size < 10000000
                         }
                     )
             }
