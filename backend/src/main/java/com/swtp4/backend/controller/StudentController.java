@@ -49,50 +49,30 @@ public class StudentController {
         this.pdfService = pdfService;
     }
 
-//    @PostMapping("/submitApplication")
-//    public ResponseEntity<?> saveApplication(@RequestBody ApplicationDto applicationDTO){
-////        log.info("Received ApplicationDto: {}", applicationDTO);
-//        applicationService.save(applicationDTO);
-//        return new ResponseEntity<>(HttpStatus.CREATED);
-//    }
-
-    @PostMapping("/test")
-    public ResponseEntity<UniModuleDto> testStudentEndpoint(@RequestBody UniModuleDto uniModuleDto){
-        return new ResponseEntity<>(uniModuleDto, HttpStatus.OK);
-    }
-
-    //@PostMapping("/submitApplication")
     @RequestMapping(path = "/submitApplication", method = POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<?> submitApplication(
             @RequestParam Map<String, MultipartFile> fileMap,
             @RequestPart("form") SubmittedApplicationDto submittedApplicationDto) {
         log.info("SUBMITTED_APPLICATION: {}", submittedApplicationDto);
 
-        // Log file field names
-        fileMap.forEach((key, value) -> {
-            try {
-                System.out.println("Received file with key: " + key + "\n" + new String(value.getBytes(), StandardCharsets.UTF_8));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        //System.out.println("Received JSON: " + submittedApplicationDto);
+        //save submitted application and receive applicationID and file paths
         ApplicationIDWithFilePaths applicationIDWithFilePaths = applicationService.saveSubmitted(submittedApplicationDto);
-
         ApplicationIdDto applicationID = new ApplicationIdDto(applicationIDWithFilePaths.getApplicationID());
         HashMap<String, String> file_paths = applicationIDWithFilePaths.getFilesAndPaths();
 
-        // TODO: here you can implement pdf saving by using multipart field names and provided paths in file_paths
+        // pdf file of each module is saved under right path
         pdfService.saveModulePDFs(fileMap, file_paths);
         return new ResponseEntity<>(applicationID, HttpStatus.CREATED);
     }
 
+    // get all necessary details for reviewing an application as student
     @GetMapping("/reviewApplication")
     public ResponseEntity<?> reviewApplication(@RequestParam String applicationID) {
         ReviewApplicationDto applicationDto = applicationService.getReviewApplication(applicationID);
         return new ResponseEntity<>(applicationDto, HttpStatus.OK);
     }
 
+    // get pdf summary for the student with all application details of the current edited version
     @GetMapping("/getPdfSummary")
     public ResponseEntity<Resource> downloadApplicationPDF(@RequestParam String applicationId) {
         try {

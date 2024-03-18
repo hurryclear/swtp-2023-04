@@ -25,6 +25,7 @@ public class UniDataInitializer implements CommandLineRunner {
         this.uniDataService = uniDataService;
     }
 
+    // this reads in the default study programm B.Sc. Informatik and initialized the database with it
     @Override
     public void run(String... args) throws Exception {
 

@@ -47,6 +47,7 @@ public class ApprovedApplicationInitializer implements CommandLineRunner {
         this.applicationService = applicationService;
     }
 
+    // this initializes a approved application for testing reasons
     @Override
     public void run(String... args) throws Exception {
 
@@ -59,14 +60,14 @@ public class ApprovedApplicationInitializer implements CommandLineRunner {
         InputStream inputStreamSubmitted = TypeReference.class.getResourceAsStream("/json/initialApplicationData.json");
         try {
             log.info("before submit");
-            //submit
+            // first submit new application
             SubmittedApplicationDto applicationDto = mapper.readValue(inputStreamSubmitted,typeReferenceSubmitted);
-
+            // get ID and file paths
             ApplicationIDWithFilePaths applicationIDWithFilePaths = applicationService.saveSubmitted(applicationDto);
             String applicationID = applicationIDWithFilePaths.getApplicationID();
             Map<String, String> filePaths = applicationIDWithFilePaths.getFilesAndPaths();
 
-            //save mock pdfs
+            //save pdfs of this application
             byte[] bytes = new ClassPathResource("/json/Mock Modulebeschreibung Modul 1.pdf").getContentAsByteArray();
             Path path = Paths.get("/app/pdf-files" + filePaths.get("file-0:0"));
             Files.createDirectories(path.getParent());
@@ -80,7 +81,8 @@ public class ApprovedApplicationInitializer implements CommandLineRunner {
             Files.createDirectories(path.getParent());
             Files.write(path, bytes);
             log.info("before edited and approved");
-            //edited and approved
+
+            //paste in ID from above into edited Application
             InputStream inputStream = getClass().getResourceAsStream("/json/initialEditedApplicationData.json");
             String editedJsonString = new String(inputStream.readAllBytes());
             log.info("read all bytes");
@@ -89,7 +91,6 @@ public class ApprovedApplicationInitializer implements CommandLineRunner {
             log.info("put applicationID");
             String modifiedJsonString = mapper.writeValueAsString(editedJsonNode);
 
-            log.info("before simulate");
             //simulate Application being edited and approved
             EditedApplicationDto editedApplicationDto = mapper.readValue(modifiedJsonString, EditedApplicationDto.class);
             log.info("updateStatus1");

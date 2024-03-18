@@ -44,6 +44,7 @@ public class ApplicationInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+        //get the Applicatin json and submit it
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
         module.addDeserializer(SubmittedApplicationDto.class, new SubmittedApplicationDeserializer());
@@ -57,7 +58,7 @@ public class ApplicationInitializer implements CommandLineRunner {
             String applicationID = applicationIDWithFilePaths.getApplicationID();
             Map<String, String> filePaths =applicationIDWithFilePaths.getFilesAndPaths();
 
-            //save mock pdfs
+            //save pdf for initial Application so that it can be downloaded
             byte[] bytes = new ClassPathResource("/json/Mock Modulebeschreibung Modul 1.pdf").getContentAsByteArray();
             Path path = Paths.get("/app/pdf-files" + filePaths.get("file-0:0"));
             Files.createDirectories(path.getParent());
