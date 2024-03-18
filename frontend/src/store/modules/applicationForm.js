@@ -2,6 +2,54 @@
 import ApplicationFormService from "@/services/ApplicationFormService";
 import router from '@/router';
 
+function resetForm(state) {
+    state.form = {
+        meta: {
+            status: "",
+            dateOfSubmission: "",
+            dateLastEdited: "",
+        },
+        university: {
+            name: null,
+            country: "",
+            website: "",
+        },
+        courseOfStudy: {
+            old: "",
+            new: null,
+        },
+        moduleMappings: [
+            {
+                meta: {
+                    key: 0,
+                },
+                previousModules: [
+                    {
+                        meta: {
+                            approval: "",
+                            comments: {
+                                student: "",
+                            },
+                            key: 0,
+                        },
+                        name: "",
+                        description: {file: null},
+                        credits: 0,
+                        university: {
+                            name: null,
+                            country: "",
+                            website: "",
+                        },
+                        id: "",
+                        courseOfStudy: "",
+                    },
+                ],
+                modulesToBeCredited: [],
+            },
+        ],
+    }
+}
+
 export default {
     state: {
         applicationId: null,
@@ -12,7 +60,7 @@ export default {
                 dateLastEdited: "",
             },
             university: {
-                name: "",
+                name: null,
                 country: "",
                 website: "",
             },
@@ -46,8 +94,7 @@ export default {
                             courseOfStudy: "",
                         },
                     ],
-                    modulesToBeCredited: [
-                    ],
+                    modulesToBeCredited: [],
                 },
             ],
         }
@@ -84,9 +131,10 @@ export default {
                                 },
                                 key: 0,
                             },
-                            university: "",
+                            university: state.form.university,
+                            selectedUniversity: null,
                             id: "",
-                            courseOfStudy: "",
+                            courseOfStudy: state.form.courseOfStudy.old,
                             name: "",
                             description: {file: null},
                             credits: 0,
@@ -115,9 +163,10 @@ export default {
                         },
                         key: key,
                     },
-                    university: "",
+                    university: state.form.university,
+                    selectedUniversity: null,
                     id: "",
-                    courseOfStudy: "",
+                    courseOfStudy: state.form.courseOfStudy.old,
                     name: "",
                     description: {file: null},
                     credits: 0,
@@ -154,6 +203,7 @@ export default {
 
                     // Navigate to another route and pass application ID
                     router.push({ name: 'Review Application', query: { applicationId: data.applicationID } });
+                    resetForm(state);
                 } else {
                     // Handle error response
                     console.error('Error submitting form:', data);

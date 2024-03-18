@@ -58,7 +58,7 @@
               prepend-icon=""
           />
           <v-combobox
-              v-model="module.university"
+              v-model="module.selectedUniversity"
               :items="universities"
               item-title="name"
               hide-details
@@ -147,6 +147,7 @@ export default {
               country: "",
               website: "",
             },
+            selectedUniversity: null,
             id: "",
             courseOfStudy: "",
             description: {
@@ -155,7 +156,7 @@ export default {
           }
         ],
         modulesToBeCredited: [],
-      }//no module is added
+      },
     };
   },
   props: {
@@ -195,6 +196,28 @@ export default {
     },
   },
   watch: {
+    'moduleMapping.previousModules': {
+      deep: true,
+      handler(newValue, oldValue) {
+        // This watcher will be triggered whenever any property inside previousModules changes
+        // We need to check if the selectedUniversity has changed
+        newValue.forEach((module, index) => {
+          if (module.selectedUniversity !== oldValue[index].selectedUniversity) {
+            // If selectedUniversity has changed, update the university properties
+            const newValue = module.selectedUniversity;
+            if (typeof newValue === 'string') {
+              this.moduleMapping.previousModules[index].university.name = newValue;
+            } else {
+              if (!newValue) { // Check if newValue is null or undefined
+                this.moduleMapping.previousModules[index].university.name = '';
+                return;
+              }
+              this.moduleMapping.previousModules[index].university = newValue
+            }
+          }
+        });
+      }
+    },
     moduleMapping: {
       handler(newVal) {
         this.$store.commit("updateModuleMappingData", {
