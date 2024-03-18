@@ -1,0 +1,83 @@
+{
+  "meta": {
+    "dateOfSubmission": "2023-12-31T22:30:42.103Z",
+    "dateLastEdited": "2024-01-14T14:12:14.675Z"
+  },
+  "university": {
+    "name": "original"
+  },
+  "courseOfStudy": {
+    "old": "original",
+    "new": "original"
+  },
+  "moduleMappings": [
+    {
+      "meta": {
+        "key": 0
+      },
+      "previousModules": [
+        {
+          "meta": {
+            "key": 0,
+            "comments": {
+              "student": "original"
+            }
+          },
+          "courseOfStudy": "original",
+          "university": {
+            "name": "original"
+          },
+          "id": "original",
+          "name": "original",
+          "credits": 5
+        },
+        {
+          "meta": {
+            "key": 1,
+            "comments": {
+              "student": "original"
+            }
+          },
+          "courseOfStudy": "original",
+          "university": {
+            "name": "original"
+          },
+          "id": "original",
+          "name": "original",
+          "credits": 4
+        }
+      ],
+      "modulesToBeCredited": [
+        3,
+        4
+      ]
+    },
+    {
+      "meta": {
+        "key": 1
+      },
+      "previousModules": [
+        {
+          "meta": {
+            "key": 0,
+            "comments": {
+              "student": "original"
+            }
+          },
+          "courseOfStudy": "original",
+          "university": {
+            "name": "original",
+            "country": "original"
+          },
+          "id": "original",
+          "name": "original",
+          "credits": 20
+        }
+      ],
+      "modulesToBeCredited": [
+        15,
+        16
+      ]
+    }
+  ]
+}
