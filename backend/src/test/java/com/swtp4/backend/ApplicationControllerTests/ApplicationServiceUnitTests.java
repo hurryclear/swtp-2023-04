@@ -2,6 +2,7 @@ package com.swtp4.backend.ApplicationControllerTests;
 
 
 import com.swtp4.backend.repositories.*;
+import com.swtp4.backend.repositories.applicationDtos.*;
 import com.swtp4.backend.repositories.entities.ApplicationEntity;
 import com.swtp4.backend.repositories.entities.ModuleBlockEntity;
 import com.swtp4.backend.repositories.entities.ModuleRelationEntity;
@@ -14,28 +15,34 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-@ExtendWith(SpringExtension.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@ExtendWith(MockitoExtension.class)
+//@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class ApplicationServiceUnitTests {
 
     @InjectMocks
     private ApplicationService applicationService;
     @Mock // mock application repository so that application service will be independent of repository
     private ApplicationRepository applicationRepository;
+    @Mock
     private ModuleBlockRepository moduleBlockRepository;
+    @Mock
     private ModuleRelationRepository moduleRelationRepository;
     private ModuleUniRepository moduleUniRepository;
     private ModuleStudentRepository moduleStudentRepository;
@@ -63,6 +70,100 @@ public class ApplicationServiceUnitTests {
     void setUp() {
         MockitoAnnotations.openMocks(this);
     }
+
+    @Test
+    public void shouldGetEntireApplicationByID () throws ParseException {
+
+        // mock data
+        String applicationID = "93e9a8f5-6ecc-4ac8-8854-13a8b7f3e6a2";
+        //original application
+        //applicationData
+        EntireApplicationDetails originalApplicationsData = new EntireApplicationDetails(
+                "93e9a8f5-6ecc-4ac8-8854-13a8b7f3e6a2",
+                "edited",
+                "Jo du",
+                "2024-03-05T13:56:51.560Z",
+                "2024-03-05T13:56:51.560Z",
+                "University of Halle",
+                "B.Sc Informatik",
+                "B.Sc Informatik"
+        );
+        //moduleFormsData
+        List<EntireStudentModule> studentModuleList = new ArrayList<>();
+        EntireStudentModule entireStudentModule = new EntireStudentModule(
+                0L,
+                1L,
+                "angenommen",
+                "Jo du",
+                "420",
+                "AlgoDat 1.5",
+                "/23-23-23-23-23-23-23-23-23-23-23/S-3",
+                5L,
+                "University of Halle",
+                "B.Sc. Informatik",
+                "War cool",
+                "Das nicht so cool"
+        );
+        studentModuleList.add(entireStudentModule);
+        List<Long> modules2bCredited = new ArrayList<>();
+        modules2bCredited.add(1L);
+        modules2bCredited.add(2L);
+        List<EntireBlock> originalModuleFormsDataList = new ArrayList<>();
+        EntireBlock entireBlock = new EntireBlock(
+                0L,
+                1L,
+                studentModuleList,
+                modules2bCredited
+        );
+        originalModuleFormsDataList.add(entireBlock);
+
+        //entire original and edited application
+        EntireApplication originalApplication =  new EntireApplication(originalApplicationsData, originalModuleFormsDataList);
+        EntireApplication editedApplication =  new EntireApplication(originalApplicationsData, originalModuleFormsDataList);
+
+        //applicationEntity
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        ApplicationKeyClass applicationKeyClass = ApplicationKeyClass.builder()
+                .id("93e9a8f5-6ecc-4ac8-8854-13a8b7f3e6a2")
+                .creator("Employee").build();
+        ApplicationEntity applicationEntity = ApplicationEntity.builder()
+                .applicationKeyClass(applicationKeyClass)
+                .status("edited")
+                .dateOfSubmission(dateFormat.parse("2024-03-05T13:56:51.560Z"))
+                .dateLastEdited(dateFormat.parse("2024-03-05T13:56:51.560Z"))
+                .universityName("University of Halle")
+                .uniMajor("B.Sc. Informatik")
+                .studentMajor("B.Sc. Informatik")
+                .build();
+
+        //moduleBlockEntity
+        ModuleBlockEntity moduleBlockEntity = new ModuleBlockEntity();
+
+        // Mock repository responses
+        when(applicationRepository.findById(any())).thenReturn(Optional.of(applicationEntity));
+        when(moduleBlockRepository.findAllByApplicationEntity(any())).thenReturn(Collections.emptyList());
+//        when(moduleRelationRepository.findByModuleBlockEntity(any())).thenReturn(Collections.emptyList());
+
+        // When
+        EntireOriginalAndEditedApplicationDto result = applicationService.getApplicationByID(applicationID);
+
+        // Then: Assertions
+        assertEquals("93e9a8f5-6ecc-4ac8-8854-13a8b7f3e6a2", result.original().applicationData().applicationID());
+        assertEquals("edited", result.original().applicationData().status());
+        assertEquals("University of Halle", result.original().applicationData().university());
+        assertEquals("2024-03-05T13:56:51.560Z", result.original().applicationData().dateOfSubmission());
+        assertEquals("2024-03-05T13:56:51.560Z", result.original().applicationData().dateLastEdited());
+        assertEquals("B.Sc. Informatik", result.original().applicationData().newCourseOfStudy());
+        assertEquals("B.Sc. Informatik", result.original().applicationData().oldCourseOfStudy());
+
+
+        // Verify the repository interactions
+//        verify(applicationRepository, times(2)).findById(any());
+//        verify(moduleBlockRepository, times(1)).findAllByApplicationEntity(any());
+//        verify(moduleRelationRepository, times(1)).findByModuleBlockEntity(any());
+
+    }
+
 //    @Test
 //    public void shouldGetAllApplications() {
 //        //Given

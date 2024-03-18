@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -28,6 +29,7 @@ import java.io.InputStream;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @Slf4j
@@ -40,31 +42,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class GetApplicationIT {
 
 
-    @MockBean
-    private PDFService pdfService;
-    private ApplicationService applicationService;
     private MockMvc mockMvc;
     private ApplicationTestData applicationTestData;
-    private ApplicationRepository applicationRepository;
-    private ModuleBlockRepository moduleBlockRepository;
-    private ModuleStudentRepository moduleStudentRepository;
-    private ModuleRelationRepository moduleRelationRepository;
 
     @Autowired
     public GetApplicationIT(ApplicationService applicationService,
                                       MockMvc mockMvc,
-                                      ApplicationTestData applicationTestData,
-                                      ApplicationRepository applicationRepository,
-                                      ModuleBlockRepository moduleBlockRepository,
-                                      ModuleStudentRepository moduleStudentRepository,
-                                      ModuleRelationRepository moduleRelationRepository) {
-        this.applicationService = applicationService;
+                                      ApplicationTestData applicationTestData) {
         this.mockMvc = mockMvc;
         this.applicationTestData = applicationTestData;
-        this.applicationRepository = applicationRepository;
-        this.moduleBlockRepository = moduleBlockRepository;
-        this.moduleStudentRepository = moduleStudentRepository;
-        this.moduleRelationRepository = moduleRelationRepository;
     }
 
     @Test
@@ -138,5 +124,85 @@ public class GetApplicationIT {
                 .andExpect(jsonPath("$.moduleFormsData[1].modules2bCredited[0].number").value("10-201-1011"))
                 .andExpect(jsonPath("$.moduleFormsData[1].modules2bCredited[1].name").value("Lineare Algebra"))
                 .andExpect(jsonPath("$.moduleFormsData[1].modules2bCredited[1].number").value("10-201-1015"));
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser(username = "testuser", roles = {"OFFICE"})
+    public void testThatGetApplication_ReturnsOriginalAndEditedApplicationJson() throws Exception {
+
+        applicationTestData.loadMajorAndModulesIntoDataBase();
+        String testApplicationJson = ApplicationTestData.createOriginalSubmitApplicationJson();
+
+        // Create a MockMultipartFile for the JSON content
+        MockMultipartFile jsonPart = new MockMultipartFile("form", "", MediaType.APPLICATION_JSON_VALUE, testApplicationJson.getBytes());
+
+        // Perform the request with multipart data, but no file part
+        MvcResult result = mockMvc.perform(
+                        multipart("/student/submitApplication")
+                                .file(jsonPart) // specify your endpoint here
+                                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                )
+                .andExpect(status().isCreated())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); // Capture the result
+
+        String contentAsString = result.getResponse().getContentAsString();
+        JSONObject jsonResponse = new JSONObject(contentAsString);
+        String applicationID = jsonResponse.getString("applicationID");
+
+        mockMvc.perform(get("/application/getApplication").param("applicationID", applicationID))
+                .andExpect(status().isOk()).andDo(print())
+                .andExpect(jsonPath("$.original.applicationData.applicationID").value(applicationID))
+                .andExpect(jsonPath("$.original.applicationData.status").value("open"))
+                .andExpect(jsonPath("$.original.applicationData.formalReject").value(""))
+                .andExpect(jsonPath("$.original.applicationData.dateOfSubmission").value("2023-12-31T22:30:42.103Z"))
+                .andExpect(jsonPath("$.original.applicationData.dateLastEdited").value("2023-12-31T22:30:42.103Z"))
+                .andExpect(jsonPath("$.original.applicationData.university").value("original"))
+                .andExpect(jsonPath("$.original.applicationData.oldCourseOfStudy").value("original"))
+                .andExpect(jsonPath("$.original.applicationData.newCourseOfStudy").value("original"))
+                .andExpect(jsonPath("$.original.moduleFormsData[0].frontend_key").value(0))
+                .andExpect(jsonPath("$.original.moduleFormsData[0].backend_block_id").value(1))
+                .andExpect(jsonPath("$.original.moduleFormsData[0].modulesStudent[0].frontend_key").value(0))
+                .andExpect(jsonPath("$.original.moduleFormsData[0].modulesStudent[0].backend_module_id").value(1))
+                .andExpect(jsonPath("$.original.moduleFormsData[0].modulesStudent[0].approval").value(""))
+                .andExpect(jsonPath("$.original.moduleFormsData[0].modulesStudent[0].reason").value(""))
+                .andExpect(jsonPath("$.original.moduleFormsData[0].modulesStudent[0].number").value("original"))
+                .andExpect(jsonPath("$.original.moduleFormsData[0].modulesStudent[0].title").value("original"))
+                .andExpect(jsonPath("$.original.moduleFormsData[0].modulesStudent[0].path").value("/"+ applicationID+ "/S-1"))
+                .andExpect(jsonPath("$.original.moduleFormsData[0].modulesStudent[0].credits").value(1))
+                .andExpect(jsonPath("$.original.moduleFormsData[0].modulesStudent[0].university").value("original"))
+                .andExpect(jsonPath("$.original.moduleFormsData[0].modulesStudent[0].major").value("original"))
+                .andExpect(jsonPath("$.original.moduleFormsData[0].modulesStudent[0].commentStudent").value("original"))
+                .andExpect(jsonPath("$.original.moduleFormsData[0].modulesStudent[0].commentEmployee").value(""))
+                .andExpect(jsonPath("$.original.moduleFormsData[0].modules2bCredited").isArray())
+                .andExpect(jsonPath("$.original.moduleFormsData[0].modules2bCredited[0]").value(3))
+                .andExpect(jsonPath("$.original.moduleFormsData[0].modules2bCredited[1]").value(4))
+                .andExpect(jsonPath("$.edited.applicationData.applicationID").value(applicationID))
+                .andExpect(jsonPath("$.edited.applicationData.status").value("open"))
+                .andExpect(jsonPath("$.edited.applicationData.formalReject").value(""))
+                .andExpect(jsonPath("$.edited.applicationData.dateOfSubmission").value("2023-12-31T22:30:42.103Z"))
+                .andExpect(jsonPath("$.edited.applicationData.dateLastEdited").value("2023-12-31T22:30:42.103Z"))
+                .andExpect(jsonPath("$.edited.applicationData.university").value("original"))
+                .andExpect(jsonPath("$.edited.applicationData.oldCourseOfStudy").value("original"))
+                .andExpect(jsonPath("$.edited.applicationData.newCourseOfStudy").value("original"))
+                .andExpect(jsonPath("$.edited.moduleFormsData[0].frontend_key").value(0))
+                .andExpect(jsonPath("$.edited.moduleFormsData[0].backend_block_id").value(2))
+                .andExpect(jsonPath("$.edited.moduleFormsData[0].modulesStudent[0].frontend_key").value(0))
+                .andExpect(jsonPath("$.edited.moduleFormsData[0].modulesStudent[0].backend_module_id").value(2))
+                .andExpect(jsonPath("$.edited.moduleFormsData[0].modulesStudent[0].approval").value(""))
+                .andExpect(jsonPath("$.edited.moduleFormsData[0].modulesStudent[0].reason").value(""))
+                .andExpect(jsonPath("$.edited.moduleFormsData[0].modulesStudent[0].number").value("original"))
+                .andExpect(jsonPath("$.edited.moduleFormsData[0].modulesStudent[0].title").value("original"))
+                .andExpect(jsonPath("$.edited.moduleFormsData[0].modulesStudent[0].path").value("/" + applicationID +"/S-1"))
+                .andExpect(jsonPath("$.edited.moduleFormsData[0].modulesStudent[0].credits").value(1))
+                .andExpect(jsonPath("$.edited.moduleFormsData[0].modulesStudent[0].university").value("original"))
+                .andExpect(jsonPath("$.edited.moduleFormsData[0].modulesStudent[0].major").value("original"))
+                .andExpect(jsonPath("$.edited.moduleFormsData[0].modulesStudent[0].commentStudent").value("original"))
+                .andExpect(jsonPath("$.edited.moduleFormsData[0].modulesStudent[0].commentEmployee").value(""))
+                .andExpect(jsonPath("$.edited.moduleFormsData[0].modules2bCredited").isArray())
+                .andExpect(jsonPath("$.edited.moduleFormsData[0].modules2bCredited[0]").value(3))
+                .andExpect(jsonPath("$.edited.moduleFormsData[0].modules2bCredited[1]").value(4));
+
     }
 }

@@ -1,0 +1,41 @@
+{
+  "meta": {
+    "dateOfSubmission": "2023-12-31T22:30:42.103Z",
+    "dateLastEdited": "2023-12-31T22:30:42.103Z"
+  },
+  "university": {
+    "name": "original"
+  },
+  "courseOfStudy": {
+    "old": "original",
+    "new": "original"
+  },
+  "moduleMappings": [
+    {
+      "meta": {
+        "key": 0
+      },
+      "previousModules": [
+        {
+          "meta": {
+            "key": 0,
+            "comments": {
+              "student": "original"
+            }
+          },
+          "courseOfStudy": "original",
+          "university": {
+            "name": "original"
+          },
+          "id": "original",
+          "name": "original",
+          "credits": 1
+        }
+      ],
+      "modulesToBeCredited": [
+        3,
+        4
+      ]
+    }
+  ]
+}
