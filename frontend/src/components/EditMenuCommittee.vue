@@ -129,9 +129,9 @@
                   @click="module.approval = 'accepted'"
                   :disabled="!showEdited"
                   class="ma-2"
-                  prepend-icon="mdi-hand-back-left"
+                  prepend-icon="mdi-check-bold"
                   variant="elevated"
-                  color="red"
+                  color="green"
               >{{ $t('examiningCommitteeChairView.accept') }}
               </v-btn>
               <v-btn
