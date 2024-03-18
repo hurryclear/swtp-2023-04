@@ -36,8 +36,10 @@
   },
   "examiningCommitteeChairView": {
     "accept": "接受",
+    "undoAccept": "撤销接受",
     "decline": "拒绝",
-    "moduleCount": "模块数",
+    "undoDecline": "撤销拒绝",
+    "moduleCount": "模块数量",
     "studentAffairsOfficeComment": "学生事务办公室评论"
   },
   "formDisplay": {

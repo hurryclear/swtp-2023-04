@@ -36,9 +36,11 @@
   },
   "examiningCommitteeChairView": {
     "accept": "Принять",
+    "undoAccept": "Отменить принятие",
     "decline": "Отклонить",
+    "undoDecline": "Отменить отклонение",
     "moduleCount": "Количество модулей",
-    "studentAffairsOfficeComment": "Комментарий студенческого отдела"
+    "studentAffairsOfficeComment": "Комментарий отдела студенческих дел"
   },
   "formDisplay": {
     "application": "Заявка",

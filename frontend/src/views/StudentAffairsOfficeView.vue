@@ -7,7 +7,7 @@
             :is="currentComponent"
             :form="comparisonForm"
             @open="openComponent"
-            @close="closeComponent"
+            @close="closeComponent(false)"
         />
       </v-col>
       <v-col>
@@ -16,7 +16,7 @@
             class="edit-menu"
             v-if="Object.keys(currentForm).length !== 0"
             :form="currentForm"
-            @close="currentForm={}"
+            @close="closeComponent(true)"
             @open="openComponent"
             @save="currentForm={}"
         />
@@ -58,9 +58,13 @@ export default {
     /**
      * Closes the currently open component and resets form data.
      */
-    closeComponent() {
+    closeComponent(isEditMenu) {
+      if (isEditMenu) {
+        this.currentForm = {};
+      } else {
+        this.comparisonForm = {};
+      }
       this.currentComponent = 'FormDisplay';
-      this.comparisonForm = {};
     },
   }
 }
