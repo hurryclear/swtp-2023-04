@@ -1,0 +1,78 @@
+{
+  "edited": {
+    "applicationData": {
+      "applicationID": "",
+      "status": "",
+      "formalReject": "",
+      "dateOfSubmission": "2023-12-31T22:30:42.103Z",
+      "dateLastEdited": "2024-01-14T14:12:14.675Z",
+      "university": "University of Regenbogenland",
+      "oldCourseOfStudy": "B. Sc. Informatik",
+      "newCourseOfStudy": "B.Sc. Informatik"
+    },
+    "moduleFormsData": [
+      {
+        "frontend_key": 0,
+        "backend_block_id": 6,
+        "modulesStudent": [
+          {
+            "frontend_key": 0,
+            "backend_module_id": 8,
+            "approval": "formally rejected",
+            "reason": "falsche Modulbeschreibung!",
+            "number": "420",
+            "title": "AlgoDat 1.5",
+            "path": "",
+            "credits": 5,
+            "university": "University of Regenbogenland",
+            "major": "Bachelor Info",
+            "commentStudent": "War cool",
+            "commentEmployee": ""
+          },
+          {
+            "frontend_key": 1,
+            "backend_module_id": 10,
+            "approval": "accepted",
+            "reason": "Das hier geht trotzdem für beides",
+            "number": "69",
+            "title": "AlgoDat 0.5",
+            "path": "",
+            "credits": 4,
+            "university": "University of Regenbogenland",
+            "major": "Bachelor Info",
+            "commentStudent": "War nicht so cool",
+            "commentEmployee": ""
+          }
+        ],
+        "modules2bCredited": [
+          3,
+          4
+        ]
+      },
+      {
+        "frontend_key": 1,
+        "backend_block_id": 8,
+        "modulesStudent": [
+          {
+            "frontend_key": 0,
+            "backend_module_id": 12,
+            "approval": "rejected",
+            "reason": "Die Module passen nicht zueinander.",
+            "number": "81923",
+            "title": "Das Alles-Modul",
+            "path": "",
+            "credits": 20,
+            "university": "University of Regenbogenland",
+            "major": "Bachelor Info",
+            "commentStudent": "Die Beschreibung ist lang, setzen Sie schon mal Kaffee auf",
+            "commentEmployee": ""
+          }
+        ],
+        "modules2bCredited": [
+          15,
+          16
+        ]
+      }
+    ]
+  }
+}

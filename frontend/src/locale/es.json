@@ -1,37 +1,38 @@
 {
   "applicationFormView": {
     "moduleFormList": {
-      "addMapping": "Agregar Mapeo de Módulo",
+      "addMapping": "Añadir Mapeo de Módulo",
       "moduleMapping": {
-        "addModule": "Agregar Módulo",
+        "addModule": "Añadir Módulo",
         "commentLabel": "Comentario",
-        "description": "¡Proporcione información sobre el módulo a ser acreditado!",
+        "description": "Proporciona información sobre el módulo que se va a acreditar.",
         "module": "Módulo",
         "moduleDescriptionLabel": "Descripción del Módulo",
         "moduleNameLabel": "Nombre del Módulo",
         "modulesToBeCreditedLabel": "Módulo Acreditado",
-        "removeModule": "Eliminar Módulo"
+        "removeModule": "Eliminar Módulo",
+        "creditLabel": "Créditos (ECTS)",
+        "moduleId": "Número de módulo/Identificación de módulo"
       },
       "removeMapping": "Eliminar Mapeo de Módulo"
     },
     "submit": "Enviar Formulario",
+    "courseOfStudy": {
+      "description": "Especifica el nombre de tu curso de estudio anterior y deseado.",
+      "courseOfStudy": "Curso de Estudio",
+      "new": "Curso de Estudio Deseado",
+      "previous": "Curso de Estudio Anterior"
+    },
     "universityForm": {
-      "courseOfStudy": {
-        "description": "¡Especifique el nombre de su programa de estudio anterior!",
-        "nameLabel": "Nombre del Programa de Estudio",
-        "previous": "Programa de Estudio Anterior"
-      },
-      "university": {
-        "countryLabel": "País",
-        "description": "¡Especifique el nombre de su universidad anterior!",
-        "nameLabel": "Nombre de la Universidad",
-        "previous": "Universidad Anterior",
-        "websiteLabel": "Sitio Web"
-      }
+      "countryLabel": "País",
+      "description": "Especifica el nombre de tu universidad anterior.",
+      "nameLabel": "Nombre de la Universidad",
+      "previous": "Universidad Anterior",
+      "websiteLabel": "Sitio Web"
     }
   },
   "darkMode": {
-    "toggleDarkMode": "Cambiar Modo Oscuro"
+    "toggleDarkMode": "Activar Modo Oscuro"
   },
   "examiningCommitteeChairView": {
     "accept": "Aceptar",
@@ -43,14 +44,14 @@
     "application": "Solicitud",
     "edit": "Editar",
     "modules": "Módulos",
-    "reason": "Razón",
-    "sendToExaminingCommitteeChair": "Enviar al Comité de Exámenes",
+    "reason": "Motivo",
+    "sendToExaminingCommitteeChair": "Enviar a Comité de Examinación",
     "university": "Universidad"
   },
   "homeView": {
-    "welcomeExaminingCommitteeChair": "Bienvenido, estimado presidente del Comité de Exámenes! En esta plataforma, tienes la oportunidad de revisar y aprobar o rechazar todas las solicitudes abiertas. Proporciona una razón fundamentada para tus decisiones. Tu participación hace que el proceso de reconocimiento de créditos sea más eficiente y con propósito.",
-    "welcomeStudent": "¡Bienvenido a nuestra nueva plataforma en línea para el reconocimiento de créditos en la Universidad de Leipzig! Entendemos que el proceso de reconocimiento de créditos a menudo es complejo y lleva tiempo. Es aún más importante que este proceso ahora se pueda realizar en línea, de manera digital y fácil. Como estudiante, ahora puedes enviar tu solicitud con solo unos pocos clics. Haz clic en 'Acreditar Módulos' para comenzar. Al enviar tu solicitud, se te asignará un número de referencia único, que podrás usar más tarde para ver tu solicitud y su estado.",
-    "welcomeStudentAffairsOffice": "Bienvenido, personal de la Oficina de Asuntos Estudiantiles! Como miembro del personal de la Oficina de Asuntos Estudiantiles, tienes acceso a una visión general de todas las solicitudes abiertas. Puedes procesar, complementar y hacer un seguimiento del estado de procesamiento de las solicitudes. Utiliza la interfaz fácil de usar para hacer más eficiente el proceso de reconocimiento de créditos."
+    "welcomeExaminingCommitteeChair": "¡Bienvenido, estimado presidente del Comité de Examinación! En esta plataforma, tienes la oportunidad de revisar y aprobar o rechazar todas las solicitudes abiertas. Por favor, proporciona una razón fundamentada para tus decisiones. Tu participación hace que el proceso de reconocimiento de créditos sea más eficiente y con propósito.",
+    "welcomeStudent": "¡Bienvenido a nuestra nueva plataforma en línea para el reconocimiento de créditos en la Universidad de Leipzig! Haz clic en 'Credit Modules' para comenzar. Al enviar tu solicitud, se te asignará un número de referencia único, que podrás utilizar más tarde para ver tu solicitud y su estado.",
+    "welcomeStudentAffairsOffice": "¡Bienvenido, personal de la Oficina de Asuntos Estudiantiles! Como miembro del personal de la Oficina de Asuntos Estudiantiles, tienes acceso a una visión general de todas las solicitudes abiertas. Puedes procesar, complementar y seguir el estado de procesamiento de las solicitudes. Utiliza la interfaz fácil de usar para hacer que el proceso de reconocimiento de créditos sea más eficiente."
   },
   "loginComponent": {
     "loginButton": "Iniciar Sesión",
@@ -60,58 +61,101 @@
   },
   "logoutButton": "Cerrar Sesión",
   "navBar": {
-    "creditModules": "Acreditar Módulos",
-    "examiningCommitteeChair": "Presidente del Comité de Exámenes",
+    "creditModules": "Módulos de Crédito",
+    "examiningCommitteeChair": "Presidente del Comité de Examinación",
     "login": "Iniciar Sesión",
     "main": "Página Principal",
     "review": "Revisar Solicitud",
-    "studentAffairsOffice": "Oficina de Asuntos Estudiantiles"
+    "studentAffairsOffice": "Oficina de Asuntos Estudiantiles",
+    "updateModuleData": "Actualizar datos del módulo"
   },
   "reviewComponent": {
-      "checkStatus": "Verificar el Estado de la Solicitud",
-      "downloadApplication": "Descargar Resumen",
-      "formID": "Número de Referencia",
-      "reviewApplication": "Revisar Solicitud",
-      "currentUniversity": "Universidad Actual",
-      "oldCourseOfStudy": "Programa de Estudios Anterior",
-      "newCourseOfStudy": "Nuevo Programa de Estudios",
-      "dateOfSubmission": "Fecha de Presentación",
-      "dateLastEdited": "Fecha de Última Edición",
-      "application": "Solicitud",
-      "overview": "Resumen de la Solicitud",
-      "modulName": "Nombre del Módulo",
-      "moduleNumber": "Número de Módulo",
-      "moduleCredits": "Créditos (ECTS)",
-      "moduleApproval": "Aprobación",
-      "moduleApprovalReason": "Razón de la Decisión",
-      "accepted": "Aceptado",
-      "rejected": "Rechazado",
-      "formallyRejected": "Rechazado Formalmente por la Oficina de Asuntos Estudiantiles",
-      "modules2bCredited": "Módulos a Acreditar",
-      "moduleApprovalOpen": "Abierto",
-      "partiallyAccepted": "Parcialmente Aceptado",
-      "open": "Abierto",
-      "editingInProgress": "Edición por la Oficina de Asuntos Estudiantiles en Proceso",
-      "edited": "Editado por la Oficina de Asuntos Estudiantiles",
-      "readyForApproval": "Listo para Aprobación por el Comité de Examen",
-      "approvalInProgress": "Aprobación por el Comité de Examen en Proceso",
-      "editedApproval": "Editado por el Comité de Examen",
-      "approvalFinished": "Aprobación por el Comité de Examen Finalizada",
-      "errorFetchingForm": "Error al Recuperar el Formulario",
-      "formNotFound": "Formulario No Encontrado",
-      "pending": "Pendiente",
-      "moduleBlock": "Bloque de Módulos"
-    },
-    
+    "checkStatus": "Ver Estado de la Solicitud",
+    "downloadApplication": "Descargar Resumen",
+    "formID": "ID del Formulario",
+    "reviewApplication": "Revisar Solicitud",
+    "currentUniversity": "Universidad Actual",
+    "oldCourseOfStudy": "Programa de Estudio Anterior",
+    "newCourseOfStudy": "Nuevo Programa de Estudio",
+    "dateOfSubmission": "Fecha de Envío",
+    "dateLastEdited": "Fecha de Última Edición",
+    "application": "Solicitud",
+    "overview": "Visión General de la Solicitud",
+    "moduleName": "Nombre del Módulo",
+    "moduleNumber": "Número del Módulo",
+    "moduleCredits": "Créditos (ECTS)",
+    "moduleApproval": "Aprobación",
+    "moduleApprovalReason": "Motivo de la Decisión",
+    "accepted": "Aceptado",
+    "rejected": "Rechazado",
+    "formallyRejected": "Rechazado Formalmente por la Oficina de Asuntos Estudiantiles",
+    "modulesToBeCredited": "Módulos a Acreditar",
+    "moduleApprovalOpen": "Abierto",
+    "partiallyAccepted": "Parcialmente Aceptado",
+    "open": "Abierto",
+    "editingInProgress": "Edición por la Oficina de Asuntos Estudiantiles en Progreso",
+    "edited": "Editado por la Oficina de Asuntos Estudiantiles",
+    "readyForApproval": "Listo para Aprobación por el Comité de Examinación",
+    "approvalInProgress": "Aprobación por el Comité de Examinación en Progreso",
+    "editedApproval": "Editado por el Comité de Examinación",
+    "approvalFinished": "Aprobación por el Comité de Examinación Finalizada",
+    "errorFetchingForm": "Error al Obtener el Formulario",
+    "formNotFound": "Formulario No Encontrado",
+    "pending": "Pendiente",
+    "moduleBlock": "Bloque de Módulos",
+    "partiallyRejected": "Parcialmente Rechazado"
+  },
   "routes": {
-    "/": "Página Principal",
-    "/application-form": "Acreditar Módulos",
-    "/examining-committee-chair": "Presidente del Comité de Exámenes",
+    "/": "Página de Inicio",
+    "/application-form": "Módulos de Crédito",
+    "/examining-committee-chair": "Presidente del Comité de Examinación",
     "/login": "Iniciar Sesión",
     "/review-application": "Revisar Solicitud",
-    "/student-affairs-office": "Oficina de Asuntos Estudiantiles"
+    "/student-affairs-office": "Oficina de Asuntos Estudiantiles",
+    "/update-module-data": "Actualizar Datos de Módulo"
   },
   "studentAffairsOfficeView": {
-    "openApplications": "Solicitudes Abiertas"
+    "application": "Solicitud",
+    "applicationID": "ID de solicitud",
+    "compareWithOtherApplications": "Comparar con otras solicitudes",
+    "courseOfStudy": "Curso de estudio",
+    "creditFor": "Crédito para",
+    "credits": "Créditos",
+    "currentCourse": "Curso actual",
+    "dateLastEdited": "Fecha de última edición",
+    "dateOfSubmission": "Fecha de presentación",
+    "decision": "Decisión",
+    "downloadDescription": "Descargar descripción",
+    "edit": "Editar",
+    "edited": "Editado",
+    "enterReason": "Ingresar razón",
+    "formalReject": "Rechazar formalmente",
+    "formallyRejectApplication": "Rechazar formalmente la solicitud",
+    "ID": "ID",
+    "mapping": "Mapeo",
+    "module": "Módulo",
+    "moduleNotFound": "Módulo no encontrado",
+    "moduleNumber": "Número de módulo",
+    "modules": "Módulos",
+    "name": "Nombre",
+    "officeComment": "Comentario de la oficina",
+    "openApplications": "Solicitudes abiertas",
+    "original": "Original",
+    "previousCourse": "Curso anterior",
+    "previousModule": "Módulo anterior",
+    "previousUniversity": "Universidad anterior",
+    "save": "Guardar",
+    "search": "Buscar",
+    "sendToExaminationCommittee": "Enviar al comité de examen",
+    "status": "Estado",
+    "studentComment": "Comentario del estudiante",
+    "undoRejection": "Deshacer rechazo",
+    "university": "Universidad",
+    "view": "Ver",
+    "reason": "Razón"
+  },
+  "updateModuleDataView": {
+    "uploadJSON": "Subir JSON",
+    "submit": "Enviar"
   }
 }

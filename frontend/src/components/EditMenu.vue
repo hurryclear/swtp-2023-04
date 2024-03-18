@@ -1,265 +1,360 @@
 <template>
-  <!--TODO: i18n-->
   <v-card>
     <div class="card-header">
       <v-card-title>
-        <u>Antrag</u>
+        <u>{{ $t('studentAffairsOfficeView.application') }}</u>
       </v-card-title>
       <v-spacer/>
-      <v-btn-toggle class="button-top" v-model="isEdited" mandatory shaped variant="outlined">
+      <v-btn-toggle
+          class="ma-2"
+          v-model="showEdited"
+          mandatory
+          shaped
+          variant="outlined">
         <v-btn :value="false">
-          Original
+          {{ $t('studentAffairsOfficeView.original') }}
         </v-btn>
         <v-btn :value="true">
-          Bearbeitet
+          {{ $t('studentAffairsOfficeView.edited') }}
         </v-btn>
       </v-btn-toggle>
-      <v-btn class="button-top" variant="tonal" @click="openComparisonMenu">Mit anderen Anträgen vergleichen</v-btn>
-      <v-btn class="button-top" variant="tonal" icon="mdi-close" @click="closeEditMenu"></v-btn>
+      <v-btn
+          class="ma-2"
+          @click="this.$emit('open',{component:'ComparisonMenu',formCopy:{}});"
+      >{{ $t('studentAffairsOfficeView.compareWithOtherApplications') }}
+      </v-btn>
+      <v-btn
+          class="ma-2"
+          icon="mdi-close"
+          @click="this.$emit('close')"
+      />
     </div>
-    <v-card-text>
-      Vorherige Universität: {{ applicationVersion.applicationData.university }}
-    </v-card-text>
-    <v-card-text>
-      Vorheriger Studiengang: {{ applicationVersion.applicationData.oldCourseOfStudy }}
-    </v-card-text>
-    <v-card-text>
-      Jetziger Studiengang: {{ applicationVersion.applicationData.newCourseOfStudy }}
-    </v-card-text>
-    <v-card-title>
-      Module:
-    </v-card-title>
-    <div v-for="(moduleData, index) in applicationVersion.moduleFormsData" v-bind:key="moduleData.frontend_key">
-      <v-card-subtitle>
-        <br>
-        Mapping {{ index + 1 }}
-      </v-card-subtitle>
-      <div v-for="(studentModule, index2) in moduleData.modulesStudent" v-bind:key="studentModule.frontend_key">
-        <v-card-text><u>Modul {{ index2 + 1 }}</u></v-card-text>
-        <v-card-text>Name:</v-card-text>
-        <v-text-field
-            :disabled="!isEdited"
-            :label="studentModule.title"
-            v-model="editedForm.edited.moduleFormsData[index].modulesStudent[index2].title"
-        ></v-text-field>
-        <v-card-text>Modulnummer:</v-card-text>
-        <v-text-field
-            :disabled="!isEdited"
-            :label="studentModule.number"
-            v-model="editedForm.edited.moduleFormsData[index].modulesStudent[index2].number"
-        ></v-text-field>
-        <v-card-text>Leistungspunkte:</v-card-text>
-        <v-text-field
-            :disabled="!isEdited"
-            :label="studentModule.credits"
-            v-model="editedForm.edited.moduleFormsData[index].modulesStudent[index2].credits"
-        ></v-text-field>
-        <v-card-text>Studentenkommentar: {{ studentModule.commentStudent }}</v-card-text>
-        <v-card-text>Studienbürokommentar: </v-card-text>
-        <v-text-field
-            :disabled="!isEdited"
-            :label="studentModule.commentEmployee"
-            v-model="editedForm.edited.moduleFormsData[index].modulesStudent[index2].commentEmployee"
-        ></v-text-field>
-        <v-btn style="margin: 1%" @click="downloadPdf(studentModule.path)">Beschreibung herunterladen</v-btn>
-        <v-text-field label="Formale Ablehnung" v-model="editedForm.edited.moduleFormsData[index].modulesStudent[index2].reason"></v-text-field>
-        <v-btn
-            @click="setFormalReject(index, index2)"
-            :disabled="!isEdited"
-            class="button-top"
-            prepend-icon="mdi-hand-back-left"
-            variant="flat"
-            color="red">Formal Ablehnen</v-btn>
-      </div>
-      <v-card-text>
-        <u>Anrechnen für:</u>
-        <br>
-        <div v-for="(module, index3) in moduleData.modules2bCredited" v-bind:key="module">
-          <v-autocomplete
-              class="text-field"
-              :items="getMajorModulesName()"
-              :label="findModule(applicationVersion.moduleFormsData[index].modules2bCredited[index3])"
-              :disabled="!isEdited"
-              v-model="editedForm.edited.moduleFormsData[index].modules2bCredited[index3]"
-          ></v-autocomplete>
-        </div>
-      </v-card-text>
-      <v-divider/>
-    </div>
+
     <v-divider/>
-    <v-text-field class="text-field" label="Begründung" v-model="reason"/>
-    <v-card-actions>
-      <v-btn
-          color="blue"
-          variant="flat"
-          class="button-bottom"
-          prepend-icon="mdi-arrow-u-left-top"
-          :loading="loadingSendButton"
-          @click="sendToPruefungsausschuss(true)"
+    <v-text-field
+        class="text-field"
+        :label="$t('studentAffairsOfficeView.reason')"
+        v-model="formalRejectionReason"
+        :disabled="!showEdited"
+    />
+    <v-btn
+        @click="formallyReject"
+        class="ma-2"
+        color="red"
+        prepend-icon="mdi-hand-back-left"
+    >{{ $t('studentAffairsOfficeView.formallyRejectApplication') }}
+    </v-btn>
+    <v-divider/>
+
+    <v-tabs v-if="formCopy" v-model="selectedTabIndex">
+      <v-tab
+          v-for="(moduleMapping,i) in (showEdited ? formCopy.edited.moduleFormsData : formCopy.original.moduleFormsData)"
+          :key="i"
+          :value="i"
       >
-        An Prüfungsausschuss senden
-      </v-btn>
-      <v-btn
-          color="green"
-          variant="flat"
-          class="button-bottom"
-          prepend-icon="mdi-content-save"
-          :loading="loadingSaveButton"
-          @click="saveEditedForm(false)"
-      >
-        Speichern
-      </v-btn>
-      <p v-if="showCommentWarning" style="color:red">Bitte geben sie eine Begründung an!</p>
-    </v-card-actions>
+        {{ $t('studentAffairsOfficeView.mapping') }} {{ i + 1 }}
+      </v-tab>
+    </v-tabs>
+    <div class="pa-2" v-if="formCopy">
+      <v-window v-model="selectedTabIndex">
+        <v-window-item
+            v-for="(moduleMapping,i) in showEdited ? formCopy.edited.moduleFormsData : formCopy.original.moduleFormsData"
+            :key="i"
+            :value="i"
+        >
+          <v-card-text>
+            <u>{{ $t('studentAffairsOfficeView.previousUniversity') }}:</u> {{
+              formCopy.original.applicationData.university
+            }}
+            <br/>
+            <u>{{ $t('studentAffairsOfficeView.previousCourse') }}:</u> {{
+              formCopy.original.applicationData.oldCourseOfStudy
+            }}
+            <br/>
+            <u>{{ $t('studentAffairsOfficeView.currentCourse') }}:</u> {{
+              formCopy.original.applicationData.newCourseOfStudy
+            }}
+          </v-card-text>
+
+          <!--Modules-->
+          <v-card-title>
+            {{ $t('studentAffairsOfficeView.modules') }}:
+          </v-card-title>
+          <div v-for="(module, j) in moduleMapping.modulesStudent" :key="module.frontend_key">
+            <v-card-subtitle>
+              {{ $t('studentAffairsOfficeView.module') }} {{ j + 1 }}
+            </v-card-subtitle>
+            <v-text-field
+                variant="outlined"
+                :disabled="!showEdited"
+                :label="$t('studentAffairsOfficeView.name')"
+                v-model="module.title"
+            />
+            <v-text-field
+                variant="outlined"
+                :disabled="!showEdited"
+                :label="$t('studentAffairsOfficeView.moduleNumber')"
+                v-model="module.number"
+            />
+            <v-text-field
+                variant="outlined"
+                :disabled="!showEdited"
+                :label="$t('studentAffairsOfficeView.credits')"
+                v-model="module.credits"
+            />
+            <v-text-field
+                disabled
+                variant="outlined"
+                :label="$t('studentAffairsOfficeView.studentComment')"
+                v-model="module.commentStudent"
+            >
+            </v-text-field>
+            <v-text-field
+                variant="outlined"
+                :disabled="!showEdited"
+                :label="$t('studentAffairsOfficeView.officeComment')"
+                v-model="module.commentEmployee"
+            />
+            <v-btn class="ma-2" @click="downloadPdf(module.path, module.title)">
+              {{ $t('studentAffairsOfficeView.downloadDescription') }}
+            </v-btn>
+            <v-text-field
+                variant="outlined"
+                :label="$t('studentAffairsOfficeView.formalReject')"
+                v-model="module.reason"/>
+            <v-row>
+              <v-btn
+                  @click="module.approval = 'formally rejected'"
+                  :disabled="!showEdited"
+                  class="ma-2"
+                  prepend-icon="mdi-hand-back-left"
+                  variant="elevated"
+                  color="red"
+              >{{ $t('studentAffairsOfficeView.formalReject') }}
+              </v-btn>
+              <v-btn
+                  @click="module.approval = 'edited'"
+                  v-if="formCopy && module.approval === 'formally rejected'"
+                  class="ma-2"
+                  prepend-icon="mdi-keyboard-backspace"
+                  variant="elevated"
+                  color="yellow"
+              >{{ $t('studentAffairsOfficeView.undoRejection') }}
+              </v-btn>
+            </v-row>
+            <v-divider/>
+          </div>
+          <v-card-text>
+            <v-select
+                multiple
+                variant="outlined"
+                class="text-field"
+                :items="majorModules"
+                item-title="name"
+                item-value="id"
+                :label="$t('studentAffairsOfficeView.creditFor')"
+                :disabled="!showEdited"
+                v-model="moduleMapping.modules2bCredited"
+            />
+          </v-card-text>
+          <v-divider/>
+        </v-window-item>
+      </v-window>
+      <v-divider/>
+      <v-card-actions>
+        <v-btn
+            color="blue"
+            variant="flat"
+            class="ma-2"
+            prepend-icon="mdi-arrow-u-left-top"
+            :loading="loadingSendButton"
+            @click="sendToExaminingCommitteeChair(true)"
+        >
+          {{ $t('studentAffairsOfficeView.sendToExaminationCommittee') }}
+        </v-btn>
+        <v-btn
+            color="green"
+            variant="flat"
+            class="ma-2"
+            prepend-icon="mdi-content-save"
+            :loading="loadingSaveButton"
+            @click="saveEditedForm(false)"
+        >
+          {{ $t('studentAffairsOfficeView.save') }}
+        </v-btn>
+      </v-card-actions>
+    </div>
   </v-card>
 </template>
 
-
 <script>
-import axios from "@/plugins/axios";
+import StudentAffairsOfficeService from "@/services/StudentAffairsOfficeService";
+
 export default {
   props: {
     form: JSON
   },
 
-  created() {
-    this.getModules();
-    this.editedForm = structuredClone(this.form);
-    this.replaceIdWithName();
+  async created() {
+    await this.getModules();
+    this.formCopy = structuredClone(this.form);
   },
 
   data() {
     return {
-      reason: '',
+      formalRejectionReason: '',
       showCommentWarning: false,
       loadingSaveButton: false,
       loadingSendButton: false,
-      isEdited: false,
-      editedForm: null,
-      majorModules: []
-    }
-  },
-
-  computed: {
-    applicationVersion() {
-      return this.isEdited ? this.form.edited : this.form.original;
+      showEdited: false,
+      majorModules: [],
+      selectedTabIndex: 0,
+      formCopy: null
     }
   },
 
   methods: {
-    closeEditMenu() {
-      this.$emit("close-edit-menu", this.form);
-    },
-
-    closeEditMenuBySaving() {
-      this.$emit("close-edit-menu-by-saving");
-    },
-
-    async sendToPruefungsausschuss(readyForApproval) {
-      this.loadingSendButton = true;
-      await this.saveEditedForm(readyForApproval)
-
-      if(this.reason === "") {
-        this.showCommentWarning = true;
-        return;
-      }
-
-      this.showCommentWarning = false;
-      this.editedForm.formalReject = this.reason;
-
-      await axios.put("/api/application/readyForApproval", this.editedForm)
-          .then(response => console.log(response))
-          .catch(err => console.error("Error setting the form status to ready for approval: ", err));
-      this.loadingSendButton = false;
-      this.closeEditMenuBySaving();
-    },
-
-    openComparisonMenu() {
-      this.$emit("open-comparison");
-    },
-
-    setFormalReject(index, index2) {
-      this.editedForm.edited.moduleFormsData[index].modulesStudent[index2].approval = "formally rejected";
-    },
-
     async getModules() {
-      await axios.get(`/api/unidata/getModules?majorName=${this.form.original.applicationData.newCourseOfStudy}`).then(
-          res => this.majorModules = res.data.modules
-      ).catch(err => {
-        console.log(err);
-      });
-    },
-
-    findModule(module) {
-      const foundModule = this.majorModules.find(item => item.id === module);
-      return foundModule ? foundModule.name : "Module not found";
-    },
-
-    findModuleInverse(module) {
-      const foundModule = this.majorModules.find(item => item.name === module)
-      return foundModule ? foundModule.id : undefined;
-    },
-
-    replaceIdWithName() {
-      for(let i = 0; i < this.editedForm.original.moduleFormsData.length; i++) {
-        for(let j = 0; j < this.editedForm.original.moduleFormsData[i].modules2bCredited.length; j++) {
-          //Replace module ID in moduleFormsData[i], modules2bCredited[j] with their names
-          this.editedForm.original.moduleFormsData[i].modules2bCredited[j] = this.findModule(this.editedForm.original.moduleFormsData[i].modules2bCredited[j]);
-          this.editedForm.edited.moduleFormsData[i].modules2bCredited[j] = this.findModule(this.editedForm.edited.moduleFormsData[i].modules2bCredited[j]);
-        }
+      try {
+        this.majorModules = await StudentAffairsOfficeService.getAllModules(this.form.original.applicationData.newCourseOfStudy);
+      } catch (error) {
+        console.error(error.message);
       }
     },
 
-    replaceNameWithId() {
-      for(let i = 0; i < this.editedForm.original.moduleFormsData.length; i++) {
-        for(let j = 0; j < this.editedForm.original.moduleFormsData[i].modules2bCredited.length; j++) {
-          //Replace module name in moduleFormsData[i], modules2bCredited[j] with their IDs (IMPORTANT FOR SAVING)
-          this.editedForm.original.moduleFormsData[i].modules2bCredited[j] = this.findModuleInverse(this.editedForm.original.moduleFormsData[i].modules2bCredited[j]);
-          this.editedForm.edited.moduleFormsData[i].modules2bCredited[j] = this.findModuleInverse(this.editedForm.edited.moduleFormsData[i].modules2bCredited[j])
-        }
+    async sendToExaminingCommitteeChair(readyForApproval) {
+      try {
+        await this.saveEditedForm(readyForApproval);
+        await StudentAffairsOfficeService.sendFormToApproval(this.formCopy);
+        this.$emit("save");
+      } catch (error) {
+        console.error(error.message);
       }
     },
 
-    getMajorModulesName() {
-      return this.majorModules.map(module => module.name)
+    async formallyReject() {
+      try {
+        if (this.formalRejectionReason === "") {
+          this.showCommentWarning = true;
+          return;
+        }
+        this.showCommentWarning = false;
+        this.formCopy.edited.applicationData.formalReject = this.formalRejectionReason;
+        await StudentAffairsOfficeService.formallyRejectForm(this.formCopy);
+        this.$emit("close");
+      } catch (error) {
+        console.error(error.message);
+      }
     },
 
     async saveEditedForm(readyForApproval) {
-      this.replaceNameWithId();
-
-      this.loadingSaveButton = true;
-      await axios.put("/api/application/saveEdited", this.editedForm)
-          .then(
-              response => console.log(response)
-          )
-          .catch(err => console.error("Error saving edited form to database: ", err));
-
-      this.loadingSaveButton = false;
-      if(!readyForApproval) {
-        this.closeEditMenuBySaving();
+      try {
+        this.formCopy.edited.applicationData.dateLastEdited = new Date().toISOString();
+        await StudentAffairsOfficeService.saveEditedForm(this.formCopy);
+        if (!readyForApproval) {
+          this.$emit("save");
+        }
+      } catch (error) {
+        console.error(error.message);
       }
     },
 
-    async downloadPdf(pdfPath) {
+    async downloadPdf(filePath, fileName) {
       try {
-        //TODO Change if it throws error
-        const response = await axios.get("/api/application/getModulePDF", {
-          params: {
-            pdfPath
-          },
-          responseType: 'blob' // Ensure response is treated as a blob
-        });
-
-        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const pdfData = await StudentAffairsOfficeService.getModulePDF(filePath);
+        const url = window.URL.createObjectURL(new Blob([pdfData]));
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', 'file.pdf');
+        link.setAttribute('download', fileName + ".pdf");
         document.body.appendChild(link);
         link.click();
       } catch (error) {
-        console.error('Error downloading PDF:', error);
+        console.error('Error downloading PDF:', error.message);
       }
-    }
+    },
+
+    /**
+     * Merges two module mappings by combining their module data and credited module IDs.
+     * @param {number} moduleMappingIndex1 - The index of the first module mapping.
+     * @param {number} moduleMappingIndex2 - The index of the second module mapping.
+     */
+    mergeModuleMappings(moduleMappingIndex1, moduleMappingIndex2) {
+      const mapping1 = this.formCopy.edited.moduleFormsData[moduleMappingIndex1];
+      const mapping2 = this.formCopy.edited.moduleFormsData[moduleMappingIndex2];
+
+      // Create a set to track unique module numbers
+      const uniqueNumbers = new Set();
+
+      // Filter out duplicates from mapping2
+      const uniqueModules2 = mapping2.modulesStudent.filter(module => {
+        if (uniqueNumbers.has(module.number)) {
+          return false; // duplicate, exclude
+        }
+        uniqueNumbers.add(module.number);
+        return true; // not a duplicate, include
+      });
+
+      // Append unique modules from mapping2 to mapping1
+      mapping1.modulesStudent.push(...uniqueModules2);
+
+      // Merge modules2bCredited arrays
+      mapping1.modules2bCredited.push(...mapping2.modules2bCredited);
+
+      // Remove mapping2
+      this.formCopy.edited.moduleFormsData.splice(moduleMappingIndex2, 1);
+    },
+
+    /**
+     * Splits a module mapping by moving selected modules and credited IDs to a new mapping.
+     * @param {number} moduleMappingIndex - The index of the module mapping to split.
+     * @param {number[]} moduleIndices - Indices of modules to move to the new mapping.
+     * @param {number[]} modules2BCIds - IDs of credited modules to move to the new mapping.
+     */
+    splitModuleMapping(moduleMappingIndex, moduleIndices, modules2BCIds) {
+      const originalModuleMapping = this.formCopy.edited.moduleFormsData[moduleMappingIndex];
+      const newModuleMapping = {
+        frontend_key: originalModuleMapping.frontend_key + 1,
+        backend_block_id: originalModuleMapping.backend_block_id,
+        modulesStudent: [],
+        modules2bCredited: []
+      };
+
+      // Iterate over moduleIndices and add modules to the new ModuleMapping
+      moduleIndices.forEach(moduleIndex => {
+        const moduleToAdd = originalModuleMapping.modulesStudent[moduleIndex];
+        // Check if moduleToAdd is not a duplicate in newModuleMapping
+        if (!newModuleMapping.modulesStudent.some(module => module.number === moduleToAdd.number)) {
+          newModuleMapping.modulesStudent.push(moduleToAdd);
+        }
+      });
+
+      // Iterate over modules2BCIds and add IDs to the new ModuleMapping
+      modules2BCIds.forEach(id => {
+        // Check if id is not a duplicate in newModuleMapping
+        if (!newModuleMapping.modules2bCredited.includes(id)) {
+          newModuleMapping.modules2bCredited.push(id);
+        }
+      });
+
+      // Remove the modules and IDs from the original ModuleMapping
+      moduleIndices.sort((a, b) => b - a); // Sort moduleIndices in descending order
+      moduleIndices.forEach(moduleIndex => {
+        originalModuleMapping.modulesStudent.splice(moduleIndex, 1);
+      });
+
+      modules2BCIds.forEach(id => {
+        const index = originalModuleMapping.modules2bCredited.indexOf(id);
+        if (index !== -1) {
+          originalModuleMapping.modules2bCredited.splice(index, 1);
+        }
+      });
+
+      // Add the new ModuleMapping to the array
+      this.formCopy.edited.moduleFormsData.splice(moduleMappingIndex + 1, 0, newModuleMapping);
+    },
+
+
+
   }
 }
 </script>
@@ -269,11 +364,7 @@ export default {
   margin: 1%;
 }
 
-.button-bottom {
-  margin: 2%
-}
-
-.button-top {
+.v-row {
   margin: 1%;
 }
 

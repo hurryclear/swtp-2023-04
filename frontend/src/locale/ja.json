@@ -1,33 +1,34 @@
 {
   "applicationFormView": {
     "moduleFormList": {
-      "addMapping": "モジュールのマッピングの追加",
+      "addMapping": "モジュールマッピングの追加",
       "moduleMapping": {
         "addModule": "モジュールの追加",
         "commentLabel": "コメント",
-        "description": "クレジットされるモジュールに関する情報を提供してください！",
+        "description": "クレジットされるモジュールの情報を提供してください。",
         "module": "モジュール",
         "moduleDescriptionLabel": "モジュールの説明",
         "moduleNameLabel": "モジュール名",
         "modulesToBeCreditedLabel": "クレジットされるモジュール",
-        "removeModule": "モジュールの削除"
+        "removeModule": "モジュールの削除",
+        "creditLabel": "単位（ECTS）",
+        "moduleId": "モジュール番号/モジュール識別"
       },
-      "removeMapping": "モジュールのマッピングの削除"
+      "removeMapping": "モジュールマッピングの削除"
     },
     "submit": "フォームを送信",
+    "courseOfStudy": {
+      "description": "以前のおよび希望する学問領域の名前を指定してください。",
+      "courseOfStudy": "学問領域",
+      "new": "希望する学問領域",
+      "previous": "以前の学問領域"
+    },
     "universityForm": {
-      "courseOfStudy": {
-        "description": "前の学習プログラムの名前を指定してください！",
-        "nameLabel": "学習プログラムの名前",
-        "previous": "前の学習プログラム"
-      },
-      "university": {
-        "countryLabel": "国",
-        "description": "前の大学の名前を指定してください！",
-        "nameLabel": "大学の名前",
-        "previous": "前の大学",
-        "websiteLabel": "ウェブサイト"
-      }
+      "countryLabel": "国",
+      "description": "以前の大学の名前を指定してください。",
+      "nameLabel": "大学名",
+      "previous": "以前の大学",
+      "websiteLabel": "ウェブサイト"
     }
   },
   "darkMode": {
@@ -36,11 +37,11 @@
   "examiningCommitteeChairView": {
     "accept": "承認",
     "decline": "拒否",
-    "moduleCount": "モジュールの数",
-    "studentAffairsOfficeComment": "学務オフィスからのコメント"
+    "moduleCount": "モジュール数",
+    "studentAffairsOfficeComment": "学生支援オフィスのコメント"
   },
   "formDisplay": {
-    "application": "申請",
+    "application": "アプリケーション",
     "edit": "編集",
     "modules": "モジュール",
     "reason": "理由",
@@ -48,71 +49,113 @@
     "university": "大学"
   },
   "homeView": {
-    "welcomeExaminingCommitteeChair": "尊敬される試験委員会の委員長の皆様、ようこそ！ このプラットフォームでは、すべてのオープンな申請を概観し、承認または拒否する機会があります。 ご自身の意思決定に根拠を提供してください。 透明性のある学分認定プロセスは、皆様の参加によってより効率的で目的に沿ったものとなります。",
-    "welcomeStudent": "ライプツィヒ大学の学分認定のための新しいオンラインプラットフォームへようこそ！ 学分認定のプロセスは複雑で時間がかかることがよく理解されています。 このプロセスをオンラインで、デジタルで、簡単に行えることはさらに重要です。 学生として、数クリックで申請を提出できます。 「クレジットモジュール」をクリックして開始してください。 申請を送信すると、一意の参照番号が割り当てられ、後で申請とそのステータスを表示できます。",
-    "welcomeStudentAffairsOffice": "学務オフィスのスタッフの皆様、ようこそ！ 学務オフィスのスタッフとして、すべてのオープンな申請の概要にアクセスできます。 申請の処理、補完、処理ステータスの追跡が可能です。 使いやすいインターフェースを利用して、学分認定プロセスを効率的に進めてください。"
+    "welcomeExaminingCommitteeChair": "尊敬する試験委員会の議長、歓迎します！このプラットフォームでは、すべてのオープンアプリケーションを概説し、承認または拒否する機会があります。意思決定の根拠を提供してください。あなたの参加は、クレジット認定プロセスをより効率的かつ目的達成的にします。",
+    "welcomeStudent": "ライプツィヒ大学のクレジット認定のための新しいオンラインプラットフォームへようこそ！ 'クレジットモジュール'をクリックして開始してください。アプリケーションを送信すると、後でアプリケーションとそのステータスを表示するための一意の参照番号が割り当てられます。",
+    "welcomeStudentAffairsOffice": "学生支援オフィスのスタッフの皆様、ようこそ！学生支援オフィスのスタッフとして、すべてのオープンアプリケーションの概要にアクセスできます。アプリケーションの処理、補足、処理状況の追跡が可能です。使いやすいインターフェースを使用して、クレジット認定プロセスをより効率的にします。"
   },
   "loginComponent": {
     "loginButton": "ログイン",
-    "loginErrorMessage": "ユーザー名またはパスワードが間違っています。",
+    "loginErrorMessage": "不正なユーザー名またはパスワード。",
     "passwordLabel": "パスワード",
     "usernameLabel": "ユーザー名"
   },
   "logoutButton": "ログアウト",
   "navBar": {
     "creditModules": "クレジットモジュール",
-    "examiningCommitteeChair": "試験委員会の委員長",
+    "examiningCommitteeChair": "試験委員会の議長",
     "login": "ログイン",
     "main": "メインページ",
-    "review": "申請の確認",
-    "studentAffairsOffice": "学務オフィス"
+    "review": "アプリケーションの確認",
+    "studentAffairsOffice": "学生支援オフィス",
+    "updateModuleData": "モジュールデータを更新する"
   },
-  "reviewComponent": 
-  {
-    "checkStatus": "申請のステータスを確認",
-    "downloadApplication": "要約をダウンロード",
-    "formID": "参照番号",
-    "reviewApplication": "申請をレビュー",
+  "reviewComponent": {
+    "checkStatus": "アプリケーションステータスの確認",
+    "downloadApplication": "概要のダウンロード",
+    "formID": "フォームID",
+    "reviewApplication": "アプリケーションの確認",
     "currentUniversity": "現在の大学",
     "oldCourseOfStudy": "以前の学習プログラム",
     "newCourseOfStudy": "新しい学習プログラム",
     "dateOfSubmission": "提出日",
     "dateLastEdited": "最終編集日",
-    "application": "申請",
-    "overview": "申請の概要",
-    "modulName": "モジュール名",
+    "application": "アプリケーション",
+    "overview": "アプリケーションの概要",
+    "moduleName": "モジュール名",
     "moduleNumber": "モジュール番号",
-    "moduleCredits": "単位数（ECTS）",
+    "moduleCredits": "単位（ECTS）",
     "moduleApproval": "承認",
-    "moduleApprovalReason": "決定の理由",
-    "accepted": "承認済み",
-    "rejected": "却下",
-    "formallyRejected": "学生事務所により正式に却下",
-    "modules2bCredited": "単位認定対象モジュール",
-    "moduleApprovalOpen": "未決定",
-    "partiallyAccepted": "部分的に承認済み",
-    "open": "未決定",
-    "editingInProgress": "学生事務所による編集中",
-    "edited": "学生事務所により編集済み",
+    "moduleApprovalReason": "決定理由",
+    "accepted": "承認されました",
+    "rejected": "拒否されました",
+    "formallyRejected": "学生支援オフィスによって正式に拒否されました",
+    "modulesToBeCredited": "クレジットされるモジュール",
+    "moduleApprovalOpen": "オープン",
+    "partiallyAccepted": "一部承認",
+    "open": "オープン",
+    "editingInProgress": "学生支援オフィスによる編集中",
+    "edited": "学生支援オフィスによって編集されました",
     "readyForApproval": "試験委員会の承認待ち",
-    "approvalInProgress": "試験委員会による承認作業中",
-    "editedApproval": "試験委員会により編集済み",
-    "approvalFinished": "試験委員会による承認完了",
-    "errorFetchingForm": "フォーム取得エラー",
-    "formNotFound": "フォームが見つからない",
+    "approvalInProgress": "試験委員会の承認中",
+    "editedApproval": "試験委員会による編集",
+    "approvalFinished": "試験委員会の承認が完了しました",
+    "errorFetchingForm": "フォームの取得エラー",
+    "formNotFound": "フォームが見つかりません",
     "pending": "保留中",
-    "moduleBlock": "モジュールブロック"
+    "moduleBlock": "モジュールブロック",
+    "partiallyRejected": "一部拒否"
   },
-  
   "routes": {
-    "/": "メインページ",
+    "/": "ホームページ",
     "/application-form": "クレジットモジュール",
-    "/examining-committee-chair": "試験委員会の委員長",
+    "/examining-committee-chair": "試験委員会の議長",
     "/login": "ログイン",
-    "/review-application": "申請の確認",
-    "/student-affairs-office": "学務オフィス"
+    "/review-application": "アプリケーションの確認",
+    "/student-affairs-office": "学生支援オフィス",
+    "/update-module-data": "モジュールデータの更新"
   },
   "studentAffairsOfficeView": {
-    "openApplications": "オープンな申請"
+    "application": "アプリケーション",
+    "applicationID": "申請ID",
+    "compareWithOtherApplications": "他の申請と比較",
+    "courseOfStudy": "専攻",
+    "creditFor": "クレジット",
+    "credits": "クレジット",
+    "currentCourse": "現在のコース",
+    "dateLastEdited": "最終編集日",
+    "dateOfSubmission": "提出日",
+    "decision": "決定",
+    "downloadDescription": "説明をダウンロード",
+    "edit": "編集",
+    "edited": "編集済み",
+    "enterReason": "理由を入力してください",
+    "formalReject": "正式に拒否",
+    "formallyRejectApplication": "公式に申請を拒否する",
+    "ID": "ID",
+    "mapping": "マッピング",
+    "module": "モジュール",
+    "moduleNotFound": "モジュールが見つかりません",
+    "moduleNumber": "モジュール番号",
+    "modules": "モジュール",
+    "name": "名前",
+    "officeComment": "オフィスのコメント",
+    "openApplications": "オープンアプリケーション",
+    "original": "オリジナル",
+    "previousCourse": "前のコース",
+    "previousModule": "以前のモジュール",
+    "previousUniversity": "前の大学",
+    "save": "保存",
+    "search": "検索",
+    "sendToExaminationCommittee": "試験委員会に送信",
+    "status": "状態",
+    "studentComment": "学生コメント",
+    "undoRejection": "拒否を取り消す",
+    "university": "大学",
+    "view": "ビュー",
+    "reason": "理由"
+  },
+  "updateModuleDataView": {
+    "uploadJSON": "JSONをアップロード",
+    "submit": "送信"
   }
 }

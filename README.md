@@ -1,92 +1,109 @@
-# swtp-2023-04
+# SWTP-04
 
+## 1. Projektbeschreibung
+Die Webanwendung dient der Modulanrechnung an der Universität Leipzig.
 
+## 2. Verwendete Technologien und Tools
+Die Microservices werden durch Docker verwaltet, während das Repository auf GitLab gehostet wird. Eine CI/CD-Pipeline mit drei Stufen (Test, Build, Deploy) läuft ebenfalls auf GitLab.
 
-## Getting started
+### Frontend
+- Node.js wird für das Frontend benötigt.
+- Die Frontend-Entwicklung erfolgt mit Vue.js und Vuetify für das Styling. Die relevanten Abhängigkeiten sind:
+  - Vue.js
+  - Vuetify (für das Styling)
+  - Axios (für API-Aufrufe)
+  - Vue I18n (für Internationalisierung)
+  - Vue Router (für Routing)
+  - Vuex (für das Speichern von Zuständen)
+- Die Entwicklungsumgebung ist konfiguriert mit Vue CLI und den entsprechenden Plugins für Babel und ESLint.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+### Backend
+- Das Backend basiert auf Java 17 und dem Spring Boot Framework.
+- Maven wird als Build-Tool verwendet.
+- PostgreSQL dient als Datenbank.
+- Die relevanten Dependencies sind:
+  - Spring Boot Web
+  - Spring Boot Data JPA
+  - Modelmapper
+  - Lombok
+  - Apache PdfBox
+  - Spring Boot Security
+  - Auth0 Java Jwt
+- Für Tests werden folgende Tools und Frameworks verwendet:
+  - Spring Boot Test
+  - Spring Security Test
+  - H2 Database (für Integrationstests)
+  - Surefire Plugin (für Unit-Tests)
+  - Failsafe Plugin (für Integrationstests)
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+### Datenbank
+PostgreSQL wird als Datenbank verwendet.
 
-## Add your files
+## 3. Einrichtung der Entwicklungsumgebung
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+### Frontend
+Um die Frontend-Abhängigkeiten zu installieren, navigieren Sie zum Frontend-Verzeichnis (`cd frontend`) und führen Sie den Befehl `npm install` aus. Stellen Sie sicher, dass [Node.js](https://nodejs.org/en/) installiert ist.
 
+### Backend
+Das Spring Boot Backend kann mit dem integrierten Maven Wrapper gestartet werden. Um die Container zu starten, verwenden Sie den Docker-Daemon von [Docker Desktop](https://www.docker.com/products/docker-desktop/). Verwenden Sie `docker-compose up --build`, um die Anwendung zu starten, und `docker-compose down`, um die Microservices herunterzufahren.
+
+### Gesamtes Projekt lokal starten
+Um die Container zu starten, benutzen wir den Docker daemon von Docker Desktop, das heißt, Docker Desktop muss vorher installiert werden.
+[Docker Desktop Installation](https://www.docker.com/products/docker-desktop/)
+Wenn das Projekt mit Docker Compose gestartet wird, werden die Tests von Surefire und Failsafe übersprungen.
+
+## 4. Lokale Entwicklung
+Wichtige Umgebungsvariablen werden im `docker-compose.yml` für Development und im `docker-compose-prod.yml` für die Produktion aufgeführt.
+
+### Frontend
+Navigieren Sie zum Frontend-Verzeichnis und verwenden Sie `npm run serve`, um das Frontend ohne Backend zu starten.
+
+### Backend
+In den `application.properties` unter `resources` im Haupt- bzw. Testverzeichnis sind zudem wichtige Konfigurationen für die einzelnen Profile enthalten.
+Zu Beachten ist, dass zum Testen eine In-Memory H2 Database mit PostgresDialect konfiguriert ist. Im Dev bzw. Prod Profile werden richtige Postgres Datenbanken verwendet.
+
+Das Backend besteht aus:
+- Controllern, wo die Endpunkte stehen, um Requests entgegenzunehmen
+- Services, wo die eigentliche Businesslogik steht
+- Repositories, wo die Dtos sowie Entitys und Repositories stehen, also alles um mit den Daten und der Datenbank zu interagieren.
+- Security, dort befindet sich alles zur Authentifizierung und Autorisierung von Nutzern (eigener Controller, Service und Repository inklusive)
+- DataInitializer, wo Commandlinerunner enthalten sind, die die Datenbank zum Testen mit Daten füllen.
+- Deserializer, wo die JSONs des Frontends in Dto transformiert werden, um besser mit den Daten arbeiten zu können.
+- Exceptions, wo eigene Exceptions definiert sind, welche als Fehlermeldung ans Frontend weitergeleitet werden können.
+
+### Weiterentwicklung (mögliche Features zur Implementierung)
+- Accountmanagement für Mitarbeitende der Universität
+- FAQ bzw. Assistent für Nutzende der Software
+- Barrierefreiheit (aktuell nur unterschiedliche Sprachen in Webanwendung)
+- Umrechnung verschiedener Credit Point-Modelle
+- Generelle Verbesserung der PDF Summarys (Uni-Design, Multilingual, Kontaktinformationen Studienbüro etc.)
+- Update-Funktion für Anträge - Nachbearbeitung durch Studenten nach formaler Ablehnung
+- Feedback-Möglichkeiten für Studenten
+- Optimierung Leistung und Skalierbarkeit
+
+## 5. Testen
+Um die maven wrapper Befehle ausführen zu können, muss erst ins Backend-Verzeichnis navigiert werden: `cd .\backend\`
+Backend-Unit-Tests können über den Befehl `.\mvnw test` gestartet werden (oder in der IDE wie beispielsweise IntelliJ IDEA).
+
+Integrationstests sollten mit dem Profil "integration" gestartet werden. Beim Ausführen des Befehls `mvnw` wird das hausinterne Flag `skip.ut` auf `false` gesetzt, um die Surefire Unittests zu überspringen und nur die Integrationstests auszuführen. Beispielbefehl:
+
+```bash
+ .\mvnw "-Dskip.ut=false" "-Dspring.profiles.active=integration" verify
 ```
-cd existing_repo
-git remote add origin https://git.informatik.uni-leipzig.de/SWS/lehre/ws-2023-2024/swt-p/projects/swtp-2023-04.git
-git branch -M main
-git push -uf origin main
-```
 
-## Integrate with your tools
+Beim Committen ins Repository werden im Feature-Branch die Backend- und Frontend-Test-Stages ausgeführt, im Development-Branch zusätzlich die Test-Integration-Stage.
 
-- [ ] [Set up project integrations](https://git.informatik.uni-leipzig.de/SWS/lehre/ws-2023-2024/swt-p/projects/swtp-2023-04/-/settings/integrations)
+## 6. Dokumentation
+Der Code ist ausführlich kommentiert.
+Im [Frontend directory](./frontend) befindet sich eine README zum Thema Vue.js.
+Im [Backend directory](./backend) gibt es eine README zu API Endpoints.
 
-## Collaborate with your team
+## 7. Deployment und Produktionsumgebung
+Für das Deployment und die Konfiguration der Produktionsumgebung nutzen wir Docker und Docker Compose.
+Das Deployment übernimmt die CI/CD-Pipeline von GitLab, welche aus dem Frontend und Backend Docker Images erstellt und sie auf Dockerhub pusht.
+Danach wird per SSH eine Verbindung zur VM aufgebaut und die Docker Container gebaut und gestartet.
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+Um mit der Produktionsumgebung, also der VM, zu interagieren, muss man sich im Universitätsnetz der Uni Leipzig befinden oder per Cisco VPN mit dem Uni-Netz verbinden.
+Die Webanwendung wird unter 172.26.92.83:3000 erreicht. Dies entspricht unserem Frontend Container, der auch als Proxy für das Backend dient.
+Alle Anfragen an 172.26.92.83:3000/api/ werden an das Backend weitergeleitet.
+Um sich direkt mit der VM zu verbinden, wird der Private SSH Key benötigt, der im GitLab als Secret Variable gespeichert ist.

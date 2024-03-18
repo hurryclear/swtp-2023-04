@@ -15,6 +15,12 @@ const routes = [
         component: () => import('@/views/LoginView.vue')
     },
     {
+        path: '/update-module-data',
+        name: 'Update Module Data',
+        component: () => import('@/views/UpdateModuleDataView.vue'),
+        meta: { requiresAuth: true, roles: ['ROLE_COMMITTEE', 'ROLE_OFFICE'] }
+    },
+    {
         path: '/application-form',
         name: 'Application Form',
         component: () => import('@/views/ApplicationFormView.vue')
@@ -28,16 +34,15 @@ const routes = [
         path: '/student-affairs-office',
         name: 'Student Affairs Office',
         component: () => import('@/views/StudentAffairsOfficeView.vue'),
-        meta: {requiresAuth: true, role: 'ROLE_OFFICE'}
+        meta: { requiresAuth: true, roles: ['ROLE_OFFICE'] }
     },
     {
         path: '/examining-committee-chair',
         name: 'Examining Committee Chair',
         component: () => import('@/views/ExaminingCommitteeChairView.vue'),
-        meta: {requiresAuth: true, role: 'ROLE_COMMITTEE'}
+        meta: { requiresAuth: true, roles: ['ROLE_COMMITTEE'] }
     }
-
-]
+];
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes
@@ -51,13 +56,13 @@ router.beforeEach((to, from, next) => {
             console.log('User not authenticated. Redirecting to Login.');
             next({name: 'Login'});
         } else {
-            const routeRequiresRole = to.meta.role;
+            const routeRequiredRoles = to.meta.roles; // Get array of roles required for this route
             const userRole = store.state.authentication.userRole;
 
-            console.log('Route requires role:', routeRequiresRole);
+            console.log('Route requires roles:', routeRequiredRoles);
 
-            if (routeRequiresRole && userRole !== routeRequiresRole) {
-                console.log(`User role ${userRole} does not match required role ${routeRequiresRole}. Redirecting.`);
+            if (routeRequiredRoles && !routeRequiredRoles.includes(userRole)) {
+                console.log(`User role ${userRole} does not match required roles ${routeRequiredRoles}. Redirecting.`);
                 next({name: 'Login'}); // Redirect to a safe route
             } else {
                 console.log('User role matches or no specific role required. Proceeding to route.');
@@ -68,7 +73,6 @@ router.beforeEach((to, from, next) => {
         console.log('No authentication required for this route. Proceeding to route.');
         next();
     }
-
 });
 
 
