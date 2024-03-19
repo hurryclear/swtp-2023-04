@@ -1,0 +1,72 @@
+{
+  "original": {
+    "applicationData": {
+      "applicationID": "7dfe-83ee-a5bf-4f0d-9a16-c68e-2e3a-0a44",
+      "status": "open",
+      "formalReject": "",
+      "dateOfSubmission": "2024-03-19T14:48:38.545Z",
+      "dateLastEdited": "2024-03-19T14:48:38.545Z",
+      "university": "Martin-Luther Universität Halle-Wittenberg",
+      "oldCourseOfStudy": "B. Sc. Informatik",
+      "newCourseOfStudy": "B.Sc. Informatik"
+    },
+    "moduleFormsData": [
+      {
+        "frontend_key": 0,
+        "backend_block_id": 9,
+        "modulesStudent": [
+          {
+            "frontend_key": 0,
+            "backend_module_id": 13,
+            "approval": "",
+            "reason": "",
+            "number": "123-123-123",
+            "title": "Betriebssysteme",
+            "path": "/7dfe-83ee-a5bf-4f0d-9a16-c68e-2e3a-0a44/S-13",
+            "credits": 4,
+            "university": "Uni Halle",
+            "major": "B. Sc. Informatik",
+            "commentStudent": "Ist ungefähr der gleiche Inhalt",
+            "commentEmployee": ""
+          }
+        ],
+        "modules2bCredited": [7]
+      }
+    ]
+  },
+  "edited": {
+    "applicationData": {
+      "applicationID": "7dfe-83ee-a5bf-4f0d-9a16-c68e-2e3a-0a44",
+      "status": "open",
+      "formalReject": "",
+      "dateOfSubmission": "2024-03-19T14:48:38.545Z",
+      "dateLastEdited": "2024-03-19T14:48:38.545Z",
+      "university": "Martin-Luther Universität Halle-Wittenberg",
+      "oldCourseOfStudy": "B. Sc. Informatik",
+      "newCourseOfStudy": "B.Sc. Informatik"
+    },
+    "moduleFormsData": [
+      {
+        "frontend_key": 0,
+        "backend_block_id": 10,
+        "modulesStudent": [
+          {
+            "frontend_key": 0,
+            "backend_module_id": 14,
+            "approval": "accepted",
+            "reason": "jo das passt so",
+            "number": "123-123-123",
+            "title": "Betriebssysteme",
+            "path": "/7dfe-83ee-a5bf-4f0d-9a16-c68e-2e3a-0a44/S-13",
+            "credits": 4,
+            "university": "Uni Halle",
+            "major": "B. Sc. Informatik",
+            "commentStudent": "Ist ungefähr der gleiche Inhalt",
+            "commentEmployee": ""
+          }
+        ],
+        "modules2bCredited": [7]
+      }
+    ]
+  }
+}

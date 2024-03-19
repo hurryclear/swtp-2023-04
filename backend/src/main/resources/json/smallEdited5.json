@@ -1,0 +1,78 @@
+{
+  "original": {
+    "applicationData": {
+      "applicationID": "bccb-f0ac-d407-43e7-a2a2-29d1-3933-df61",
+      "status": "open",
+      "formalReject": "",
+      "dateOfSubmission": "2024-01-19T14:48:38.545Z",
+      "dateLastEdited": "2024-02-19T14:48:38.545Z",
+      "university": "Norway School",
+      "oldCourseOfStudy": "B. Sc. Computer Stuff",
+      "newCourseOfStudy": "B.Sc. Informatik"
+    },
+    "moduleFormsData": [
+      {
+        "frontend_key": 0,
+        "backend_block_id": 17,
+        "modulesStudent": [
+          {
+            "frontend_key": 0,
+            "backend_module_id": 21,
+            "approval": "",
+            "reason": "",
+            "number": "123-123-123",
+            "title": "Computer Spass",
+            "path": "/bccb-f0ac-d407-43e7-a2a2-29d1-3933-df61/S-21",
+            "credits": 15,
+            "university": "Uni des Südens",
+            "major": "B. Sc. Informatik",
+            "commentStudent": "War schön in Norwegen",
+            "commentEmployee": ""
+          }
+        ],
+        "modules2bCredited": [
+          5,
+          6
+        ]
+      }
+    ]
+  },
+  "edited": {
+    "applicationData": {
+      "applicationID": "bccb-f0ac-d407-43e7-a2a2-29d1-3933-df61",
+      "status": "open",
+      "formalReject": "",
+      "dateOfSubmission": "2024-01-19T14:48:38.545Z",
+      "dateLastEdited": "2024-02-19T14:48:38.545Z",
+      "university": "Norway School",
+      "oldCourseOfStudy": "B. Sc. Computer Stuff",
+      "newCourseOfStudy": "B.Sc. Informatik"
+    },
+    "moduleFormsData": [
+      {
+        "frontend_key": 0,
+        "backend_block_id": 18,
+        "modulesStudent": [
+          {
+            "frontend_key": 0,
+            "backend_module_id": 22,
+            "approval": "accepted",
+            "reason": "da wär ja noch mehr gegangen",
+            "number": "123-123-123",
+            "title": "Computer Spass",
+            "path": "/bccb-f0ac-d407-43e7-a2a2-29d1-3933-df61/S-21",
+            "credits": 15,
+            "university": "Uni des Südens",
+            "major": "B. Sc. Informatik",
+            "commentStudent": "War schön in Norwegen",
+            "commentEmployee": ""
+          }
+        ],
+        "modules2bCredited": [
+          5,
+          6
+        ]
+      }
+    ]
+  }
+}

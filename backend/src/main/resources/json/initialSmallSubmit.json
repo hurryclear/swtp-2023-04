@@ -1,0 +1,40 @@
+{
+  "meta": {
+    "dateOfSubmission": "2023-12-31T22:30:42.103Z",
+    "dateLastEdited": "2024-01-14T14:12:14.675Z"
+  },
+  "university": {
+    "name": "University of Regenbogenland"
+  },
+  "courseOfStudy": {
+    "old": "B. Sc. Informatik",
+    "new": "B.Sc. Informatik"
+  },
+  "moduleMappings": [
+    {
+      "meta": {
+        "key": 0
+      },
+      "previousModules": [
+        {
+          "meta": {
+            "key": 0,
+            "comments": {
+              "student": "War cool"
+            }
+          },
+          "courseOfStudy": "B. Sc. Informatik",
+          "university": {
+            "name": "University of Regenbogenland"
+          },
+          "id": "420",
+          "name": "AlgoDat 1.5",
+          "credits": 5
+        }
+      ],
+      "modulesToBeCredited": [
+        3
+      ]
+    }
+  ]
+}
