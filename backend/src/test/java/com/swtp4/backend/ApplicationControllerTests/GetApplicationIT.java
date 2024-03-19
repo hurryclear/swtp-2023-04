@@ -205,4 +205,197 @@ public class GetApplicationIT {
                 .andExpect(jsonPath("$.edited.moduleFormsData[0].modules2bCredited[1]").value(4));
 
     }
+
+
+    @Test
+    @Transactional
+    @WithMockUser(username = "testuser", roles = {"OFFICE"})
+    public void testSearchApplications_ReturnsApplicationWithRightProperties() throws Exception {
+
+        applicationTestData.loadMajorAndModulesIntoDataBase();
+        String testApplicationJson = ApplicationTestData.createOriginalSubmitApplicationJson();
+
+        // Create a MockMultipartFile for the JSON content
+        MockMultipartFile jsonPart = new MockMultipartFile("form", "", MediaType.APPLICATION_JSON_VALUE, testApplicationJson.getBytes());
+
+        // Perform the request with multipart data, but no file part
+        MvcResult result = mockMvc.perform(
+                        multipart("/student/submitApplication")
+                                .file(jsonPart) // specify your endpoint here
+                                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                )
+                .andExpect(status().isCreated())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); // Capture the result
+
+        String contentAsString = result.getResponse().getContentAsString();
+        JSONObject jsonResponse = new JSONObject(contentAsString);
+        String applicationID = jsonResponse.getString("applicationID");
+
+        mockMvc.perform(get("/application/overviewOffice?sortBy=applicationID&applicationID="+applicationID+"&dateOfSubmission=31.12.2023&universityName=original&module=original&uniMajor=original"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.content[0].applicationID").value(applicationID))
+                .andExpect(jsonPath("$.content[0].universityName").value("original"))
+                .andExpect(jsonPath("$.content[0].dateOfSubmission").value("2023-12-31T22:30:42.103Z"))
+                .andExpect(jsonPath("$.content[0].dateLastEdited").value("2023-12-31T22:30:42.103Z"))
+                .andExpect(jsonPath("$.content[0].status").value("open"))
+                .andExpect(jsonPath("$.totalElements").value(1))
+                .andDo(print());
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser(username = "testuser", roles = {"OFFICE"})
+    public void testSearchApplicationsWithNotExistingProperties_ReturnsEmptyContent() throws Exception {
+
+        applicationTestData.loadMajorAndModulesIntoDataBase();
+        String testApplicationJson = ApplicationTestData.createOriginalSubmitApplicationJson();
+
+        // Create a MockMultipartFile for the JSON content
+        MockMultipartFile jsonPart = new MockMultipartFile("form", "", MediaType.APPLICATION_JSON_VALUE, testApplicationJson.getBytes());
+
+        // Perform the request with multipart data, but no file part
+        MvcResult result = mockMvc.perform(
+                        multipart("/student/submitApplication")
+                                .file(jsonPart) // specify your endpoint here
+                                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                )
+                .andExpect(status().isCreated())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); // Capture the result
+
+        String contentAsString = result.getResponse().getContentAsString();
+        JSONObject jsonResponse = new JSONObject(contentAsString);
+        String applicationID = jsonResponse.getString("applicationID");
+
+        // if applicationID does not exist, no Applications are found
+        mockMvc.perform(get("/application/overviewOffice?applicationID=123-123"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.content").isArray())
+                .andExpect(jsonPath("$.content").isEmpty())
+                .andExpect(jsonPath("$.totalElements").value(0));
+
+        // if dateOfSubmission does not exist, no Applications are found
+        mockMvc.perform(get("/application/overviewOffice?dateOfSubmission=12.12.2040"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.content").isArray())
+                .andExpect(jsonPath("$.content").isEmpty())
+                .andExpect(jsonPath("$.totalElements").value(0));
+
+        // don't filter date if not provided correctly,
+        mockMvc.perform(get("/application/overviewOffice?dateOfSubmission=2000.12.12"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.content").isArray())
+                .andExpect(jsonPath("$.content").isNotEmpty())
+                .andExpect(jsonPath("$.totalElements").value(1));
+
+        // if University does not exist, no Applications are found
+        mockMvc.perform(get("/application/overviewOffice?universityName=Otter University"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.content").isArray())
+                .andExpect(jsonPath("$.content").isEmpty())
+                .andExpect(jsonPath("$.totalElements").value(0));
+
+        // if module does not exist, no Applications are found
+        mockMvc.perform(get("/application/overviewOffice?module=Spaghettiologie"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.content").isArray())
+                .andExpect(jsonPath("$.content").isEmpty())
+                .andExpect(jsonPath("$.totalElements").value(0));
+
+        // if uniMajor does not exist, no Applications are found
+        mockMvc.perform(get("/application/overviewOffice?uniMajor=Wirtschaft"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.content").isArray())
+                .andExpect(jsonPath("$.content").isEmpty())
+                .andExpect(jsonPath("$.totalElements").value(0));
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser(username = "testuser", roles = {"OFFICE"})
+    public void testPaging_ReturnsRightApplicationAmount() throws Exception {
+
+        applicationTestData.loadMajorAndModulesIntoDataBase();
+        String testApplicationJson = ApplicationTestData.createOriginalSubmitApplicationJson();
+
+        // Create a MockMultipartFile for the JSON content
+        MockMultipartFile jsonPart = new MockMultipartFile("form", "", MediaType.APPLICATION_JSON_VALUE, testApplicationJson.getBytes());
+
+        // Perform 5 requests with multipart data, but no file part
+        mockMvc.perform(multipart("/student/submitApplication")
+                                .file(jsonPart) // specify your endpoint here
+                                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                )
+                .andExpect(status().isCreated())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+
+        mockMvc.perform(multipart("/student/submitApplication")
+                        .file(jsonPart) // specify your endpoint here
+                        .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                )
+                .andExpect(status().isCreated())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+
+        mockMvc.perform(multipart("/student/submitApplication")
+                        .file(jsonPart) // specify your endpoint here
+                        .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                )
+                .andExpect(status().isCreated())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+
+        mockMvc.perform(multipart("/student/submitApplication")
+                        .file(jsonPart) // specify your endpoint here
+                        .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                )
+                .andExpect(status().isCreated())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+
+        mockMvc.perform(multipart("/student/submitApplication")
+                        .file(jsonPart) // specify your endpoint here
+                        .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                )
+                .andExpect(status().isCreated())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+
+
+        // the first page should have 3 elements
+        mockMvc.perform(get("/application/overviewOffice?pageNumber=0&pageSize=3"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.content").isArray())
+                .andExpect(jsonPath("$.content", hasSize(3)))
+                .andExpect(jsonPath("$.totalElements").value(5));
+
+        // the second page should have 2 elements
+        mockMvc.perform(get("/application/overviewOffice?pageNumber=1&pageSize=3"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.content").isArray())
+                .andExpect(jsonPath("$.content", hasSize(2)))
+                .andExpect(jsonPath("$.totalElements").value(5));
+
+        // if no pageSize is set 5 elements should get returned
+        mockMvc.perform(get("/application/overviewOffice"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.content").isArray())
+                .andExpect(jsonPath("$.content", hasSize(5)))
+                .andExpect(jsonPath("$.totalElements").value(5));
+
+        // if no pageSize is set the second page should be empty
+        mockMvc.perform(get("/application/overviewOffice?pageNumber=1"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.content").isArray())
+                .andExpect(jsonPath("$.content").isEmpty())
+                .andExpect(jsonPath("$.totalElements").value(5));
+    }
 }

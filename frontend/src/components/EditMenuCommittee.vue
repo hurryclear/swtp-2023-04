@@ -1,34 +1,40 @@
 <template>
   <v-card>
     <div class="card-header">
-      <v-card-title>
-        <u>{{ $t('studentAffairsOfficeView.application') }}</u>
-      </v-card-title>
-      <v-spacer/>
-      <v-btn-toggle
-          class="ma-2"
-          v-model="showEdited"
-          mandatory
-          shaped
-          variant="outlined">
-        <v-btn :value="false">
-          {{ $t('studentAffairsOfficeView.original') }}
-        </v-btn>
-        <v-btn :value="true">
-          {{ $t('studentAffairsOfficeView.edited') }}
-        </v-btn>
-      </v-btn-toggle>
-      <v-btn
-          class="ma-2"
-          @click="this.$emit('open',{component:'ComparisonMenu',formCopy:{}});"
-      >{{ $t('studentAffairsOfficeView.compareWithOtherApplications') }}
-      </v-btn>
-      <v-btn
-          class="ma-2"
-          icon="mdi-close"
-          @click="this.$emit('close')"
-      />
+      <v-row>
+        <v-col cols="6" md="4">
+          <v-card-title>
+            <u>{{ $t('studentAffairsOfficeView.application') }}</u>
+          </v-card-title>
+        </v-col>
+    
+        <v-col cols="6" md="4">
+          <v-btn-toggle class="ma-2" v-model="showEdited" mandatory shaped variant="outlined">
+            <v-btn :value="false">
+              {{ $t('studentAffairsOfficeView.original') }}
+            </v-btn>
+            <v-btn :value="true">
+              {{ $t('studentAffairsOfficeView.edited') }}
+            </v-btn>
+          </v-btn-toggle>
+        </v-col>
+    
+        <v-col cols="3" md="1">
+          <v-btn class="ma-2" icon="mdi-call-split" @click="this.$emit('open', { component: 'SplitComponent', form: this.formCopy })"/>
+        </v-col>
+        <v-col cols="3" md="1">
+          <v-btn class="ma-2" icon="mdi-call-merge" @click="this.$emit('open', { component: 'MergeComponent', form: this.formCopy })"/>
+        </v-col>
+        <v-col cols="3" md="1">
+          <v-btn class="ma-2" icon="mdi-file-compare" @click="this.$emit('open',{component:'ComparisonMenu',formCopy:{}});"/>
+        </v-col>
+        <v-col cols="3" md="1">
+          <v-btn class="ma-2" icon="mdi-close" @click="this.$emit('close')"/>
+        </v-col>
+      </v-row>
     </div>
+
+    <v-divider/>
 
     <v-tabs v-if="formCopy" v-model="selectedTabIndex">
       <v-tab
@@ -86,30 +92,35 @@
                 :label="$t('studentAffairsOfficeView.credits')"
                 v-model="module.credits"
             />
-            <v-text-field
-                disabled
-                variant="outlined"
-                :label="$t('studentAffairsOfficeView.studentComment')"
-                v-model="module.commentStudent"
-            >
-            </v-text-field>
-            <v-text-field
-                variant="outlined"
-                :disabled="!showEdited"
-                :label="$t('studentAffairsOfficeView.officeComment')"
-                v-model="module.commentEmployee"
-            />
+            <v-div>
+              <u>{{$t('studentAffairsOfficeView.studentComment')}}:</u> {{ module.commentStudent }}
+              <br>
+              <u>{{$t('studentAffairsOfficeView.officeComment')}}:</u> {{ module.commentEmployee }}
+            </v-div>
+              <br>    
             <v-btn class="ma-2" @click="downloadPdf(module.path, module.title)">
               {{ $t('studentAffairsOfficeView.downloadDescription') }}
             </v-btn>
-            <v-text-field
+
+            <v-div v-if="module.approval === 'formally rejected'">
+              <v-card-text>
+                <u>{{ $t('reviewComponent.formallyRejected') }}</u>
+                <br/>
+                <u>{{ $t('reviewComponent.moduleApprovalReason') }}:</u> {{ module.reason }}
+              </v-card-text>
+            </v-div>
+
+            <v-div v-else-if="showEdited">
+              <v-text-field
                 variant="outlined"
                 :label="$t('studentAffairsOfficeView.formalReject')"
                 v-model="module.reason"/>
-            <v-row>
+            </v-div>
+            
+            <v-row v-if="showEdited && module.approval !== 'formally rejected'">
               <v-btn
                   @click="module.approval = 'rejected'"
-                  :disabled="!showEdited"
+                  :disabled="module.reason === ''"
                   class="ma-2"
                   prepend-icon="mdi-hand-back-left"
                   variant="elevated"
@@ -127,7 +138,7 @@
               </v-btn>
               <v-btn
                   @click="module.approval = 'accepted'"
-                  :disabled="!showEdited"
+                  :disabled="module.reason === ''"
                   class="ma-2"
                   prepend-icon="mdi-check-bold"
                   variant="elevated"
@@ -164,16 +175,18 @@
       </v-window>
       <v-divider/>
       <v-card-actions>
-        <v-btn
-            color="green"
-            variant="elevated"
-            class="ma-2"
-            prepend-icon="mdi-content-save"
-            :loading="loadingSaveButton"
-            @click="saveEditedForm(false)"
-        >
-          {{ $t('studentAffairsOfficeView.save') }}
-        </v-btn>
+        <v-div v-if="showEdited">
+          <v-btn
+          variant="elevated"
+          class="ma-2"
+          prepend-icon="mdi-content-save"
+          :loading="loadingSaveButton"
+          @click="saveApprovedForm(false)"
+          :color="allModulesReviewed ? 'blue' : 'green'"
+          >
+            {{ allModulesReviewed ? $t('newLabelWhenAllReviewed') : $t('studentAffairsOfficeView.save') }}
+          </v-btn>
+        </v-div>
       </v-card-actions>
     </div>
   </v-card>
@@ -204,8 +217,23 @@ export default {
       formCopy: null
     }
   },
+  computed: {
+    allModulesReviewed() {
+      return this.formCopy.edited.moduleFormsData.every(mapping => 
+        mapping.modulesStudent.every(module => 
+          ['accepted', 'rejected', 'formally rejected'].includes(module.approval)
+        )
+      );
+    },
+  },
+
 
   methods: {
+
+    async openSplitMergeComponent() {
+      this.$emit('open', { component: 'SplitMergeComponent', formCopy: this.formCopy });
+    },
+    
     async getModules() {
       try {
         this.majorModules = await StudentAffairsOfficeService.getAllModules(this.form.original.applicationData.newCourseOfStudy);
@@ -214,32 +242,7 @@ export default {
       }
     },
 
-    async sendToExaminingCommitteeChair(readyForApproval) {
-      try {
-        await this.saveEditedForm(readyForApproval);
-        await StudentAffairsOfficeService.sendFormToApproval(this.formCopy);
-        this.$emit("save");
-      } catch (error) {
-        console.error(error.message);
-      }
-    },
-
-    async formallyReject() {
-      try {
-        if (this.formalRejectionReason === "") {
-          this.showCommentWarning = true;
-          return;
-        }
-        this.showCommentWarning = false;
-        this.formCopy.edited.applicationData.formalReject = this.formalRejectionReason;
-        await StudentAffairsOfficeService.formallyRejectForm(this.formCopy);
-        this.$emit("close");
-      } catch (error) {
-        console.error(error.message);
-      }
-    },
-
-    async saveEditedForm(readyForApproval) {
+    async saveApprovedForm(readyForApproval) {
       try {
         this.formCopy.edited.applicationData.dateLastEdited = new Date().toISOString();
         await StudentAffairsOfficeService.saveApprovedForm(this.formCopy);
