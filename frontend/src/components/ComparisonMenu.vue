@@ -16,7 +16,7 @@
         :items="formattedForms"
         :loading="loading"
         :items-length="totalItems"
-        :page="page"
+        v-model:page="page"
         @update:options="loadItems"
     >
       <template v-slot:[`item.actions`]="{ item }">
@@ -97,7 +97,6 @@ export default {
         const response = await StudentAffairsOfficeService.searchApplication(this.buildQueryString());
         this.items = response.content;
         this.totalItems = response.totalItems;
-        console.log(response.totalItems);
       } catch (error) {
         console.error("Error retrieving filtered/sorted applications: ", error);
       }

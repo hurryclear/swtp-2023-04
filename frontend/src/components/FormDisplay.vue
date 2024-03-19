@@ -10,7 +10,7 @@
         :items="formattedForms"
         :items-length="totalItems"
         :loading="loading"
-        :page="page"
+        v-model:page="page"
         item-key="id"
         @update:options="getForms"
     >
