@@ -167,6 +167,12 @@
 
 
   },
+  "mergeComponents": {
+    "selectMappingSplit": "Select Module Mapping to be Split",
+    "selectModuleSplit": "Select Modules to be split off",
+    "selectModuleTBCSplit": "Select Modules To Be Credited to be split off",
+    "selectModuleMerge": "Select Modules"
+  },
   "updateModuleDataView": {
     "uploadJSON": "Upload JSON",
     "submit": "Submit"

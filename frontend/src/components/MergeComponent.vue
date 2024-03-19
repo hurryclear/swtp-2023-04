@@ -5,7 +5,7 @@
         :items="moduleOptions"
         item-title="title"
         item-value="value"
-        label="Select Modules"
+        :label="$t('mergeComponents.selectModuleMerge')"
         outlined
         multiple
     />

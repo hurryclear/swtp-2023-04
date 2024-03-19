@@ -162,6 +162,12 @@
     "finishApproval": "승인 완료",
     "reasonForDesicion": "결정 이유"
    },
+  "mergeComponents": {
+    "selectMappingSplit": "분할할 매핑 선택",
+    "selectModuleSplit": "분할할 모듈 선택",
+    "selectModuleTBCSplit": "학점 부여를 위해 분할할 모듈 선택",
+    "selectModuleMerge": "병합할 모듈 선택"
+  },
   "updateModuleDataView": {
     "uploadJSON": "JSON 업로드",
     "submit": "제출"

@@ -162,6 +162,12 @@
     "finishApproval": "Concluir Aprovação",
     "reasonForDesicion": "Razão para a Decisão"
   },
+  "mergeComponents": {
+    "selectMappingSplit": "Selecionar mapeamento para dividir",
+    "selectModuleSplit": "Selecionar módulos para dividir",
+    "selectModuleTBCSplit": "Selecionar módulos para dividir para crédito",
+    "selectModuleMerge": "Selecionar módulos para mesclar"
+  },
   "updateModuleDataView": {
     "uploadJSON": "Carregar JSON",
     "submit": "Enviar"

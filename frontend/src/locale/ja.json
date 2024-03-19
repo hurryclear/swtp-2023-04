@@ -162,6 +162,12 @@
     "finishApproval": "承認を完了する",
     "reasonForDesicion": "決定理由"
   },
+  "mergeComponents": {
+    "selectMappingSplit": "分割するマッピングを選択",
+    "selectModuleSplit": "分割するモジュールを選択",
+    "selectModuleTBCSplit": "単位付与のために分割するモジュールを選択",
+    "selectModuleMerge": "統合するモジュールを選択"
+  },
   "updateModuleDataView": {
     "uploadJSON": "JSONをアップロード",
     "submit": "送信"

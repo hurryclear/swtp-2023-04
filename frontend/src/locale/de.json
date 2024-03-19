@@ -163,6 +163,12 @@
 
 
   },
+  "mergeComponents": {
+    "selectMappingSplit": "Zuordnung zum Abspalten wählen",
+    "selectModuleSplit": "Module zum Abspalten wählen",
+    "selectModuleTBCSplit": "Anzurechnende Module zum Abspalten wählen",
+    "selectModuleMerge": "Module auswählen"
+  },
   "updateModuleDataView": {
     "uploadJSON": "JSON hochladen",
     "submit": "Absenden"

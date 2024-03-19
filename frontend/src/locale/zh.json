@@ -162,6 +162,12 @@
     "finishApproval": "完成批准",
     "reasonForDesicion": "决定原因"
   },
+  "mergeComponents": {
+    "selectMappingSplit": "选择分割映射",
+    "selectModuleSplit": "选择要分割的模块",
+    "selectModuleTBCSplit": "选择要分割以获得学分的模块",
+    "selectModuleMerge": "选择要合并的模块"
+  },
   "updateModuleDataView": {
     "uploadJSON": "上传JSON",
     "submit": "提交"
