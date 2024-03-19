@@ -86,7 +86,7 @@ export default {
     splitModuleMapping(moduleMappingIndex, modules, modules2BCIds) {
       const originalModuleMapping = this.formCopy.edited.moduleFormsData[moduleMappingIndex];
       const newModuleMapping = {
-        backend_block_id: 0,
+        backend_block_id: null,
         frontend_key: -1,
         modulesStudent: [], // Initialize with empty array
         modules2bCredited: [], // Initialize with empty array
