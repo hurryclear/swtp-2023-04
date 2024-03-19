@@ -33,51 +33,25 @@
         </v-col>
 
         <v-col cols="3" md="1">
-          <!-- Button for SplitComponent-->
-          <v-btn
-              class="ma-2"
-              icon
-              @click="this.$emit('open', { component: 'SplitComponent', form: this.formCopy })"
-          >
+          <v-btn class="ma-2" icon="mdi-call-split" @click="this.$emit('open', { component: 'SplitComponent', form: this.formCopy })" v-show="showEdited" >
             <v-icon>mdi-call-split</v-icon>
-            <v-tooltip
-                activator="parent"
-                location="bottom"
-            >
-              {{ $t("studentAffairsOfficeView.split") }}
-            </v-tooltip>
+            <v-tooltip activator="parent" location="bottom">{{ $t("studentAffairsOfficeView.split") }} </v-tooltip>
           </v-btn>
         </v-col>
+
         <v-col cols="3" md="1">
-          <!-- Button for MergeComponent-->
-          <v-btn
-              class="ma-2"
-              icon
-              @click="this.$emit('open', { component: 'MergeComponent', form: this.formCopy })"
-          >
+          <v-btn class="ma-2" icon="mdi-call-merge" @click="this.$emit('open', { component: 'MergeComponent', form: this.formCopy })" v-show="showEdited">
             <v-icon>mdi-call-merge</v-icon>
-            <v-tooltip
-                activator="parent"
-                location="bottom"
-            >
-              {{ $t('studentAffairsOfficeView.merge') }}
-            </v-tooltip>
+            <v-tooltip activator="parent" location="bottom">{{ $t('studentAffairsOfficeView.merge') }} </v-tooltip>
           </v-btn>
         </v-col>
+
         <v-col cols="3" md="1">
-          <v-btn
-              class="ma-2"
-              icon
-              @click="this.$emit('open',{component:'ComparisonMenu',formCopy:{}});"
-          >
+          <v-btn class="ma-2" icon="mdi-file-compare" @click="this.$emit('open',{component:'ComparisonMenu',formCopy:{}});">
             <v-icon>mdi-file-compare</v-icon>
-            <v-tooltip
-                activator="parent"
-                location="bottom"
-            >
-              {{ $t('studentAffairsOfficeView.compareWithOtherApplications') }}
-            </v-tooltip>
+            <v-tooltip activator="parent" location="bottom"> {{ $t('studentAffairsOfficeView.compareWithOtherApplications') }} </v-tooltip>
           </v-btn>
+  
         </v-col>
         <v-col cols="3" md="1">
           <v-btn class="ma-2" icon="mdi-close" @click="this.$emit('close')"/>
@@ -143,30 +117,30 @@
                 :label="$t('studentAffairsOfficeView.credits')"
                 v-model="module.credits"
             />
-            <div>
+            <v-div>
               <u>{{$t('studentAffairsOfficeView.studentComment')}}:</u> {{ module.commentStudent }}
               <br>
               <u>{{$t('studentAffairsOfficeView.officeComment')}}:</u> {{ module.commentEmployee }}
-            </div>
+            </v-div>
               <br>    
             <v-btn class="ma-2" @click="downloadPdf(module.path, module.title)">
               {{ $t('studentAffairsOfficeView.downloadDescription') }}
             </v-btn>
 
-            <div v-if="module.approval === 'formally rejected'">
+            <v-div v-if="module.approval === 'formally rejected'">
               <v-card-text>
-                <u>{{ $t('reviewComponent.formallyRejected') }}</u>
+                <div><span style="font-weight: bold;">{{ $t('reviewComponent.formallyRejected') }}</span></div>
                 <br/>
-                <u>{{ $t('reviewComponent.moduleApprovalReason') }}:</u> {{ module.reason }}
+                <div><span style="font-weight: bold;">{{ $t('reviewComponent.moduleApprovalReason') }}:</span>{{ module.reason }}</div>
               </v-card-text>
-            </div>
+            </v-div>
 
-            <div v-else-if="showEdited">
+            <v-div v-else-if="showEdited">
               <v-text-field
                 variant="outlined"
                 :label="$t('studentAffairsOfficeView.reasonForDesicion')"
                 v-model="module.reason"/>
-            </div>
+            </v-div>
             
             <v-row v-if="showEdited && module.approval !== 'formally rejected'">
               <v-btn
@@ -226,7 +200,7 @@
       </v-window>
       <v-divider/>
       <v-card-actions>
-        <div v-if="showEdited">
+        <v-div v-if="showEdited">
             <v-btn
           variant="elevated"
           class="ma-2"
@@ -237,7 +211,7 @@
           >
             {{ allModulesReviewed ? $t('studentAffairsOfficeView.finishApproval') : $t('studentAffairsOfficeView.save') }}
           </v-btn>
-        </div>
+        </v-div>
       </v-card-actions>
     </div>
   </v-card>
@@ -280,6 +254,11 @@ export default {
 
 
   methods: {
+
+    async openSplitMergeComponent() {
+      this.$emit('open', { component: 'SplitMergeComponent', formCopy: this.formCopy });
+    },
+    
     async getModules() {
       try {
         this.majorModules = await StudentAffairsOfficeService.getAllModules(this.form.original.applicationData.newCourseOfStudy);
