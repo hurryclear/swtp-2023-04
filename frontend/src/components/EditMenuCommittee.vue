@@ -255,10 +255,6 @@ export default {
 
   methods: {
 
-    async openSplitMergeComponent() {
-      this.$emit('open', { component: 'SplitMergeComponent', formCopy: this.formCopy });
-    },
-    
     async getModules() {
       try {
         this.majorModules = await StudentAffairsOfficeService.getAllModules(this.form.original.applicationData.newCourseOfStudy);
