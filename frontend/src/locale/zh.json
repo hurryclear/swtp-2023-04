@@ -3,6 +3,9 @@
     "moduleFormList": {
       "addMapping": "添加模块映射",
       "moduleMapping": {
+        "required": "必填!",
+        "charLimitExceeded": "字符限制超出!",
+        "fileTooBig": "文件太大!",
         "addModule": "添加模块",
         "commentLabel": "评论",
         "description": "提供有关要认可的模块的信息。",

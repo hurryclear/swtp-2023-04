@@ -3,6 +3,9 @@
     "moduleFormList": {
       "addMapping": "Add Module Mapping",
       "moduleMapping": {
+        "required": "Required!",
+        "charLimitExceeded": "Character Limit exceeded!",
+        "fileTooBig": "File size too big!",
         "addModule": "Add Module",
         "commentLabel": "Comment",
         "description": "Provide information about the module to be credited.",
