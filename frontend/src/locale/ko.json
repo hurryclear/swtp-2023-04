@@ -3,6 +3,9 @@
     "moduleFormList": {
       "addMapping": "모듈 매핑 추가",
       "moduleMapping": {
+        "required": "필수!",
+        "charLimitExceeded": "문자 제한 초과!",
+        "fileTooBig": "파일 크기가 너무 큽니다!",
         "addModule": "모듈 추가",
         "commentLabel": "코멘트",
         "description": "인정 받을 모듈에 대한 정보를 제공하십시오.",

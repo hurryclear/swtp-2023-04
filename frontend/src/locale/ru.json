@@ -3,6 +3,9 @@
     "moduleFormList": {
       "addMapping": "Добавить сопоставление модулей",
       "moduleMapping": {
+        "required": "Обязательно!",
+        "charLimitExceeded": "Превышен лимит символов!",
+        "fileTooBig": "Слишком большой размер файла!",
         "addModule": "Добавить модуль",
         "commentLabel": "Комментарий",
         "description": "Укажите информацию о модуле, который должен быть зачтен.",

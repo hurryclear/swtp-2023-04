@@ -1,0 +1,78 @@
+{
+  "original": {
+    "applicationData": {
+      "applicationID": "7262-a4b8-c5f6-4772-be6f-9fc6-45de-0a8f",
+      "status": "open",
+      "formalReject": "",
+      "dateOfSubmission": "2024-03-19T14:48:38.545Z",
+      "dateLastEdited": "2025-03-19T14:48:38.545Z",
+      "university": "Uni des Südens",
+      "oldCourseOfStudy": "B. Sc. Biologie",
+      "newCourseOfStudy": "B.Sc. Informatik"
+    },
+    "moduleFormsData": [
+      {
+        "frontend_key": 0,
+        "backend_block_id": 11,
+        "modulesStudent": [
+          {
+            "frontend_key": 0,
+            "backend_module_id": 15,
+            "approval": "",
+            "reason": "",
+            "number": "123-123-123",
+            "title": "Mahte1",
+            "path": "/7262-a4b8-c5f6-4772-be6f-9fc6-45de-0a8f/S-15",
+            "credits": 10,
+            "university": "Uni des Südens",
+            "major": "B. Sc. Informatik",
+            "commentStudent": "Bitte bitte bitte mag kein mathe mehr",
+            "commentEmployee": ""
+          }
+        ],
+        "modules2bCredited": [
+          15,
+          16
+        ]
+      }
+    ]
+  },
+  "edited": {
+    "applicationData": {
+      "applicationID": "7262-a4b8-c5f6-4772-be6f-9fc6-45de-0a8f",
+      "status": "open",
+      "formalReject": "",
+      "dateOfSubmission": "2024-03-19T14:48:38.545Z",
+      "dateLastEdited": "2025-03-19T14:48:38.545Z",
+      "university": "Uni des Südens",
+      "oldCourseOfStudy": "B. Sc. Biologie",
+      "newCourseOfStudy": "B.Sc. Informatik"
+    },
+    "moduleFormsData": [
+      {
+        "frontend_key": 0,
+        "backend_block_id": 12,
+        "modulesStudent": [
+          {
+            "frontend_key": 0,
+            "backend_module_id": 16,
+            "approval": "rejected",
+            "reason": "ne ne soviel Credits gehen nicht",
+            "number": "123-123-123",
+            "title": "Mahte1",
+            "path": "/7262-a4b8-c5f6-4772-be6f-9fc6-45de-0a8f/S-15",
+            "credits": 10,
+            "university": "Uni des Südens",
+            "major": "B. Sc. Informatik",
+            "commentStudent": "Bitte bitte bitte mag kein mathe mehr",
+            "commentEmployee": ""
+          }
+        ],
+        "modules2bCredited": [
+          15,
+          16
+        ]
+      }
+    ]
+  }
+}

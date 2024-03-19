@@ -85,7 +85,6 @@
               variant="outlined"
           />
           <v-text-field
-              :rules="rules.creditRules"
               v-model="module.credits"
               class="userInput"
               hide-details
@@ -168,20 +167,13 @@ export default {
         modulesToBeCredited: [],
       },
       rules: {
-        creditRules: [
-          credits => (credits <= 30) || 'Max 30.',
-          credits => (credits >= 0) || 'Min 0.',
-          credits => (credits && credits.length <= 2) || 'Max 2 characters'
-        ],
         textRules: [
-          value => !!value || 'Required.',
-          value => (value && value.length <= 255) || 'Max 255 characters',
+          value => !!value || this.$t('applicationFormView.moduleFormList.moduleMapping.required'),
+          value => (value && value.length <= 255) || this.$t('applicationFormView.moduleFormList.moduleMapping.charLimitExceeded'),
         ],
         fileRules: [
-          file => !!file || 'Required',
-          file => {
-            return !file || !file.length || file[0].size <= 10 * 1024 * 1024 || this.$t('applicationFormView.moduleFormList.FileTooBig');
-          }
+          file => !!file || this.$t('applicationFormView.moduleFormList.required'),
+          file => !file || !file.length || file[0].size <= 10 * 1024 * 1024 || this.$t('applicationFormView.moduleFormList.moduleMapping.fileTooBig'),
         ]
       },
     };

@@ -113,16 +113,6 @@
           <v-divider />
         </v-window-item>
       </v-window>
-      <v-divider />
-      <v-card-text>
-        {{ $t('studentAffairsOfficeView.decision') }}:
-        <v-text-field
-            disabled
-            v-model="copy.edited.formalReject"
-            :label="$t('studentAffairsOfficeView.decision')"
-            variant="outlined"
-        />
-      </v-card-text>
     </v-card>
   </div>
 </template>

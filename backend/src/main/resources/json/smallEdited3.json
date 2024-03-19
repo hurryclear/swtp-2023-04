@@ -1,0 +1,72 @@
+{
+  "original": {
+    "applicationData": {
+      "applicationID": "544a-0cf7-e3d8-4646-8eea-94ca-5046-75dd",
+      "status": "open",
+      "formalReject": "",
+      "dateOfSubmission": "2023-03-12T14:48:38.545Z",
+      "dateLastEdited": "2023-03-19T14:48:38.545Z",
+      "university": "Uni di Pasti",
+      "oldCourseOfStudy": "B. Sc. Philosophie",
+      "newCourseOfStudy": "B.Sc. Informatik"
+    },
+    "moduleFormsData": [
+      {
+        "frontend_key": 0,
+        "backend_block_id": 13,
+        "modulesStudent": [
+          {
+            "frontend_key": 0,
+            "backend_module_id": 17,
+            "approval": "",
+            "reason": "",
+            "number": "123-123-123",
+            "title": "DIGITAL WORLDS",
+            "path": "/544a-0cf7-e3d8-4646-8eea-94ca-5046-75dd/S-17",
+            "credits": 6,
+            "university": "Uni di Pasti",
+            "major": "Philosophie",
+            "commentStudent": "War was mit Computern",
+            "commentEmployee": ""
+          }
+        ],
+        "modules2bCredited": [19]
+      }
+    ]
+  },
+  "edited": {
+    "applicationData": {
+      "applicationID": "544a-0cf7-e3d8-4646-8eea-94ca-5046-75dd",
+      "status": "open",
+      "formalReject": "",
+      "dateOfSubmission": "2023-03-12T14:48:38.545Z",
+      "dateLastEdited": "2023-03-19T14:48:38.545Z",
+      "university": "Uni di Pasti",
+      "oldCourseOfStudy": "B. Sc. Philosophie",
+      "newCourseOfStudy": "B.Sc. Informatik"
+    },
+    "moduleFormsData": [
+      {
+        "frontend_key": 0,
+        "backend_block_id": 14,
+        "modulesStudent": [
+          {
+            "frontend_key": 0,
+            "backend_module_id": 18,
+            "approval": "accepted",
+            "reason": "ja das könnte man machen",
+            "number": "123-123-123",
+            "title": "DIGITAL WORLDS",
+            "path": "/544a-0cf7-e3d8-4646-8eea-94ca-5046-75dd/S-17",
+            "credits": 6,
+            "university": "Uni di Pasti",
+            "major": "Philosophie",
+            "commentStudent": "War was mit Computern",
+            "commentEmployee": ""
+          }
+        ],
+        "modules2bCredited": [19]
+      }
+    ]
+  }
+}

@@ -3,6 +3,9 @@
     "moduleFormList": {
       "addMapping": "モジュールマッピングの追加",
       "moduleMapping": {
+        "required": "必須!",
+        "charLimitExceeded": "文字数制限を超えました!",
+        "fileTooBig": "ファイルサイズが大きすぎます!",
         "addModule": "モジュールの追加",
         "commentLabel": "コメント",
         "description": "クレジットされるモジュールの情報を提供してください。",
