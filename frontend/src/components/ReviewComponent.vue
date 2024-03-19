@@ -40,6 +40,8 @@
               <v-card-text class="text-center" style="color: white;">
                 <!-- Status information -->
                 <span style="font-weight: bold;">{{ determineStatusTranslations(form.applicationData.status) }}</span>
+                <br>
+                <div v-if="form.applicationData.formalRejection !== ''"><span style="font-weight: bold;">{{ $t('reviewComponent.moduleApprovalReason') }}: {{ form.applicationData.formalRejection }}</span></div>
               </v-card-text>
             </v-card>
           </v-col>
@@ -264,7 +266,7 @@ const approvalStatusMappings = {
     translation:'rejected',
     color: 'red'
   },
-  formallyRejected: {
+  'formally rejected': {
     translation:'formallyRejected',
     color: 'red',
   },
@@ -343,6 +345,7 @@ export default {
      * link in the DOM to trigger the download of the PDF file. After the download
      * initiates, it cleans up by removing the temporary link and revoking the
      * created URL object.
+     * If the PDF download fails, an error will be logged to the console.
      *
      * @async
      * @function downloadForm
@@ -354,6 +357,7 @@ export default {
           params: {applicationId},
           responseType: 'blob'
         });
+        
         const url = window.URL.createObjectURL(new Blob([response.data], {type: 'application/pdf'}));
         const filename = `Application-${applicationId}.pdf`;
         const link = document.createElement('a');
@@ -413,7 +417,7 @@ export default {
 
       if (approvalCounts.accepted === modules.length) return 'accepted';
       if (approvalCounts.rejected === modules.length) return 'rejected';
-      if (approvalCounts.formallyRejected === modules.length) return 'formallyRejected';
+      if (approvalCounts.formallyRejected === modules.length) return 'formally rejected';
       if (approvalCounts.accepted > 0) return 'partiallyAccepted';
       if (approvalCounts.rejected > 0) return 'partiallyRejected';
       if (approvalCounts.open === modules.length) return 'open';

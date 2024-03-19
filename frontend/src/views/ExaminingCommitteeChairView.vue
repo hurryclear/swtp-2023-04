@@ -8,6 +8,7 @@
             :form="comparisonForm"
             @open="openComponent"
             @close="closeComponent(false)"
+            ref="childComponent"
         />
       </v-col>
       <v-col cols="12" md="6">
@@ -18,7 +19,7 @@
             :form="currentForm"
             @close="closeComponent(true)"
             @open="openComponent"
-            @save="currentForm={}"
+            @save="save"
         />
       </v-col>
     </v-row>
@@ -30,6 +31,7 @@
             :form="comparisonForm"
             @open="openComponent"
             @close="closeComponent(false)"
+            ref="childComponent"
         />
       </v-col>
       <v-col>
@@ -40,7 +42,7 @@
             :form="currentForm"
             @close="closeComponent(true)"
             @open="openComponent"
-            @save="currentForm={}"
+            @save="save"
         />
       </v-col>
     </div>
@@ -92,6 +94,10 @@ export default {
       }
       this.currentComponent = 'FormDisplay';
     },
+    save(){
+      this.currentForm = {};
+      this.$refs.childComponent.updateForm();
+    }
   }
 }
 </script>
