@@ -261,14 +261,13 @@ export default {
     /**
      * Watches for changes in moduleMapping.previousModules and updates university data accordingly.
      * @param {Array} newValue The new value of moduleMapping.previousModules.
-     * @param {Array} oldValue The old value of moduleMapping.previousModules.
      */
     'moduleMapping.previousModules': {
-      handler(newValue, oldValue) {
+      handler(newValue) {
         // This watcher will be triggered whenever any property inside previousModules changes
         // We need to check if the selectedUniversity has changed
         newValue.forEach((module, index) => {
-          if (module.selectedUniversity !== oldValue[index].selectedUniversity) {
+          //if (module.selectedUniversity !== oldValue[index].selectedUniversity) {
             // If selectedUniversity has changed, update the university properties
             const newValue = module.selectedUniversity;
             if (typeof newValue === 'string') {
@@ -281,7 +280,7 @@ export default {
               this.moduleMapping.previousModules[index].university.name = newValue.name
               this.moduleMapping.previousModules[index].university.country = newValue.country
               this.moduleMapping.previousModules[index].university.website = newValue.web_pages.toString()
-            }
+            //}
           }
         })
       },
