@@ -76,17 +76,25 @@
             :value="i"
         >
           <v-card-text>
-            <u>{{ $t('studentAffairsOfficeView.previousUniversity') }}:</u> {{
-              formCopy.original.applicationData.university
-            }}
-            <br/>
-            <u>{{ $t('studentAffairsOfficeView.previousCourse') }}:</u> {{
-              formCopy.original.applicationData.oldCourseOfStudy
-            }}
-            <br/>
-            <u>{{ $t('studentAffairsOfficeView.currentCourse') }}:</u> {{
-              formCopy.original.applicationData.newCourseOfStudy
-            }}
+
+            <v-text-field
+                disabled
+                v-model="formCopy.original.applicationData.university"
+                :label="$t('studentAffairsOfficeView.previousUniversity')"
+                variant="outlined"
+            />
+            <v-text-field
+                disabled
+                v-model="formCopy.original.applicationData.oldCourseOfStudy"
+                :label="$t('studentAffairsOfficeView.previousCourse')"
+                variant="outlined"
+            />
+            <v-text-field
+                disabled
+                v-model="formCopy.original.applicationData.newCourseOfStudy"
+                :label="$t('studentAffairsOfficeView.currentCourse')"
+                variant="outlined"
+            />
           </v-card-text>
 
           <!--Modules-->
@@ -100,19 +108,31 @@
             <v-text-field
                 variant="outlined"
                 :disabled="!showEdited"
-                :label="$t('studentAffairsOfficeView.name')"
+                :label="$t('applicationFormView.moduleFormList.moduleMapping.moduleNameLabel')"
                 v-model="module.title"
             />
             <v-text-field
                 variant="outlined"
                 :disabled="!showEdited"
-                :label="$t('studentAffairsOfficeView.moduleNumber')"
+                :label="$t('applicationFormView.moduleFormList.moduleMapping.moduleId')"
                 v-model="module.number"
             />
             <v-text-field
                 variant="outlined"
                 :disabled="!showEdited"
-                :label="$t('studentAffairsOfficeView.credits')"
+                :label="$t('applicationFormView.universityForm.nameLabel')"
+                v-model="module.university"
+            />
+            <v-text-field
+                variant="outlined"
+                :disabled="!showEdited"
+                :label="$t('applicationFormView.courseOfStudy.courseOfStudy')"
+                v-model="module.major"
+            />
+            <v-text-field
+                variant="outlined"
+                :disabled="!showEdited"
+                :label="$t('applicationFormView.moduleFormList.moduleMapping.creditLabel')"
                 v-model="module.credits"
             />
             <v-text-field
@@ -133,6 +153,7 @@
             </v-btn>
             <v-text-field
                 variant="outlined"
+                :disabled="!showEdited"
                 :label="$t('studentAffairsOfficeView.formalReject')"
                 v-model="module.reason"/>
             <v-row>
@@ -226,10 +247,6 @@ export default {
   },
 
   methods: {
-    async openSplitMergeComponent() {
-      this.$emit('open', { component: 'SplitMergeComponent', formCopy: this.formCopy });
-    },
-
     async getModules() {
       try {
         this.$store.state.studentAffairsOffice.majorModules= await StudentAffairsOfficeService.getAllModules(this.form.original.applicationData.newCourseOfStudy);
@@ -242,7 +259,17 @@ export default {
       try {
         await this.saveEditedForm(readyForApproval);
         await StudentAffairsOfficeService.sendFormToApproval(this.formCopy);
-        this.$emit("save");
+      } catch (error) {
+        console.error(error.message);
+      }
+    },
+
+    saveEditedForm(readyForApproval) {
+      try {
+        this.formCopy.edited.applicationData.dateLastEdited = new Date().toISOString();
+        if (!readyForApproval) {
+          this.$emit("save");
+        }
       } catch (error) {
         console.error(error.message);
       }
@@ -258,18 +285,6 @@ export default {
         this.formCopy.edited.applicationData.formalReject = this.formalRejectionReason;
         await StudentAffairsOfficeService.formallyRejectForm(this.formCopy);
         this.$emit("close");
-      } catch (error) {
-        console.error(error.message);
-      }
-    },
-
-    async saveEditedForm(readyForApproval) {
-      try {
-        this.formCopy.edited.applicationData.dateLastEdited = new Date().toISOString();
-        await StudentAffairsOfficeService.saveEditedForm(this.formCopy);
-        if (!readyForApproval) {
-          this.$emit("save");
-        }
       } catch (error) {
         console.error(error.message);
       }

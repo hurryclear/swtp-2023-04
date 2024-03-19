@@ -21,21 +21,23 @@
                 disabled
                 v-model="copy.edited.applicationData.university"
                 :label="$t('studentAffairsOfficeView.previousUniversity')"
-                outlined
+                variant="outlined"
             />
             <v-text-field
                 disabled
                 v-model="copy.edited.applicationData.oldCourseOfStudy"
                 :label="$t('studentAffairsOfficeView.previousCourse')"
-                outlined
+                variant="outlined"
             />
             <v-text-field
                 disabled
                 v-model="copy.edited.applicationData.newCourseOfStudy"
                 :label="$t('studentAffairsOfficeView.currentCourse')"
-                outlined
+                variant="outlined"
             />
           </v-card-text>
+
+          <!--Modules-->
           <v-card-title>
             {{ $t('studentAffairsOfficeView.modules') }}:
           </v-card-title>
@@ -46,41 +48,51 @@
             <v-text-field
                 disabled
                 v-model="studentModule.title"
-                :label="$t('studentAffairsOfficeView.name')"
-                outlined
+                :label="$t('applicationFormView.moduleFormList.moduleMapping.moduleNameLabel')"
+                variant="outlined"
             />
             <v-text-field
                 disabled
                 v-model="studentModule.number"
-                :label="$t('studentAffairsOfficeView.moduleNumber')"
-                outlined
+                :label="$t('applicationFormView.moduleFormList.moduleMapping.moduleId')"
+                variant="outlined"
+            />
+            <v-text-field
+                variant="outlined"
+                :label="$t('applicationFormView.universityForm.nameLabel')"
+                v-model="studentModule.university"
+            />
+            <v-text-field
+                variant="outlined"
+                :label="$t('applicationFormView.courseOfStudy.courseOfStudy')"
+                v-model="studentModule.major"
             />
             <v-text-field
                 disabled
                 v-model="studentModule.credits"
-                :label="$t('studentAffairsOfficeView.credits')"
-                outlined
+                :label="$t('applicationFormView.moduleFormList.moduleMapping.creditLabel')"
+                variant="outlined"
             />
             <v-text-field
                 disabled
                 v-model="studentModule.commentStudent"
                 :label="$t('studentAffairsOfficeView.studentComment')"
-                outlined
+                variant="outlined"
             />
             <v-text-field
                 disabled
                 v-model="studentModule.commentEmployee"
                 :label="$t('studentAffairsOfficeView.officeComment')"
-                outlined
+                variant="outlined"
             />
-            <v-btn style="margin: 1%" @click="downloadPdf(studentModule.path)">
+            <v-btn class="ma-2"  @click="downloadPdf(studentModule.path)">
               {{ $t('studentAffairsOfficeView.downloadDescription') }}
             </v-btn>
             <v-text-field
                 disabled
                 v-model="studentModule.reason"
                 :label="$t('studentAffairsOfficeView.decision')"
-                outlined
+                variant="outlined"
             />
             <v-divider />
           </div>
@@ -91,7 +103,8 @@
                 :items="majorModules"
                 item-title="name"
                 item-value="id"
-                outlined
+                variant="outlined"
+                disabled
                 :label="$t('studentAffairsOfficeView.creditFor')"
             />
           </v-card-text>
@@ -105,7 +118,7 @@
             disabled
             v-model="copy.edited.formalReject"
             :label="$t('studentAffairsOfficeView.decision')"
-            outlined
+            variant="outlined"
         />
       </v-card-text>
     </v-card>

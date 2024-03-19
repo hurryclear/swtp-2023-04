@@ -2,9 +2,9 @@
   <v-card class="pa-2" v-if="formCopy">
     <v-select
         v-model="selectedModuleIndices"
-        :items="formCopy.edited.moduleFormsData"
-        item-text="text"
-        item-value="frontend_key"
+        :items="moduleOptions"
+        item-title="title"
+        item-value="value"
         label="Select Modules"
         outlined
         multiple
@@ -26,6 +26,14 @@ export default {
   },
   created() {
     this.formCopy = structuredClone(this.form);
+  },computed: {
+    moduleOptions() {
+      if (!this.formCopy || !this.formCopy.edited.moduleFormsData) return [];
+      return this.formCopy.edited.moduleFormsData.map((module, index) => ({
+        title: `Module Mapping ${index + 1}`,
+        value: index,
+      }));
+    },
   },
   methods: {
     mergeModules() {

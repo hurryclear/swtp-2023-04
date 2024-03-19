@@ -247,7 +247,6 @@ export default {
      * @param {Array} oldValue The old value of moduleMapping.previousModules.
      */
     'moduleMapping.previousModules': {
-      deep: true,
       handler(newValue, oldValue) {
         // This watcher will be triggered whenever any property inside previousModules changes
         // We need to check if the selectedUniversity has changed
@@ -262,11 +261,12 @@ export default {
                 this.moduleMapping.previousModules[index].university.name = '';
                 return;
               }
-              this.moduleMapping.previousModules[index].university = newValue
+              this.moduleMapping.previousModules[index].university = structuredClone(newValue);
             }
           }
-        });
-      }
+        })
+      },
+      deep: true,
     },
 
     /**

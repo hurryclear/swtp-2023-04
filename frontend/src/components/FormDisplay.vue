@@ -1,6 +1,8 @@
 <template>
-  <h1>{{$t("studentAffairsOfficeView.openApplications")}}</h1>
   <v-card>
+    <v-card-title>
+      <u>{{ $t('studentAffairsOfficeView.openApplications') }}</u>
+    </v-card-title>
     <v-data-table-server
         v-model:items-per-page="itemsPerPage"
         v-model:sort-by="sortBy"
@@ -41,6 +43,9 @@ export default {
   },
 
   methods: {
+    async updateForm(){
+      await this.getForms()
+    },
     async openEditMenu(item) {
       try {
         const form = await StudentAffairsOfficeService.getApplication(item.applicationID);

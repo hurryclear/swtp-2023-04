@@ -1,7 +1,7 @@
 <template>
   <v-card class="pa-2" v-if="formCopy">
     <v-select
-        v-model="selectedModuleIndex"
+        v-model="selectedModuleMappingIndex"
         :items="moduleOptions"
         item-title="title"
         item-value="value"
@@ -9,27 +9,28 @@
         outlined
     />
     <v-select
-        v-if="selectedModuleIndex!==null"
-        v-model="selectedModuleIndices"
-        :items="formCopy.edited.moduleFormsData[selectedModuleIndex].modulesStudent"
+        v-if="selectedModuleMappingIndex!==null"
+        v-model="selectedModules"
+        :items="formCopy.edited.moduleFormsData[selectedModuleMappingIndex].modulesStudent"
         item-title="title"
         :item-value="item => item"
         label="Select Modules to be split off"
         multiple
+        :disabled="formCopy.edited.moduleFormsData[selectedModuleMappingIndex].modulesStudent.length<2"
         outlined
     />
     <v-select
-        v-if="selectedModuleIndex!==null"
+        v-if="selectedModuleMappingIndex!==null"
         v-model="selectedCreditedIds"
-        :items="formCopy.edited.moduleFormsData[selectedModuleIndex].modules2bCredited"
-        :title="filteredModules"
-        item-title="title"
+        :items="formCopy.edited.moduleFormsData[selectedModuleMappingIndex].modules2bCredited.map(id => majorModules.find(module => module.id === id))"
+        item-title="name"
         item-value="id"
         label="Select Modules To Be Credited to be split off"
+        :disabled="formCopy.edited.moduleFormsData[selectedModuleMappingIndex].modulesStudent.length<2"
         multiple
         outlined
     />
-    <v-btn @click="splitModule" color="primary">Split Module</v-btn>
+    <v-btn @click="splitModule" :disabled="!formFilled" color="primary">Split Module</v-btn>
   </v-card>
 </template>
 
@@ -42,21 +43,14 @@ export default {
   data() {
     return {
       formCopy: null,
-      selectedModuleIndex: null,
-      selectedModuleIndices: [],
+      selectedModuleMappingIndex: null,
+      selectedModules: [],
       selectedCreditedIds: [],
     };
   },
   computed: {
     majorModules() {
       return this.$store.state.studentAffairsOffice.majorModules;
-    },
-    filteredModules() {
-      if (this.selectedModuleIndex && this.formCopy.edited.moduleFormsData[this.selectedModuleIndex]) {
-        const modules2bCredited = this.formCopy.edited.moduleFormsData[this.selectedModuleIndex].modules2bCredited;
-        return modules2bCredited.filter(item => this.majorModules.some(majorModule => majorModule.id === item.id));
-      }
-      return [];
     },
     moduleOptions() {
       if (!this.formCopy || !this.formCopy.edited.moduleFormsData) return [];
@@ -65,28 +59,35 @@ export default {
         value: index,
       }));
     },
+    formFilled(){
+      return (this.selectedModuleMappingIndex === null ||
+          this.selectedModules.length === 0 ||
+          this.selectedCreditedIds.length === 0);
+    }
   },
   created() {
     this.formCopy = structuredClone(this.form);
   },
   methods: {
     splitModule() {
-      if (
-          this.selectedModuleIndex === null ||
-          this.selectedModuleIndices.length === 0 ||
-          this.selectedCreditedIds.length === 0
-      ) {
-        return;
-      }
+      if (!this.formFilled) return;
+
+      // Check if both original and new mappings have at least one module selected
+      const originalMapping = this.formCopy.edited.moduleFormsData[this.selectedModuleMappingIndex];
+      const newMappingModules = this.selectedModules;
+      if (originalMapping.modulesStudent.length === 0 || newMappingModules.length === 0) return;
+
       this.splitModuleMapping(
-          this.selectedModuleIndex,
-          this.selectedModuleIndices,
+          this.selectedModuleMappingIndex,
+          this.selectedModules,
           this.selectedCreditedIds
       );
     },
     splitModuleMapping(moduleMappingIndex, modules, modules2BCIds) {
       const originalModuleMapping = this.formCopy.edited.moduleFormsData[moduleMappingIndex];
       const newModuleMapping = {
+        backend_block_id: 0,
+        frontend_key: -1,
         modulesStudent: [], // Initialize with empty array
         modules2bCredited: [], // Initialize with empty array
       };
