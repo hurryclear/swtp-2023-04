@@ -58,11 +58,13 @@
                 variant="outlined"
             />
             <v-text-field
+                disabled
                 variant="outlined"
                 :label="$t('applicationFormView.universityForm.nameLabel')"
                 v-model="studentModule.university"
             />
             <v-text-field
+                disabled
                 variant="outlined"
                 :label="$t('applicationFormView.courseOfStudy.courseOfStudy')"
                 v-model="studentModule.major"
