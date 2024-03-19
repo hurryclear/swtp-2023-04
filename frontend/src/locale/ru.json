@@ -165,6 +165,12 @@
     "finishApproval": "Завершить утверждение",
     "reasonForDesicion": "Причина решения"
   },
+  "mergeComponents": {
+    "selectMappingSplit": "Выбрать отображение для разделения",
+    "selectModuleSplit": "Выбрать модули для разделения",
+    "selectModuleTBCSplit": "Выбрать модули для разделения с зачетом",
+    "selectModuleMerge": "Выбрать модули для объединения"
+  },
   "updateModuleDataView": {
     "uploadJSON": "Загрузить JSON",
     "submit": "Отправить"

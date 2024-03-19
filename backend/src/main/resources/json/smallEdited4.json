@@ -1,0 +1,76 @@
+{
+  "original": {
+    "applicationData": {
+      "applicationID": "39ab-ab73-c102-44d4-8f25-4196-3a37-b206",
+      "status": "open",
+      "formalReject": "",
+      "dateOfSubmission": "2024-03-19T14:48:38.545Z",
+      "dateLastEdited": "2024-03-19T14:48:38.545Z",
+      "university": "Uni Leipzig",
+      "oldCourseOfStudy": "B. Sc. Bio-Informatik",
+      "newCourseOfStudy": "B.Sc. Informatik"
+    },
+    "moduleFormsData": [
+      {
+        "frontend_key": 0,
+        "backend_block_id": 15,
+        "modulesStudent": [
+          {
+            "frontend_key": 0,
+            "backend_module_id": 19,
+            "approval": "",
+            "reason": "",
+            "number": "123-1234-1234-1",
+            "title": "MUP 1",
+            "path": "/39ab-ab73-c102-44d4-8f25-4196-3a37-b206/S-19",
+            "credits": 5,
+            "university": "Uni Leipzig",
+            "major": "B. Sc. Bio-Informatik",
+            "commentStudent": "Hab das schon belegt",
+            "commentEmployee": ""
+          }
+        ],
+        "modules2bCredited": [
+          1
+        ]
+      }
+    ]
+  },
+  "edited": {
+    "applicationData": {
+      "applicationID": "39ab-ab73-c102-44d4-8f25-4196-3a37-b206",
+      "status": "open",
+      "formalReject": "",
+      "dateOfSubmission": "2024-03-19T14:48:38.545Z",
+      "dateLastEdited": "2024-03-19T14:48:38.545Z",
+      "university": "Uni Leipzig",
+      "oldCourseOfStudy": "B. Sc. Bio-Informatik",
+      "newCourseOfStudy": "B.Sc. Informatik"
+    },
+    "moduleFormsData": [
+      {
+        "frontend_key": 0,
+        "backend_block_id": 16,
+        "modulesStudent": [
+          {
+            "frontend_key": 0,
+            "backend_module_id": 20,
+            "approval": "accepted",
+            "reason": "da brauchst du ja nicht mal fragen das geht",
+            "number": "123-1234-1234-1",
+            "title": "MUP 1",
+            "path": "/39ab-ab73-c102-44d4-8f25-4196-3a37-b206/S-19",
+            "credits": 5,
+            "university": "Uni Leipzig",
+            "major": "B. Sc. Bio-Informatik",
+            "commentStudent": "Hab das schon belegt",
+            "commentEmployee": ""
+          }
+        ],
+        "modules2bCredited": [
+          1
+        ]
+      }
+    ]
+  }
+}
