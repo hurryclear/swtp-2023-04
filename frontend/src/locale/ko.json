@@ -55,6 +55,7 @@
     "welcomeStudent": "라이프치히 대학의 학점 인정을 위한 새로운 온라인 플랫폼에 오신 것을 환영합니다! '학점 모듈'을 클릭하여 시작하십시오. 신청서를 제출하면 고유한 참조 번호가 할당되며 이를 사용하여 나중에 신청과 상태를 확인할 수 있습니다.",
     "welcomeStudentAffairsOffice": "학생 지원 사무실 직원 여러분, 환영합니다! 학생 지원 사무실 직원으로서 여러분은 모든 오픈된 신청에 대한 개요에 액세스할 수 있습니다. 신청서를 처리하고 보충하며 처리 상태를 추적할 수 있습니다. 직관적 인터페이스를 사용하여 학점 인정 프로세스를 보다 효율적으로 만드십시오."
   },
+  "languageSwitcher": "언어 변경",
   "loginComponent": {
     "loginButton": "로그인",
     "loginErrorMessage": "잘못된 사용자 이름 또는 비밀번호입니다.",
@@ -117,6 +118,8 @@
     "/update-module-data": "모듈 데이터 업데이트"
   },
   "studentAffairsOfficeView": {
+    "split": "모듈 분할",
+    "merge": "모듈 병합",
     "application": "신청",
     "applicationID": "신청 ID",
     "compareWithOtherApplications": "다른 신청과 비교",

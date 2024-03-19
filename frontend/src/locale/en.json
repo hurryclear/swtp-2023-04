@@ -55,6 +55,7 @@
     "welcomeStudent": "Welcome to our new online platform for credit recognition at the University of Leipzig! Click on 'Credit Modules' to get started. By submitting your application, you will be assigned a unique reference number, which you can use later to view your application and its status.",
     "welcomeStudentAffairsOffice": "Welcome, staff of the Student Affairs Office! As a staff member of the Student Affairs Office, you have access to an overview of all open applications. You can process, supplement, and track the processing status of applications. Use the user-friendly interface to make the credit recognition process more efficient."
   },
+  "languageSwitcher": "Change Language",
   "loginComponent": {
     "loginButton": "Login",
     "loginErrorMessage": "Incorrect username or password.",
@@ -117,6 +118,8 @@
     "/update-module-data": "Update Module Data"
   },
   "studentAffairsOfficeView": {
+    "split": "Split Module",
+    "merge": "Merge Modules",
     "application": "Application",
     "applicationID": "Application ID",
     "compareWithOtherApplications": "Compare with other applications",

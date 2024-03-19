@@ -3,9 +3,17 @@
       class="button-spacing"
       variant="elevated"
       color="#262A31"
-      icon="mdi-logout"
+      icon
       @click="logout()"
-  />
+  >
+    <v-icon>mdi-logout</v-icon>
+    <v-tooltip
+        activator="parent"
+        location="bottom"
+    >
+      {{ $t("logoutButton") }}
+    </v-tooltip>
+  </v-btn>
 </template>
 
 <script>

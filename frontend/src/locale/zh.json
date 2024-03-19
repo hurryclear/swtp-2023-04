@@ -61,6 +61,7 @@
     "passwordLabel": "密码",
     "usernameLabel": "用户名"
   },
+  "languageSwitcher": "更改语言",
   "logoutButton": "登出",
   "navBar": {
     "creditModules": "学分模块",
@@ -117,6 +118,8 @@
     "/update-module-data": "更新模块数据"
   },
   "studentAffairsOfficeView": {
+    "split": "拆分模块",
+    "merge": "合并模块",
     "application": "申请",
     "applicationID": "申请 ID",
     "compareWithOtherApplications": "与其他申请比较",

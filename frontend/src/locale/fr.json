@@ -55,6 +55,7 @@
     "welcomeStudent": "Bienvenue sur notre nouvelle plateforme en ligne de reconnaissance de crédits à l'Université de Leipzig ! Cliquez sur 'Modules de Crédit' pour commencer. En soumettant votre demande, vous recevrez un numéro de référence unique, que vous pourrez utiliser ultérieurement pour consulter votre demande et son statut.",
     "welcomeStudentAffairsOffice": "Bienvenue, personnel du Bureau des Affaires Étudiantes ! En tant que membre du personnel du Bureau des Affaires Étudiantes, vous avez accès à une vue d'ensemble de toutes les demandes ouvertes. Vous pouvez traiter, compléter et suivre l'état de traitement des demandes. Utilisez l'interface conviviale pour rendre le processus de reconnaissance des crédits plus efficace."
   },
+  "languageSwitcher": "Changer de langue",
   "loginComponent": {
     "loginButton": "Connexion",
     "loginErrorMessage": "Nom d'utilisateur ou mot de passe incorrect.",
@@ -117,6 +118,8 @@
     "/update-module-data": "Mettre à Jour les Données des Modules"
   },
   "studentAffairsOfficeView": {
+    "split": "Diviser le module",
+    "merge": "Fusionner les modules",
     "application": "Application",
     "applicationID": "ID de l'application",
     "compareWithOtherApplications": "Comparer avec d'autres demandes",

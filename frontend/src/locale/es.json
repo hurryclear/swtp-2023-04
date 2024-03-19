@@ -61,6 +61,7 @@
     "passwordLabel": "Contraseña",
     "usernameLabel": "Nombre de Usuario"
   },
+  "languageSwitcher": "Cambiar idioma",
   "logoutButton": "Cerrar Sesión",
   "navBar": {
     "creditModules": "Módulos de Crédito",
@@ -117,6 +118,8 @@
     "/update-module-data": "Actualizar Datos de Módulo"
   },
   "studentAffairsOfficeView": {
+    "split": "Dividir módulo",
+    "merge": "Combinar módulos",
     "application": "Solicitud",
     "applicationID": "ID de solicitud",
     "compareWithOtherApplications": "Comparar con otras solicitudes",

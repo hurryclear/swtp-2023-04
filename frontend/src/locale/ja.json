@@ -55,6 +55,7 @@
     "welcomeStudent": "ライプツィヒ大学のクレジット認定のための新しいオンラインプラットフォームへようこそ！ 'クレジットモジュール'をクリックして開始してください。アプリケーションを送信すると、後でアプリケーションとそのステータスを表示するための一意の参照番号が割り当てられます。",
     "welcomeStudentAffairsOffice": "学生支援オフィスのスタッフの皆様、ようこそ！学生支援オフィスのスタッフとして、すべてのオープンアプリケーションの概要にアクセスできます。アプリケーションの処理、補足、処理状況の追跡が可能です。使いやすいインターフェースを使用して、クレジット認定プロセスをより効率的にします。"
   },
+  "languageSwitcher": "言語を変更",
   "loginComponent": {
     "loginButton": "ログイン",
     "loginErrorMessage": "不正なユーザー名またはパスワード。",
@@ -117,6 +118,8 @@
     "/update-module-data": "モジュールデータの更新"
   },
   "studentAffairsOfficeView": {
+    "split": "モジュールを分割",
+    "merge": "モジュールを結合",
     "application": "アプリケーション",
     "applicationID": "申請ID",
     "compareWithOtherApplications": "他の申請と比較",

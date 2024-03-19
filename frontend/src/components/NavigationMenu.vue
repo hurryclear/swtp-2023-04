@@ -6,16 +6,30 @@
       <v-spacer/>
 
       <!-- Hamburger menu for mobile view -->
-      <v-btn icon="mdi-menu" class="d-md-none" variant="elevated" color="#262A31" @click="drawer = !drawer"/>
+      <v-btn icon class="d-md-none" variant="elevated" color="#262A31" @click="drawer = !drawer">
+        <v-icon>mdi-menu</v-icon>
+        <v-tooltip
+            activator="parent"
+            location="bottom"
+        >
+          Menu
+        </v-tooltip>
+      </v-btn>
 
       <!-- Regular buttons for desktop view -->
       <div class="d-none d-md-flex">
         <v-btn class="button-spacing t-button"
                variant="elevated" color="#262A31"
-               prepend-icon="mdi-home"
+               icon
                @click="navigateTo('/')"
         >
-          {{ $t("navBar.main") }}
+          <v-icon>mdi-home</v-icon>
+          <v-tooltip
+              activator="parent"
+              location="bottom"
+          >
+            {{ $t("navBar.main") }}
+          </v-tooltip>
         </v-btn>
         <v-btn
             v-if="this.userRole === 'ROLE_OFFICE' || this.userRole === 'ROLE_COMMITTEE'"
@@ -72,9 +86,17 @@
                class="button-spacing"
                variant="elevated"
                color="#262A31"
-               icon="mdi-login"
+               icon
                @click="navigateTo('/login')"
-        />
+        >
+          <v-icon>mdi-login</v-icon>
+          <v-tooltip
+              activator="parent"
+              location="bottom"
+          >
+            {{ $t("loginComponent.loginButton") }}
+          </v-tooltip>
+        </v-btn>
         <v-spacer/>
         <LogoutButton
             v-if="this.userRole === 'ROLE_OFFICE' || this.userRole === 'ROLE_COMMITTEE'"
@@ -82,23 +104,32 @@
         />
       </div>
     </v-app-bar>
+
+    <!--Hamburger Menu-->
     <v-navigation-drawer fluid temporary v-model="drawer" app>
       <v-list>
         <v-btn
             class="button-spacing"
             variant="text"
-            icon="mdi-close"
+            icon
             @click="drawer = !drawer"
         />
+        <v-icon>mdi-close</v-icon>
         <v-spacer/>
         <v-btn
             class="button-spacing t-button"
             variant="elevated"
             color="#262A31"
-            prepend-icon="mdi-home"
+            icon
             @click="navigateTo('/')"
         >
-          {{ $t("navBar.main") }}
+          <v-icon>mdi-home</v-icon>
+          <v-tooltip
+              activator="parent"
+              location="bottom"
+          >
+            {{ $t("navBar.main") }}
+          </v-tooltip>
         </v-btn>
         <v-spacer/>
         <v-btn
@@ -139,7 +170,7 @@
             class="button-spacing t-button"
             variant="elevated"
             color="#262A31"
-            prepend-icon="mdi-account-briefcase"
+            prepend-icon="mdi-briefcase-account"
             @click="navigateTo('/student-affairs-office')"
         >
           {{ $t("navBar.studentAffairsOffice") }}
@@ -169,9 +200,17 @@
                   class="button-spacing"
                   variant="elevated"
                   color="#262A31"
-                  icon="mdi-login"
+                  icon
                   @click="navigateTo('/login')"
-              />
+              >
+                <v-icon>mdi-login</v-icon>
+                <v-tooltip
+                    activator="parent"
+                    location="bottom"
+                >
+                  {{ $t("loginComponent.loginButton") }}
+                </v-tooltip>
+              </v-btn>
             </v-col>
             <v-col cols="4">
               <LogoutButton
@@ -246,8 +285,9 @@ export default {
 .button-spacing {
   margin: 8px;
 }
+
 .t-button {
-  height:auto;
+  height: auto;
 }
 
 .d-md-none {

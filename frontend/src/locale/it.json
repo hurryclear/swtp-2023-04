@@ -55,6 +55,7 @@
     "welcomeStudent": "Benvenuto nella nostra nuova piattaforma online per il riconoscimento dei crediti presso l'Università di Lipsia! Clicca su 'Credit Modules' per iniziare. Inviano la tua domanda, ti verrà assegnato un numero di riferimento unico, che potrai utilizzare in seguito per visualizzare la tua domanda e il suo stato.",
     "welcomeStudentAffairsOffice": "Benvenuto, personale dell'Ufficio Affari Studenti! Come membro dello staff dell'Ufficio Affari Studenti, hai accesso a una panoramica di tutte le domande aperte. Puoi elaborare, integrare e monitorare lo stato di elaborazione delle domande. Utilizza l'interfaccia utente intuitiva per rendere il processo di riconoscimento dei crediti più efficiente."
   },
+  "languageSwitcher": "Cambia lingua",
   "loginComponent": {
     "loginButton": "Accedi",
     "loginErrorMessage": "Nome utente o password errati.",
@@ -117,6 +118,8 @@
     "/update-module-data": "Aggiorna Dati Modulo"
   },
   "studentAffairsOfficeView": {
+    "split": "Dividi modulo",
+    "merge": "Unisci moduli",
     "application": "Applicazione",
     "applicationID": "ID domanda",
     "compareWithOtherApplications": "Confronta con altre domande",

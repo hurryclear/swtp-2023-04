@@ -21,21 +21,44 @@
       <!-- Button for SplitComponent-->
       <v-btn
           class="ma-2"
-          icon="mdi-call-split"
+          icon
           @click="this.$emit('open', { component: 'SplitComponent', form: this.formCopy })"
-      />
+      >
+        <v-icon>mdi-call-split</v-icon>
+        <v-tooltip
+            activator="parent"
+            location="bottom"
+        >
+          {{ $t("studentAffairsOfficeView.split") }}
+        </v-tooltip>
+      </v-btn>
       <!-- Button for MergeComponent-->
       <v-btn
           class="ma-2"
-          icon="mdi-call-merge"
+          icon
           @click="this.$emit('open', { component: 'MergeComponent', form: this.formCopy })"
-      />
+      >
+        <v-icon>mdi-call-merge</v-icon>
+        <v-tooltip
+            activator="parent"
+            location="bottom"
+        >
+          {{ $t('studentAffairsOfficeView.merge') }}
+        </v-tooltip>
+      </v-btn>
       <v-btn
           class="ma-2"
-          icon="mdi-file-compare"
+          icon
           @click="this.$emit('open',{component:'ComparisonMenu',formCopy:{}});"
-      /><!--{{ $t('studentAffairsOfficeView.compareWithOtherApplications') }}
-      </v-btn>-->
+      >
+        <v-icon>mdi-file-compare</v-icon>
+        <v-tooltip
+            activator="parent"
+            location="bottom"
+        >
+          {{ $t('studentAffairsOfficeView.compareWithOtherApplications') }}
+        </v-tooltip>
+      </v-btn>
       <v-btn
           class="ma-2"
           icon="mdi-close"

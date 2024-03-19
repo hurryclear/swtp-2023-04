@@ -1,5 +1,13 @@
 <template>
-  <v-btn class="button-spacing" variant="elevated" color="#262A31" :icon="themeIcon" @click="toggleTheme"></v-btn>
+  <v-btn class="button-spacing" variant="elevated" color="#262A31" icon @click="toggleTheme">
+    <v-icon>{{themeIcon}}</v-icon>
+    <v-tooltip
+        activator="parent"
+        location="bottom"
+    >
+      {{ $t("darkMode.toggleDarkMode") }}
+    </v-tooltip>
+  </v-btn>
 </template>
 
 <script setup>
