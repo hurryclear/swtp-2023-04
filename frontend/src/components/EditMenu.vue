@@ -258,6 +258,7 @@ export default {
     async sendToExaminingCommitteeChair() {
       try {
         await StudentAffairsOfficeService.sendFormToApproval(this.formCopy);
+        this.$emit("close");
       } catch (error) {
         console.error(error.message);
       }
