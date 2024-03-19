@@ -1,7 +1,7 @@
 <template>
   <v-container fluid class="wrapper">
-    <v-row>
-      <v-col cols="6">
+    <v-row v-if="currentComponent === 'ViewApplication'">
+      <v-col cols="12" md="6">
         <!-- Dynamic component rendering based on currentComponent -->
         <component
             :is="currentComponent"
@@ -11,8 +11,8 @@
             ref="childComponent"
         />
       </v-col>
-      <v-col cols="6">
-        <!-- EditMenu component -->
+      <v-col cols="12" md="6">
+        <!-- EditMenuCommittee component -->
         <EditMenu
             class="edit-menu"
             v-if="Object.keys(currentForm).length !== 0"
@@ -23,6 +23,29 @@
         />
       </v-col>
     </v-row>
+    <div v-else>
+      <v-col>
+        <!-- Dynamic component rendering based on currentComponent -->
+        <component
+            :is="currentComponent"
+            :form="comparisonForm"
+            @open="openComponent"
+            @close="closeComponent(false)"
+            ref="childComponent"
+        />
+      </v-col>
+      <v-col>
+        <!-- EditMenu component -->
+        <EditMenu
+            class="edit-menu"
+            v-if="Object.keys(currentForm).length !== 0"
+            :form="currentForm"
+            @close="closeComponent(true)"
+            @open="openComponent"
+            @save="save"
+        />
+      </v-col>
+    </div>
   </v-container>
 </template>
 
