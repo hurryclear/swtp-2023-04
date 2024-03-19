@@ -431,6 +431,22 @@ export default {
     determineTextColor(approval) {
       return approvalStatusMappings[approval]?.color || approvalStatusMappings.default.color;
     },
+    
+    copyToClipboard() {
+      // Create a temporary textarea element
+      const textarea = document.createElement('textarea');
+      textarea.value = this.form.applicationData.applicationID;
+      document.body.appendChild(textarea);
+      
+      // Select the text and copy it to the clipboard
+      textarea.select();
+      document.execCommand('copy');
+
+      // Remove the temporary textarea
+      document.body.removeChild(textarea);
+
+      // Optional: Show a message or do something to indicate successful copying
+    }
   },
   props: {
     applicationId: String
@@ -448,22 +464,6 @@ export default {
       if (this.formId) {
         this.checkStatus();
       }
-    },
-
-    copyToClipboard() {
-      // Create a temporary textarea element
-      const textarea = document.createElement('textarea');
-      textarea.value = this.form.applicationData.applicationID;
-      document.body.appendChild(textarea);
-      
-      // Select the text and copy it to the clipboard
-      textarea.select();
-      document.execCommand('copy');
-
-      // Remove the temporary textarea
-      document.body.removeChild(textarea);
-
-      // Optional: Show a message or do something to indicate successful copying
     }
   }
 };
