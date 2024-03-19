@@ -33,13 +33,25 @@
         </v-col>
 
         <v-col cols="3" md="1">
-          <v-btn class="ma-2" icon="mdi-call-split" @click="this.$emit('open', { component: 'SplitComponent', form: this.formCopy })" v-show="showEdited"/>
+          <v-btn class="ma-2" icon="mdi-call-split" @click="this.$emit('open', { component: 'SplitComponent', form: this.formCopy })" v-show="showEdited" >
+            <v-icon>mdi-call-split</v-icon>
+            <v-tooltip activator="parent" location="bottom">{{ $t("studentAffairsOfficeView.split") }} </v-tooltip>
+          </v-btn>
         </v-col>
+
         <v-col cols="3" md="1">
-          <v-btn class="ma-2" icon="mdi-call-merge" @click="this.$emit('open', { component: 'MergeComponent', form: this.formCopy })" v-show="showEdited"/>
+          <v-btn class="ma-2" icon="mdi-call-merge" @click="this.$emit('open', { component: 'MergeComponent', form: this.formCopy })" v-show="showEdited">
+            <v-icon>mdi-call-merge</v-icon>
+            <v-tooltip activator="parent" location="bottom">{{ $t('studentAffairsOfficeView.merge') }} </v-tooltip>
+          </v-btn>
         </v-col>
+
         <v-col cols="3" md="1">
-          <v-btn class="ma-2" icon="mdi-file-compare" @click="this.$emit('open',{component:'ComparisonMenu',formCopy:{}});"/>
+          <v-btn class="ma-2" icon="mdi-file-compare" @click="this.$emit('open',{component:'ComparisonMenu',formCopy:{}});">
+            <v-icon>mdi-file-compare</v-icon>
+            <v-tooltip activator="parent" location="bottom"> {{ $t('studentAffairsOfficeView.compareWithOtherApplications') }} </v-tooltip>
+          </v-btn>
+  
         </v-col>
         <v-col cols="3" md="1">
           <v-btn class="ma-2" icon="mdi-close" @click="this.$emit('close')"/>
@@ -117,9 +129,9 @@
 
             <v-div v-if="module.approval === 'formally rejected'">
               <v-card-text>
-                <u>{{ $t('reviewComponent.formallyRejected') }}</u>
+                <div><span style="font-weight: bold;">{{ $t('reviewComponent.formallyRejected') }}</span></div>
                 <br/>
-                <u>{{ $t('reviewComponent.moduleApprovalReason') }}:</u> {{ module.reason }}
+                <div><span style="font-weight: bold;">{{ $t('reviewComponent.moduleApprovalReason') }}:</span>{{ module.reason }}</div>
               </v-card-text>
             </v-div>
 
