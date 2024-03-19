@@ -87,6 +87,7 @@
           <v-card-text>
             <v-select
                 multiple
+                disabled
                 v-model="moduleData.modules2bCredited"
                 :items="majorModules"
                 item-title="name"
