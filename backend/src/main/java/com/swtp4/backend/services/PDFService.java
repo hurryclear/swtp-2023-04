@@ -192,7 +192,7 @@ public class PDFService {
                 contentStream = new PDPageContentStream(document, newPage);
                 currentHeight = 750;
             }
-            currentHeight = writeContentOneLine(contentStream,PDType1Font.HELVETICA, 12, 100, currentHeight, lineHeight, "Anzurechnende Module:");
+            currentHeight = writeContentOneLine(contentStream,PDType1Font.HELVETICA_BOLD, 12, 100, currentHeight, lineHeight, "Anzurechnende Module:");
             for (ModuleUniEntity moduleUniEntity : moduleUniEntityList) {
                 //Check if Page is full
                 if (currentHeight < 20) {
@@ -242,6 +242,18 @@ public class PDFService {
                 contentStream.beginText();
                 contentStream.setFont(font, fontSize);
                 line = new StringBuilder();
+                while (word.length() > 50) {
+                    int midIndex = word.length() / 2;
+                    line.append(word.substring(0, midIndex));
+                    contentStream.newLineAtOffset(tx, ty);
+                    contentStream.showText(line.toString());
+                    ty -= lineHeight;
+                    word = word.substring(midIndex);
+                    contentStream.endText();
+                    contentStream.beginText();
+                    contentStream.setFont(font, fontSize);
+                    line = new StringBuilder();
+                }
                 line.append(word);
             }
         }
@@ -257,11 +269,7 @@ public class PDFService {
         float ty = currentHeight;
         //iterate over textLines and uses single method do write lines
         for (int i=0; i < textLines.size(); i++) {
-            if (i == 0) {
-                ty = writeContentOneLine(contentStream, font, fontSize, tx1, ty, lineHeight, textLines.get(i));
-            } else {
-                ty = writeContentOneLine(contentStream, font, fontSize, tx1, ty, lineHeight, textLines.get(i));
-            }
+            ty = writeContentOneLine(contentStream, font, fontSize, tx1, ty, lineHeight, textLines.get(i));
         }
         return ty;
     }
