@@ -26,6 +26,7 @@
 
 <script>
 import StudentAffairsOfficeService from "@/services/StudentAffairsOfficeService";
+
 export default {
   data() {
     return {
@@ -49,7 +50,11 @@ export default {
     async openEditMenu(item) {
       try {
         const form = await StudentAffairsOfficeService.getApplication(item.applicationID);
-        this.$emit('open', {component: 'EditMenu', form});
+        const role = this.$store.authentication.role
+        const component = role === 'ROLE_COMMITTEE' ? 'EditMenuCommittee' : role === 'ROLE_OFFICE' ? 'EditMenu' : null;
+        if (component) {
+          this.$emit('open', { component, form });
+        }
       } catch (error) {
         console.error("Error retrieving form: ", error);
       }

@@ -46,6 +46,7 @@
           {{ $t('studentAffairsOfficeView.merge') }}
         </v-tooltip>
       </v-btn>
+      <!-- Button for ComparisonMenu-->
       <v-btn
           class="ma-2"
           icon
