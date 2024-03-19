@@ -313,15 +313,17 @@ public class ApplicationService {
             for(EditedStudentModule editedModule : block.editedModules()){
                 ModuleStudentEntity moduleStudent = moduleStudentRepository.findById(editedModule.moduleID())
                         .orElseThrow(() -> new ResourceNotFoundException("Student Module with ID " +editedModule.moduleID() + "not found, cant updateApproval"));
-                if (moduleStudent.getApproval().isEmpty() && !editedModule.reason().isEmpty() && validApprovals.contains(editedModule.approval())){
-                    moduleStudent.setApproval(editedModule.approval());
-                }
-                else{
-                    // if there is still a module without reason or valid approval-state then approval has not finished yet
-                    if(editedModule.reason().isEmpty() || !editedModule.approval().equals("formally rejected"))
+                // if it was not proven yet then..
+                if (moduleStudent.getApproval().isEmpty()) {
+                    //if there is a reason and a valid Approval then set the Approval
+                    if (!editedModule.reason().isEmpty() && validApprovals.contains(editedModule.approval())) {
+                        moduleStudent.setApproval(editedModule.approval());
+                    } else {
+                        // if there is still a module without reason or valid approval-state then approval has not finished yet
                         allAreApproved = false;
+                    }
+                    moduleStudent.setApprovalReason(editedModule.reason());
                 }
-                moduleStudent.setApprovalReason(editedModule.reason());
                 moduleStudentRepository.save(moduleStudent);
             }
         }
