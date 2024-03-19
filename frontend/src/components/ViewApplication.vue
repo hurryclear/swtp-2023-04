@@ -105,7 +105,6 @@
                 item-title="name"
                 item-value="id"
                 variant="outlined"
-                disabled
                 :label="$t('studentAffairsOfficeView.creditFor')"
             />
           </v-card-text>
