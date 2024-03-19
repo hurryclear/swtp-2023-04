@@ -3,6 +3,9 @@
     "moduleFormList": {
       "addMapping": "Añadir Mapeo de Módulo",
       "moduleMapping": {
+        "required": "¡Requerido!",
+        "charLimitExceeded": "¡Límite de caracteres excedido!",
+        "fileTooBig": "¡Archivo demasiado grande!",
         "addModule": "Añadir Módulo",
         "commentLabel": "Comentario",
         "description": "Proporciona información sobre el módulo que se va a acreditar.",

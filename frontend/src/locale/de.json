@@ -3,6 +3,9 @@
     "moduleFormList": {
       "addMapping": "Modulabbildung hinzufügen",
       "moduleMapping": {
+        "required": "Erforderlich!",
+        "charLimitExceeded": "Zeichenbegrenzung überschritten!",
+        "fileTooBig": "Dateigröße zu groß!",
         "addModule": "Modul hinzufügen",
         "commentLabel": "Kommentar",
         "description": "Geben Sie Informationen zum Modul an, das anerkannt werden soll.",

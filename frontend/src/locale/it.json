@@ -3,6 +3,9 @@
     "moduleFormList": {
       "addMapping": "Aggiungi Mappatura Modulo",
       "moduleMapping": {
+        "required": "Richiesto!",
+        "charLimitExceeded": "Limite di caratteri superato!",
+        "fileTooBig": "Dimensione del file troppo grande!",
         "addModule": "Aggiungi Modulo",
         "commentLabel": "Commento",
         "description": "Fornisci informazioni sul modulo da accreditare.",
