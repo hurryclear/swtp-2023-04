@@ -8,7 +8,20 @@
           </v-card-title>
         </v-col>
     
-        <v-col cols="6" md="4">
+        <v-col cols="6" md="4" v-if="formCopy.edited.applicationData.status === 'open' || formCopy.edited.applicationData.status === 'edited'">
+            <v-btn
+          variant="elevated"
+          class="ma-2"
+          prepend-icon="mdi-content-save"
+          :loading="loadingSaveButton"
+          @click="sendToExaminingCommitteeChair()"
+          color="orange"
+          >
+            {{  $t('studentAffairsOfficeView.makeApprovable') }}
+            </v-btn>
+        </v-col>
+
+        <v-col cols="6" md="4" v-else>
           <v-btn-toggle class="ma-2" v-model="showEdited" mandatory shaped variant="outlined">
             <v-btn :value="false">
               {{ $t('studentAffairsOfficeView.original') }}
@@ -18,7 +31,7 @@
             </v-btn>
           </v-btn-toggle>
         </v-col>
-    
+
         <v-col cols="3" md="1">
           <v-btn class="ma-2" icon="mdi-call-split" @click="this.$emit('open', { component: 'SplitComponent', form: this.formCopy })"/>
         </v-col>
@@ -113,7 +126,7 @@
             <v-div v-else-if="showEdited">
               <v-text-field
                 variant="outlined"
-                :label="$t('studentAffairsOfficeView.formalReject')"
+                :label="$t('studentAffairsOfficeView.reasonForDesicion')"
                 v-model="module.reason"/>
             </v-div>
             
@@ -176,7 +189,7 @@
       <v-divider/>
       <v-card-actions>
         <v-div v-if="showEdited">
-          <v-btn
+            <v-btn
           variant="elevated"
           class="ma-2"
           prepend-icon="mdi-content-save"
@@ -184,7 +197,7 @@
           @click="saveApprovedForm(false)"
           :color="allModulesReviewed ? 'blue' : 'green'"
           >
-            {{ allModulesReviewed ? $t('newLabelWhenAllReviewed') : $t('studentAffairsOfficeView.save') }}
+            {{ allModulesReviewed ? $t('sutdentAffairsOfficeView.finishApproval') : $t('studentAffairsOfficeView.save') }}
           </v-btn>
         </v-div>
       </v-card-actions>
@@ -237,6 +250,15 @@ export default {
     async getModules() {
       try {
         this.majorModules = await StudentAffairsOfficeService.getAllModules(this.form.original.applicationData.newCourseOfStudy);
+      } catch (error) {
+        console.error(error.message);
+      }
+    },
+
+    async sendToExaminingCommitteeChair() {
+      try {
+        await StudentAffairsOfficeService.sendFormToApproval(this.formCopy);
+        this.$emit("save");
       } catch (error) {
         console.error(error.message);
       }

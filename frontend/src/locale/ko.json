@@ -154,7 +154,10 @@
     "undoRejection": "거부 취소",
     "university": "대학교",
     "view": "보기",
-    "reason": "이유"
+    "reason": "이유",
+    "makeApprovable": "승인 가능하게 만들기",
+    "finishApproval": "승인 완료",
+    "reasonForDesicion": "결정 이유"
    },
   "updateModuleDataView": {
     "uploadJSON": "JSON 업로드",

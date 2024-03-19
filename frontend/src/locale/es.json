@@ -154,7 +154,10 @@
     "undoRejection": "Deshacer rechazo",
     "university": "Universidad",
     "view": "Ver",
-    "reason": "Razón"
+    "reason": "Razón",
+    "makeApprovable": "Hacer aprobable",
+    "finishApproval": "Finalizar aprobación",
+    "reasonForDesicion": "Razón de la decisión"
   },
   "updateModuleDataView": {
     "uploadJSON": "Subir JSON",
