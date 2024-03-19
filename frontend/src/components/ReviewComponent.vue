@@ -317,7 +317,6 @@ export default {
     async checkStatus() {
       try {
         await this.fetchApplicationSummary(this.formId);
-        console.log('Form:', this.form);
 
         if (this.form && this.form.applicationData.applicationID === this.formId) {
           this.isDataVisible = true;
@@ -344,7 +343,6 @@ export default {
      * link in the DOM to trigger the download of the PDF file. After the download
      * initiates, it cleans up by removing the temporary link and revoking the
      * created URL object.
-     * If the PDF download fails, an error will be logged to the console.
      *
      * @async
      * @function downloadForm
@@ -356,8 +354,6 @@ export default {
           params: {applicationId},
           responseType: 'blob'
         });
-        console.log('PDF response:', response);
-
         const url = window.URL.createObjectURL(new Blob([response.data], {type: 'application/pdf'}));
         const filename = `Application-${applicationId}.pdf`;
         const link = document.createElement('a');
@@ -472,7 +468,6 @@ export default {
     },
     applicationId(newVal) {
       this.formId = newVal;
-      console.log('Updated Form ID:', this.formId);
       if (this.formId) {
         this.checkStatus();
       }
