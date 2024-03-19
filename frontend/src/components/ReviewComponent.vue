@@ -108,7 +108,7 @@
                       <!-- Card displaying approval status of the module block -->
                       <v-card :color="getBlockApprovalColor(moduleForm.modulesStudent)">
                         <v-card-text class="text-center"><span style="font-weight: bold; color: white;"> {{
-                            getBlockApprovalStatus(moduleForm.modulesStudent)
+                            statusTranslation(getBlockApprovalStatus(moduleForm.modulesStudent))
                           }}</span></v-card-text>
                       </v-card>
                     </v-col>

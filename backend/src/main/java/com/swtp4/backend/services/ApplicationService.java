@@ -154,8 +154,7 @@ public class ApplicationService {
 
         for(EditedBlock blockDto : applicationDto.editedBlocks()) {
             ModuleBlockEntity blockEmployee = updateModuleBlockEntity(blockDto, applicationEmployee);
-
-            for(EditedStudentModule moduleDto : blockDto.editedModules()) {
+            for (EditedStudentModule moduleDto : blockDto.editedModules()) {
                 ModuleStudentEntity moduleEmployee = updateModuleStudentEntity(moduleDto);
 
                 List<ModuleRelationEntity> moduleRelationEntities = moduleRelationRepository
@@ -171,9 +170,19 @@ public class ApplicationService {
                     }
                 }
 
-                for(Long newUniModuleID: blockDto.uniModuleIDs()){
+                for (Long newUniModuleID : blockDto.uniModuleIDs()) {
                     updateModuleRelationEntity(blockEmployee, moduleEmployee, newUniModuleID);
                 }
+            }
+        }
+
+        List<ModuleBlockEntity> moduleBlockEntityList = moduleBlockRepository
+                .findAllByApplicationEntity(applicationEmployee);
+        for(ModuleBlockEntity oldBlock: moduleBlockEntityList){
+            List<ModuleRelationEntity> moduleRelationEntityList = moduleRelationRepository
+                    .findByModuleBlockEntity(oldBlock);
+            if(moduleRelationEntityList.isEmpty()){
+                moduleBlockRepository.delete(oldBlock);
             }
         }
     }
@@ -212,7 +221,7 @@ public class ApplicationService {
     // create new or update exiting Block
     private ModuleBlockEntity updateModuleBlockEntity(EditedBlock blockDto, ApplicationEntity applicationEmployee) {
         ModuleBlockEntity blockEmployee;
-        if (blockDto.blockID() == null) {
+        if (blockDto.blockID()==null || Objects.equals(blockDto.blockID(), 0L)) {
             blockEmployee = ModuleBlockEntity.builder().applicationEntity(applicationEmployee).build();
         }
         else {
