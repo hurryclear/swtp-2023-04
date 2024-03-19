@@ -42,6 +42,7 @@
         >
           <v-text-field
               class="userInput"
+              :rules="rules.textRules"
               v-model="module.name"
               hide-details
               :label="$t('applicationFormView.moduleFormList.moduleMapping.moduleNameLabel')"
@@ -49,7 +50,7 @@
           />
           <v-file-input
               v-model="module.description.file"
-              :rules="fileRules"
+              :rules="rules.fileRules"
               class="userInput"
               accept=".pdf"
               show-size
@@ -68,6 +69,7 @@
               class="userInput"
           />
           <v-text-field
+              :rules="rules.textRules"
               class="userInput"
               v-model="module.courseOfStudy"
               hide-details
@@ -75,6 +77,7 @@
               variant="outlined"
           />
           <v-text-field
+              :rules="rules.textRules"
               class="userInput"
               v-model="module.id"
               hide-details
@@ -82,6 +85,7 @@
               variant="outlined"
           />
           <v-text-field
+              :rules="rules.creditRules"
               v-model="module.credits"
               class="userInput"
               hide-details
@@ -92,6 +96,7 @@
               max="30"
           />
           <v-text-field
+              :rules="rules.textRules"
               v-model="module.meta.comments.student"
               class="userInput"
               hide-details
@@ -162,13 +167,24 @@ export default {
         ],
         modulesToBeCredited: [],
       },
-
-      fileRules: [
-        file => {
-          return !file || !file.length || file[0].size <= 10 * 1024 * 1024 || this.$t('applicationFormView.moduleFormList.FileToBig');
-        }
-      ]
-  };
+      rules: {
+        creditRules: [
+          credits => (credits <= 30) || 'Max 30.',
+          credits => (credits >= 0) || 'Min 0.',
+          credits => (credits && credits.length <= 2) || 'Max 2 characters'
+        ],
+        textRules: [
+          value => !!value || 'Required.',
+          value => (value && value.length <= 255) || 'Max 255 characters',
+        ],
+        fileRules: [
+          file => !!file || 'Required',
+          file => {
+            return !file || !file.length || file[0].size <= 10 * 1024 * 1024 || this.$t('applicationFormView.moduleFormList.FileTooBig');
+          }
+        ]
+      },
+    };
   },
 
   // Props
@@ -212,7 +228,7 @@ export default {
     addModule() {
       const key = this.moduleMapping.previousModules[this.moduleMapping.previousModules.length - 1].meta.key + 1
       const moduleMappingIndex = this.moduleMappingIndex
-      this.$store.commit('addModule', { moduleMappingIndex, key });
+      this.$store.commit('addModule', {moduleMappingIndex, key});
       this.moduleMapping = this.$store.getters.getModuleMappingByIndex(moduleMappingIndex)
       this.selectedTab = this.moduleMapping.previousModules.length - 1;
     },
