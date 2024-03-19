@@ -264,13 +264,25 @@ const approvalStatusMappings = {
     translation:'rejected',
     color: 'red'
   },
-  'formally rejected': {
+  formallyRejected: {
     translation:'formallyRejected',
     color: 'red',
   },
+  open:{
+    translation:'open',
+    color: 'blue',
+  },
+  partiallyAccepted:{
+    translation: 'partiallyAccepted',
+    color: 'orange'
+  },
+  partiallyRejected:{
+    translation: 'partiallyRejected',
+    color: 'orange'
+  },
   default: {
-    translation:'pending',
-    color: 'red'
+    translation:'unknown',
+    color: 'grey'
   },
 };
 
