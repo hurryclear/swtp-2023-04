@@ -202,7 +202,7 @@
             class="ma-2"
             prepend-icon="mdi-arrow-u-left-top"
             :loading="loadingSendButton"
-            @click="sendToExaminingCommitteeChair(true)"
+            @click="sendToExaminingCommitteeChair()"
         >
           {{ $t('studentAffairsOfficeView.sendToExaminationCommittee') }}
         </v-btn>
@@ -212,7 +212,7 @@
             class="ma-2"
             prepend-icon="mdi-content-save"
             :loading="loadingSaveButton"
-            @click="saveEditedForm(false)"
+            @click="saveEditedForm()"
         >
           {{ $t('studentAffairsOfficeView.save') }}
         </v-btn>
@@ -255,21 +255,21 @@ export default {
       }
     },
 
-    async sendToExaminingCommitteeChair(readyForApproval) {
+    async sendToExaminingCommitteeChair() {
       try {
-        await this.saveEditedForm(readyForApproval);
+        this.formCopy.edited.applicationData.dateLastEdited = new Date().toISOString();
         await StudentAffairsOfficeService.sendFormToApproval(this.formCopy);
+        this.$emit("save");
       } catch (error) {
         console.error(error.message);
       }
     },
 
-    saveEditedForm(readyForApproval) {
+    async saveEditedForm() {
       try {
         this.formCopy.edited.applicationData.dateLastEdited = new Date().toISOString();
-        if (!readyForApproval) {
-          this.$emit("save");
-        }
+        await StudentAffairsOfficeService.saveEditedForm(this.formCopy);
+        this.$emit("save");
       } catch (error) {
         console.error(error.message);
       }

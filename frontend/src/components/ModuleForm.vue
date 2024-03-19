@@ -241,6 +241,15 @@ export default {
 
   // Watchers
   watch: {
+
+    moduleCredits(newVal) {
+      if (newVal > 30) {
+        this.moduleCredits = 30; // Set moduleCredits to 30 if the input exceeds 30
+      } else if (newVal < 0) {
+        this.moduleCredits = 0
+      }
+    },
+
     /**
      * Watches for changes in moduleMapping.previousModules and updates university data accordingly.
      * @param {Array} newValue The new value of moduleMapping.previousModules.
