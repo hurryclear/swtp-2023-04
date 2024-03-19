@@ -5,47 +5,109 @@
         <v-card-title>
           <u>{{ $t('studentAffairsOfficeView.application') }}</u>
         </v-card-title>
-        <v-spacer/>
-        <v-btn class="button-top" variant="tonal" icon="mdi-close" @click="this.$emit('close');"/>
+        <v-spacer />
+        <v-btn class="button-top" variant="tonal" icon="mdi-close" @click="this.$emit('close');" />
       </div>
-      <v-card-text>
-        {{ $t('studentAffairsOfficeView.previousUniversity') }}: {{ copy.edited.applicationData.university }}
-      </v-card-text>
-      <v-card-text>
-        {{ $t('studentAffairsOfficeView.previousCourse') }}: {{ copy.edited.applicationData.oldCourseOfStudy }}
-      </v-card-text>
-      <v-card-text>
-        {{ $t('studentAffairsOfficeView.currentCourse') }}: {{ copy.edited.applicationData.newCourseOfStudy }}
-      </v-card-text>
-      <v-card-title>
-        {{ $t('studentAffairsOfficeView.modules') }}:
-      </v-card-title>
-      <div v-for="(moduleData, index) in copy.edited.moduleFormsData" v-bind:key="moduleData.frontend_key">
-        <v-card-subtitle>
-          <br>
+      <v-divider />
+      <v-tabs v-model="selectedTabIndex">
+        <v-tab v-for="(moduleData, index) in copy.edited.moduleFormsData" :key="index">
           {{ $t('studentAffairsOfficeView.mapping') }} {{ index + 1 }}
-        </v-card-subtitle>
-        <div v-for="(studentModule, index2) in moduleData.modulesStudent" v-bind:key="studentModule.frontend_key">
-          <v-card-text><u>{{ $t('studentAffairsOfficeView.module') }} {{ index2 + 1 }}</u></v-card-text>
-          <v-card-text>{{ $t('studentAffairsOfficeView.name') }}: {{ studentModule.title }}</v-card-text>
-          <v-card-text>{{ $t('studentAffairsOfficeView.moduleNumber') }}: {{ studentModule.number }}</v-card-text>
-          <v-card-text>{{ $t('studentAffairsOfficeView.credits') }}: {{ studentModule.credits }}</v-card-text>
-          <v-card-text>{{ $t('studentAffairsOfficeView.studentComment') }}: {{ studentModule.commentStudent }}</v-card-text>
-          <v-card-text>{{ $t('studentAffairsOfficeView.officeComment') }}: {{ studentModule.commentEmployee }}</v-card-text>
-          <v-btn style="margin: 1%" @click="downloadPdf(studentModule.path)">{{ $t('studentAffairsOfficeView.downloadDescription') }}</v-btn>
-          <v-card-text>{{ $t('studentAffairsOfficeView.decision') }}: {{ studentModule.reason }}</v-card-text>
-        </div>
-        <v-card-text>
-          <u>{{ $t('studentAffairsOfficeView.creditFor') }}:</u>
-          <br>
-          <div v-for="module in moduleData.modules2bCredited" v-bind:key="module">
-            <v-card-text>{{ module }}</v-card-text>
+        </v-tab>
+      </v-tabs>
+      <v-window v-model="selectedTabIndex">
+        <v-window-item v-for="(moduleData, index) in copy.edited.moduleFormsData" :key="index">
+          <v-card-text>
+            <v-text-field
+                disabled
+                v-model="copy.edited.applicationData.university"
+                :label="$t('studentAffairsOfficeView.previousUniversity')"
+                outlined
+            />
+            <v-text-field
+                disabled
+                v-model="copy.edited.applicationData.oldCourseOfStudy"
+                :label="$t('studentAffairsOfficeView.previousCourse')"
+                outlined
+            />
+            <v-text-field
+                disabled
+                v-model="copy.edited.applicationData.newCourseOfStudy"
+                :label="$t('studentAffairsOfficeView.currentCourse')"
+                outlined
+            />
+          </v-card-text>
+          <v-card-title>
+            {{ $t('studentAffairsOfficeView.modules') }}:
+          </v-card-title>
+          <div v-for="(studentModule, index2) in moduleData.modulesStudent" :key="index2">
+            <v-card-subtitle>
+              {{ $t('studentAffairsOfficeView.module') }} {{ index2 + 1 }}
+            </v-card-subtitle>
+            <v-text-field
+                disabled
+                v-model="studentModule.title"
+                :label="$t('studentAffairsOfficeView.name')"
+                outlined
+            />
+            <v-text-field
+                disabled
+                v-model="studentModule.number"
+                :label="$t('studentAffairsOfficeView.moduleNumber')"
+                outlined
+            />
+            <v-text-field
+                disabled
+                v-model="studentModule.credits"
+                :label="$t('studentAffairsOfficeView.credits')"
+                outlined
+            />
+            <v-text-field
+                disabled
+                v-model="studentModule.commentStudent"
+                :label="$t('studentAffairsOfficeView.studentComment')"
+                outlined
+            />
+            <v-text-field
+                disabled
+                v-model="studentModule.commentEmployee"
+                :label="$t('studentAffairsOfficeView.officeComment')"
+                outlined
+            />
+            <v-btn style="margin: 1%" @click="downloadPdf(studentModule.path)">
+              {{ $t('studentAffairsOfficeView.downloadDescription') }}
+            </v-btn>
+            <v-text-field
+                disabled
+                v-model="studentModule.reason"
+                :label="$t('studentAffairsOfficeView.decision')"
+                outlined
+            />
+            <v-divider />
           </div>
-        </v-card-text>
-        <v-divider/>
-      </div>
-      <v-divider/>
-      <v-card-text>{{ $t('studentAffairsOfficeView.decision') }}: {{ copy.edited.formalReject}}</v-card-text>
+          <v-card-text>
+            <v-select
+                multiple
+                v-model="moduleData.modules2bCredited"
+                :items="majorModules"
+                item-title="name"
+                item-value="id"
+                outlined
+                :label="$t('studentAffairsOfficeView.creditFor')"
+            />
+          </v-card-text>
+          <v-divider />
+        </v-window-item>
+      </v-window>
+      <v-divider />
+      <v-card-text>
+        {{ $t('studentAffairsOfficeView.decision') }}:
+        <v-text-field
+            disabled
+            v-model="copy.edited.formalReject"
+            :label="$t('studentAffairsOfficeView.decision')"
+            outlined
+        />
+      </v-card-text>
     </v-card>
   </div>
 </template>
@@ -61,30 +123,12 @@ export default {
   data() {
     return {
       copy: {},
-      majorModules: []
-    }
+      majorModules: [],
+      selectedTabIndex: 0
+    };
   },
 
   methods: {
-
-    findModule(module) {
-      const foundModule = this.majorModules.find(item => item.id === module);
-      return foundModule ? foundModule.name : this.$t('studentAffairsOfficeView.moduleNotFound');
-    },
-
-    replaceIdWithName() {
-      for (let i = 0; i < this.copy.edited.moduleFormsData.length; i++) {
-        for (let j = 0; j < this.copy.edited.moduleFormsData[i].modules2bCredited.length; j++) {
-          //Replace module ID in moduleFormsData[i], modules2bCredited[j] with their names
-          this.copy.edited.moduleFormsData[i].modules2bCredited[j] = this.findModule(this.copy.edited.moduleFormsData[i].modules2bCredited[j]);
-        }
-      }
-    },
-
-    createCopy() {
-      this.copy = structuredClone(this.form);
-    },
-
     async getModules() {
       try {
         this.majorModules = await StudentAffairsOfficeService.getModules(this.copy.edited.applicationData.newCourseOfStudy);
@@ -106,15 +150,13 @@ export default {
         console.error('Error downloading PDF:', error);
       }
     }
-
   },
 
   async created() {
-    this.createCopy();
+    this.copy = structuredClone(this.form);
     await this.getModules();
-    this.replaceIdWithName();
   }
-}
+};
 </script>
 
 <style scoped>
