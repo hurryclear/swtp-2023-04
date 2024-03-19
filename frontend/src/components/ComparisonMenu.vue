@@ -13,7 +13,7 @@
         v-model:items-per-page="itemsPerPage"
         v-model:sort-by="sortBy"
         :headers="translatedHeaders"
-        :items="items"
+        :items="formattedForms"
         :loading="loading"
         :items-length="totalItems"
         :page="page"
@@ -58,7 +58,7 @@ export default {
         applicationID: this.id,
         universityName: this.previousUniversity,
         module: this.previousModule,
-        dateOfSubmission: this.formatDate(this.dateOfSubmission.toString()),
+        dateOfSubmission: this.formatDateForQueryString(this.dateOfSubmission.toString()),
         pageNumber: this.page - 1,
       };
 
@@ -74,9 +74,21 @@ export default {
           .join("&");
     },
 
-    formatDate(dateString) {
+    formatDateForQueryString(dateString) {
       const [year, month, day] = dateString.split("-");
       return `${day}.${month}.${year}`;
+    },
+
+    formatDateForTable(inputDate) {
+      const date = new Date(inputDate);
+      const options = {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      };
+      return date.toLocaleDateString(this.$i18n.locale, options);
     },
 
     async loadItems() {
@@ -84,7 +96,8 @@ export default {
       try {
         const response = await StudentAffairsOfficeService.searchApplication(this.buildQueryString());
         this.items = response.content;
-        this.totalItems = response.totalElements;
+        this.totalItems = response.totalItems;
+        console.log(response.totalItems);
       } catch (error) {
         console.error("Error retrieving filtered/sorted applications: ", error);
       }
@@ -113,6 +126,13 @@ export default {
         { title: this.$t("studentAffairsOfficeView.status"), key: "status" },
         { title: this.$t("studentAffairsOfficeView.view"), value: "actions", sortable: false }
       ];
+    },
+    formattedForms() {
+      return this.items.map(form => ({
+        ...form,
+        dateOfSubmission: this.formatDateForTable(form.dateOfSubmission),
+        dateLastEdited: this.formatDateForTable(form.dateLastEdited)
+      }));
     }
   },
 }

@@ -270,7 +270,9 @@ export default {
                 this.moduleMapping.previousModules[index].university.name = '';
                 return;
               }
-              this.moduleMapping.previousModules[index].university = structuredClone(newValue);
+              this.moduleMapping.previousModules[index].university.name = newValue.name
+              this.moduleMapping.previousModules[index].university.country = newValue.country
+              this.moduleMapping.previousModules[index].university.website = newValue.web_pages.toString()
             }
           }
         })

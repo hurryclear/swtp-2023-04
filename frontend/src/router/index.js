@@ -49,28 +49,20 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    console.log('Navigating to:', to.path, "\nCurrent user authenticated status:", store.state.authentication.isAuthenticated, "\nCurrent user role:", store.state.authentication.userRole);
-    document.title = i18n.global.t(`routes.${to.path}`);//TODO:i18n
+    document.title = i18n.global.t(`routes.${to.path}`);
     if (to.matched.some(record => record.meta.requiresAuth)) {
         if (!store.state.authentication.isAuthenticated) {
-            console.log('User not authenticated. Redirecting to Login.');
             next({name: 'Login'});
         } else {
             const routeRequiredRoles = to.meta.roles; // Get array of roles required for this route
             const userRole = store.state.authentication.userRole;
-
-            console.log('Route requires roles:', routeRequiredRoles);
-
             if (routeRequiredRoles && !routeRequiredRoles.includes(userRole)) {
-                console.log(`User role ${userRole} does not match required roles ${routeRequiredRoles}. Redirecting.`);
                 next({name: 'Login'}); // Redirect to a safe route
             } else {
-                console.log('User role matches or no specific role required. Proceeding to route.');
                 next();
             }
         }
     } else {
-        console.log('No authentication required for this route. Proceeding to route.');
         next();
     }
 });

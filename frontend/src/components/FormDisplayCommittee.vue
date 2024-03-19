@@ -38,7 +38,7 @@ export default {
   },
 
   async created() {
-    await this.getForms();
+
   },
 
   methods: {
@@ -55,7 +55,9 @@ export default {
       try {
         this.loading = true;
         const queryString = this.buildQueryString()
-        this.forms = await StudentAffairsOfficeService.getCommitteeOverview(queryString);
+        const response = await StudentAffairsOfficeService.getCommitteeOverview(queryString);
+        this.forms = response.content;
+        this.totalItems = response.totalItems;
         this.loading = false;
       } catch (error) {
         console.error("Error retrieving open forms: ", error);

@@ -101,13 +101,16 @@ const StudentAffairsOfficeService = {
 
     /**
      * Fetches the office overview.
-     * @returns {Promise<string>} A promise that resolves with the office overview content.
+     * @returns {Promise<{totalItems: (number|*), content}>} A promise that resolves with the office overview content.
      * @throws {Error} If an error occurs while fetching the office overview.
      */
     async getOfficeOverview(queryString) {
         try {
             const response = await axios.get("/api/application/overviewOffice?" + queryString);
-            return response.data.content;
+            return {
+                content: response.data.content,
+                totalItems: response.data.totalElements
+            };
         } catch (error) {
             throw new Error(`Error fetching office overview: ${error.message}`);
         }
@@ -137,7 +140,10 @@ const StudentAffairsOfficeService = {
     async searchApplication(queryString) {
         try {
             const response = await axios.get("/api/application/searchApplication?" + queryString);
-            return response.data;
+            return {
+                content: response.data.content,
+                totalItems: response.data.totalElements
+            };
         } catch (error) {
             throw new Error(`Error retrieving filtered/sorted applications: ${error.message}`);
         }
@@ -145,13 +151,16 @@ const StudentAffairsOfficeService = {
 
     /**
      * Fetches the committee overview.
-     * @returns {Promise<string>} A promise that resolves with the committee overview content.
+     * @returns {Promise<{totalItems: (number|*), content}>} A promise that resolves with the committee overview content.
      * @throws {Error} If an error occurs while fetching the committee overview.
      */
     async getCommitteeOverview(queryString) {
         try {
             const response = await axios.get("/api/application/overviewCommittee?" + queryString);
-            return response.data.content;
+            return {
+                content: response.data.content,
+                totalItems: response.data.totalElements
+            };
         } catch (error) {
             throw new Error(`Error fetching committee overview: ${error.message}`);
         }

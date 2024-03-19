@@ -36,7 +36,6 @@ export default {
         },
         setCurrentForm(state, form) {
             state.currentForm = {...form};
-            console.log('Current form:', state.currentForm);
         }
     },
     actions: {

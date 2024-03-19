@@ -365,6 +365,7 @@ export default {
                     (module) => {
                         const id = moduleForm.meta.key + ":" + module.meta.key;
                         formData.append(`file-${id}`, module.description.file[0]);
+                        delete module.selectedUniversity;
                         delete module.description;
                     }
                 )
