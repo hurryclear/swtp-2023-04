@@ -156,7 +156,8 @@
     "view": "视图",
     "reason": "原因",
     "reject": "拒绝",
-    "finishApproval": "完成批准"
+    "finishApproval": "完成批准",
+    "reasonForDesicion": "决定原因"
   },
   "updateModuleDataView": {
     "uploadJSON": "上传JSON",

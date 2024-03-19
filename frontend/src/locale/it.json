@@ -156,7 +156,8 @@
     "view": "Visualizza",
     "reason": "Motivo",
     "makeApprovable": "Rendi approvabile",
-    "finishApproval": "Termina approvazione"
+    "finishApproval": "Termina approvazione",
+    "reasonForDesicion": "Motivo della decisione"
   },
   "updateModuleDataView": {
     "uploadJSON": "Carica JSON",

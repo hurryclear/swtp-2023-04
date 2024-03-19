@@ -155,7 +155,8 @@
     "view": "Anzeigen",
     "reason": "Grund",
     "makeApprovable": "Genehmigungsfähig machen",
-    "finishApproval": "Genehmigung abschließen"
+    "finishApproval": "Genehmigung abschließen",
+    "reasonForDesicion": "Grund für Entscheidung"
 
 
   },

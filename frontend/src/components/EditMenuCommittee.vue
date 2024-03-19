@@ -17,7 +17,7 @@
           @click="sendToExaminingCommitteeChair()"
           color="orange"
           >
-            {{  $t('studentAffairsOfficeView.sendToExaminationCommittee') }}
+            {{  $t('studentAffairsOfficeView.makeApprovable') }}
             </v-btn>
         </v-col>
 
@@ -126,7 +126,7 @@
             <v-div v-else-if="showEdited">
               <v-text-field
                 variant="outlined"
-                :label="$t('studentAffairsOfficeView.formalReject')"
+                :label="$t('studentAffairsOfficeView.reasonForDesicion')"
                 v-model="module.reason"/>
             </v-div>
             
@@ -189,20 +189,6 @@
       <v-divider/>
       <v-card-actions>
         <v-div v-if="showEdited">
-          <v-div v-if="formCopy.edited.applicationData.status === 'open' || formCopy.edited.applicationData.status === 'edited'">
-            <v-btn
-          variant="elevated"
-          class="ma-2"
-          prepend-icon="mdi-content-save"
-          :loading="loadingSaveButton"
-          @click="sendToExaminingCommitteeChair()"
-          color="orange"
-          >
-            {{  $t('studentAffairsOfficeView.sendToExaminationCommittee') }}
-          </v-btn>
-
-          </v-div>
-          <v-div v-else>
             <v-btn
           variant="elevated"
           class="ma-2"
@@ -211,10 +197,8 @@
           @click="saveApprovedForm(false)"
           :color="allModulesReviewed ? 'blue' : 'green'"
           >
-            {{ allModulesReviewed ? $t('newLabelWhenAllReviewed') : $t('studentAffairsOfficeView.save') }}
+            {{ allModulesReviewed ? $t('sutdentAffairsOfficeView.finishApproval') : $t('studentAffairsOfficeView.save') }}
           </v-btn>
-          </v-div>
-          
         </v-div>
       </v-card-actions>
     </div>

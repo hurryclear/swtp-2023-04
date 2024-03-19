@@ -156,7 +156,8 @@
     "view": "Просмотр",
     "reason": "Причина",
     "makeApprovable": "Сделать утверждаемым",
-    "finishApproval": "Завершить утверждение"
+    "finishApproval": "Завершить утверждение",
+    "reasonForDesicion": "Причина решения"
   },
   "updateModuleDataView": {
     "uploadJSON": "Загрузить JSON",
