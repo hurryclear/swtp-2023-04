@@ -138,7 +138,10 @@ const StudentAffairsOfficeService = {
     async searchApplication(queryString) {
         try {
             const response = await axios.get("/api/application/searchApplication?" + queryString);
-            return response.data;
+            return {
+                content: response.data.content,
+                totalItems: response.data.totalElements
+            };
         } catch (error) {
             throw new Error(`Error retrieving filtered/sorted applications: ${error.message}`);
         }

@@ -149,7 +149,7 @@ public class ApplicationCriteriaRepository {
         CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
         Root<ApplicationEntity> countRoot = countQuery.from(ApplicationEntity.class);
         Predicate predicate = getPredicate(applicationSearchCriteria, countRoot);
-        countQuery.select(criteriaBuilder.count(countRoot)).where(predicate);
+        countQuery.select(criteriaBuilder.countDistinct(countRoot)).where(predicate);
         return entityManager.createQuery(countQuery).getSingleResult();
     }
 }
