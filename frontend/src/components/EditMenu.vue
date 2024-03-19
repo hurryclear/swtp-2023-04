@@ -202,7 +202,7 @@
             class="ma-2"
             prepend-icon="mdi-arrow-u-left-top"
             :loading="loadingSendButton"
-            @click="sendToExaminingCommitteeChair(true)"
+            @click="sendToExaminingCommitteeChair()"
         >
           {{ $t('studentAffairsOfficeView.sendToExaminationCommittee') }}
         </v-btn>
@@ -255,9 +255,8 @@ export default {
       }
     },
 
-    async sendToExaminingCommitteeChair(readyForApproval) {
+    async sendToExaminingCommitteeChair() {
       try {
-        await this.saveEditedForm(readyForApproval);
         await StudentAffairsOfficeService.sendFormToApproval(this.formCopy);
       } catch (error) {
         console.error(error.message);
