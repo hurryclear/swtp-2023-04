@@ -66,6 +66,15 @@ public class ApplicationTestData {
         return JsonToStringConverter.convertJsonToString("TestApplicationJsonA.json");
     }
 
+    public static String createTestReviewApplication() throws Exception {
+        return JsonToStringConverter.convertJsonToString("TestReviewApplication.json");
+    }
+
+    public static String createOriginalSubmitApplicationJson() throws Exception {
+        return JsonToStringConverter.convertJsonToString("TestOriginalSubmittedApplication.json");
+    }
+
+
 //    public static ApplicationEntity createTestApplicationEntityA() {
 //        return ApplicationEntity.builder()
 //                .applicationKeyClass(createTestApplicationKeyClassA())
