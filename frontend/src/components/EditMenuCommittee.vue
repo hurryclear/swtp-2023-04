@@ -197,7 +197,7 @@
           @click="saveApprovedForm(false)"
           :color="allModulesReviewed ? 'blue' : 'green'"
           >
-            {{ allModulesReviewed ? $t('sutdentAffairsOfficeView.finishApproval') : $t('studentAffairsOfficeView.save') }}
+            {{ allModulesReviewed ? $t('studentAffairsOfficeView.finishApproval') : $t('studentAffairsOfficeView.save') }}
           </v-btn>
         </v-div>
       </v-card-actions>
