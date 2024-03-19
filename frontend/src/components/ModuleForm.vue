@@ -60,7 +60,7 @@
               prepend-icon=""
           />
           <v-autocomplete
-              v-model="module.selectedUniversity"
+              v-model="module.university"
               :items="universities"
               item-title="name"
               hide-details
