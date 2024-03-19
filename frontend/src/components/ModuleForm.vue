@@ -59,7 +59,7 @@
               hide-details="auto"
               prepend-icon=""
           />
-          <v-combobox
+          <v-autocomplete
               v-model="module.selectedUniversity"
               :items="universities"
               item-title="name"
@@ -256,36 +256,6 @@ export default {
       } else if (newVal < 0) {
         this.moduleCredits = 0
       }
-    },
-
-    /**
-     * Watches for changes in moduleMapping.previousModules and updates university data accordingly.
-     * @param {Array} newValue The new value of moduleMapping.previousModules.
-     * @param {Array} oldValue The old value of moduleMapping.previousModules.
-     */
-    'moduleMapping.previousModules': {
-      handler(newValue, oldValue) {
-        // This watcher will be triggered whenever any property inside previousModules changes
-        // We need to check if the selectedUniversity has changed
-        newValue.forEach((module, index) => {
-          if (module.selectedUniversity !== oldValue[index].selectedUniversity) {
-            // If selectedUniversity has changed, update the university properties
-            const newValue = module.selectedUniversity;
-            if (typeof newValue === 'string') {
-              this.moduleMapping.previousModules[index].university.name = newValue;
-            } else {
-              if (!newValue) { // Check if newValue is null or undefined
-                this.moduleMapping.previousModules[index].university.name = '';
-                return;
-              }
-              this.moduleMapping.previousModules[index].university.name = newValue.name
-              this.moduleMapping.previousModules[index].university.country = newValue.country
-              this.moduleMapping.previousModules[index].university.website = newValue.web_pages.toString()
-            }
-          }
-        })
-      },
-      deep: true,
     },
 
     /**

@@ -87,9 +87,15 @@
                 :label="$t('studentAffairsOfficeView.officeComment')"
                 variant="outlined"
             />
-            <v-btn class="ma-2"  @click="downloadPdf(studentModule.path)">
+            <v-btn class="ma-2"  @click="downloadPdf(studentModule.path, studentModule.title)">
               {{ $t('studentAffairsOfficeView.downloadDescription') }}
             </v-btn>
+            <v-text-field
+                disabled
+                v-model="studentModule.approval"
+                :label="$t('studentAffairsOfficeView.approval')"
+                variant="outlined"
+            />
             <v-text-field
                 disabled
                 v-model="studentModule.reason"
@@ -142,13 +148,13 @@ export default {
       }
     },
 
-    async downloadPdf(pdfPath) {
+    async downloadPdf(pdfPath, fileName) {
       try {
         const pdfBlob = await StudentAffairsOfficeService.getModulePDF(pdfPath);
         const url = window.URL.createObjectURL(new Blob([pdfBlob]));
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', 'file.pdf');
+        link.setAttribute('download', fileName + '.pdf');
         document.body.appendChild(link);
         link.click();
       } catch (error) {
