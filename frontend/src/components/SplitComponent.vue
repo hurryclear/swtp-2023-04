@@ -30,7 +30,7 @@
         multiple
         outlined
     />
-    <v-btn @click="splitModule" :disabled="!formFilled" color="primary">Split Module</v-btn>
+    <v-btn @click="splitModule" :disabled="formNotFilled" color="primary">Split Module</v-btn>
   </v-card>
 </template>
 
@@ -59,7 +59,7 @@ export default {
         value: index,
       }));
     },
-    formFilled(){
+    formNotFilled(){
       return (this.selectedModuleMappingIndex === null ||
           this.selectedModules.length === 0 ||
           this.selectedCreditedIds.length === 0);
@@ -70,7 +70,7 @@ export default {
   },
   methods: {
     splitModule() {
-      if (!this.formFilled) return;
+      if (this.formNotFilled) return;
 
       // Check if both original and new mappings have at least one module selected
       const originalMapping = this.formCopy.edited.moduleFormsData[this.selectedModuleMappingIndex];

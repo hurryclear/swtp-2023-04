@@ -284,7 +284,7 @@ export default {
         this.showCommentWarning = false;
         this.formCopy.edited.applicationData.formalReject = this.formalRejectionReason;
         await StudentAffairsOfficeService.formallyRejectForm(this.formCopy);
-        this.$emit("close");
+        this.$emit("save");
       } catch (error) {
         console.error(error.message);
       }
