@@ -110,7 +110,7 @@ const StudentAffairsOfficeService = {
             }
             return response.data.content;
         } catch (error) {
-            throw new Error(`Error fetching committee overview: ${error.message}`);
+            throw new Error(`Error fetching overview: ${error.message}`);
         }
     },
 
