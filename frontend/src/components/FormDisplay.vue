@@ -5,6 +5,7 @@
     </v-card-title>
     <v-data-table-server
         v-model:items-per-page="itemsPerPage"
+        :items-per-page-options="itemsPerPageOptions"
         v-model:sort-by="sortBy"
         :headers="translatedHeaders"
         :items="formattedForms"
@@ -31,6 +32,12 @@ export default {
   data() {
     return {
       itemsPerPage: 5,
+      itemsPerPageOptions: [
+        {value: 5, title: "5"},
+        {value: 10, title: "10"},
+        {value: 25, title: "25"},
+        {value: -1, title: "$vuetify.dataFooter.itemsPerPageAll"}
+      ],
       page: 1,
       totalItems: 0,
       sortBy: [],
