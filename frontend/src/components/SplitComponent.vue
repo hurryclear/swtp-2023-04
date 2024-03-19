@@ -5,7 +5,7 @@
         :items="moduleOptions"
         item-title="title"
         item-value="value"
-        label="Select Module Mapping to be Split"
+        :label="$t('mergeComponents.selectMappingSplit')"
         outlined
     />
     <v-select
@@ -14,7 +14,7 @@
         :items="formCopy.edited.moduleFormsData[selectedModuleMappingIndex].modulesStudent"
         item-title="title"
         :item-value="item => item"
-        label="Select Modules to be split off"
+        :label="$t('mergeComponents.selectModuleSplit')"
         multiple
         :disabled="formCopy.edited.moduleFormsData[selectedModuleMappingIndex].modulesStudent.length<2"
         outlined
@@ -25,7 +25,7 @@
         :items="formCopy.edited.moduleFormsData[selectedModuleMappingIndex].modules2bCredited.map(id => majorModules.find(module => module.id === id))"
         item-title="name"
         item-value="id"
-        label="Select Modules To Be Credited to be split off"
+        :label="$t('mergeComponents.selectModuleTBCSplit')"
         :disabled="formCopy.edited.moduleFormsData[selectedModuleMappingIndex].modulesStudent.length<2"
         multiple
         outlined

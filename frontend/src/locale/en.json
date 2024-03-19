@@ -132,7 +132,8 @@
     "currentCourse": "Current Course",
     "dateLastEdited": "Date Last Edited",
     "dateOfSubmission": "Date of Submission",
-    "decision": "Decision",
+    "decision": "Reason",
+    "approval": "Decision",
     "downloadDescription": "Download Description",
     "edit": "Edit",
     "edited": "Edited",
@@ -169,6 +170,12 @@
     "reasonForDesicion": "Reason for Decision"
 
 
+  },
+  "mergeComponents": {
+    "selectMappingSplit": "Select Module Mapping to be Split",
+    "selectModuleSplit": "Select Modules to be split off",
+    "selectModuleTBCSplit": "Select Modules To Be Credited to be split off",
+    "selectModuleMerge": "Select Modules"
   },
   "updateModuleDataView": {
     "uploadJSON": "Upload JSON",

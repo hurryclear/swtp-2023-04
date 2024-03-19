@@ -132,7 +132,8 @@
     "currentCourse": "当前课程",
     "dateLastEdited": "上次编辑日期",
     "dateOfSubmission": "提交日期",
-    "decision": "决定",
+    "decision": "原因",
+    "approval": "批准",
     "downloadDescription": "下载描述",
     "edit": "编辑",
     "edited": "已编辑",
@@ -164,6 +165,12 @@
     "reject": "拒绝",
     "finishApproval": "完成批准",
     "reasonForDesicion": "决定原因"
+  },
+  "mergeComponents": {
+    "selectMappingSplit": "选择分割映射",
+    "selectModuleSplit": "选择要分割的模块",
+    "selectModuleTBCSplit": "选择要分割以获得学分的模块",
+    "selectModuleMerge": "选择要合并的模块"
   },
   "updateModuleDataView": {
     "uploadJSON": "上传JSON",

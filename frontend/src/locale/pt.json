@@ -132,7 +132,8 @@
     "currentCourse": "Curso atual",
     "dateLastEdited": "Data da última edição",
     "dateOfSubmission": "Data de Submissão",
-    "decision": "Decisão",
+    "decision": "Motivo",
+    "approval": "Aprovação",
     "downloadDescription": "Baixar Descrição",
     "edit": "Editar",
     "edited": "Editado",
@@ -164,6 +165,12 @@
     "makeApprovable": "Tornar Aprovável",
     "finishApproval": "Concluir Aprovação",
     "reasonForDesicion": "Razão para a Decisão"
+  },
+  "mergeComponents": {
+    "selectMappingSplit": "Selecionar mapeamento para dividir",
+    "selectModuleSplit": "Selecionar módulos para dividir",
+    "selectModuleTBCSplit": "Selecionar módulos para dividir para crédito",
+    "selectModuleMerge": "Selecionar módulos para mesclar"
   },
   "updateModuleDataView": {
     "uploadJSON": "Carregar JSON",

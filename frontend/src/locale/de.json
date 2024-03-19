@@ -131,7 +131,8 @@
     "currentCourse": "Aktueller Kurs",
     "dateLastEdited": "Zuletzt bearbeitet am",
     "dateOfSubmission": "Einreichungsdatum",
-    "decision": "Entscheidung",
+    "decision": "Grund",
+    "approval": "Entscheidung",
     "downloadDescription": "Beschreibung herunterladen",
     "edit": "Bearbeiten",
     "edited": "Bearbeitet",
@@ -165,6 +166,12 @@
     "reasonForDesicion": "Grund für Entscheidung"
 
 
+  },
+  "mergeComponents": {
+    "selectMappingSplit": "Zuordnung zum Abspalten wählen",
+    "selectModuleSplit": "Module zum Abspalten wählen",
+    "selectModuleTBCSplit": "Anzurechnende Module zum Abspalten wählen",
+    "selectModuleMerge": "Module auswählen"
   },
   "updateModuleDataView": {
     "uploadJSON": "JSON hochladen",

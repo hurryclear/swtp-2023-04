@@ -11,12 +11,13 @@
 
     <v-data-table-server
         v-model:items-per-page="itemsPerPage"
+        :items-per-page-options="itemsPerPageOptions"
         v-model:sort-by="sortBy"
         :headers="translatedHeaders"
         :items="formattedForms"
         :loading="loading"
         :items-length="totalItems"
-        :page="page"
+        v-model:page="page"
         @update:options="loadItems"
     >
       <template v-slot:[`item.actions`]="{ item }">
@@ -38,6 +39,12 @@ export default {
       items: [],
       loading: false,
       itemsPerPage: 5,
+      itemsPerPageOptions: [
+        {value: 5, title: "5"},
+        {value: 10, title: "10"},
+        {value: 25, title: "25"},
+        {value: -1, title: "$vuetify.dataFooter.itemsPerPageAll"}
+      ],
       totalItems: 0,
       page: 1,
       sortBy: [],
@@ -60,6 +67,7 @@ export default {
         module: this.previousModule,
         dateOfSubmission: this.formatDateForQueryString(this.dateOfSubmission.toString()),
         pageNumber: this.page - 1,
+        pageSize: this.itemsPerPage
       };
 
       // Check if sortBy exists and append to queryParams
@@ -97,7 +105,6 @@ export default {
         const response = await StudentAffairsOfficeService.searchApplication(this.buildQueryString());
         this.items = response.content;
         this.totalItems = response.totalItems;
-        console.log(response.totalItems);
       } catch (error) {
         console.error("Error retrieving filtered/sorted applications: ", error);
       }

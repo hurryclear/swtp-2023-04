@@ -132,7 +132,8 @@
     "currentCourse": "현재 코스",
     "dateLastEdited": "최종 편집일",
     "dateOfSubmission": "제출일",
-    "decision": "결정",
+    "decision": "이유",
+    "approval": "승인",
     "downloadDescription": "설명 다운로드",
     "edit": "편집",
     "edited": "편집 됨",
@@ -165,6 +166,12 @@
     "finishApproval": "승인 완료",
     "reasonForDesicion": "결정 이유"
    },
+  "mergeComponents": {
+    "selectMappingSplit": "분할할 매핑 선택",
+    "selectModuleSplit": "분할할 모듈 선택",
+    "selectModuleTBCSplit": "학점 부여를 위해 분할할 모듈 선택",
+    "selectModuleMerge": "병합할 모듈 선택"
+  },
   "updateModuleDataView": {
     "uploadJSON": "JSON 업로드",
     "submit": "제출"

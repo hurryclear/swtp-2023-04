@@ -132,7 +132,8 @@
     "currentCourse": "Текущий курс",
     "dateLastEdited": "Дата последнего редактирования",
     "dateOfSubmission": "Дата подачи",
-    "decision": "Решение",
+    "decision": "Причина",
+    "approval": "Утверждение",
     "downloadDescription": "Скачать описание",
     "edit": "Редактировать",
     "edited": "Отредактировано",
@@ -164,6 +165,12 @@
     "makeApprovable": "Сделать утверждаемым",
     "finishApproval": "Завершить утверждение",
     "reasonForDesicion": "Причина решения"
+  },
+  "mergeComponents": {
+    "selectMappingSplit": "Выбрать отображение для разделения",
+    "selectModuleSplit": "Выбрать модули для разделения",
+    "selectModuleTBCSplit": "Выбрать модули для разделения с зачетом",
+    "selectModuleMerge": "Выбрать модули для объединения"
   },
   "updateModuleDataView": {
     "uploadJSON": "Загрузить JSON",
