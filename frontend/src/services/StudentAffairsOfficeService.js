@@ -4,6 +4,7 @@
  */
 
 import axios from "@/plugins/axios";
+import store from "@/store/index"
 
 const StudentAffairsOfficeService = {
     /**
@@ -102,7 +103,7 @@ const StudentAffairsOfficeService = {
     async getOverview(queryString) {
         try {
             let response
-            const role = this.$store.state.authentication.userRole
+            const role = store.state.authentication.userRole
             if (role ==='ROLE_COMMITTEE') {
                 response = await axios.get("/api/application/overviewCommittee?" + queryString);
             } else if (role ==='ROLE_OFFICE') {
