@@ -109,7 +109,10 @@ const StudentAffairsOfficeService = {
             } else if (role ==='ROLE_OFFICE') {
                 response = await axios.get("/api/application/overviewOffice?" + queryString);
             }
-            return response.data.content;
+            return {
+                content: response.data.content,
+                totalItems: response.data.totalElements
+            };
         } catch (error) {
             throw new Error(`Error fetching overview: ${error.message}`);
         }
