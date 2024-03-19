@@ -1,58 +1,85 @@
 <template>
   <v-card>
     <div class="card-header">
-      <v-row>
-        <v-col cols="6" md="4">
-          <v-card-title>
-            <u>{{ $t('studentAffairsOfficeView.application') }}</u>
-          </v-card-title>
-        </v-col>
-    
-        <v-col cols="6" md="4">
-          <v-btn-toggle class="ma-2" v-model="showEdited" mandatory shaped variant="outlined">
-            <v-btn :value="false">
-              {{ $t('studentAffairsOfficeView.original') }}
-            </v-btn>
-            <v-btn :value="true">
-              {{ $t('studentAffairsOfficeView.edited') }}
-            </v-btn>
-          </v-btn-toggle>
-        </v-col>
-
-        <v-col cols="3" md="1">
-          <v-btn class="ma-2" icon="mdi-call-split" @click="this.$emit('open', { component: 'SplitComponent', form: this.formCopy })" v-show="showEdited"/>
-        </v-col>
-        <v-col cols="3" md="1">
-          <v-btn class="ma-2" icon="mdi-call-merge" @click="this.$emit('open', { component: 'MergeComponent', form: this.formCopy })" v-show="showEdited"/>
-        </v-col>
-        <v-col cols="3" md="1">
-          <v-btn class="ma-2" icon="mdi-file-compare" @click="this.$emit('open',{component:'ComparisonMenu',formCopy:{}});"/>
-        </v-col>
-        <v-col cols="3" md="1">
-          <v-btn class="ma-2" icon="mdi-close" @click="this.$emit('close')"/>
-        </v-col>
-      </v-row>
+      <v-card-title>
+        <u>{{ $t('studentAffairsOfficeView.application') }}</u>
+      </v-card-title>
+      <v-spacer/>
+      <v-btn-toggle
+          class="ma-2"
+          v-model="showEdited"
+          mandatory
+          shaped
+          variant="outlined">
+        <v-btn :value="false">
+          {{ $t('studentAffairsOfficeView.original') }}
+        </v-btn>
+        <v-btn :value="true">
+          {{ $t('studentAffairsOfficeView.edited') }}
+        </v-btn>
+      </v-btn-toggle>
+      <!-- Button for SplitComponent-->
+      <v-btn
+          class="ma-2"
+          icon
+          @click="this.$emit('open', { component: 'SplitComponent', form: this.formCopy })"
+      >
+        <v-icon>mdi-call-split</v-icon>
+        <v-tooltip
+            activator="parent"
+            location="bottom"
+        >
+          {{ $t("studentAffairsOfficeView.split") }}
+        </v-tooltip>
+      </v-btn>
+      <!-- Button for MergeComponent-->
+      <v-btn
+          class="ma-2"
+          icon
+          @click="this.$emit('open', { component: 'MergeComponent', form: this.formCopy })"
+      >
+        <v-icon>mdi-call-merge</v-icon>
+        <v-tooltip
+            activator="parent"
+            location="bottom"
+        >
+          {{ $t('studentAffairsOfficeView.merge') }}
+        </v-tooltip>
+      </v-btn>
+      <v-btn
+          class="ma-2"
+          icon
+          @click="this.$emit('open',{component:'ComparisonMenu',formCopy:{}});"
+      >
+        <v-icon>mdi-file-compare</v-icon>
+        <v-tooltip
+            activator="parent"
+            location="bottom"
+        >
+          {{ $t('studentAffairsOfficeView.compareWithOtherApplications') }}
+        </v-tooltip>
+      </v-btn>
+      <v-btn
+          class="ma-2"
+          icon="mdi-close"
+          @click="this.$emit('close')"
+      />
     </div>
 
     <v-divider/>
-    <div v-if="showEdited">
-      <v-text-field
-              class="text-field"
-              :label="$t('studentAffairsOfficeView.reasonForDesicion')"
-              v-model="formalRejectionReason"
-              :disabled="!showEdited"
-              variant="outlined"
-          />
-          <v-btn
-              @click="formallyReject"
-              class="ma-2"
-              color="red"
-              prepend-icon="mdi-hand-back-left"
-              :disabled="formalRejectionReason === ''"
-          >{{ $t('studentAffairsOfficeView.formallyRejectApplication') }}
-          </v-btn>
-    </div>
-    
+    <v-text-field
+        class="text-field"
+        :label="$t('studentAffairsOfficeView.reason')"
+        v-model="formalRejectionReason"
+        :disabled="!showEdited"
+    />
+    <v-btn
+        @click="formallyReject"
+        class="ma-2"
+        color="red"
+        prepend-icon="mdi-hand-back-left"
+    >{{ $t('studentAffairsOfficeView.formallyRejectApplication') }}
+    </v-btn>
     <v-divider/>
 
     <v-tabs v-if="formCopy" v-model="selectedTabIndex">
@@ -147,15 +174,15 @@
             <v-btn class="ma-2" @click="downloadPdf(module.path, module.title)">
               {{ $t('studentAffairsOfficeView.downloadDescription') }}
             </v-btn>
-            <v-text-field v-if="showEdited"
+            <v-text-field
                 variant="outlined"
                 :disabled="!showEdited"
                 :label="$t('studentAffairsOfficeView.formalReject')"
                 v-model="module.reason"/>
-            <v-row v-if="showEdited">
+            <v-row>
               <v-btn
                   @click="module.approval = 'formally rejected'"
-                  :disabled="module.reason === ''"
+                  :disabled="!showEdited"
                   class="ma-2"
                   prepend-icon="mdi-hand-back-left"
                   variant="elevated"
@@ -191,7 +218,7 @@
         </v-window-item>
       </v-window>
       <v-divider/>
-      <v-card-actions v-if="showEdited">
+      <v-card-actions>
         <v-btn
             color="blue"
             variant="flat"
