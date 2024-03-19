@@ -179,6 +179,10 @@ export default {
   margin: 1%;
 }
 
+.v-text-field {
+  margin: 1%;
+}
+
 .card-header {
   display: flex;
   align-items: center;
