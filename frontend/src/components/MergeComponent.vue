@@ -77,8 +77,12 @@ export default {
       moduleIndices.reverse().forEach(index => {
         this.formCopy.edited.moduleFormsData.splice(index, 1);
       });
-      console.log(JSON.stringify(this.formCopy))
-      this.$emit('open', { component: 'EditMenu', form: this.formCopy });
+      const userRole = this.$store.state.authentication.userRole
+      if (userRole==='ROLE_COMMITTEE'){
+        this.$emit('open',{component: 'EditMenuCommittee', form: this.formCopy})
+      } else if (userRole==='ROLE_OFFICE'){
+        this.$emit('open', {component: 'EditMenu', form: this.formCopy})
+      }
     },
   },
 };
