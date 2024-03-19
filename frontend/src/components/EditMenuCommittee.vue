@@ -59,7 +59,7 @@
       </v-row>
     </div>
 
-    <v-divider/>
+    <divider/>
 
     <v-tabs v-if="formCopy" v-model="selectedTabIndex">
       <v-tab
@@ -117,30 +117,30 @@
                 :label="$t('studentAffairsOfficeView.credits')"
                 v-model="module.credits"
             />
-            <v-div>
+            <div>
               <u>{{$t('studentAffairsOfficeView.studentComment')}}:</u> {{ module.commentStudent }}
               <br>
               <u>{{$t('studentAffairsOfficeView.officeComment')}}:</u> {{ module.commentEmployee }}
-            </v-div>
+            </div>
               <br>    
             <v-btn class="ma-2" @click="downloadPdf(module.path, module.title)">
               {{ $t('studentAffairsOfficeView.downloadDescription') }}
             </v-btn>
 
-            <v-div v-if="module.approval === 'formally rejected'">
+            <div v-if="module.approval === 'formally rejected'">
               <v-card-text>
                 <div><span style="font-weight: bold;">{{ $t('reviewComponent.formallyRejected') }}</span></div>
                 <br/>
                 <div><span style="font-weight: bold;">{{ $t('reviewComponent.moduleApprovalReason') }}:</span>{{ module.reason }}</div>
               </v-card-text>
-            </v-div>
+            </div>
 
-            <v-div v-else-if="showEdited">
+            <div v-else-if="showEdited">
               <v-text-field
                 variant="outlined"
                 :label="$t('studentAffairsOfficeView.reasonForDesicion')"
                 v-model="module.reason"/>
-            </v-div>
+            </div>
             
             <v-row v-if="showEdited && module.approval !== 'formally rejected'">
               <v-btn
@@ -180,7 +180,7 @@
               >{{ $t('examiningCommitteeChairView.undoAccept') }}
               </v-btn>
             </v-row>
-            <v-divider/>
+            <divider/>
           </div>
           <v-card-text>
             <v-select
@@ -195,12 +195,12 @@
                 v-model="moduleMapping.modules2bCredited"
             />
           </v-card-text>
-          <v-divider/>
+          <divider/>
         </v-window-item>
       </v-window>
-      <v-divider/>
+      <divider/>
       <v-card-actions>
-        <v-div v-if="showEdited">
+        <div v-if="showEdited">
             <v-btn
           variant="elevated"
           class="ma-2"
@@ -211,7 +211,7 @@
           >
             {{ allModulesReviewed ? $t('studentAffairsOfficeView.finishApproval') : $t('studentAffairsOfficeView.save') }}
           </v-btn>
-        </v-div>
+        </div>
       </v-card-actions>
     </div>
   </v-card>
