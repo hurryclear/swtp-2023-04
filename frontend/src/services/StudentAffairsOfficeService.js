@@ -99,17 +99,18 @@ const StudentAffairsOfficeService = {
         }
     },
 
-    /**
-     * Fetches the office overview.
-     * @returns {Promise<string>} A promise that resolves with the office overview content.
-     * @throws {Error} If an error occurs while fetching the office overview.
-     */
-    async getOfficeOverview(queryString) {
+    async getOverview(queryString) {
         try {
-            const response = await axios.get("/api/application/overviewOffice?" + queryString);
+            let response
+            const role = this.$store.state.authentication.userRole
+            if (role ==='ROLE_COMMITTEE') {
+                response = await axios.get("/api/application/overviewCommittee?" + queryString);
+            } else if (role ==='ROLE_OFFICE') {
+                response = await axios.get("/api/application/overviewOffice?" + queryString);
+            }
             return response.data.content;
         } catch (error) {
-            throw new Error(`Error fetching office overview: ${error.message}`);
+            throw new Error(`Error fetching committee overview: ${error.message}`);
         }
     },
 
@@ -143,19 +144,7 @@ const StudentAffairsOfficeService = {
         }
     },
 
-    /**
-     * Fetches the committee overview.
-     * @returns {Promise<string>} A promise that resolves with the committee overview content.
-     * @throws {Error} If an error occurs while fetching the committee overview.
-     */
-    async getCommitteeOverview(queryString) {
-        try {
-            const response = await axios.get("/api/application/overviewCommittee?" + queryString);
-            return response.data.content;
-        } catch (error) {
-            throw new Error(`Error fetching committee overview: ${error.message}`);
-        }
-    },
+
 
     /**
      * Saves an approved form.

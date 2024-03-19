@@ -35,7 +35,7 @@ import SplitComponent from "@/components/SplitComponent.vue";
 import MergeComponent from "@/components/MergeComponent.vue";
 
 export default {
-  components: { ComparisonMenu, EditMenu, FormDisplay, ViewApplication, SplitComponent, MergeComponent }, // Add SplitComponent and MergeComponent
+  components: { ComparisonMenu, EditMenu, FormDisplay, ViewApplication, SplitComponent, MergeComponent },
   data() {
     return {
       currentComponent: 'FormDisplay', // Default component to display

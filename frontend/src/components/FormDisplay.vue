@@ -59,7 +59,7 @@ export default {
       try {
         this.loading = true;
         const queryString = this.buildQueryString()
-        this.forms = await StudentAffairsOfficeService.getOfficeOverview(queryString);
+        this.forms = await StudentAffairsOfficeService.getOverview(queryString);
         this.loading = false;
       } catch (error) {
         console.error("Error retrieving open forms: ", error);

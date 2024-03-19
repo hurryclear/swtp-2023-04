@@ -22,7 +22,7 @@
         />
       </v-col>
     </v-row>
-    <v-div v-else>
+    <div v-else>
       <v-col>
         <!-- Dynamic component rendering based on currentComponent -->
         <component
@@ -43,24 +43,23 @@
             @save="currentForm={}"
         />
       </v-col>
-    </v-div>
-    
+    </div>
   </v-container>
 </template>
 
 <script>
 import EditMenuCommittee from "@/components/EditMenuCommittee.vue";
-import FormDisplayCommittee from "@/components/FormDisplayCommittee.vue";
+import FormDisplay from "@/components/FormDisplay.vue";
 import ComparisonMenu from "@/components/ComparisonMenu.vue";
 import ViewApplication from "@/components/ViewApplication.vue";
 import SplitComponent from "@/components/SplitComponent.vue";
 import MergeComponent from "@/components/MergeComponent.vue";
 
 export default {
-  components: { ComparisonMenu, EditMenuCommittee, FormDisplayCommittee, ViewApplication, SplitComponent, MergeComponent }, // Add SplitComponent and MergeComponent
+  components: { ComparisonMenu, EditMenuCommittee, FormDisplay, ViewApplication, SplitComponent, MergeComponent },
   data() {
     return {
-      currentComponent: 'FormDisplayCommittee', // Default component to display
+      currentComponent: 'FormDisplay', // Default component to display
       comparisonForm: {}, // Form data for comparison
       currentForm: {}, // Current form data for editing
     }
@@ -77,7 +76,7 @@ export default {
         this.currentComponent = component;
         this.comparisonForm = form;
       } else {
-        this.currentComponent = 'FormDisplayCommittee'
+        this.currentComponent = 'FormDisplay'
         this.currentForm = form;
       }
     },
@@ -91,7 +90,7 @@ export default {
       } else {
         this.comparisonForm = {};
       }
-      this.currentComponent = 'FormDisplayCommittee';
+      this.currentComponent = 'FormDisplay';
     },
   }
 }
