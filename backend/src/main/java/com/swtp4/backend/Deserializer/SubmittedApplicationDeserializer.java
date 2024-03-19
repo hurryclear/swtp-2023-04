@@ -44,7 +44,7 @@ public class SubmittedApplicationDeserializer extends JsonDeserializer<Submitted
                                 moduleNode.get("id").asText(),
                                 moduleNode.get("name").asText(),
                                 moduleNode.get("credits").asLong(),
-                                moduleNode.get("university").asText(),
+                                moduleNode.get("university").get("name").asText(),
                                 moduleNode.get("courseOfStudy").asText(),
                                 moduleNode.get("meta").get("comments").get("student").asText(),
                                 moduleNode.get("meta").get("key").asLong()
