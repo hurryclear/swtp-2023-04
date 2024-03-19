@@ -154,7 +154,9 @@
     "undoRejection": "拒否を取り消す",
     "university": "大学",
     "view": "ビュー",
-    "reason": "理由"
+    "reason": "理由",
+    "makeApprovable": "承認可能にする",
+    "finishApproval": "承認を完了する"
   },
   "updateModuleDataView": {
     "uploadJSON": "JSONをアップロード",

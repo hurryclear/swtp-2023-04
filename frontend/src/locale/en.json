@@ -157,8 +157,9 @@
     "reason": "Reason",
     "accept": "Accept",
     "undoAcceptance": "Undo Acceptance",
-    "reject": "Reject"
-
+    "reject": "Reject",
+    "makeApprovable": "Make Approvable",
+    "finishApproval": "Finish Approval"
 
   },
   "updateModuleDataView": {

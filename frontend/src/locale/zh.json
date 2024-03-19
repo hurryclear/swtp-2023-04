@@ -154,7 +154,9 @@
     "undoRejection": "撤销拒绝",
     "university": "大学",
     "view": "视图",
-    "reason": "原因"
+    "reason": "原因",
+    "reject": "拒绝",
+    "finishApproval": "完成批准"
   },
   "updateModuleDataView": {
     "uploadJSON": "上传JSON",

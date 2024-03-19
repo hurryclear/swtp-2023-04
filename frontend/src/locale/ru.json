@@ -154,7 +154,9 @@
     "undoRejection": "Отменить отклонение",
     "university": "Университет",
     "view": "Просмотр",
-    "reason": "Причина"
+    "reason": "Причина",
+    "makeApprovable": "Сделать утверждаемым",
+    "finishApproval": "Завершить утверждение"
   },
   "updateModuleDataView": {
     "uploadJSON": "Загрузить JSON",
