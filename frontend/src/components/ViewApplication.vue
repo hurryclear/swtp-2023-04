@@ -87,7 +87,7 @@
                 :label="$t('studentAffairsOfficeView.officeComment')"
                 variant="outlined"
             />
-            <v-btn class="ma-2"  @click="downloadPdf(studentModule.path)">
+            <v-btn class="ma-2"  @click="downloadPdf(studentModule.path, studentModule.title)">
               {{ $t('studentAffairsOfficeView.downloadDescription') }}
             </v-btn>
             <v-text-field
