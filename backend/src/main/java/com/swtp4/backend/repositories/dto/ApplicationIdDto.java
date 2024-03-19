@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class ApplicationIdDto {
+    //response to frontend containing only the ID of the submitted Application
     private String applicationID;
 }

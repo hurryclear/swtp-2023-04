@@ -60,6 +60,7 @@ public class ApplicationCriteriaRepository {
                 .map(entity -> new OverviewApplicationDto(entity.getApplicationKeyClass().getId(),
                         entity.getUniversityName(),
                         dateFormat.format(entity.getDateOfSubmission()),
+                        dateFormat.format(entity.getDateLastEdited()),
                         entity.getStatus()
                         )).toList();
 
@@ -67,10 +68,11 @@ public class ApplicationCriteriaRepository {
         return new PageImpl<>(overviewApplicationDtoList, pageable, applicationsCount);
     }
 
-    // filtering
+    // filtering, adds up all Conditions which must be matched (all Filters)
     private Predicate getPredicate(ApplicationSearchCriteria applicationSearchCriteria,
                                    Root<ApplicationEntity> applicationEntityRoot) {
         List<Predicate> predicates = new ArrayList<>();
+        //only edited Applications are used
         predicates.add(criteriaBuilder.equal(applicationEntityRoot.get("applicationKeyClass").get("creator"), "Employee"));
         if(Objects.nonNull(applicationSearchCriteria.getApplicationID())) {
             predicates.add(
@@ -78,6 +80,7 @@ public class ApplicationCriteriaRepository {
                             applicationEntityRoot.get("applicationKeyClass").get("id"),
                             "%" + applicationSearchCriteria.getApplicationID() + "%"));
         }
+        // only specific states are allowed in each overview or comparison menu
         if(Objects.nonNull(applicationSearchCriteria.getStatusList())) {
             predicates.add(
                     applicationEntityRoot.get("status").in(applicationSearchCriteria.getStatusList()));
@@ -100,6 +103,7 @@ public class ApplicationCriteriaRepository {
                             applicationEntityRoot.<Date>get("dateOfSubmission"),
                             applicationSearchCriteria.getDateOfSubmission()));
         }
+        // filter by module names of an application
         if(Objects.nonNull(applicationSearchCriteria.getModule())) {
             predicates.add(
                     criteriaBuilder.like(
@@ -114,17 +118,19 @@ public class ApplicationCriteriaRepository {
         return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
     }
 
-    // sorting
+    // sorting but only after one property at a time
     private void setOrder(ApplicationPage applicationPage,
                           CriteriaQuery<ApplicationEntity> criteriaQuery,
                           Root<ApplicationEntity> applicationEntityRoot) {
         if(applicationPage.getSortDirection().equals(Sort.Direction.ASC)) {
+            // sorting criteria applicationID is transformed to match entity
             if(applicationPage.getSortBy().equals("applicationID")) {
                 criteriaQuery.orderBy(criteriaBuilder.asc(applicationEntityRoot.get("applicationKeyClass").get("id")));
             } else {
                 criteriaQuery.orderBy(criteriaBuilder.asc(applicationEntityRoot.get(applicationPage.getSortBy())));
             }
         } else {
+            // sorting criteria applicationID is transformed to match entity
             if(applicationPage.getSortBy().equals("applicationID")) {
                 criteriaQuery.orderBy(criteriaBuilder.desc(applicationEntityRoot.get("applicationKeyClass").get("id")));
             } else {
@@ -132,17 +138,18 @@ public class ApplicationCriteriaRepository {
             }
         }
     }
-    // paging
+    // paging, only one page with a specific number of entities is provided
     private Pageable getPageable(ApplicationPage applicationPage) {
         Sort sort = Sort.by(applicationPage.getSortDirection(), applicationPage.getSortBy());
         return PageRequest.of(applicationPage.getPageNumber(), applicationPage.getPageSize(), sort);
     }
 
+    // count the total number of entities found with the querry
     private long getApplicationsCount(ApplicationSearchCriteria applicationSearchCriteria) {
         CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
         Root<ApplicationEntity> countRoot = countQuery.from(ApplicationEntity.class);
         Predicate predicate = getPredicate(applicationSearchCriteria, countRoot);
-        countQuery.select(criteriaBuilder.count(countRoot)).where(predicate);
+        countQuery.select(criteriaBuilder.countDistinct(countRoot)).where(predicate);
         return entityManager.createQuery(countQuery).getSingleResult();
     }
 }

@@ -1,51 +1,103 @@
 <template>
-  <v-container fluid :key="updateKey">
-    <v-row>
-      <v-col v-for="form in formsInProgress" :key="form.timestamp">
-        <v-card>
-          <v-card-title>{{ form.universityData.universityName }}</v-card-title>
-          <v-card-subtitle>{{ form.universityData.studyProgram }}</v-card-subtitle>
-          <v-card-text>
-            <div>{{ $t("examiningCommitteeChairView.moduleCount") }}: {{ form.moduleFormsData.length }}</div>
-            <div>{{ $t("applicationForm.countryLabel") }}: {{ form.universityData.country }}</div>
-          </v-card-text>
-          <v-card-text v-if="form.comment">
-            {{ $t("examiningCommitteeChairView.studentAffairsOfficeComment") }}: {{ form.comment }}
-          </v-card-text>
-          <v-card-actions>
-            <v-btn color="green" @click="acceptForm(form.timestamp)">{{ $t("examiningCommitteeChairView.accept") }}
-            </v-btn>
-            <v-btn color="red" @click="denyForm(form.timestamp)">{{ $t("examiningCommitteeChairView.decline") }}</v-btn>
-          </v-card-actions>
-        </v-card>
+  <v-container fluid class="wrapper">
+    <v-row v-if="currentComponent === 'ViewApplication'">
+      <v-col cols="12" md="6">
+        <!-- Dynamic component rendering based on currentComponent -->
+        <component
+            :is="currentComponent"
+            :form="comparisonForm"
+            @open="openComponent"
+            @close="closeComponent(false)"
+            ref="childComponent"
+        />
+      </v-col>
+      <v-col cols="12" md="6">
+        <!-- EditMenuCommittee component -->
+        <EditMenuCommittee
+            class="edit-menu"
+            v-if="Object.keys(currentForm).length !== 0"
+            :form="currentForm"
+            @close="closeComponent(true)"
+            @open="openComponent"
+            @save="save"
+        />
       </v-col>
     </v-row>
+    <div v-else>
+      <v-col>
+        <!-- Dynamic component rendering based on currentComponent -->
+        <component
+            :is="currentComponent"
+            :form="comparisonForm"
+            @open="openComponent"
+            @close="closeComponent(false)"
+            ref="childComponent"
+        />
+      </v-col>
+      <v-col>
+        <!-- EditMenu component -->
+        <EditMenuCommittee
+            class="edit-menu"
+            v-if="Object.keys(currentForm).length !== 0"
+            :form="currentForm"
+            @close="closeComponent(true)"
+            @open="openComponent"
+            @save="save"
+        />
+      </v-col>
+    </div>
   </v-container>
 </template>
 
 <script>
+import EditMenuCommittee from "@/components/EditMenuCommittee.vue";
+import FormDisplay from "@/components/FormDisplay.vue";
+import ComparisonMenu from "@/components/ComparisonMenu.vue";
+import ViewApplication from "@/components/ViewApplication.vue";
+import SplitComponent from "@/components/SplitComponent.vue";
+import MergeComponent from "@/components/MergeComponent.vue";
+
 export default {
-  computed: {
-    formsInProgress() {
-      // Get forms that are 'in progress'
-      return this.$store.getters.form.formsByStatus('in progress'); //TODO: State must be of type ENUM
+  components: { ComparisonMenu, EditMenuCommittee, FormDisplay, ViewApplication, SplitComponent, MergeComponent },
+  data() {
+    return {
+      currentComponent: 'FormDisplay', // Default component to display
+      comparisonForm: {}, // Form data for comparison
+      currentForm: {}, // Current form data for editing
     }
   },
   methods: {
-    // Dispatch action to accept the form
-    acceptForm(formTimestamp) {
-      this.$store.dispatch('changeFormStatus', {
-        formId: formTimestamp,
-        newStatus: 'accepted'
-      });
+    /**
+     * Opens a specific component with associated form data.
+     * @param {object} options - Object containing component and form data.
+     * @param {string} options.component - Name of the component to open.
+     * @param {object} options.form - Form data to pass to the component.
+     */
+    openComponent({component, form}) {
+      if (component !== 'EditMenuCommittee') {
+        this.currentComponent = component;
+        this.comparisonForm = form;
+      } else {
+        this.currentComponent = 'FormDisplay'
+        this.currentForm = form;
+      }
     },
-    denyForm(formTimestamp) {
-      // Dispatch action to decline the form
-      this.$store.dispatch('changeFormStatus', {
-        formId: formTimestamp,
-        newStatus: 'denied'
-      });
+    /**
+     * Closes the currently open component and resets form data.
+     */
+    closeComponent(isEditMenu) {
+      // Reset the current form data and switch to the default component
+      if (isEditMenu) {
+        this.currentForm = {};
+      } else {
+        this.comparisonForm = {};
+      }
+      this.currentComponent = 'FormDisplay';
     },
+    save(){
+      this.currentForm = {};
+      this.$refs.childComponent.updateForm();
+    }
   }
 }
 </script>

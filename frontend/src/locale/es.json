@@ -3,6 +3,9 @@
     "moduleFormList": {
       "addMapping": "Añadir Mapeo de Módulo",
       "moduleMapping": {
+        "required": "¡Requerido!",
+        "charLimitExceeded": "¡Límite de caracteres excedido!",
+        "fileTooBig": "¡Archivo demasiado grande!",
         "addModule": "Añadir Módulo",
         "commentLabel": "Comentario",
         "description": "Proporciona información sobre el módulo que se va a acreditar.",
@@ -11,7 +14,8 @@
         "moduleNameLabel": "Nombre del Módulo",
         "modulesToBeCreditedLabel": "Módulo Acreditado",
         "removeModule": "Eliminar Módulo",
-        "creditLabel": "Créditos (ECTS)"
+        "creditLabel": "Créditos (ECTS)",
+        "moduleId": "Número de módulo/Identificación de módulo"
       },
       "removeMapping": "Eliminar Mapeo de Módulo"
     },
@@ -35,9 +39,11 @@
   },
   "examiningCommitteeChairView": {
     "accept": "Aceptar",
+    "undoAccept": "Deshacer aceptación",
     "decline": "Rechazar",
-    "moduleCount": "Número de Módulos",
-    "studentAffairsOfficeComment": "Comentario de la Oficina de Asuntos Estudiantiles"
+    "undoDecline": "Deshacer rechazo",
+    "moduleCount": "Cantidad de módulos",
+    "studentAffairsOfficeComment": "Comentario de la oficina de asuntos estudiantiles"
   },
   "formDisplay": {
     "application": "Solicitud",
@@ -58,6 +64,7 @@
     "passwordLabel": "Contraseña",
     "usernameLabel": "Nombre de Usuario"
   },
+  "languageSwitcher": "Cambiar idioma",
   "logoutButton": "Cerrar Sesión",
   "navBar": {
     "creditModules": "Módulos de Crédito",
@@ -65,12 +72,13 @@
     "login": "Iniciar Sesión",
     "main": "Página Principal",
     "review": "Revisar Solicitud",
-    "studentAffairsOffice": "Oficina de Asuntos Estudiantiles"
+    "studentAffairsOffice": "Oficina de Asuntos Estudiantiles",
+    "updateModuleData": "Actualizar datos del módulo"
   },
   "reviewComponent": {
     "checkStatus": "Ver Estado de la Solicitud",
     "downloadApplication": "Descargar Resumen",
-    "formID": "Número de Referencia",
+    "formID": "ID del Formulario",
     "reviewApplication": "Revisar Solicitud",
     "currentUniversity": "Universidad Actual",
     "oldCourseOfStudy": "Programa de Estudio Anterior",
@@ -100,7 +108,8 @@
     "errorFetchingForm": "Error al Obtener el Formulario",
     "formNotFound": "Formulario No Encontrado",
     "pending": "Pendiente",
-    "moduleBlock": "Bloque de Módulos"
+    "moduleBlock": "Bloque de Módulos",
+    "partiallyRejected": "Parcialmente Rechazado"
   },
   "routes": {
     "/": "Página de Inicio",
@@ -112,7 +121,56 @@
     "/update-module-data": "Actualizar Datos de Módulo"
   },
   "studentAffairsOfficeView": {
-    "openApplications": "Solicitudes Abiertas"
+    "split": "Dividir módulo",
+    "merge": "Combinar módulos",
+    "application": "Solicitud",
+    "applicationID": "ID de solicitud",
+    "compareWithOtherApplications": "Comparar con otras solicitudes",
+    "courseOfStudy": "Curso de estudio",
+    "creditFor": "Crédito para",
+    "credits": "Créditos",
+    "currentCourse": "Curso actual",
+    "dateLastEdited": "Fecha de última edición",
+    "dateOfSubmission": "Fecha de presentación",
+    "decision": "Motivo",
+    "approval": "Aprobación",
+    "downloadDescription": "Descargar descripción",
+    "edit": "Editar",
+    "edited": "Editado",
+    "enterReason": "Ingresar razón",
+    "formalReject": "Rechazar formalmente",
+    "formallyRejectApplication": "Rechazar formalmente la solicitud",
+    "ID": "ID",
+    "mapping": "Mapeo",
+    "module": "Módulo",
+    "moduleNotFound": "Módulo no encontrado",
+    "moduleNumber": "Número de módulo",
+    "modules": "Módulos",
+    "name": "Nombre",
+    "officeComment": "Comentario de la oficina",
+    "openApplications": "Solicitudes abiertas",
+    "original": "Original",
+    "previousCourse": "Curso anterior",
+    "previousModule": "Módulo anterior",
+    "previousUniversity": "Universidad anterior",
+    "save": "Guardar",
+    "search": "Buscar",
+    "sendToExaminationCommittee": "Enviar al comité de examen",
+    "status": "Estado",
+    "studentComment": "Comentario del estudiante",
+    "undoRejection": "Deshacer rechazo",
+    "university": "Universidad",
+    "view": "Ver",
+    "reason": "Razón",
+    "makeApprovable": "Hacer aprobable",
+    "finishApproval": "Finalizar aprobación",
+    "reasonForDesicion": "Razón de la decisión"
+  },
+  "mergeComponents": {
+    "selectMappingSplit": "Seleccionar mapeo para dividir",
+    "selectModuleSplit": "Seleccionar módulos para dividir",
+    "selectModuleTBCSplit": "Seleccionar módulos para dividir con crédito",
+    "selectModuleMerge": "Seleccionar módulos para fusionar"
   },
   "updateModuleDataView": {
     "uploadJSON": "Subir JSON",

@@ -3,6 +3,9 @@
     "moduleFormList": {
       "addMapping": "Добавить сопоставление модулей",
       "moduleMapping": {
+        "required": "Обязательно!",
+        "charLimitExceeded": "Превышен лимит символов!",
+        "fileTooBig": "Слишком большой размер файла!",
         "addModule": "Добавить модуль",
         "commentLabel": "Комментарий",
         "description": "Укажите информацию о модуле, который должен быть зачтен.",
@@ -11,7 +14,8 @@
         "moduleNameLabel": "Название модуля",
         "modulesToBeCreditedLabel": "Модули, подлежащие зачету",
         "removeModule": "Удалить модуль",
-        "creditLabel": "Зачет (ECTS)"
+        "creditLabel": "Зачет (ECTS)",
+        "moduleId": "Номер модуля/Идентификация модуля"
       },
       "removeMapping": "Удалить сопоставление модулей"
     },
@@ -35,9 +39,11 @@
   },
   "examiningCommitteeChairView": {
     "accept": "Принять",
+    "undoAccept": "Отменить принятие",
     "decline": "Отклонить",
+    "undoDecline": "Отменить отклонение",
     "moduleCount": "Количество модулей",
-    "studentAffairsOfficeComment": "Комментарий студенческого отдела"
+    "studentAffairsOfficeComment": "Комментарий отдела студенческих дел"
   },
   "formDisplay": {
     "application": "Заявка",
@@ -52,6 +58,7 @@
     "welcomeStudent": "Добро пожаловать на нашу новую онлайн-платформу для зачета кредитов в Лейпцигском университете! Нажмите кнопку 'Кредитные модули', чтобы начать. После отправки вашей заявки вам будет присвоен уникальный номер ссылки, который вы сможете использовать позже для просмотра вашей заявки и ее статуса.",
     "welcomeStudentAffairsOffice": "Добро пожаловать, сотрудники студенческого отдела! Как член студенческого отдела, у вас есть доступ к обзору всех открытых заявок. Вы можете обрабатывать, дополнять и отслеживать статус обработки заявок. Используйте удобный интерфейс для более эффективного процесса зачета кредитов."
   },
+  "languageSwitcher": "Изменить язык",
   "loginComponent": {
     "loginButton": "Войти",
     "loginErrorMessage": "Неверное имя пользователя или пароль.",
@@ -65,12 +72,13 @@
     "login": "Войти",
     "main": "Главная страница",
     "review": "Проверка заявок",
-    "studentAffairsOffice": "Студенческий отдел"
+    "studentAffairsOffice": "Студенческий отдел",
+    "updateModuleData": "Обновить данные модуля"
   },
   "reviewComponent": {
     "checkStatus": "Проверить статус заявки",
     "downloadApplication": "Загрузить обзор",
-    "formID": "Номер ссылки",
+    "formID": "ID формы",
     "reviewApplication": "Просмотр заявки",
     "currentUniversity": "Текущий университет",
     "oldCourseOfStudy": "Прошлый курс",
@@ -100,7 +108,8 @@
     "errorFetchingForm": "Ошибка получения формы",
     "formNotFound": "Форма не найдена",
     "pending": "Ожидает",
-    "moduleBlock": "Блок модулей"
+    "moduleBlock": "Блок модулей",
+    "partiallyRejected": "Частично отклонено"
   },
   "routes": {
     "/": "Главная страница",
@@ -112,7 +121,56 @@
     "/update-module-data": "Обновить данные модуля"
   },
   "studentAffairsOfficeView": {
-    "openApplications": "Открытые заявки"
+    "split": "Разделить модуль",
+    "merge": "Объединить модули",
+    "application": "Приложение",
+    "applicationID": "ID приложения",
+    "compareWithOtherApplications": "Сравнить с другими заявками",
+    "courseOfStudy": "Курс обучения",
+    "creditFor": "Кредит за",
+    "credits": "Кредиты",
+    "currentCourse": "Текущий курс",
+    "dateLastEdited": "Дата последнего редактирования",
+    "dateOfSubmission": "Дата подачи",
+    "decision": "Причина",
+    "approval": "Утверждение",
+    "downloadDescription": "Скачать описание",
+    "edit": "Редактировать",
+    "edited": "Отредактировано",
+    "enterReason": "Введите причину",
+    "formalReject": "Формальный отказ",
+    "formallyRejectApplication": "Формально отклонить заявку",
+    "ID": "ID",
+    "mapping": "Сопоставление",
+    "module": "Модуль",
+    "moduleNotFound": "Модуль не найден",
+    "moduleNumber": "Номер модуля",
+    "modules": "Модули",
+    "name": "Имя",
+    "officeComment": "Комментарий офиса",
+    "openApplications": "Открытые заявки",
+    "original": "Оригинал",
+    "previousCourse": "Предыдущий курс",
+    "previousModule": "Предыдущий модуль",
+    "previousUniversity": "Предыдущий университет",
+    "save": "Сохранить",
+    "search": "Поиск",
+    "sendToExaminationCommittee": "Отправить на экзаменационный комитет",
+    "status": "Статус",
+    "studentComment": "Комментарий студента",
+    "undoRejection": "Отменить отклонение",
+    "university": "Университет",
+    "view": "Просмотр",
+    "reason": "Причина",
+    "makeApprovable": "Сделать утверждаемым",
+    "finishApproval": "Завершить утверждение",
+    "reasonForDesicion": "Причина решения"
+  },
+  "mergeComponents": {
+    "selectMappingSplit": "Выбрать отображение для разделения",
+    "selectModuleSplit": "Выбрать модули для разделения",
+    "selectModuleTBCSplit": "Выбрать модули для разделения с зачетом",
+    "selectModuleMerge": "Выбрать модули для объединения"
   },
   "updateModuleDataView": {
     "uploadJSON": "Загрузить JSON",

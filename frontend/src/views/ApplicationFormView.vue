@@ -18,27 +18,48 @@
 <script>
 import UniversityForm from "@/components/UniversityForm.vue";
 import ModuleFormList from "@/components/ModuleFormList.vue";
-
+/**
+ * Vue component representing the main application form view.
+ * This component manages the submission of the entire form.
+ * @component ApplicationFormView
+ */
 export default {
-  components: {ModuleFormList, UniversityForm},
+  // Component properties
+  components: { ModuleFormList, UniversityForm },
+
+  // Computed properties
   computed: {
+    /**
+     * Checks if the entire form is filled.
+     * @returns {boolean} Whether the form is filled or not.
+     */
     formFilled() {
       return this.$store.getters.formFilled;
     },
+
+    /**
+     * Checks if the university form is filled.
+     * @returns {boolean} Whether the university form is filled or not.
+     */
     universityFormIsFilled() {
       return this.$store.getters.universityFormIsFilled;
     }
   },
+
+  // Methods
   methods: {
+    /**
+     * Submits the entire form.
+     * @async
+     * @returns {Promise<void>} A promise that resolves when the form is submitted.
+     */
     async submitWholeForm() {
       try {
-        const {success} = await this.$store.dispatch('submitWholeForm');
+        const { success } = await this.$store.dispatch('submitWholeForm');
 
         if (success) {
-          // Handle success response (if needed)
           console.log('Form submitted successfully');
         } else {
-          // Handle error response (if needed)
           console.error('Error submitting form');
         }
       } catch (error) {

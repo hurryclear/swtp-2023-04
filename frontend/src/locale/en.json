@@ -3,6 +3,9 @@
     "moduleFormList": {
       "addMapping": "Add Module Mapping",
       "moduleMapping": {
+        "required": "Required!",
+        "charLimitExceeded": "Character Limit exceeded!",
+        "fileTooBig": "File size too big!",
         "addModule": "Add Module",
         "commentLabel": "Comment",
         "description": "Provide information about the module to be credited.",
@@ -11,7 +14,8 @@
         "moduleNameLabel": "Module Name",
         "modulesToBeCreditedLabel": "Credited Module",
         "removeModule": "Remove Module",
-        "creditLabel": "Credits (ECTS)"
+        "creditLabel": "Credits (ECTS)",
+        "moduleId": "Module Number/Module Identification"
       },
       "removeMapping": "Remove Module Mapping"
     },
@@ -35,9 +39,11 @@
   },
   "examiningCommitteeChairView": {
     "accept": "Accept",
+    "undoAccept": "Undo Acceptance",
     "decline": "Decline",
-    "moduleCount": "Number of Modules",
-    "studentAffairsOfficeComment": "Comment from Student Affairs Office"
+    "undoDecline": "Undo Decline",
+    "moduleCount": "Module Count",
+    "studentAffairsOfficeComment": "Student Affairs Office Comment"
   },
   "formDisplay": {
     "application": "Application",
@@ -52,6 +58,7 @@
     "welcomeStudent": "Welcome to our new online platform for credit recognition at the University of Leipzig! Click on 'Credit Modules' to get started. By submitting your application, you will be assigned a unique reference number, which you can use later to view your application and its status.",
     "welcomeStudentAffairsOffice": "Welcome, staff of the Student Affairs Office! As a staff member of the Student Affairs Office, you have access to an overview of all open applications. You can process, supplement, and track the processing status of applications. Use the user-friendly interface to make the credit recognition process more efficient."
   },
+  "languageSwitcher": "Change Language",
   "loginComponent": {
     "loginButton": "Login",
     "loginErrorMessage": "Incorrect username or password.",
@@ -65,12 +72,13 @@
     "login": "Login",
     "main": "Main Page",
     "review": "Review Application",
-    "studentAffairsOffice": "Student Affairs Office"
+    "studentAffairsOffice": "Student Affairs Office",
+    "updateModuleData": "Update Module Data"
   },
   "reviewComponent": {
     "checkStatus": "Check Application Status",
     "downloadApplication": "Download Summary",
-    "formID": "Reference Number",
+    "formID": "Application ID",
     "reviewApplication": "Review Application",
     "currentUniversity": "Current University",
     "oldCourseOfStudy": "Previous Study Program",
@@ -100,7 +108,8 @@
     "errorFetchingForm": "Error Fetching Form",
     "formNotFound": "Form Not Found",
     "pending": "Pending",
-    "moduleBlock": "Module Block"
+    "moduleBlock": "Module Block",
+    "partiallyRejected": "Partially Rejected"
   },
   "routes": {
     "/": "Homepage",
@@ -112,7 +121,61 @@
     "/update-module-data": "Update Module Data"
   },
   "studentAffairsOfficeView": {
-    "openApplications": "Open Applications"
+    "split": "Split Module",
+    "merge": "Merge Modules",
+    "application": "Application",
+    "applicationID": "Application ID",
+    "compareWithOtherApplications": "Compare with other applications",
+    "courseOfStudy": "Course of Study",
+    "creditFor": "Credit For",
+    "credits": "Credits",
+    "currentCourse": "Current Course",
+    "dateLastEdited": "Date Last Edited",
+    "dateOfSubmission": "Date of Submission",
+    "decision": "Reason",
+    "approval": "Decision",
+    "downloadDescription": "Download Description",
+    "edit": "Edit",
+    "edited": "Edited",
+    "enterReason": "Enter reason",
+    "formalReject": "Formal Reject",
+    "formallyRejectApplication": "Formally reject application",
+    "ID": "ID",
+    "mapping": "Mapping",
+    "module": "Module",
+    "moduleNotFound": "Module not found",
+    "moduleNumber": "Module Number",
+    "modules": "Modules",
+    "name": "Name",
+    "officeComment": "Office Comment",
+    "openApplications": "Open Applications",
+    "original": "Original",
+    "previousCourse": "Previous Course",
+    "previousModule": "Previous Module",
+    "previousUniversity": "Previous University",
+    "save": "Save",
+    "search": "Search",
+    "sendToExaminationCommittee": "Send to Examination Committee",
+    "status": "Status",
+    "studentComment": "Student Comment",
+    "undoRejection": "Undo Rejection",
+    "university": "University",
+    "view": "View",
+    "reason": "Reason",
+    "accept": "Accept",
+    "undoAcceptance": "Undo Acceptance",
+    "reject": "Reject",
+    "makeApprovable": "Make Approvable",
+    "finishApproval": "Finish Approval",
+    "reasonForDesicion": "Reason for Decision"
+
+
+  },
+  "mergeComponents": {
+    "selectMappingSplit": "Select Module Mapping to be Split",
+    "selectModuleSplit": "Select Modules to be split off",
+    "selectModuleTBCSplit": "Select Modules To Be Credited to be split off",
+    "selectModuleMerge": "Select Modules"
   },
   "updateModuleDataView": {
     "uploadJSON": "Upload JSON",

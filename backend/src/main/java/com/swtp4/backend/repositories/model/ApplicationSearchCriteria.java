@@ -12,12 +12,13 @@ import java.util.List;
 public class ApplicationSearchCriteria {
 
     private String applicationID;
-    private List<String> statusList;
+    private List<String> statusList; // this is set by the service method and not by the frontend request
     private String dateOfSubmission;
     private String universityName;
     private String module;
     private String uniMajor;
 
+    // format date to european date pattern
     public Date getDateOfSubmission() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         try {

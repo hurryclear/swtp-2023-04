@@ -7,11 +7,16 @@ import com.swtp4.backend.repositories.ModuleStudentRepository;
 import com.swtp4.backend.repositories.entities.*;
 import com.swtp4.backend.repositories.entities.keyClasses.ApplicationKeyClass;
 import com.swtp4.backend.services.ApplicationService;
+import com.swtp4.backend.services.PDFService;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import static org.mockito.Mockito.verify;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Example;
 import org.springframework.http.MediaType;
@@ -22,11 +27,17 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -34,6 +45,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@Slf4j
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD) //IMPORTANT, this resets Application Context, ID Sequences start at 1 again
@@ -42,6 +54,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("integration")
 public class SubmitAndEditApplicationIT {
 
+    @MockBean
+    private PDFService pdfService;
     private ApplicationService applicationService;
     private MockMvc mockMvc;
     private ApplicationTestData applicationTestData;
@@ -75,16 +89,30 @@ public class SubmitAndEditApplicationIT {
 
         // Create a MockMultipartFile for the JSON content
         MockMultipartFile jsonPart = new MockMultipartFile("form", "", MediaType.APPLICATION_JSON_VALUE, testApplicationJson.getBytes());
+        // Create a MockMultipartFile for a PDF file
+        InputStream pdfInputStream = getClass().getResourceAsStream("/pdf_example.pdf");
+        MockMultipartFile pdfPart = new MockMultipartFile("file-0:0", "pdf_example.pdf", MediaType.APPLICATION_PDF_VALUE, pdfInputStream);
         // Perform the request with multipart data, but no file part
         mockMvc.perform(
                 multipart("/student/submitApplication")
                         .file(jsonPart)// specify your endpoint here
+                        .file(pdfPart)
                         .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
                 )
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.applicationID", not(is(emptyString()))));
 
+        // Verify that the PDF service method was called with the correct parameters
+        ArgumentCaptor<Map<String, MultipartFile>> fileMapCaptor = ArgumentCaptor.forClass(Map.class);
+        ArgumentCaptor<HashMap<String, String>> filePathsCaptor = ArgumentCaptor.forClass(HashMap.class);
+        verify(pdfService).saveModulePDFs(fileMapCaptor.capture(), filePathsCaptor.capture());
+        Map<String, MultipartFile> capturedFileMap = fileMapCaptor.getValue();
+        HashMap<String, String> capturedFilePaths = filePathsCaptor.getValue();
+        assertThat(capturedFileMap).containsKey("file-0:0");
+        String filePath = capturedFilePaths.get("file-0:0");
+        assertThat(filePath).isNotNull();
+        // File Check not possible because Mocked test
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         //ApplicationEntity Check
@@ -125,6 +153,7 @@ public class SubmitAndEditApplicationIT {
                 .commentStudent("War cool")
                 .commentEmployee("")
                 .build());
+        log.info("ALL MODULES: {}", moduleStudentRepository.findAll());
         assertThat(moduleStudentRepository.findAll(module1))
                 .hasSize(2)
                 .extracting(ModuleStudentEntity::getCreator)
@@ -197,9 +226,6 @@ public class SubmitAndEditApplicationIT {
         String savedApplicationID = savedSubmitted.get(0).getApplicationKeyClass().getId();
 
         String editedApplicationJson = ApplicationTestData.createEditedApplicationJson(savedApplicationID);
-
-        mockMvc.perform(put("/application/editingInProgress?applicationID="+savedApplicationID))
-                .andExpect(status().isOk());
 
         mockMvc.perform(put("/application/saveEdited")
                         .contentType(MediaType.APPLICATION_JSON)

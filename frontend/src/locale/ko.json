@@ -3,6 +3,9 @@
     "moduleFormList": {
       "addMapping": "모듈 매핑 추가",
       "moduleMapping": {
+        "required": "필수!",
+        "charLimitExceeded": "문자 제한 초과!",
+        "fileTooBig": "파일 크기가 너무 큽니다!",
         "addModule": "모듈 추가",
         "commentLabel": "코멘트",
         "description": "인정 받을 모듈에 대한 정보를 제공하십시오.",
@@ -11,7 +14,8 @@
         "moduleNameLabel": "모듈명",
         "modulesToBeCreditedLabel": "인정 받을 모듈",
         "removeModule": "모듈 제거",
-        "creditLabel": "학점 (ECTS)"
+        "creditLabel": "학점 (ECTS)",
+        "moduleId": "모듈 번호/모듈 식별"
       },
       "removeMapping": "모듈 매핑 제거"
     },
@@ -35,9 +39,11 @@
   },
   "examiningCommitteeChairView": {
     "accept": "수락",
-    "decline": "거부",
+    "undoAccept": "수락 취소",
+    "decline": "거절",
+    "undoDecline": "거절 취소",
     "moduleCount": "모듈 수",
-    "studentAffairsOfficeComment": "학생 지원 사무실 코멘트"
+    "studentAffairsOfficeComment": "학생 사무실 코멘트"
   },
   "formDisplay": {
     "application": "신청서",
@@ -52,6 +58,7 @@
     "welcomeStudent": "라이프치히 대학의 학점 인정을 위한 새로운 온라인 플랫폼에 오신 것을 환영합니다! '학점 모듈'을 클릭하여 시작하십시오. 신청서를 제출하면 고유한 참조 번호가 할당되며 이를 사용하여 나중에 신청과 상태를 확인할 수 있습니다.",
     "welcomeStudentAffairsOffice": "학생 지원 사무실 직원 여러분, 환영합니다! 학생 지원 사무실 직원으로서 여러분은 모든 오픈된 신청에 대한 개요에 액세스할 수 있습니다. 신청서를 처리하고 보충하며 처리 상태를 추적할 수 있습니다. 직관적 인터페이스를 사용하여 학점 인정 프로세스를 보다 효율적으로 만드십시오."
   },
+  "languageSwitcher": "언어 변경",
   "loginComponent": {
     "loginButton": "로그인",
     "loginErrorMessage": "잘못된 사용자 이름 또는 비밀번호입니다.",
@@ -65,12 +72,13 @@
     "login": "로그인",
     "main": "메인 페이지",
     "review": "신청서 검토",
-    "studentAffairsOffice": "학생 지원 사무실"
+    "studentAffairsOffice": "학생 지원 사무실",
+    "updateModuleData": "모듈 데이터 업데이트"
   },
   "reviewComponent": {
     "checkStatus": "신청서 상태 확인",
     "downloadApplication": "요약 다운로드",
-    "formID": "참조 번호",
+    "formID": "양식 ID",
     "reviewApplication": "신청서 검토",
     "currentUniversity": "현재 대학",
     "oldCourseOfStudy": "이전 과정",
@@ -100,7 +108,8 @@
     "errorFetchingForm": "양식 가져오기 오류",
     "formNotFound": "양식을 찾을 수 없음",
     "pending": "보류 중",
-    "moduleBlock": "모듈 블록"
+    "moduleBlock": "모듈 블록",
+    "partiallyRejected": "일부 거부됨"
   },
   "routes": {
     "/": "홈페이지",
@@ -112,7 +121,56 @@
     "/update-module-data": "모듈 데이터 업데이트"
   },
   "studentAffairsOfficeView": {
-    "openApplications": "열린 신청"
+    "split": "모듈 분할",
+    "merge": "모듈 병합",
+    "application": "신청",
+    "applicationID": "신청 ID",
+    "compareWithOtherApplications": "다른 신청과 비교",
+    "courseOfStudy": "전공",
+    "creditFor": "크레딧",
+    "credits": "크레딧",
+    "currentCourse": "현재 코스",
+    "dateLastEdited": "최종 편집일",
+    "dateOfSubmission": "제출일",
+    "decision": "이유",
+    "approval": "승인",
+    "downloadDescription": "설명 다운로드",
+    "edit": "편집",
+    "edited": "편집 됨",
+    "enterReason": "이유를 입력하세요",
+    "formalReject": "공식적으로 거부",
+    "formallyRejectApplication": "공식적으로 신청 거부",
+    "ID": "ID",
+    "mapping": "매핑",
+    "module": "모듈",
+    "moduleNotFound": "모듈을 찾을 수 없음",
+    "moduleNumber": "모듈 번호",
+    "modules": "모듈",
+    "name": "이름",
+    "officeComment": "사무실 코멘트",
+    "openApplications": "오픈 애플리케이션",
+    "original": "오리지널",
+    "previousCourse": "이전 코스",
+    "previousModule": "이전 모듈",
+    "previousUniversity": "이전 대학",
+    "save": "저장",
+    "search": "검색",
+    "sendToExaminationCommittee": "시험 위원회에 보내기",
+    "status": "상태",
+    "studentComment": "학생 코멘트",
+    "undoRejection": "거부 취소",
+    "university": "대학교",
+    "view": "보기",
+    "reason": "이유",
+    "makeApprovable": "승인 가능하게 만들기",
+    "finishApproval": "승인 완료",
+    "reasonForDesicion": "결정 이유"
+   },
+  "mergeComponents": {
+    "selectMappingSplit": "분할할 매핑 선택",
+    "selectModuleSplit": "분할할 모듈 선택",
+    "selectModuleTBCSplit": "학점 부여를 위해 분할할 모듈 선택",
+    "selectModuleMerge": "병합할 모듈 선택"
   },
   "updateModuleDataView": {
     "uploadJSON": "JSON 업로드",

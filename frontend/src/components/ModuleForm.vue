@@ -42,6 +42,7 @@
         >
           <v-text-field
               class="userInput"
+              :rules="rules.textRules"
               v-model="module.name"
               hide-details
               :label="$t('applicationFormView.moduleFormList.moduleMapping.moduleNameLabel')"
@@ -49,16 +50,17 @@
           />
           <v-file-input
               v-model="module.description.file"
+              :rules="rules.fileRules"
               class="userInput"
               accept=".pdf"
               show-size
               :label="$t('applicationFormView.moduleFormList.moduleMapping.moduleDescriptionLabel')"
               variant="outlined"
-              hide-details
+              hide-details="auto"
               prepend-icon=""
           />
-          <v-combobox
-              v-model="module.university"
+          <v-autocomplete
+              v-model="module.university.name"
               :items="universities"
               item-title="name"
               hide-details
@@ -67,13 +69,15 @@
               class="userInput"
           />
           <v-text-field
+              :rules="rules.textRules"
               class="userInput"
               v-model="module.courseOfStudy"
               hide-details
-              :label="$t('applicationFormView.moduleFormList.moduleMapping.courseOfStudy')"
+              :label="$t('applicationFormView.courseOfStudy.courseOfStudy')"
               variant="outlined"
           />
           <v-text-field
+              :rules="rules.textRules"
               class="userInput"
               v-model="module.id"
               hide-details
@@ -91,6 +95,7 @@
               max="30"
           />
           <v-text-field
+              :rules="rules.textRules"
               v-model="module.meta.comments.student"
               class="userInput"
               hide-details
@@ -122,12 +127,16 @@
 </template>
 
 <script>
-
+/**
+ * Vue component representing a single module form within a module mapping.
+ * This component manages the input and display of module details.
+ * @component ModuleForm
+ */
 export default {
+  // Data
   data() {
     return {
       selectedTab: 0,
-      selectedFile: null,
       moduleMapping: {
         meta: {
           key: this.moduleKey
@@ -147,6 +156,7 @@ export default {
               country: "",
               website: "",
             },
+            selectedUniversity: null,
             id: "",
             courseOfStudy: "",
             description: {
@@ -155,25 +165,58 @@ export default {
           }
         ],
         modulesToBeCredited: [],
-      }//no module is added
+      },
+      rules: {
+        textRules: [
+          value => !!value || this.$t('applicationFormView.moduleFormList.moduleMapping.required'),
+          value => (value && value.length <= 255) || this.$t('applicationFormView.moduleFormList.moduleMapping.charLimitExceeded'),
+        ],
+        fileRules: [
+          file => !!file || this.$t('applicationFormView.moduleFormList.required'),
+          file => !file || !file.length || file[0].size <= 10 * 1024 * 1024 || this.$t('applicationFormView.moduleFormList.moduleMapping.fileTooBig'),
+        ]
+      },
     };
   },
+
+  // Props
   props: {
     moduleMappingIndex: Number,
     moduleKey: Number,
   },
+
+  // Computed properties
   computed: {
+    /**
+     * Checks if module mapping removal is disabled.
+     * @returns {boolean} Whether module mapping removal is disabled or not.
+     */
     disableModuleMappingRemoval() {
       return this.$store.getters.disableModuleMappingRemoval;
     },
+
+    /**
+     * Retrieves the list of available universities from the store.
+     * @returns {Array} List of available universities.
+     */
     universities() {
       return this.$store.state.university.universities;
     },
+
+    /**
+     * Retrieves the list of available modules from the store.
+     * @returns {Array} List of available modules.
+     */
     modules() {
       return this.$store.state.module.modules;
     }
   },
+
+  // Methods
   methods: {
+    /**
+     * Adds a new module to the module mapping.
+     */
     addModule() {
       const key = this.moduleMapping.previousModules[this.moduleMapping.previousModules.length - 1].meta.key + 1
       const moduleMappingIndex = this.moduleMappingIndex
@@ -181,6 +224,11 @@ export default {
       this.moduleMapping = this.$store.getters.getModuleMappingByIndex(moduleMappingIndex)
       this.selectedTab = this.moduleMapping.previousModules.length - 1;
     },
+
+    /**
+     * Removes a module from the module mapping.
+     * @param {number} moduleIndex The index of the module to remove.
+     */
     removeModule(moduleIndex) {
       this.$store.commit('removeModule', {
         moduleMappingIndex: this.moduleMappingIndex,
@@ -190,11 +238,30 @@ export default {
         this.selectedTab--
       }
     },
+
+    /**
+     * Removes the module mapping.
+     */
     removeModuleMapping() {
       this.$store.commit('removeModuleMappingForm', this.moduleMappingIndex)
     },
   },
+
+  // Watchers
   watch: {
+
+    moduleCredits(newVal) {
+      if (newVal > 30) {
+        this.moduleCredits = 30; // Set moduleCredits to 30 if the input exceeds 30
+      } else if (newVal < 0) {
+        this.moduleCredits = 0
+      }
+    },
+
+    /**
+     * Watches for changes in moduleMapping and updates store data accordingly.
+     * @param {any} newVal The new value of moduleMapping.
+     */
     moduleMapping: {
       handler(newVal) {
         this.$store.commit("updateModuleMappingData", {
@@ -204,6 +271,11 @@ export default {
       },
       deep: true,
     },
+
+    /**
+     * Watches for changes in selectedTab and ensures it stays within bounds.
+     * @param {number} newVal The new value of selectedTab.
+     */
     selectedTab: {
       handler(newVal) {
         if (!newVal) {
@@ -213,4 +285,5 @@ export default {
     }
   }
 }
+
 </script>

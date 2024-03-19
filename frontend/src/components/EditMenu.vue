@@ -1,265 +1,328 @@
 <template>
-  <!--TODO: i18n-->
   <v-card>
     <div class="card-header">
-      <v-card-title>
-        <u>Antrag</u>
-      </v-card-title>
-      <v-spacer/>
-      <v-btn-toggle class="button-top" v-model="isEdited" mandatory shaped variant="outlined">
-        <v-btn :value="false">
-          Original
-        </v-btn>
-        <v-btn :value="true">
-          Bearbeitet
-        </v-btn>
-      </v-btn-toggle>
-      <v-btn class="button-top" variant="tonal" @click="openComparisonMenu">Mit anderen Anträgen vergleichen</v-btn>
-      <v-btn class="button-top" variant="tonal" icon="mdi-close" @click="closeEditMenu"></v-btn>
+      <v-row>
+        <v-col cols="6" md="4">
+          <v-card-title>
+            <u>{{ $t('studentAffairsOfficeView.application') }}</u>
+          </v-card-title>
+        </v-col>
+    
+        <v-col cols="6" md="4">
+          <v-btn-toggle class="ma-2" v-model="showEdited" mandatory shaped variant="outlined">
+            <v-btn :value="false">
+              {{ $t('studentAffairsOfficeView.original') }}
+            </v-btn>
+            <v-btn :value="true">
+              {{ $t('studentAffairsOfficeView.edited') }}
+            </v-btn>
+          </v-btn-toggle>
+        </v-col>
+
+        <v-col cols="3" md="1">
+          <v-btn class="ma-2" icon="mdi-call-split" @click="this.$emit('open', { component: 'SplitComponent', form: this.formCopy })" v-show="showEdited" >
+            <v-icon>mdi-call-split</v-icon>
+            <v-tooltip activator="parent" location="bottom">{{ $t("studentAffairsOfficeView.split") }} </v-tooltip>
+          </v-btn>
+        </v-col>
+
+        <v-col cols="3" md="1">
+          <v-btn class="ma-2" icon="mdi-call-merge" @click="this.$emit('open', { component: 'MergeComponent', form: this.formCopy })" v-show="showEdited">
+            <v-icon>mdi-call-merge</v-icon>
+            <v-tooltip activator="parent" location="bottom">{{ $t('studentAffairsOfficeView.merge') }} </v-tooltip>
+          </v-btn>
+        </v-col>
+
+        <v-col cols="3" md="1">
+          <v-btn class="ma-2" icon="mdi-file-compare" @click="this.$emit('open',{component:'ComparisonMenu',formCopy:{}});">
+            <v-icon>mdi-file-compare</v-icon>
+            <v-tooltip activator="parent" location="bottom"> {{ $t('studentAffairsOfficeView.compareWithOtherApplications') }} </v-tooltip>
+          </v-btn>
+        </v-col>
+        <v-col cols="3" md="1">
+          <v-btn class="ma-2" icon="mdi-close" @click="this.$emit('close')"/>
+        </v-col>
+      </v-row>
     </div>
-    <v-card-text>
-      Vorherige Universität: {{ applicationVersion.applicationData.university }}
-    </v-card-text>
-    <v-card-text>
-      Vorheriger Studiengang: {{ applicationVersion.applicationData.oldCourseOfStudy }}
-    </v-card-text>
-    <v-card-text>
-      Jetziger Studiengang: {{ applicationVersion.applicationData.newCourseOfStudy }}
-    </v-card-text>
-    <v-card-title>
-      Module:
-    </v-card-title>
-    <div v-for="(moduleData, index) in applicationVersion.moduleFormData" v-bind:key="moduleData.frontend_key">
-      <v-card-subtitle>
-        <br>
-        Mapping {{ index + 1 }}
-      </v-card-subtitle>
-      <div v-for="(studentModule, index2) in moduleData.modulesStudent" v-bind:key="studentModule.frontend_key">
-        <v-card-text><u>Modul {{ index2 + 1 }}</u></v-card-text>
-        <v-card-text>Name:</v-card-text>
-        <v-text-field
-            :disabled="!isEdited"
-            :label="studentModule.title"
-            v-model="editedForm.edited.moduleFormData[index].modulesStudent[index2].title"
-        ></v-text-field>
-        <v-card-text>Modulnummer:</v-card-text>
-        <v-text-field
-            :disabled="!isEdited"
-            :label="studentModule.number"
-            v-model="editedForm.edited.moduleFormData[index].modulesStudent[index2].number"
-        ></v-text-field>
-        <v-card-text>Leistungspunkte:</v-card-text>
-        <v-text-field
-            :disabled="!isEdited"
-            :label="studentModule.credits"
-            v-model="editedForm.edited.moduleFormData[index].modulesStudent[index2].credits"
-        ></v-text-field>
-        <v-card-text>Studentenkommentar: {{ studentModule.commentStudent }}</v-card-text>
-        <v-card-text>Studienbürokommentar: </v-card-text>
-        <v-text-field
-            :disabled="!isEdited"
-            :label="studentModule.commentEmployee"
-            v-model="editedForm.edited.moduleFormData[index].modulesStudent[index2].commentEmployee"
-        ></v-text-field>
-        <v-btn style="margin: 1%" @click="downloadPdf(studentModule.path)">Beschreibung herunterladen</v-btn>
-        <v-text-field label="Formale Ablehnung" v-model="editedForm.edited.moduleFormData[index].modulesStudent[index2].reason"></v-text-field>
-        <v-btn
-            @click="setFormalReject(index, index2)"
-            :disabled="!isEdited"
-            class="button-top"
-            prepend-icon="mdi-hand-back-left"
-            variant="flat"
-            color="red">Formal Ablehnen</v-btn>
-      </div>
-      <v-card-text>
-        <u>Anrechnen für:</u>
-        <br>
-        <div v-for="(module, index3) in moduleData.modules2bCredited" v-bind:key="module">
-          <v-autocomplete
-              class="text-field"
-              :items="getMajorModulesName()"
-              :label="findModule(applicationVersion.moduleFormData[index].modules2bCredited[index3])"
-              :disabled="!isEdited"
-              v-model="editedForm.edited.moduleFormData[index].modules2bCredited[index3]"
-          ></v-autocomplete>
-        </div>
-      </v-card-text>
-      <v-divider/>
-    </div>
+
     <v-divider/>
-    <v-text-field class="text-field" label="Begründung" v-model="reason"/>
-    <v-card-actions>
-      <v-btn
-          color="blue"
-          variant="flat"
-          class="button-bottom"
-          prepend-icon="mdi-arrow-u-left-top"
-          :loading="loadingSendButton"
-          @click="sendToPruefungsausschuss(true)"
+    <div v-if="showEdited">
+      <v-text-field
+              class="text-field"
+              :label="$t('studentAffairsOfficeView.reasonForDesicion')"
+              v-model="formalRejectionReason"
+              :disabled="!showEdited"
+              variant="outlined"
+          />
+          <v-btn
+              @click="formallyReject"
+              class="ma-2"
+              color="red"
+              prepend-icon="mdi-hand-back-left"
+              :disabled="formalRejectionReason === ''"
+          >{{ $t('studentAffairsOfficeView.formallyRejectApplication') }}
+          </v-btn>
+    </div>
+    
+    <v-divider/>
+
+    <v-tabs v-if="formCopy" v-model="selectedTabIndex">
+      <v-tab
+          v-for="(moduleMapping,i) in (showEdited ? formCopy.edited.moduleFormsData : formCopy.original.moduleFormsData)"
+          :key="i"
+          :value="i"
       >
-        An Prüfungsausschuss senden
-      </v-btn>
-      <v-btn
-          color="green"
-          variant="flat"
-          class="button-bottom"
-          prepend-icon="mdi-content-save"
-          :loading="loadingSaveButton"
-          @click="saveEditedForm(false)"
-      >
-        Speichern
-      </v-btn>
-      <p v-if="showCommentWarning" style="color:red">Bitte geben sie eine Begründung an!</p>
-    </v-card-actions>
+        {{ $t('studentAffairsOfficeView.mapping') }} {{ i + 1 }}
+      </v-tab>
+    </v-tabs>
+    <div class="pa-2" v-if="formCopy">
+      <v-window v-model="selectedTabIndex">
+        <v-window-item
+            v-for="(moduleMapping,i) in showEdited ? formCopy.edited.moduleFormsData : formCopy.original.moduleFormsData"
+            :key="i"
+            :value="i"
+        >
+          <v-card-text>
+
+            <v-text-field
+                disabled
+                v-model="formCopy.original.applicationData.university"
+                :label="$t('studentAffairsOfficeView.previousUniversity')"
+                variant="outlined"
+            />
+            <v-text-field
+                disabled
+                v-model="formCopy.original.applicationData.oldCourseOfStudy"
+                :label="$t('studentAffairsOfficeView.previousCourse')"
+                variant="outlined"
+            />
+            <v-text-field
+                disabled
+                v-model="formCopy.original.applicationData.newCourseOfStudy"
+                :label="$t('studentAffairsOfficeView.currentCourse')"
+                variant="outlined"
+            />
+          </v-card-text>
+
+          <!--Modules-->
+          <v-card-title>
+            {{ $t('studentAffairsOfficeView.modules') }}:
+          </v-card-title>
+          <div v-for="(module, j) in moduleMapping.modulesStudent" :key="module.frontend_key">
+            <v-card-subtitle>
+              {{ $t('studentAffairsOfficeView.module') }} {{ j + 1 }}
+            </v-card-subtitle>
+            <v-text-field
+                variant="outlined"
+                :disabled="!showEdited"
+                :label="$t('applicationFormView.moduleFormList.moduleMapping.moduleNameLabel')"
+                v-model="module.title"
+            />
+            <v-text-field
+                variant="outlined"
+                :disabled="!showEdited"
+                :label="$t('applicationFormView.moduleFormList.moduleMapping.moduleId')"
+                v-model="module.number"
+            />
+            <v-text-field
+                variant="outlined"
+                :disabled="!showEdited"
+                :label="$t('applicationFormView.universityForm.nameLabel')"
+                v-model="module.university"
+            />
+            <v-text-field
+                variant="outlined"
+                :disabled="!showEdited"
+                :label="$t('applicationFormView.courseOfStudy.courseOfStudy')"
+                v-model="module.major"
+            />
+            <v-text-field
+                variant="outlined"
+                :disabled="!showEdited"
+                :label="$t('applicationFormView.moduleFormList.moduleMapping.creditLabel')"
+                v-model="module.credits"
+            />
+            <v-text-field
+                disabled
+                variant="outlined"
+                :label="$t('studentAffairsOfficeView.studentComment')"
+                v-model="module.commentStudent"
+            >
+            </v-text-field>
+            <v-text-field
+                variant="outlined"
+                :disabled="!showEdited"
+                :label="$t('studentAffairsOfficeView.officeComment')"
+                v-model="module.commentEmployee"
+            />
+            <v-btn class="ma-2" @click="downloadPdf(module.path, module.title)">
+              {{ $t('studentAffairsOfficeView.downloadDescription') }}
+            </v-btn>
+            <v-text-field v-if="showEdited"
+                variant="outlined"
+                :disabled="!showEdited"
+                :label="$t('studentAffairsOfficeView.formalReject')"
+                v-model="module.reason"/>
+            <v-row v-if="showEdited">
+              <v-btn
+                  @click="module.approval = 'formally rejected'"
+                  :disabled="module.reason === ''"
+                  class="ma-2"
+                  prepend-icon="mdi-hand-back-left"
+                  variant="elevated"
+                  color="red"
+              >{{ $t('studentAffairsOfficeView.formalReject') }}
+              </v-btn>
+              <v-btn
+                  @click="module.approval = 'edited'"
+                  v-if="formCopy && module.approval === 'formally rejected'"
+                  class="ma-2"
+                  prepend-icon="mdi-keyboard-backspace"
+                  variant="elevated"
+                  color="yellow"
+              >{{ $t('studentAffairsOfficeView.undoRejection') }}
+              </v-btn>
+            </v-row>
+            <v-divider/>
+          </div>
+          <v-card-text>
+            <v-select
+                multiple
+                variant="outlined"
+                class="text-field"
+                :items="majorModules"
+                item-title="name"
+                item-value="id"
+                :label="$t('studentAffairsOfficeView.creditFor')"
+                :disabled="!showEdited"
+                v-model="moduleMapping.modules2bCredited"
+            />
+          </v-card-text>
+          <v-divider/>
+        </v-window-item>
+      </v-window>
+      <v-divider/>
+      <v-card-actions v-if="showEdited">
+        <v-btn
+            color="blue"
+            variant="flat"
+            class="ma-2"
+            prepend-icon="mdi-arrow-u-left-top"
+            :loading="loadingSendButton"
+            @click="sendToExaminingCommitteeChair()"
+        >
+          {{ $t('studentAffairsOfficeView.sendToExaminationCommittee') }}
+        </v-btn>
+        <v-btn
+            color="green"
+            variant="flat"
+            class="ma-2"
+            prepend-icon="mdi-content-save"
+            :loading="loadingSaveButton"
+            @click="saveEditedForm()"
+        >
+          {{ $t('studentAffairsOfficeView.save') }}
+        </v-btn>
+      </v-card-actions>
+    </div>
   </v-card>
 </template>
 
-
 <script>
-import axios from "@/plugins/axios";
+import StudentAffairsOfficeService from "@/services/StudentAffairsOfficeService";
+
 export default {
   props: {
     form: JSON
   },
 
-  created() {
-    this.getModules();
-    this.editedForm = structuredClone(this.form);
-    this.replaceIdWithName();
+  async created() {
+    await this.getModules();
+    this.formCopy = structuredClone(this.form);
   },
 
   data() {
     return {
-      reason: '',
+      formalRejectionReason: '',
       showCommentWarning: false,
       loadingSaveButton: false,
       loadingSendButton: false,
-      isEdited: false,
-      editedForm: null,
-      majorModules: []
-    }
-  },
-
-  computed: {
-    applicationVersion() {
-      return this.isEdited ? this.form.edited : this.form.original;
+      showEdited: false,
+      selectedTabIndex: 0,
+      formCopy: null
     }
   },
 
   methods: {
-    closeEditMenu() {
-      this.$emit("close-edit-menu", this.form);
-    },
-
-    closeEditMenuBySaving() {
-      this.$emit("close-edit-menu-by-saving");
-    },
-
-    async sendToPruefungsausschuss(readyForApproval) {
-      this.loadingSendButton = true;
-      await this.saveEditedForm(readyForApproval)
-
-      if(this.reason === "") {
-        this.showCommentWarning = true;
-        return;
-      }
-
-      this.showCommentWarning = false;
-      this.editedForm.formalReject = this.reason;
-
-      await axios.put("/api/application/readyForApproval", this.editedForm)
-          .then(response => console.log(response))
-          .catch(err => console.error("Error setting the form status to ready for approval: ", err));
-      this.loadingSendButton = false;
-      this.closeEditMenuBySaving();
-    },
-
-    openComparisonMenu() {
-      this.$emit("open-comparison");
-    },
-
-    setFormalReject(index, index2) {
-      this.editedForm.edited.moduleFormData[index].modulesStudent[index2].approval = "formally rejected";
-    },
-
     async getModules() {
-      await axios.get(`/api/unidata/getModules?majorName=${this.form.original.applicationData.newCourseOfStudy}`).then(
-          res => this.majorModules = res.data.modules
-      ).catch(err => {
-        console.log(err);
-      });
-    },
-
-    findModule(module) {
-      const foundModule = this.majorModules.find(item => item.id === module);
-      return foundModule ? foundModule.name : "Module not found";
-    },
-
-    findModuleInverse(module) {
-      const foundModule = this.majorModules.find(item => item.name === module)
-      return foundModule ? foundModule.id : undefined;
-    },
-
-    replaceIdWithName() {
-      for(let i = 0; i < this.editedForm.original.moduleFormData.length; i++) {
-        for(let j = 0; j < this.editedForm.original.moduleFormData[i].modules2bCredited.length; j++) {
-          //Replace module ID in moduleFormData[i], modules2bCredited[j] with their names
-          this.editedForm.original.moduleFormData[i].modules2bCredited[j] = this.findModule(this.editedForm.original.moduleFormData[i].modules2bCredited[j]);
-          this.editedForm.edited.moduleFormData[i].modules2bCredited[j] = this.findModule(this.editedForm.edited.moduleFormData[i].modules2bCredited[j]);
-        }
-      }
-    },
-
-    replaceNameWithId() {
-      for(let i = 0; i < this.editedForm.original.moduleFormData.length; i++) {
-        for(let j = 0; j < this.editedForm.original.moduleFormData[i].modules2bCredited.length; j++) {
-          //Replace module name in moduleFormData[i], modules2bCredited[j] with their IDs (IMPORTANT FOR SAVING)
-          this.editedForm.original.moduleFormData[i].modules2bCredited[j] = this.findModuleInverse(this.editedForm.original.moduleFormData[i].modules2bCredited[j]);
-          this.editedForm.edited.moduleFormData[i].modules2bCredited[j] = this.findModuleInverse(this.editedForm.edited.moduleFormData[i].modules2bCredited[j])
-        }
-      }
-    },
-
-    getMajorModulesName() {
-      return this.majorModules.map(module => module.name)
-    },
-
-    async saveEditedForm(readyForApproval) {
-      this.replaceNameWithId();
-
-      this.loadingSaveButton = true;
-      await axios.put("/api/application/saveEdited", this.editedForm)
-          .then(
-              response => console.log(response)
-          )
-          .catch(err => console.error("Error saving edited form to database: ", err));
-
-      this.loadingSaveButton = false;
-      if(!readyForApproval) {
-        this.closeEditMenuBySaving();
-      }
-    },
-
-    async downloadPdf(filePath) {
       try {
-        //TODO Change if it throws error
-        const response = await axios.get("/api/application/getModulePDF", {
-          params: {
-            filePath
-          },
-          responseType: 'blob' // Ensure response is treated as a blob
-        });
+        this.$store.state.studentAffairsOffice.majorModules= await StudentAffairsOfficeService.getAllModules(this.form.original.applicationData.newCourseOfStudy);
+      } catch (error) {
+        console.error(error.message);
+      }
+    },
 
-        const url = window.URL.createObjectURL(new Blob([response.data]));
+    async sendToExaminingCommitteeChair() {
+      try {
+        this.formCopy.edited.applicationData.dateLastEdited = new Date().toISOString();
+        await StudentAffairsOfficeService.sendFormToApproval(this.formCopy);
+        this.$emit("save");
+      } catch (error) {
+        console.error(error.message);
+      }
+    },
+
+    async saveEditedForm() {
+      try {
+        this.formCopy.edited.applicationData.dateLastEdited = new Date().toISOString();
+        await StudentAffairsOfficeService.saveEditedForm(this.formCopy);
+        this.$emit("save");
+      } catch (error) {
+        console.error(error.message);
+      }
+    },
+
+    async formallyReject() {
+      try {
+        if (this.formalRejectionReason === "") {
+          this.showCommentWarning = true;
+          return;
+        }
+        this.showCommentWarning = false;
+        this.formCopy.edited.applicationData.formalReject = this.formalRejectionReason;
+        await StudentAffairsOfficeService.formallyRejectForm(this.formCopy);
+        this.$emit("save");
+      } catch (error) {
+        console.error(error.message);
+      }
+    },
+
+    async downloadPdf(filePath, fileName) {
+      try {
+        const pdfData = await StudentAffairsOfficeService.getModulePDF(filePath);
+        const url = window.URL.createObjectURL(new Blob([pdfData]));
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', 'file.pdf');
+        link.setAttribute('download', fileName + ".pdf");
         document.body.appendChild(link);
         link.click();
       } catch (error) {
-        console.error('Error downloading PDF:', error);
+        console.error('Error downloading PDF:', error.message);
       }
+    },
+  },
+  watch:{
+    form: {
+      handler(newVal){
+        this.formCopy = structuredClone(newVal);
+      },
+      deep: true
     }
+  },
+  computed: {
+    majorModules() {
+      return this.$store.state.studentAffairsOffice.majorModules;
+    },
   }
 }
 </script>
@@ -269,11 +332,7 @@ export default {
   margin: 1%;
 }
 
-.button-bottom {
-  margin: 2%
-}
-
-.button-top {
+.v-row {
   margin: 1%;
 }
 

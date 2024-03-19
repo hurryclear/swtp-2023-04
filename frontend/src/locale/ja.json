@@ -3,6 +3,9 @@
     "moduleFormList": {
       "addMapping": "モジュールマッピングの追加",
       "moduleMapping": {
+        "required": "必須!",
+        "charLimitExceeded": "文字数制限を超えました!",
+        "fileTooBig": "ファイルサイズが大きすぎます!",
         "addModule": "モジュールの追加",
         "commentLabel": "コメント",
         "description": "クレジットされるモジュールの情報を提供してください。",
@@ -11,7 +14,8 @@
         "moduleNameLabel": "モジュール名",
         "modulesToBeCreditedLabel": "クレジットされるモジュール",
         "removeModule": "モジュールの削除",
-        "creditLabel": "単位（ECTS）"
+        "creditLabel": "単位（ECTS）",
+        "moduleId": "モジュール番号/モジュール識別"
       },
       "removeMapping": "モジュールマッピングの削除"
     },
@@ -34,10 +38,12 @@
     "toggleDarkMode": "ダークモードの切り替え"
   },
   "examiningCommitteeChairView": {
-    "accept": "承認",
-    "decline": "拒否",
+    "accept": "受け入れる",
+    "undoAccept": "受け入れを取り消す",
+    "decline": "拒否する",
+    "undoDecline": "拒否を取り消す",
     "moduleCount": "モジュール数",
-    "studentAffairsOfficeComment": "学生支援オフィスのコメント"
+    "studentAffairsOfficeComment": "学生課コメント"
   },
   "formDisplay": {
     "application": "アプリケーション",
@@ -52,6 +58,7 @@
     "welcomeStudent": "ライプツィヒ大学のクレジット認定のための新しいオンラインプラットフォームへようこそ！ 'クレジットモジュール'をクリックして開始してください。アプリケーションを送信すると、後でアプリケーションとそのステータスを表示するための一意の参照番号が割り当てられます。",
     "welcomeStudentAffairsOffice": "学生支援オフィスのスタッフの皆様、ようこそ！学生支援オフィスのスタッフとして、すべてのオープンアプリケーションの概要にアクセスできます。アプリケーションの処理、補足、処理状況の追跡が可能です。使いやすいインターフェースを使用して、クレジット認定プロセスをより効率的にします。"
   },
+  "languageSwitcher": "言語を変更",
   "loginComponent": {
     "loginButton": "ログイン",
     "loginErrorMessage": "不正なユーザー名またはパスワード。",
@@ -65,12 +72,13 @@
     "login": "ログイン",
     "main": "メインページ",
     "review": "アプリケーションの確認",
-    "studentAffairsOffice": "学生支援オフィス"
+    "studentAffairsOffice": "学生支援オフィス",
+    "updateModuleData": "モジュールデータを更新する"
   },
   "reviewComponent": {
     "checkStatus": "アプリケーションステータスの確認",
     "downloadApplication": "概要のダウンロード",
-    "formID": "参照番号",
+    "formID": "フォームID",
     "reviewApplication": "アプリケーションの確認",
     "currentUniversity": "現在の大学",
     "oldCourseOfStudy": "以前の学習プログラム",
@@ -100,7 +108,8 @@
     "errorFetchingForm": "フォームの取得エラー",
     "formNotFound": "フォームが見つかりません",
     "pending": "保留中",
-    "moduleBlock": "モジュールブロック"
+    "moduleBlock": "モジュールブロック",
+    "partiallyRejected": "一部拒否"
   },
   "routes": {
     "/": "ホームページ",
@@ -112,7 +121,56 @@
     "/update-module-data": "モジュールデータの更新"
   },
   "studentAffairsOfficeView": {
-    "openApplications": "オープンアプリケーション"
+    "split": "モジュールを分割",
+    "merge": "モジュールを結合",
+    "application": "アプリケーション",
+    "applicationID": "申請ID",
+    "compareWithOtherApplications": "他の申請と比較",
+    "courseOfStudy": "専攻",
+    "creditFor": "クレジット",
+    "credits": "クレジット",
+    "currentCourse": "現在のコース",
+    "dateLastEdited": "最終編集日",
+    "dateOfSubmission": "提出日",
+    "decision": "理由",
+    "approval": "承認",
+    "downloadDescription": "説明をダウンロード",
+    "edit": "編集",
+    "edited": "編集済み",
+    "enterReason": "理由を入力してください",
+    "formalReject": "正式に拒否",
+    "formallyRejectApplication": "公式に申請を拒否する",
+    "ID": "ID",
+    "mapping": "マッピング",
+    "module": "モジュール",
+    "moduleNotFound": "モジュールが見つかりません",
+    "moduleNumber": "モジュール番号",
+    "modules": "モジュール",
+    "name": "名前",
+    "officeComment": "オフィスのコメント",
+    "openApplications": "オープンアプリケーション",
+    "original": "オリジナル",
+    "previousCourse": "前のコース",
+    "previousModule": "以前のモジュール",
+    "previousUniversity": "前の大学",
+    "save": "保存",
+    "search": "検索",
+    "sendToExaminationCommittee": "試験委員会に送信",
+    "status": "状態",
+    "studentComment": "学生コメント",
+    "undoRejection": "拒否を取り消す",
+    "university": "大学",
+    "view": "ビュー",
+    "reason": "理由",
+    "makeApprovable": "承認可能にする",
+    "finishApproval": "承認を完了する",
+    "reasonForDesicion": "決定理由"
+  },
+  "mergeComponents": {
+    "selectMappingSplit": "分割するマッピングを選択",
+    "selectModuleSplit": "分割するモジュールを選択",
+    "selectModuleTBCSplit": "単位付与のために分割するモジュールを選択",
+    "selectModuleMerge": "統合するモジュールを選択"
   },
   "updateModuleDataView": {
     "uploadJSON": "JSONをアップロード",

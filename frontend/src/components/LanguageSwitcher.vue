@@ -3,10 +3,19 @@
     <template v-slot:activator="{ props }">
       <v-btn
           class="button-spacing"
-          icon="mdi-translate"
           variant="elevated"
           color="#262A31"
-          v-bind="props"/>
+          v-bind="props"
+          icon
+      >
+        <v-icon>mdi-translate</v-icon>
+        <v-tooltip
+            activator="parent"
+            location="bottom"
+        >
+          {{ $t("languageSwitcher") }}
+        </v-tooltip>
+      </v-btn>
     </template>
     <v-list>
       <v-list-item

@@ -6,35 +6,48 @@
       <v-spacer/>
 
       <!-- Hamburger menu for mobile view -->
-      <v-btn class="d-md-none" variant="elevated" color="#262A31" icon="mdi-menu" @click="drawer = !drawer">
+      <v-btn icon class="d-md-none" variant="elevated" color="#262A31" @click="drawer = !drawer">
         <v-icon>mdi-menu</v-icon>
+        <v-tooltip
+            activator="parent"
+            location="bottom"
+        >
+          Menu
+        </v-tooltip>
       </v-btn>
 
       <!-- Regular buttons for desktop view -->
       <div class="d-none d-md-flex">
         <v-btn class="button-spacing t-button"
                variant="elevated" color="#262A31"
-               prepend-icon="mdi-home"
+               icon
                @click="navigateTo('/')"
         >
-          {{ $t("navBar.main") }}
+          <v-icon>mdi-home</v-icon>
+          <v-tooltip
+              activator="parent"
+              location="bottom"
+          >
+            {{ $t("navBar.main") }}
+          </v-tooltip>
         </v-btn>
         <v-btn
             v-if="this.userRole === 'ROLE_OFFICE' || this.userRole === 'ROLE_COMMITTEE'"
             class="button-spacing t-button"
             variant="elevated"
             color="#262A31"
+            prepend-icon="mdi-update"
             @click="navigateTo('/update-module-data')"
         >
-          swag
+          {{ $t("navBar.updateModuleData") }}
         </v-btn>
-        <v-spacer/>
         <v-btn
             v-if="userRole==='ROLE_STUDENT'"
             class="button-spacing t-button"
             variant="elevated"
             color="#262A31"
             @click="navigateTo('/application-form')"
+            prepend-icon="mdi-abacus"
         >
           {{ $t("navBar.creditModules") }}
         </v-btn>
@@ -42,6 +55,7 @@
                class="button-spacing t-button"
                variant="elevated"
                color="#262A31"
+               prepend-icon="mdi-file-find"
                @click="navigateTo('/review-application')"
         >
           {{ $t("navBar.review") }}
@@ -51,6 +65,7 @@
             class="button-spacing t-button"
             variant="elevated"
             color="#262A31"
+            prepend-icon="mdi-briefcase-account"
             @click="navigateTo('/student-affairs-office')"
         >
           {{ $t("navBar.studentAffairsOffice") }}
@@ -60,40 +75,72 @@
             class="button-spacing t-button"
             variant="elevated"
             color="#262A31"
+            prepend-icon="mdi-briefcase-account"
             @click="navigateTo('/examining-committee-chair')"
         >
           {{ $t("navBar.examiningCommitteeChair") }}
         </v-btn>
         <LanguageSwitcher/>
         <DarkThemeToggle/>
-        <v-btn class="button-spacing"
+        <v-btn v-if="this.userRole === 'ROLE_STUDENT'"
+               class="button-spacing"
                variant="elevated"
                color="#262A31"
-               icon="mdi-login-variant"
+               icon
                @click="navigateTo('/login')"
+        >
+          <v-icon>mdi-login</v-icon>
+          <v-tooltip
+              activator="parent"
+              location="bottom"
+          >
+            {{ $t("loginComponent.loginButton") }}
+          </v-tooltip>
+        </v-btn>
+        <v-spacer/>
+        <LogoutButton
+            v-if="this.userRole === 'ROLE_OFFICE' || this.userRole === 'ROLE_COMMITTEE'"
+            @click="navigateTo('/')"
         />
       </div>
-
     </v-app-bar>
 
+    <!--Hamburger Menu-->
     <v-navigation-drawer fluid temporary v-model="drawer" app>
       <v-list>
         <v-btn
             class="button-spacing"
             variant="text"
-            icon="mdi-close"
+            icon
             @click="drawer = !drawer"
         />
+        <v-icon>mdi-close</v-icon>
         <v-spacer/>
-        <!-- TODO: width:calc(100% - 1rem) ist erstmal ne Übergangslösung -->
         <v-btn
             class="button-spacing t-button"
             variant="elevated"
             color="#262A31"
-            prepend-icon="mdi-home"
+            icon
             @click="navigateTo('/')"
         >
-          {{ $t("navBar.main") }}
+          <v-icon>mdi-home</v-icon>
+          <v-tooltip
+              activator="parent"
+              location="bottom"
+          >
+            {{ $t("navBar.main") }}
+          </v-tooltip>
+        </v-btn>
+        <v-spacer/>
+        <v-btn
+            v-if="this.userRole === 'ROLE_OFFICE' || this.userRole === 'ROLE_COMMITTEE'"
+            class="button-spacing t-button"
+            variant="elevated"
+            color="#262A31"
+            prepend-icon="mdi-update"
+            @click="navigateTo('/update-module-data')"
+        >
+          {{ $t("navBar.updateModuleData") }}
         </v-btn>
         <v-spacer/>
         <v-btn
@@ -101,15 +148,18 @@
             class="button-spacing t-button"
             variant="elevated"
             color="#262A31"
+            prepend-icon="mdi-abacus"
             @click="navigateTo('/application-form')"
         >
           {{ $t("navBar.creditModules") }}
         </v-btn>
+        <v-spacer/>
         <v-btn
             v-if="userRole==='ROLE_STUDENT'"
             class="button-spacing t-button"
             variant="elevated"
             color="#262A31"
+            prepend-icon="mdi-file-find"
             @click="navigateTo('/review-application')"
         >
           {{ $t("navBar.review") }}
@@ -120,6 +170,7 @@
             class="button-spacing t-button"
             variant="elevated"
             color="#262A31"
+            prepend-icon="mdi-briefcase-account"
             @click="navigateTo('/student-affairs-office')"
         >
           {{ $t("navBar.studentAffairsOffice") }}
@@ -130,6 +181,7 @@
             class="button-spacing t-button"
             variant="elevated"
             color="#262A31"
+            prepend-icon="mdi-account-briefcase"
             @click="navigateTo('/examining-committee-chair')"
         >
           {{ $t("navBar.examiningCommitteeChair") }}
@@ -148,8 +200,21 @@
                   class="button-spacing"
                   variant="elevated"
                   color="#262A31"
-                  icon="mdi-login-variant"
+                  icon
                   @click="navigateTo('/login')"
+              >
+                <v-icon>mdi-login</v-icon>
+                <v-tooltip
+                    activator="parent"
+                    location="bottom"
+                >
+                  {{ $t("loginComponent.loginButton") }}
+                </v-tooltip>
+              </v-btn>
+            </v-col>
+            <v-col cols="4">
+              <LogoutButton
+                  v-if="this.userRole === 'ROLE_OFFICE' || this.userRole === 'ROLE_COMMITTEE'"
               />
             </v-col>
           </v-row>
@@ -164,6 +229,7 @@ import DarkThemeToggle from "@/components/DarkThemeToggle.vue";
 import LanguageSwitcher from "@/components/LanguageSwitcher.vue";
 import {computed} from 'vue';
 import {useTheme} from 'vuetify';
+import LogoutButton from "@/components/LogoutButton.vue";
 
 export default {
   setup() {
@@ -186,13 +252,13 @@ export default {
   },
 
   components: {
+    LogoutButton,
     DarkThemeToggle,
     LanguageSwitcher,
   },
   computed: {
     userRole() {
-      console.log(JSON.stringify(this.$store.state.authentication.userRole))
-      return this.$store.state.authentication.userRole; //TODO: fix error
+      return this.$store.state.authentication.userRole;
     },
   },
   methods: {
@@ -200,7 +266,7 @@ export default {
       this.$router.push(page);
     },
   },
-};
+}
 </script>
 
 <style scoped>
@@ -219,8 +285,9 @@ export default {
 .button-spacing {
   margin: 8px;
 }
+
 .t-button {
-  height:auto;
+  height: auto;
 }
 
 .d-md-none {

@@ -39,19 +39,7 @@ public class ApplicationController {
         this.pdfService = pdfService;
     }
 
-    @PutMapping("/resetStatusInProgress")
-    public ResponseEntity<?> resetStatus(@RequestParam String applicationID) {
-        applicationService.resetStatus(applicationID);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-
-    @PutMapping("/editingInProgress")
-    public ResponseEntity<?> continueEditing(@RequestParam String applicationID) {
-        applicationService.updateStatus(applicationID, "editing in progress");
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
+    // save the edited application in the database and update status of application and approval of modules properly
     @PutMapping("/saveEdited")
     @Transactional
     public ResponseEntity<?> saveApplication(@RequestBody EditedApplicationDto applicationDto){
@@ -62,6 +50,7 @@ public class ApplicationController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    // entire application gets formally rejected, updates application and module approvals properly
     @PutMapping("/formalRejection")
     @Transactional
     public ResponseEntity<?> formalRejectApplication(@RequestBody EditedApplicationDto applicationDto){
@@ -71,6 +60,7 @@ public class ApplicationController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    // updates application and updates status so that Office Members cant edit it any longer, only Committee is able to edit it now.
     @PutMapping("/readyForApproval")
     @Transactional
     public ResponseEntity<?> readyForApproval(@RequestBody EditedApplicationDto applicationDto){
@@ -81,14 +71,7 @@ public class ApplicationController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('COMMITTEE')")
-    @PutMapping("/approvalInProgress")
-    @Transactional
-    public ResponseEntity<?> approvalInProgress(@RequestParam String applicationID){
-        applicationService.updateStatus(applicationID, "approval in progress");
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
+    // changes of Committee Members are saved and status and approvals of modules are updated
     @PreAuthorize("hasRole('COMMITTEE')")
     @PutMapping("/saveApproval")
     @Transactional
@@ -99,8 +82,9 @@ public class ApplicationController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // "/getApplication?filters=__&sortBy=__&sortOrder=__&page=__&size=__"
-    // from here is sorting, filtering and paging
+
+    // sends paged applications which are open or edited to the office overview page
+    // frontend specifies sorting (default is after DateOfSubmission ASC)
     @GetMapping("/overviewOffice")
     public ResponseEntity<Page<OverviewApplicationDto>> getOverviewOffice(ApplicationPage applicationPage,
                                                                                 ApplicationSearchCriteria applicationSearchCriteria) {
@@ -108,6 +92,8 @@ public class ApplicationController {
         return new ResponseEntity<>(resultPage, HttpStatus.OK);
     }
 
+    // sends paged application which are open, edited, edited approval or ready for approval
+    // frontend specifies sorting (default is after DateOfSubmission ASC)
     @GetMapping("/overviewCommittee")
     public ResponseEntity<Page<OverviewApplicationDto>> getOverviewCommittee(ApplicationPage applicationPage,
                                                                              ApplicationSearchCriteria applicationSearchCriteria) {
@@ -115,6 +101,8 @@ public class ApplicationController {
         return new ResponseEntity<>(resultPage, HttpStatus.OK);
     }
 
+    // sends paged applications which are already closed (approval finished)
+    // they can be also filtered and sorted
     @GetMapping("/searchApplication")
     public ResponseEntity<Page<OverviewApplicationDto>> getSearchApplication(ApplicationPage applicationPage,
                                                   ApplicationSearchCriteria applicationSearchCriteria) {
@@ -129,67 +117,17 @@ public class ApplicationController {
         return new ResponseEntity<>(entireOriginalAndEditedApplicationDto, HttpStatus.OK);
     }
 
-
+    // get the pdf to one specific module which the student has uploaded
     @GetMapping(path = "/getModulePDF", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<Resource> getPDF(@RequestParam String filePath) {
         try {
             Resource pdfResource = pdfService.getModulePDF("/app/pdf-files" + filePath);
             return ResponseEntity.ok()
                     .contentType(MediaType.APPLICATION_PDF)
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filepath = " + filePath)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filepath=" + filePath)
                     .body(pdfResource);
         } catch (FileNotFoundException | MalformedURLException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
-
-
-//    @PostMapping("/test")
-//    public ResponseEntity<UniModuleDto> testOfficeEndpoint(@RequestBody UniModuleDto uniModuleDto){
-//        return new ResponseEntity<>(uniModuleDto, HttpStatus.OK);
-//    }
-//
-//    @GetMapping("/get-applications-with-sorting/{field}")
-//    public List<ApplicationEntity> getAllApplicationsWithSorting(@PathVariable String field) {
-//        return applicationService.getAllApplicationsWithSorting(field);
-//    }
-//
-//    // the following gets are for employee, it will only return applications with creator "Employee"
-//    @GetMapping("/get-all-applications")
-//    public List<ApplicationEntity> getAllApplications() {
-//        return applicationService.getAllApplications();
-//    }
-//
-//    @GetMapping("/get-applications-by-status")
-//    public List<ApplicationEntity> getApplicationsByStatus(@RequestParam("status") String status) {
-//        return applicationService.getApplicationsByStatus(status);
-//    }
-//
-//    @GetMapping("/get-applications-by-major")
-//    public List<ApplicationEntity> getApplicationsByMajor(@RequestParam("major") String major) {
-//        return applicationService.getApplicationsByMajor(major);
-//    }
-//
-//    @GetMapping("/get-applications-by-university")
-//    public List<ApplicationEntity> getApplicationsByUniversity(@RequestParam("universityName") String universityName) {
-//        return applicationService.getApplicationsByUniversityName(universityName);
-//    }
-//
-//    @GetMapping("/get-applications-by-date-of-submission")
-//    public ApplicationEntity getApplicationsByDateOfSubmission(@RequestParam("dateOfSubmission") String dateOfSubmission) {
-//        return applicationService.getApplicationsByDateOfSubmission(dateOfSubmission);
-//    }
-//
-//    // not complete
-//    @GetMapping("/get-applications-before-date-of-submission")
-//    public List<ApplicationEntity> getApplicationsByDateOfSubmissionBefore(@RequestParam("dateOfSubmission") String dateOfSubmission) {
-//        return applicationService.getApplicationsByDateOfSubmissionBefore(dateOfSubmission);
-//    }
-//
-//    // not complete
-//    @GetMapping("/get-applications-after-date-of-submission")
-//    public List<ApplicationEntity> getApplicationsByDateOfSubmissionAfter(@RequestParam("dateOfSubmission") String dateOfSubmission) {
-//        return applicationService.getApplicationsByDateOfSubmissionAfter(dateOfSubmission);
-//    }
-
 }

@@ -3,6 +3,9 @@
     "moduleFormList": {
       "addMapping": "Adicionar Mapeamento de Módulo",
       "moduleMapping": {
+        "required": "Obrigatório!",
+        "charLimitExceeded": "Limite de caracteres excedido!",
+        "fileTooBig": "Tamanho do arquivo muito grande!",
         "addModule": "Adicionar Módulo",
         "commentLabel": "Comentário",
         "description": "Forneça informações sobre o módulo a ser creditado.",
@@ -11,7 +14,8 @@
         "moduleNameLabel": "Nome do Módulo",
         "modulesToBeCreditedLabel": "Módulos a serem Creditados",
         "removeModule": "Remover Módulo",
-        "creditLabel": "Créditos (ECTS)"
+        "creditLabel": "Créditos (ECTS)",
+        "moduleId": "Número do módulo/Identificação do módulo"
       },
       "removeMapping": "Remover Mapeamento de Módulo"
     },
@@ -35,9 +39,11 @@
   },
   "examiningCommitteeChairView": {
     "accept": "Aceitar",
+    "undoAccept": "Desfazer aceitação",
     "decline": "Recusar",
-    "moduleCount": "Número de Módulos",
-    "studentAffairsOfficeComment": "Comentário do Escritório de Assuntos Estudantis"
+    "undoDecline": "Desfazer recusa",
+    "moduleCount": "Número de módulos",
+    "studentAffairsOfficeComment": "Comentário do escritório de assuntos estudantis"
   },
   "formDisplay": {
     "application": "Aplicação",
@@ -52,6 +58,7 @@
     "welcomeStudent": "Bem-vindo à nossa nova plataforma online para reconhecimento de crédito na Universidade de Leipzig! Clique em 'Módulos de Crédito' para começar. Ao enviar sua inscrição, você receberá um número de referência exclusivo, que poderá usar posteriormente para visualizar sua inscrição e seu status.",
     "welcomeStudentAffairsOffice": "Bem-vindo, equipe do Escritório de Assuntos Estudantis! Como membro da equipe do Escritório de Assuntos Estudantis, você tem acesso a uma visão geral de todas as inscrições em aberto. Você pode processar, complementar e acompanhar o status de processamento das inscrições. Use a interface amigável para tornar o processo de reconhecimento de crédito mais eficiente."
   },
+  "languageSwitcher": "Alterar idioma",
   "loginComponent": {
     "loginButton": "Entrar",
     "loginErrorMessage": "Nome de usuário ou senha incorretos.",
@@ -65,12 +72,13 @@
     "login": "Entrar",
     "main": "Página Principal",
     "review": "Revisão da Inscrição",
-    "studentAffairsOffice": "Escritório de Assuntos Estudantis"
+    "studentAffairsOffice": "Escritório de Assuntos Estudantis",
+    "updateModuleData": "Atualizar dados do módulo"
   },
   "reviewComponent": {
     "checkStatus": "Verificar Status da Inscrição",
     "downloadApplication": "Baixar Resumo",
-    "formID": "Número de Referência",
+    "formID": "ID do Formulário",
     "reviewApplication": "Revisar Inscrição",
     "currentUniversity": "Universidade Atual",
     "oldCourseOfStudy": "Curso Anterior",
@@ -100,7 +108,8 @@
     "errorFetchingForm": "Erro ao Recuperar Formulário",
     "formNotFound": "Formulário não Encontrado",
     "pending": "Pendente",
-    "moduleBlock": "Bloco de Módulos"
+    "moduleBlock": "Bloco de Módulos",
+    "partiallyRejected": "Parcialmente Rejeitado"
   },
   "routes": {
     "/": "Página Inicial",
@@ -112,7 +121,56 @@
     "/update-module-data": "Atualizar Dados do Módulo"
   },
   "studentAffairsOfficeView": {
-    "openApplications": "Inscrições em Aberto"
+    "split": "Dividir módulo",
+    "merge": "Fundir módulos",
+    "application": "Aplicação",
+    "applicationID": "ID da aplicação",
+    "compareWithOtherApplications": "Comparar com outras aplicações",
+    "courseOfStudy": "Curso de Estudo",
+    "creditFor": "Crédito para",
+    "credits": "Créditos",
+    "currentCourse": "Curso atual",
+    "dateLastEdited": "Data da última edição",
+    "dateOfSubmission": "Data de Submissão",
+    "decision": "Motivo",
+    "approval": "Aprovação",
+    "downloadDescription": "Baixar Descrição",
+    "edit": "Editar",
+    "edited": "Editado",
+    "enterReason": "Digite o motivo",
+    "formalReject": "Rejeição Formal",
+    "formallyRejectApplication": "Rejeitar Formalmente a Aplicação",
+    "ID": "ID",
+    "mapping": "Mapeamento",
+    "module": "Módulo",
+    "moduleNotFound": "Módulo não encontrado",
+    "moduleNumber": "Número do Módulo",
+    "modules": "Módulos",
+    "name": "Nome",
+    "officeComment": "Comentário do Escritório",
+    "openApplications": "Aplicações Abertas",
+    "original": "Original",
+    "previousCourse": "Curso Anterior",
+    "previousModule": "Módulo Anterior",
+    "previousUniversity": "Universidade Anterior",
+    "save": "Salvar",
+    "search": "Pesquisar",
+    "sendToExaminationCommittee": "Enviar para Comitê de Exame",
+    "status": "Status",
+    "studentComment": "Comentário do Estudante",
+    "undoRejection": "Desfazer Rejeição",
+    "university": "Universidade",
+    "view": "Visualizar",
+    "reason": "Razão",
+    "makeApprovable": "Tornar Aprovável",
+    "finishApproval": "Concluir Aprovação",
+    "reasonForDesicion": "Razão para a Decisão"
+  },
+  "mergeComponents": {
+    "selectMappingSplit": "Selecionar mapeamento para dividir",
+    "selectModuleSplit": "Selecionar módulos para dividir",
+    "selectModuleTBCSplit": "Selecionar módulos para dividir para crédito",
+    "selectModuleMerge": "Selecionar módulos para mesclar"
   },
   "updateModuleDataView": {
     "uploadJSON": "Carregar JSON",

@@ -11,15 +11,4 @@ export default {
       throw error;
     }
   },
-  async fetchPdfSummary(applicationId) {
-    try {
-      const response = await axios.get(`/api/student/getPdfSummary`, {params: {applicationId}}, { responseType: 'arraybuffer' });
-      console.log(response.data);
-      return response.data;
-      
-    } catch (error) {
-      console.error('Error fetching PDF summary:', error);
-      throw error;
-    }
-  },
 };

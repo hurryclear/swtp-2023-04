@@ -3,6 +3,9 @@
     "moduleFormList": {
       "addMapping": "添加模块映射",
       "moduleMapping": {
+        "required": "必填!",
+        "charLimitExceeded": "字符限制超出!",
+        "fileTooBig": "文件太大!",
         "addModule": "添加模块",
         "commentLabel": "评论",
         "description": "提供有关要认可的模块的信息。",
@@ -11,7 +14,8 @@
         "moduleNameLabel": "模块名称",
         "modulesToBeCreditedLabel": "要认可的模块",
         "removeModule": "删除模块",
-        "creditLabel": "学分（ECTS）"
+        "creditLabel": "学分（ECTS）",
+        "moduleId": "模块号/模块识别"
       },
       "removeMapping": "删除模块映射"
     },
@@ -35,8 +39,10 @@
   },
   "examiningCommitteeChairView": {
     "accept": "接受",
+    "undoAccept": "撤销接受",
     "decline": "拒绝",
-    "moduleCount": "模块数",
+    "undoDecline": "撤销拒绝",
+    "moduleCount": "模块数量",
     "studentAffairsOfficeComment": "学生事务办公室评论"
   },
   "formDisplay": {
@@ -58,6 +64,7 @@
     "passwordLabel": "密码",
     "usernameLabel": "用户名"
   },
+  "languageSwitcher": "更改语言",
   "logoutButton": "登出",
   "navBar": {
     "creditModules": "学分模块",
@@ -65,12 +72,13 @@
     "login": "登录",
     "main": "主页",
     "review": "审核申请",
-    "studentAffairsOffice": "学生事务办公室"
+    "studentAffairsOffice": "学生事务办公室",
+    "updateModuleData": "更新模块数据"
   },
   "reviewComponent": {
     "checkStatus": "检查申请状态",
     "downloadApplication": "下载概要",
-    "formID": "参考编号",
+    "formID": "表单 ID",
     "reviewApplication": "审核申请",
     "currentUniversity": "当前大学",
     "oldCourseOfStudy": "以前的课程",
@@ -100,7 +108,8 @@
     "errorFetchingForm": "获取表格时出错",
     "formNotFound": "找不到表格",
     "pending": "待定",
-    "moduleBlock": "模块块"
+    "moduleBlock": "模块块",
+    "partiallyRejected": "部分已拒绝"
   },
   "routes": {
     "/": "主页",
@@ -112,7 +121,56 @@
     "/update-module-data": "更新模块数据"
   },
   "studentAffairsOfficeView": {
-    "openApplications": "开放申请"
+    "split": "拆分模块",
+    "merge": "合并模块",
+    "application": "申请",
+    "applicationID": "申请 ID",
+    "compareWithOtherApplications": "与其他申请比较",
+    "courseOfStudy": "专业",
+    "creditFor": "信用",
+    "credits": "学分",
+    "currentCourse": "当前课程",
+    "dateLastEdited": "上次编辑日期",
+    "dateOfSubmission": "提交日期",
+    "decision": "原因",
+    "approval": "批准",
+    "downloadDescription": "下载描述",
+    "edit": "编辑",
+    "edited": "已编辑",
+    "enterReason": "输入原因",
+    "formalReject": "正式拒绝",
+    "formallyRejectApplication": "正式拒绝申请",
+    "ID": "ID",
+    "mapping": "映射",
+    "module": "模块",
+    "moduleNotFound": "未找到模块",
+    "moduleNumber": "模块编号",
+    "modules": "模块",
+    "name": "名称",
+    "officeComment": "办公室评论",
+    "openApplications": "打开的申请",
+    "original": "原始",
+    "previousCourse": "上一个课程",
+    "previousModule": "以前的模块",
+    "previousUniversity": "以前的大学",
+    "save": "保存",
+    "search": "搜索",
+    "sendToExaminationCommittee": "发送到考试委员会",
+    "status": "状态",
+    "studentComment": "学生评论",
+    "undoRejection": "撤销拒绝",
+    "university": "大学",
+    "view": "视图",
+    "reason": "原因",
+    "reject": "拒绝",
+    "finishApproval": "完成批准",
+    "reasonForDesicion": "决定原因"
+  },
+  "mergeComponents": {
+    "selectMappingSplit": "选择分割映射",
+    "selectModuleSplit": "选择要分割的模块",
+    "selectModuleTBCSplit": "选择要分割以获得学分的模块",
+    "selectModuleMerge": "选择要合并的模块"
   },
   "updateModuleDataView": {
     "uploadJSON": "上传JSON",

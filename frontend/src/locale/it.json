@@ -3,6 +3,9 @@
     "moduleFormList": {
       "addMapping": "Aggiungi Mappatura Modulo",
       "moduleMapping": {
+        "required": "Richiesto!",
+        "charLimitExceeded": "Limite di caratteri superato!",
+        "fileTooBig": "Dimensione del file troppo grande!",
         "addModule": "Aggiungi Modulo",
         "commentLabel": "Commento",
         "description": "Fornisci informazioni sul modulo da accreditare.",
@@ -11,7 +14,8 @@
         "moduleNameLabel": "Nome Modulo",
         "modulesToBeCreditedLabel": "Moduli Accreditati",
         "removeModule": "Rimuovi Modulo",
-        "creditLabel": "Crediti (ECTS)"
+        "creditLabel": "Crediti (ECTS)",
+        "moduleId": "Numero del modulo/Identificazione del modulo"
       },
       "removeMapping": "Rimuovi Mappatura Modulo"
     },
@@ -35,9 +39,11 @@
   },
   "examiningCommitteeChairView": {
     "accept": "Accetta",
+    "undoAccept": "Annulla accettazione",
     "decline": "Rifiuta",
-    "moduleCount": "Numero di Moduli",
-    "studentAffairsOfficeComment": "Commento dell'Ufficio Affari Studenti"
+    "undoDecline": "Annulla rifiuto",
+    "moduleCount": "Numero di moduli",
+    "studentAffairsOfficeComment": "Commento dell'ufficio affari studenti"
   },
   "formDisplay": {
     "application": "Domanda",
@@ -52,6 +58,7 @@
     "welcomeStudent": "Benvenuto nella nostra nuova piattaforma online per il riconoscimento dei crediti presso l'Università di Lipsia! Clicca su 'Credit Modules' per iniziare. Inviano la tua domanda, ti verrà assegnato un numero di riferimento unico, che potrai utilizzare in seguito per visualizzare la tua domanda e il suo stato.",
     "welcomeStudentAffairsOffice": "Benvenuto, personale dell'Ufficio Affari Studenti! Come membro dello staff dell'Ufficio Affari Studenti, hai accesso a una panoramica di tutte le domande aperte. Puoi elaborare, integrare e monitorare lo stato di elaborazione delle domande. Utilizza l'interfaccia utente intuitiva per rendere il processo di riconoscimento dei crediti più efficiente."
   },
+  "languageSwitcher": "Cambia lingua",
   "loginComponent": {
     "loginButton": "Accedi",
     "loginErrorMessage": "Nome utente o password errati.",
@@ -65,12 +72,13 @@
     "login": "Accedi",
     "main": "Pagina Principale",
     "review": "Revisione Domanda",
-    "studentAffairsOffice": "Ufficio Affari Studenti"
+    "studentAffairsOffice": "Ufficio Affari Studenti",
+    "updateModuleData": "Aggiorna dati del modulo"
   },
   "reviewComponent": {
     "checkStatus": "Verifica Stato Domanda",
     "downloadApplication": "Scarica Riepilogo",
-    "formID": "Numero di Riferimento",
+    "formID": "ID Domanda",
     "reviewApplication": "Revisione Domanda",
     "currentUniversity": "Università Attuale",
     "oldCourseOfStudy": "Programma di Studio Precedente",
@@ -100,7 +108,8 @@
     "errorFetchingForm": "Errore Recupero Domanda",
     "formNotFound": "Domanda non Trovata",
     "pending": "In Attesa",
-    "moduleBlock": "Blocco di Moduli"
+    "moduleBlock": "Blocco di Moduli",
+    "partiallyRejected": "Parzialmente Respinto"
   },
   "routes": {
     "/": "Homepage",
@@ -112,7 +121,56 @@
     "/update-module-data": "Aggiorna Dati Modulo"
   },
   "studentAffairsOfficeView": {
-    "openApplications": "Domande Aperte"
+    "split": "Dividi modulo",
+    "merge": "Unisci moduli",
+    "application": "Applicazione",
+    "applicationID": "ID domanda",
+    "compareWithOtherApplications": "Confronta con altre domande",
+    "courseOfStudy": "Corso di studio",
+    "creditFor": "Credito per",
+    "credits": "Crediti",
+    "currentCourse": "Corso attuale",
+    "dateLastEdited": "Data ultima modifica",
+    "dateOfSubmission": "Data di presentazione",
+    "decision": "Motivo",
+    "approval": "Approvazione",
+    "downloadDescription": "Scarica descrizione",
+    "edit": "Modifica",
+    "edited": "Modificato",
+    "enterReason": "Inserisci motivo",
+    "formalReject": "Rifiuto formale",
+    "formallyRejectApplication": "Rifiuta formalmente l'applicazione",
+    "ID": "ID",
+    "mapping": "Mappatura",
+    "module": "Modulo",
+    "moduleNotFound": "Modulo non trovato",
+    "moduleNumber": "Numero di modulo",
+    "modules": "Moduli",
+    "name": "Nome",
+    "officeComment": "Commento dell'ufficio",
+    "openApplications": "Applicazioni aperte",
+    "original": "Originale",
+    "previousCourse": "Corso precedente",
+    "previousModule": "Modulo precedente",
+    "previousUniversity": "Università precedente",
+    "save": "Salva",
+    "search": "Cerca",
+    "sendToExaminationCommittee": "Invia alla commissione d'esame",
+    "status": "Stato",
+    "studentComment": "Commento dello studente",
+    "undoRejection": "Annulla il rifiuto",
+    "university": "Università",
+    "view": "Visualizza",
+    "reason": "Motivo",
+    "makeApprovable": "Rendi approvabile",
+    "finishApproval": "Termina approvazione",
+    "reasonForDesicion": "Motivo della decisione"
+  },
+  "mergeComponents": {
+    "selectMappingSplit": "Seleziona mappatura da dividere",
+    "selectModuleSplit": "Seleziona moduli da dividere",
+    "selectModuleTBCSplit": "Seleziona moduli da dividere per il riconoscimento",
+    "selectModuleMerge": "Seleziona moduli da unire"
   },
   "updateModuleDataView": {
     "uploadJSON": "Carica JSON",

@@ -3,21 +3,27 @@
     "moduleFormList": {
       "addMapping": "Modulabbildung hinzufügen",
       "moduleMapping": {
+        "required": "Erforderlich!",
+        "charLimitExceeded": "Zeichenbegrenzung überschritten!",
+        "fileTooBig": "Dateigröße zu groß!",
         "addModule": "Modul hinzufügen",
-        "commentLabel": "Bemerkung",
-        "description": "Geben Sie Angaben über die anzurechnenden Module an.",
+        "commentLabel": "Kommentar",
+        "description": "Geben Sie Informationen zum Modul an, das anerkannt werden soll.",
         "module": "Modul",
         "moduleDescriptionLabel": "Modulbeschreibung",
         "moduleNameLabel": "Modulname",
-        "modulesToBeCreditedLabel": "Anzurechnende Module",
-        "removeModule": "Modul entfernen"
+        "modulesToBeCreditedLabel": "Anzurechnendes Modul",
+        "removeModule": "Modul entfernen",
+        "creditLabel": "Credits (ECTS)",
+        "moduleId":"Modulnummer/ Modulidentifikation"
       },
-      "removeMapping": "Modulabbildung entfernen"
+      "removeMapping": "Modulzuordnung entfernen"
     },
-    "submit": "Absenden",
+    "submit": "Formular absenden",
     "courseOfStudy": {
-      "description": "Geben Sie die Namen Ihres bisherigen und Ihres gewünschten Studiengangs an.",
-      "nameLabel": "Name des Studiengangs",
+      "description": "Geben Sie den Namen Ihres bisherigen und gewünschten Studiengangs an.",
+      "courseOfStudy": "Studiengang",
+      "new": "Gewünschter Studiengang",
       "previous": "Bisheriger Studiengang"
     },
     "universityForm": {
@@ -33,7 +39,9 @@
   },
   "examiningCommitteeChairView": {
     "accept": "Annehmen",
+    "undoAccept": "Akzeptanz rückgängig machen",
     "decline": "Ablehnen",
+    "undoDecline": "Ablehnung rückgängig machen",
     "moduleCount": "Anzahl der Module",
     "studentAffairsOfficeComment": "Kommentar vom Studienbüro"
   },
@@ -50,6 +58,7 @@
     "welcomeStudent": "Herzlich willkommen auf unserer neuen Online-Plattform für die Anrechnung von Studienleistungen an der Universität Leipzig! Drücken Sie auf 'Module anrechnen', um zu beginnen. Mit dem Absenden Ihres Antrags wird Ihnen eine eindeutige Vorgangsnummer zugewiesen, mit der Sie Ihren Antrag und dessen Status später einsehen können.",
     "welcomeStudentAffairsOffice": "Herzlich willkommen, Mitarbeitende des Studienbüros! Als Mitarbeitende des Studienbüros haben Sie Zugriff auf eine Übersicht aller offenen Anträge. Sie können Anträge bearbeiten, ergänzen und den Bearbeitungsstatus verfolgen. Nutzen Sie die benutzerfreundliche Oberfläche, um den Anrechnungsprozess effizienter zu gestalten."
   },
+  "languageSwitcher": "Sprache wechseln",
   "loginComponent": {
     "loginButton": "Einloggen",
     "loginErrorMessage": "Falscher Benutzername oder Passwort.",
@@ -63,12 +72,13 @@
     "login": "Einloggen",
     "main": "Hauptseite",
     "review": "Antrag einsehen",
-    "studentAffairsOffice": "Studienbüro"
+    "studentAffairsOffice": "Studienbüro",
+    "updateModuleData": "Moduldaten aktualisieren"
   },
   "reviewComponent": {
     "checkStatus": "Antragsstatus prüfen",
     "downloadApplication": "Zusammenfassung herunterladen",
-    "formID": "Referenznummer",
+    "formID": "Antrag-ID",
     "reviewApplication": "Antrag prüfen",
     "currentUniversity": "Aktuelle Universität",
     "oldCourseOfStudy": "Vorheriges Studienprogramm",
@@ -98,7 +108,8 @@
     "errorFetchingForm": "Fehler beim Abrufen des Formulars",
     "formNotFound": "Formular nicht gefunden",
     "pending": "Ausstehend",
-    "moduleBlock": "Modulblock"
+    "moduleBlock": "Modulblock",
+    "partiallyRejected": "Teilweise abgelehnt"
   },
   "routes": {
     "/": "Startseite",
@@ -109,7 +120,58 @@
     "/student-affairs-office": "Studienbüro"
   },
   "studentAffairsOfficeView": {
-    "openApplications": "Offene Anträge"
+    "split": "Modul teilen",
+    "merge": "Module zusammenführen",
+    "application": "Antrag",
+    "applicationID": "Antrags-ID",
+    "compareWithOtherApplications": "Mit anderen Anträgen vergleichen",
+    "courseOfStudy": "Studiengang",
+    "creditFor": "Anrechnen für",
+    "credits": "Credits",
+    "currentCourse": "Aktueller Kurs",
+    "dateLastEdited": "Zuletzt bearbeitet am",
+    "dateOfSubmission": "Einreichungsdatum",
+    "decision": "Grund",
+    "approval": "Entscheidung",
+    "downloadDescription": "Beschreibung herunterladen",
+    "edit": "Bearbeiten",
+    "edited": "Bearbeitet",
+    "enterReason": "Grund eingeben",
+    "formalReject": "Formal Ablehnen",
+    "formallyRejectApplication": "Antrag formal ablehnen",
+    "ID": "ID",
+    "mapping": "Zuordnung",
+    "module": "Modul",
+    "moduleNotFound": "Modul nicht gefunden",
+    "moduleNumber": "Modulnummer",
+    "modules": "Module",
+    "name": "Name",
+    "officeComment": "Bürokommentar",
+    "openApplications": "Offene Anträgen",
+    "original": "Original",
+    "previousCourse": "Vorheriger Kurs",
+    "previousModule": "Vorheriges Modul",
+    "previousUniversity": "Vorherige Universität",
+    "save": "Speichern",
+    "search": "Suche",
+    "sendToExaminationCommittee": "An Prüfungsausschuss senden",
+    "status": "Status",
+    "studentComment": "Studentenkommentar",
+    "undoRejection": "Ablehnung rückgängig machen",
+    "university": "Universität",
+    "view": "Anzeigen",
+    "reason": "Grund",
+    "makeApprovable": "Genehmigungsfähig machen",
+    "finishApproval": "Genehmigung abschließen",
+    "reasonForDesicion": "Grund für Entscheidung"
+
+
+  },
+  "mergeComponents": {
+    "selectMappingSplit": "Zuordnung zum Abspalten wählen",
+    "selectModuleSplit": "Module zum Abspalten wählen",
+    "selectModuleTBCSplit": "Anzurechnende Module zum Abspalten wählen",
+    "selectModuleMerge": "Module auswählen"
   },
   "updateModuleDataView": {
     "uploadJSON": "JSON hochladen",

@@ -10,7 +10,7 @@
       "oldCourseOfStudy": "B.Sc. Informatik",
       "newCourseOfStudy": "B.Sc. Informatik"
     },
-    "moduleFormData": [
+    "moduleFormsData": [
       {
         "frontend_key": 0,
         "backend_block_id": 1,
@@ -86,7 +86,7 @@
       "oldCourseOfStudy": "B.Sc. Informatik",
       "newCourseOfStudy": "B.Sc. Informatik"
     },
-    "moduleFormData": [
+    "moduleFormsData": [
       {
         "frontend_key": 0,
         "backend_block_id": 1,

@@ -4,8 +4,7 @@ import FormService from '@/services/FormService';
 export default {
     state: {
         forms: [],
-        currentForm: null,
-        currentFormPdf: null,
+        currentForm: null
     },
     getters: {
         formsByStatus: (state) => (status) => {
@@ -37,10 +36,6 @@ export default {
         },
         setCurrentForm(state, form) {
             state.currentForm = {...form};
-            console.log('Current form:', state.currentForm);
-        },
-        setCurrentFormPdf(state, pdf) {
-            state.currentFormPdf = pdf;
         }
     },
     actions: {
@@ -57,10 +52,6 @@ export default {
             const form = await FormService.fetchApplicationSummary(applicationId);
             commit('setCurrentForm', form);
             
-        },
-        async fetchPdfSummary({ commit }, applicationId) {
-            const pdfData = await FormService.fetchPdfSummary(applicationId);
-            commit('setCurrentFormPdf', pdfData);
-        },
+        }
     },
 };

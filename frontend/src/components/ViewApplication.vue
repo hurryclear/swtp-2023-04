@@ -3,55 +3,128 @@
     <v-card>
       <div class="card-header">
         <v-card-title>
-          <u>Antrag</u>
+          <u>{{ $t('studentAffairsOfficeView.application') }}</u>
         </v-card-title>
-        <v-spacer/>
-        <v-btn class="button-top" variant="tonal" icon="mdi-close" @click="closeViewApplication"></v-btn>
+        <v-spacer />
+        <v-btn class="button-top" variant="tonal" icon="mdi-close" @click="this.$emit('close');" />
       </div>
-      <v-card-text>
-        Vorherige Universität: {{ copy.edited.applicationData.university }}
-      </v-card-text>
-      <v-card-text>
-        Vorheriger Studiengang: {{ copy.edited.applicationData.oldCourseOfStudy }}
-      </v-card-text>
-      <v-card-text>
-        Jetziger Studiengang: {{ copy.edited.applicationData.newCourseOfStudy }}
-      </v-card-text>
-      <v-card-title>
-        Module:
-      </v-card-title>
-      <div v-for="(moduleData, index) in copy.edited.moduleFormsData" v-bind:key="moduleData.frontend_key">
-        <v-card-subtitle>
-          <br>
-          Mapping {{ index + 1 }}
-        </v-card-subtitle>
-        <div v-for="(studentModule, index2) in moduleData.modulesStudent" v-bind:key="studentModule.frontend_key">
-          <v-card-text><u>Modul {{ index2 + 1 }}</u></v-card-text>
-          <v-card-text>Name: {{ studentModule.title }}</v-card-text>
-          <v-card-text>Modulnummer: {{ studentModule.number }}</v-card-text>
-          <v-card-text>Leistungspunkte: {{ studentModule.credits }}</v-card-text>
-          <v-card-text>Studentenkommentar: {{ studentModule.commentStudent }}</v-card-text>
-          <v-card-text>Studienbürokommentar: {{ studentModule.commentEmployee }}</v-card-text>
-          <v-btn style="margin: 1%" @click="downloadPdf(studentModule.path)">Beschreibung herunterladen</v-btn>
-          <v-card-text>Entscheidung: {{ studentModule.reason }}</v-card-text>
-        </div>
-        <v-card-text>
-          <u>Anrechnen für:</u>
-          <br>
-          <div v-for="module in moduleData.modules2bCredited" v-bind:key="module">
-            <v-card-text>{{ module }}</v-card-text>
+      <v-divider />
+      <v-tabs v-model="selectedTabIndex">
+        <v-tab v-for="(moduleData, index) in copy.edited.moduleFormsData" :key="index">
+          {{ $t('studentAffairsOfficeView.mapping') }} {{ index + 1 }}
+        </v-tab>
+      </v-tabs>
+      <v-window v-model="selectedTabIndex">
+        <v-window-item v-for="(moduleData, index) in copy.edited.moduleFormsData" :key="index">
+          <v-card-text>
+            <v-text-field
+                disabled
+                v-model="copy.edited.applicationData.university"
+                :label="$t('studentAffairsOfficeView.previousUniversity')"
+                variant="outlined"
+            />
+            <v-text-field
+                disabled
+                v-model="copy.edited.applicationData.oldCourseOfStudy"
+                :label="$t('studentAffairsOfficeView.previousCourse')"
+                variant="outlined"
+            />
+            <v-text-field
+                disabled
+                v-model="copy.edited.applicationData.newCourseOfStudy"
+                :label="$t('studentAffairsOfficeView.currentCourse')"
+                variant="outlined"
+            />
+          </v-card-text>
+
+          <!--Modules-->
+          <v-card-title>
+            {{ $t('studentAffairsOfficeView.modules') }}:
+          </v-card-title>
+          <div v-for="(studentModule, index2) in moduleData.modulesStudent" :key="index2">
+            <v-card-subtitle>
+              {{ $t('studentAffairsOfficeView.module') }} {{ index2 + 1 }}
+            </v-card-subtitle>
+            <v-text-field
+                disabled
+                v-model="studentModule.title"
+                :label="$t('applicationFormView.moduleFormList.moduleMapping.moduleNameLabel')"
+                variant="outlined"
+            />
+            <v-text-field
+                disabled
+                v-model="studentModule.number"
+                :label="$t('applicationFormView.moduleFormList.moduleMapping.moduleId')"
+                variant="outlined"
+            />
+            <v-text-field
+                disabled
+                variant="outlined"
+                :label="$t('applicationFormView.universityForm.nameLabel')"
+                v-model="studentModule.university"
+            />
+            <v-text-field
+                disabled
+                variant="outlined"
+                :label="$t('applicationFormView.courseOfStudy.courseOfStudy')"
+                v-model="studentModule.major"
+            />
+            <v-text-field
+                disabled
+                v-model="studentModule.credits"
+                :label="$t('applicationFormView.moduleFormList.moduleMapping.creditLabel')"
+                variant="outlined"
+            />
+            <v-text-field
+                disabled
+                v-model="studentModule.commentStudent"
+                :label="$t('studentAffairsOfficeView.studentComment')"
+                variant="outlined"
+            />
+            <v-text-field
+                disabled
+                v-model="studentModule.commentEmployee"
+                :label="$t('studentAffairsOfficeView.officeComment')"
+                variant="outlined"
+            />
+            <v-btn class="ma-2"  @click="downloadPdf(studentModule.path, studentModule.title)">
+              {{ $t('studentAffairsOfficeView.downloadDescription') }}
+            </v-btn>
+            <v-text-field
+                disabled
+                v-model="studentModule.approval"
+                :label="$t('studentAffairsOfficeView.approval')"
+                variant="outlined"
+            />
+            <v-text-field
+                disabled
+                v-model="studentModule.reason"
+                :label="$t('studentAffairsOfficeView.decision')"
+                variant="outlined"
+            />
+            <v-divider />
           </div>
-        </v-card-text>
-        <v-divider/>
-      </div>
-      <v-divider/>
-      <v-card-text>Entscheidung: {{ copy.edited.formalReject}}</v-card-text>
+          <v-card-text>
+            <v-select
+                multiple
+                disabled
+                v-model="moduleData.modules2bCredited"
+                :items="majorModules"
+                item-title="name"
+                item-value="id"
+                variant="outlined"
+                :label="$t('studentAffairsOfficeView.creditFor')"
+            />
+          </v-card-text>
+          <v-divider />
+        </v-window-item>
+      </v-window>
     </v-card>
   </div>
 </template>
 
 <script>
-import axios from "@/plugins/axios";
+import StudentAffairsOfficeService from "@/services/StudentAffairsOfficeService";
 
 export default {
   props: {
@@ -61,74 +134,48 @@ export default {
   data() {
     return {
       copy: {},
-      majors: []
-    }
+      majorModules: [],
+      selectedTabIndex: 0
+    };
   },
 
   methods: {
-    closeViewApplication() {
-      this.$emit("close-view-application");
-    },
-
-    findModule(module) {
-      const foundModule = this.majors.find(item => item.id === module);
-      return foundModule ? foundModule.name : "Module not found";
-    },
-
-    replaceIdWithName() {
-      for (let i = 0; i < this.copy.edited.moduleFormsData.length; i++) {
-        for (let j = 0; j < this.copy.edited.moduleFormsData[i].modules2bCredited.length; j++) {
-          //Replace module ID in moduleFormsData[i], modules2bCredited[j] with their names
-          this.copy.edited.moduleFormsData[i].modules2bCredited[j] = this.findModule(this.copy.edited.moduleFormsData[i].modules2bCredited[j]);
-        }
+    async getModules() {
+      try {
+        this.majorModules = await StudentAffairsOfficeService.getModules(this.copy.edited.applicationData.newCourseOfStudy);
+      } catch (error) {
+        console.error('Error fetching modules:', error);
       }
     },
 
-    createCopy() {
-      this.copy = structuredClone(this.form);
-    },
-
-    async getModules() {
-      await axios.get(`/api/unidata/getModules?majorName=${this.copy.edited.applicationData.newCourseOfStudy}`).then(
-          res => this.major = res.data.modules
-      ).catch(err => {
-        console.log(err);
-      });
-    },
-
-    async downloadPdf(pdfPath) {
+    async downloadPdf(pdfPath, fileName) {
       try {
-        //TODO Change if it throws error
-        const response = await axios.get("/api/application/getModulePDF", {
-          params: {
-            pdfPath
-          },
-          responseType: 'blob' // Ensure response is treated as a blob
-        });
-
-        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const pdfBlob = await StudentAffairsOfficeService.getModulePDF(pdfPath);
+        const url = window.URL.createObjectURL(new Blob([pdfBlob]));
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', 'file.pdf');
+        link.setAttribute('download', fileName + '.pdf');
         document.body.appendChild(link);
         link.click();
       } catch (error) {
         console.error('Error downloading PDF:', error);
       }
     }
-
   },
 
-  created() {
-    this.createCopy();
-    this.getModules();
-    this.replaceIdWithName();
+  async created() {
+    this.copy = structuredClone(this.form);
+    await this.getModules();
   }
-}
+};
 </script>
 
 <style scoped>
 .button-top {
+  margin: 1%;
+}
+
+.v-text-field {
   margin: 1%;
 }
 

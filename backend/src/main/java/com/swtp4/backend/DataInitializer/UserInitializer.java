@@ -34,6 +34,7 @@ public class UserInitializer implements CommandLineRunner {
         this.passwordEncoder = passwordEncoder;
     }
 
+    // this initializes the accounts of Office and Committee
     @Override
     public void run(String... args) throws Exception {
         // Create a user and save in the database
