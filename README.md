@@ -59,6 +59,7 @@ Wichtige Umgebungsvariablen werden im `docker-compose.yml` für Development und 
 Navigieren Sie zum Frontend-Verzeichnis und verwenden Sie `npm run serve`, um das Frontend ohne Backend zu starten.
 
 ### Backend
+
 In den `application.properties` unter `resources` im Haupt- bzw. Testverzeichnis sind zudem wichtige Konfigurationen für die einzelnen Profile enthalten.
 Zu Beachten ist, dass zum Testen eine In-Memory H2 Database mit PostgresDialect konfiguriert ist. Im Dev bzw. Prod Profile werden richtige Postgres Datenbanken verwendet.
 

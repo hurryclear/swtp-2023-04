@@ -26,13 +26,18 @@ import java.net.MalformedURLException;
 import java.util.List;
 
 @Slf4j
-@RestController
+@RestController // marks the class as a REST API controller, which returns JSON/XML files
 @CrossOrigin
 @RequestMapping(path = "/application")
 public class ApplicationController {
     private ApplicationService applicationService;
     private PDFService pdfService;
 
+    /**
+     * Constructor injection
+     * this class has two dependencies: ApplicationService and PDFService
+     * they will be injected via the constructor
+     */
     @Autowired
     public ApplicationController(ApplicationService applicationService, PDFService pdfService) {
         this.applicationService = applicationService;
@@ -41,7 +46,7 @@ public class ApplicationController {
 
     // save the edited application in the database and update status of application and approval of modules properly
     @PutMapping("/saveEdited")
-    @Transactional
+    @Transactional // If updating the status or approvals fails, all changes (e.g., status, approvals, application data) are rolled back.
     public ResponseEntity<?> saveApplication(@RequestBody EditedApplicationDto applicationDto){
         log.info("Received applicationDto: {}", applicationDto);
         applicationService.updateStatus(applicationDto.applicationID(), "edited");
