@@ -3,6 +3,8 @@
 ## 1. Projektbeschreibung
 Die Webanwendung dient der Modulanrechnung an der Universität Leipzig.
 
+A web application which can help students to create application for module credit transfer and university employees can easily manage all applications.
+
 ## 2. Verwendete Technologien und Tools
 Die Microservices werden durch Docker verwaltet, während das Repository auf GitLab gehostet wird. Eine CI/CD-Pipeline mit drei Stufen (Test, Build, Deploy) läuft ebenfalls auf GitLab.
 
