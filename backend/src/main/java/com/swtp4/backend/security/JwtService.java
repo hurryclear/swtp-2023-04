@@ -18,7 +18,7 @@ import java.util.Date;
 public class JwtService {
 
     // jwtSecret is our secret key to generate Tokens
-    // these are environment variables and can be set in application.properties
+    // these are environment variables and can be set in application.yml
     @Value("${jwt.secret}")
     private String jwtSecret;
 
