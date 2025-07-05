@@ -1,7 +1,5 @@
 # SWTP-04: Module Credit Recognition System
 
-A comprehensive web application for module credit recognition at Leipzig University, built with modern microservices architecture and containerized deployment.
-
 ## 📋 Table of Contents
 - [🎯 Overview](#🎯 overview)
 - [📊 Business Workflow](#📊 business-workflow)
@@ -18,7 +16,7 @@ A comprehensive web application for module credit recognition at Leipzig Univers
 - [🔧 Troubleshooting](#🔧 troubleshooting)
 - [🛡️ Security Considerations](#🛡️ security-considerations)
 - [📈 Performance & Scalability](#📈 performance--scalability)
-- [🤝 Contributing](#🤝 contributing)
+- [🤝 Contributing](#🤝 contributing) 
 
 ## 🎯 Overview
 
@@ -125,6 +123,7 @@ The application follows a microservices architecture with clear separation of co
 
 ## 🚀 Getting Started
 
+<<<<<<< HEAD
 ### Prerequisites
 - **Docker Desktop**: [Install Docker](https://www.docker.com/products/docker-desktop/)
 - **Node.js 18+**: [Install Node.js](https://nodejs.org/) (for local development)
@@ -836,3 +835,8 @@ For technical support or questions about this project:
 ---
 
 *This documentation is maintained by hurryclear and is updated regularly to reflect the current state of the application.*
+=======
+Um mit der Produktionsumgebung, also der VM, zu interagieren, muss man sich im Universitätsnetz der Uni Leipzig befinden oder per Cisco VPN mit dem Uni-Netz verbinden.
+Die Webanwendung wird unter 172.26.92.83:3000 erreicht. Dies entspricht unserem Frontend Container, der auch als Proxy für das Backend dient.
+Alle Anfragen an 172.26.92.83:3000/api/ werden an das Backend weitergeleitet.
+Um sich direkt mit der VM zu verbinden, wird der Private SSH Key benötigt, der im GitLab als Secret Variable gespeichert ist.
