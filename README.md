@@ -832,11 +832,4 @@ For technical support or questions about this project:
   - [Frontend Documentation](./frontend/README.md)
   - [Backend Documentation](./backend/README.md)
 
----
-
-*This documentation is maintained by hurryclear and is updated regularly to reflect the current state of the application.*
-=======
-Um mit der Produktionsumgebung, also der VM, zu interagieren, muss man sich im Universitätsnetz der Uni Leipzig befinden oder per Cisco VPN mit dem Uni-Netz verbinden.
-Die Webanwendung wird unter 172.26.92.83:3000 erreicht. Dies entspricht unserem Frontend Container, der auch als Proxy für das Backend dient.
-Alle Anfragen an 172.26.92.83:3000/api/ werden an das Backend weitergeleitet.
-Um sich direkt mit der VM zu verbinden, wird der Private SSH Key benötigt, der im GitLab als Secret Variable gespeichert ist.
+*This documentation is maintained by hurryclear and is updated regularly to reflect the current state of the application.* 

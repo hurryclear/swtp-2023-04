@@ -1,0 +1,24 @@
+spring:
+  sql:
+    init:
+      encoding: UTF-8
+  servlet:
+    multipart:
+      max-request-size: 100MB
+      max-file-size: 10MB
+
+# JWT token configuration
+jwt:
+  secret: kdcg/HWhPwXlI0IzwNAph97Vwv7mnQ5tM0EH//MmSjXrbGkFTB1jCupER02sJQykbmBHg8TahS7YIl2tJ8uh4A==
+  expiration: 3600000
+  header: Authorization
+  prefix: "Bearer "
+
+# Test users
+office:
+  username: office
+  password: pw_office
+
+committee:
+  username: committee
+  password: pw_committee

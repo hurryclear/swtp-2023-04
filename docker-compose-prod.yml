@@ -3,7 +3,7 @@ version: "3.7"
 services:
   frontend:
    container_name: vue-frontend
-   image: swtp04/vue-frontend:latest
+   image: ghcr.io/hurryclear/swtp-hc-frontend:latest
    ports:
     - 172.26.92.83:3000:80
    depends_on:
@@ -16,7 +16,7 @@ services:
   
   backend:
    container_name: springboot-backend
-   image: swtp04/springboot-backend:latest
+   image: ghcr.io/hurryclear/swtp-hc-backend:latest
    ports:
     - 172.26.92.83:3001:8080
    depends_on:

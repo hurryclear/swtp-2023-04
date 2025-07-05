@@ -18,8 +18,9 @@ test_integration:
     # skipping Unittests and set spring profile to use application-integration.properties for h2 database connection
     - mvn -Dskip.ut=true -Dspring.profiles.active=integration verify
   rules:
-    # only run integration tests in main and dev
-    - if: $CI_COMMIT_BRANCH == "DEV2.0"
+    # Updated for GitHub branch names
+    - if: $CI_COMMIT_BRANCH == "dev-hurry"
+    - if: $CI_COMMIT_BRANCH == "dev"
     - if: $CI_COMMIT_BRANCH == "main"
 
 test_frontend:
