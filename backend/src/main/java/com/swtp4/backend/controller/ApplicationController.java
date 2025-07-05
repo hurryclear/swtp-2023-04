@@ -34,9 +34,11 @@ public class ApplicationController {
     private PDFService pdfService;
 
     /**
-     * Constructor injection
+     * Constructor injection through Autowired
      * this class has two dependencies: ApplicationService and PDFService
-     * they will be injected via the constructor
+     * Without @Autowired you have to write new ApplicationService and new PDFService
+     * but @Autowired will help us to create ApplicationService and PDFService bean and pass them to the constructor
+     * so no need to create them manually
      */
     @Autowired
     public ApplicationController(ApplicationService applicationService, PDFService pdfService) {

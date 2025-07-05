@@ -53,7 +53,7 @@ public class ApplicationService {
 
     public ApplicationIDWithFilePaths saveSubmitted(SubmittedApplicationDto applicationDto) {
         String applicationID = uniqueNumberService.generateUniqueNumber();
-        HashMap<String, String> file_paths = new HashMap<>();
+        HashMap<String, String> file_paths = new HashMap<>(); // <keys, pdf_path>
 
         ApplicationEntity applicationStudent = saveApplicationEntity(applicationID, "Student", applicationDto);
         ApplicationEntity applicationEmployee = saveApplicationEntity(applicationID, "Employee", applicationDto);
@@ -89,8 +89,9 @@ public class ApplicationService {
     }
 
     // save application details
+    // .builder() from Lombok to create a new instance
     private ApplicationEntity saveApplicationEntity(String applicationID, String creator, SubmittedApplicationDto applicationDto) {
-        return applicationRepository.save(ApplicationEntity.builder()
+        return applicationRepository.save(ApplicationEntity.builder() // save-method is of JpaRepository<ApplicationEntity>
                 .applicationKeyClass(ApplicationKeyClass.builder()
                         .id(applicationID)
                         .creator(creator).build())

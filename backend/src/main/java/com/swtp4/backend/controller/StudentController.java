@@ -49,9 +49,20 @@ public class StudentController {
         this.pdfService = pdfService;
     }
 
+    /**
+     *
+     * @param fileMap
+     * @param submittedApplicationDto
+     * return ResponseEntity<?>
+     * ResponseEntity in Spring includes status code, headers and body
+     * ? in wildcard means the body could be any type, or just no body, i.e. just return status code
+     *
+     *
+     */
     @RequestMapping(path = "/submitApplication", method = POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<?> submitApplication(
             @RequestParam Map<String, MultipartFile> fileMap,
+            // Find the part which name is "form" in the multipart and deserialize it into a submittedApplicationDto (a object)
             @RequestPart("form") SubmittedApplicationDto submittedApplicationDto) {
         log.info("SUBMITTED_APPLICATION: {}", submittedApplicationDto);
 
@@ -62,7 +73,7 @@ public class StudentController {
 
         // pdf file of each module is saved under right path
         pdfService.saveModulePDFs(fileMap, file_paths);
-        return new ResponseEntity<>(applicationID, HttpStatus.CREATED);
+        return new ResponseEntity<>(applicationID, HttpStatus.CREATED); // applicationID will be returned to student, so can be used for tracking
     }
 
     // get all necessary details for reviewing an application as student
